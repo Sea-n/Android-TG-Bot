@@ -1,38 +1,38 @@
 <resources>
-    <string name="app_name">Awesome Telegram Bot</string>
+    <string name="app_name" translatable="false">Awesome Telegram Bot</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
-    <string name="title_activity_add_bot">New Bot</string>
+    <string name="title_activity_add_bot" translatable="false">New Bot</string>
 
     <string name="add_bot_token">Your Bot Token</string>
     <string name="add_bot_name">Nickname</string>
     <string name="add_bot_submit">Done</string>
     <string name="add_bot_name_invalid">Nickname Invalid, please check again.</string>
     <string name="add_bot_token_invalid">Token format invalid</string>
-    <string name="bot_token_regex">[0-9]{8,10}:[A-Za-z0-9_-]*</string>
-    <string name="title_activity_main">Playground</string>
-    <string name="title_home_activity">Awsesome Telegram Bot</string>
-    <string name="nav_header_default_title">Sean Bot</string>
-    <string name="nav_header_default_subtitle">109780439:TEST_test</string>
+    <string name="bot_token_regex" translatable="false">[0-9]{8,10}:[A-Za-z0-9_-]*</string>
+    <string name="title_activity_main" translatable="false">Playground</string>
+    <string name="title_home_activity" translatable="false">Awsesome Telegram Bot</string>
+    <string name="nav_header_default_title" translatable="false">Sean Bot</string>
+    <string name="nav_header_default_subtitle" translatable="false">109780439:TEST_test</string>
     <string name="menu_api_caller">Free API Caller</string>
-    <string name="menu_send_message">sendMessage</string>
+    <string name="menu_send_message" translatable="false">sendMessage</string>
     <string name="nav_menu_account">Accounts</string>
     <string name="nav_menu_functions">Functions</string>
     <string name="nav_menu_join_group">Join Group</string>
     <string name="nav_menu_add_bot">Add Bot</string>
-    <string name="api_caller_method_hint">Method</string>
-    <string name="api_caller_method_default_text">getMe</string>
-    <string name="api_caller_data_hint">JSON Data</string>
-    <string name="json_empty_object">{}</string>
+    <string name="api_caller_method_hint" translatable="false">Method</string>
+    <string name="api_caller_method_default_text" translatable="false">getMe</string>
+    <string name="api_caller_data_hint" translatable="false">JSON Data</string>
+    <string name="json_empty_object" translatable="false">{}</string>
     <string name="api_caller_check_text">Check JSON</string>
     <string name="api_caller_submit_text">Submit</string>
     <string name="api_caller_result_placeholder">No Context Yet.</string>
     <string name="send_message_text_hint">Your Message</string>
     <string name="send_message_data_hint">Optional Params</string>
     <string name="send_message_result_placeholder">No Context Yet.</string>
-    <string name="send_message_chat_hint">Chat ID</string>
-    <string name="nav_header_photo">Bot Profile Photo</string>
+    <string name="send_message_chat_hint" translatable="false">Chat ID</string>
+    <string name="nav_header_photo" translatable="false">Bot Profile Photo</string>
 </resources>
