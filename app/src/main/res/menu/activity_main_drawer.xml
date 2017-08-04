@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/menu_api"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_caller"
+            android:icon="@android:drawable/ic_menu_call"
+            android:title="@string/menu_api_caller" />
+        <item
+            android:id="@+id/nav_sendMessage"
+            android:icon="@android:drawable/ic_menu_send"
+            android:title="@string/menu_send_message" />
+    </group>
+
+    <item
+        android:id="@+id/menu_accounts_item"
+        android:title="@string/nav_menu_account"
+        android:visible="false">
+        <menu
+            android:id="@+id/menu_accounts"
+            android:checkableBehavior="single" />
+    </item>
+
+    <item
+        android:id="@+id/menu_functions"
+        android:title="@string/nav_menu_functions">
+        <menu>
+            <item
+                android:id="@+id/nav_add_bot"
+                android:icon="@android:drawable/ic_menu_add"
+                android:title="@string/nav_menu_add_bot" />
+            <item
+                android:id="@+id/nav_join_group"
+                android:icon="@drawable/ic_group_black_24dp"
+                android:title="@string/nav_menu_join_group" />
+        </menu>
+    </item>
+
+</menu>
