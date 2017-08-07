@@ -1,5 +1,7 @@
 package taipei.sean.telegram.botplayground;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -7,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,8 +20,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-
+import com.onesignal.OneSignal;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,6 +35,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        OneSignal.startInit(this)
+                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+                .unsubscribeWhenNotificationsAreDisabled(true)
+                .init();
 
         db = new SeanDBHelper(this, "data.db", null, 1);
 
@@ -61,6 +70,38 @@ public class MainActivity extends AppCompatActivity {
 
         initAccount();
 
+
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(200);   /// Wait for UI ready
+                } catch (InterruptedException e) {
+                    Log.e("main", "sleep", e);
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        LinearLayout navHeader = (LinearLayout) findViewById(R.id.nav_header);
+                        navHeader.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                changeAccount(view);
+                            }
+                        });
+                        navHeader.setOnLongClickListener(new View.OnLongClickListener() {
+                            @Override
+                            public boolean onLongClick(View view) {
+                                initAccount();
+                                return false;
+                            }
+                        });
+                    }
+                });
+
+            }
+        };
+        thread.start();
     }
 
     @Override
@@ -89,15 +130,49 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         switch (id) {
-            case R.id.action_settings:
-                Log.d("option", "Press Setting");
+            case R.id.action_edit:
+                Intent mIntent = new Intent(MainActivity.this, AddBotActivity.class);
+                if (null == currentBot) {
+                    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+                    Snackbar.make(fab, R.string.main_did_not_select_bot, Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                } else
+                    mIntent.putExtra("id", currentBot._id);
+                startActivity(mIntent);
+                break;
+            case R.id.action_remove:
+                if (null == currentBot) {
+                    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+                    Snackbar.make(fab, R.string.main_did_not_select_bot, Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    break;
+                }
+                deleteBot(currentBot._id);
                 break;
             default:
-                Log.d("option", "Press" + id);
+                if (null != currentBot)
+                Log.w("option", "Press unknow " + id);
                 break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void deleteBot(final long id) {
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("Closing Activity")
+                .setMessage("Are you sure you want to delete this bot?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        db.deleteBot(id);
+                    }
+
+                })
+                .setNegativeButton("No", null)
+                .show();
     }
 
     public boolean navItemSelected(@NonNull MenuItem item) {
@@ -112,9 +187,11 @@ public class MainActivity extends AppCompatActivity {
             default:
                 switch (id) {
                     case R.id.nav_sendMessage:
-                        Log.d("nav", "press sendMessage");
                         if (null == currentBot) {
                             Log.w("nav", "no bots");
+                            View fab = findViewById(R.id.fab);
+                            Snackbar.make(fab, R.string.no_bot_warning, Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
                             break;
                         }
                         Intent sIntent = new Intent(MainActivity.this, SendMessageActivity.class);
@@ -122,9 +199,11 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(sIntent);
                         break;
                     case R.id.nav_caller:
-                        Log.d("nav", "press free api caller");
                         if (null == currentBot) {
                             Log.w("nav", "no bots");
+                            View fab = findViewById(R.id.fab);
+                            Snackbar.make(fab, R.string.no_bot_warning, Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
                             break;
                         }
                         Intent mIntent = new Intent(MainActivity.this, ApiCallerActivity.class);
@@ -132,15 +211,14 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(mIntent);
                         break;
                     case R.id.nav_add_bot:
-                        Log.d("nav", "press add bot");
                         addBot();
+                        initAccount();
                         break;
                     case R.id.nav_join_group:
-                        Log.d("nav", "press share");
                         joinGroup();
                         break;
                     default:
-                        Log.w("nav", "press unknown item" + id);
+                        Log.w("nav", "press unknown item " + id);
                         break;
                 }
                 break;
@@ -161,6 +239,7 @@ public class MainActivity extends AppCompatActivity {
         Menu navMenu = navView.getMenu();
         MenuItem menuItem = navMenu.findItem(R.id.menu_accounts_item);
         SubMenu subMenu = menuItem.getSubMenu();
+        subMenu.clear();
 
         _bots = db.getBots();
         for (int i = 0; i < _bots.size(); i++) {
@@ -169,9 +248,15 @@ public class MainActivity extends AppCompatActivity {
             subMenu.add(R.id.menu_accounts, Menu.FIRST + i, Menu.NONE, bot.name);
         }
 
-        SharedPreferences settings = getSharedPreferences("data", MODE_PRIVATE);
-        final int id = settings.getInt("currentBotId", -1);
+        long id = -1;
+        try {
+            SharedPreferences settings = getSharedPreferences("data", MODE_PRIVATE);
+            id = settings.getLong("currentBotId", -1);
+        } catch (RuntimeException e) {
+            Log.e("main", "fetch shared preference", e);
+        }
         if (id > 0) {
+            final long finalId = id;
             Thread thread = new Thread() {
                 @Override
                 public void run() {
@@ -180,8 +265,8 @@ public class MainActivity extends AppCompatActivity {
                     } catch (InterruptedException e) {
                         Log.e("main", "sleep", e);
                     }
-                    Log.d("main", "restore bot " + id);
-                    changeToken(id);
+                    Log.d("main", "restore bot " + finalId);
+                    changeToken(finalId);
                 }
             };
             thread.start();
@@ -189,9 +274,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void changeAccount(View view) {
-        if (changeAccountMenuOpen) {
+        if (changeAccountMenuOpen && null != view) {
             Log.d("main", "close change acount list");
-            restoreMenu();
+            if (null != view)
+                restoreMenu();
             return;
         }
 
@@ -206,12 +292,12 @@ public class MainActivity extends AppCompatActivity {
         changeAccountMenuOpen = true;
     }
 
-    private boolean changeToken(final int id) {
+    private boolean changeToken(final long id) {
         Log.d("main", "Changing Token to bot" + id);
 
         BotStructure bot;
         try {
-            bot = _bots.get(id - 1);
+            bot = _bots.get((int) id - 1);
         } catch (RuntimeException e) {
             Log.e("main", "ct", e);
             bot = db.getBot(id);
@@ -230,9 +316,11 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     TextView title = (TextView) findViewById(R.id.nav_header_title);
                     TextView subtitle = (TextView) findViewById(R.id.nav_header_subtitle);
+                    TextView main = (TextView) findViewById(R.id.main_content);
 
                     title.setText(finalBot.name);
                     subtitle.setText(finalBot.token);
+                    main.setText(finalBot.name);
                 } catch (NullPointerException e) {
                     Log.e("main", "Switching Account Error" + id, e);
                 }
@@ -242,7 +330,7 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences settings = getSharedPreferences("data", MODE_PRIVATE);
         settings.edit()
-                .putInt("currentBotId", id)
+                .putLong("currentBotId", id)
                 .apply();
 
         restoreMenu();
@@ -251,11 +339,16 @@ public class MainActivity extends AppCompatActivity {
 
     private void restoreMenu() {
         Log.d("main", "restore menu");
-        NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
-        Menu menu = navView.getMenu();
-        menu.setGroupVisible(R.id.menu_api, true);
-        menu.setGroupVisible(R.id.menu_accounts, false);
-        menu.getItem(2).setVisible(false);
+        final NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Menu menu = navView.getMenu();
+                menu.setGroupVisible(R.id.menu_api, true);
+                menu.setGroupVisible(R.id.menu_accounts, false);
+                menu.getItem(2).setVisible(false);
+            }
+        });
         changeAccountMenuOpen = false;
     }
 

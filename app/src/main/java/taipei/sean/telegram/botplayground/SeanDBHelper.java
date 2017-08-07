@@ -85,12 +85,12 @@ public class SeanDBHelper extends SQLiteOpenHelper {
         return db.insert("tokens", null, values);
     }
 
-    public int updateBot(long id, ContentValues values) {
+    public long updateBot(long id, ContentValues values) {
         SQLiteDatabase db = getWritableDatabase();
         return db.update("tokens", values, "_id=?", new String[]{id + ""});
     }
 
-    public int deleteBot(long id) {
+    public long deleteBot(long id) {
         SQLiteDatabase db = getWritableDatabase();
         Log.d("db", "del" + id);
         return db.delete("tokens", "_id=?", new String[]{id + ""});

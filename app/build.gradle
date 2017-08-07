@@ -7,9 +7,12 @@ android {
         applicationId "taipei.sean.telegram.botplayground"
         minSdkVersion 21
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        versionCode 4
+        versionName "1.0.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [onesignal_app_id: "07dbb755-8e15-4edb-9c2c-281efae2b677",
+                                // Project number pulled from dashboard, local value is ignored.
+                                onesignal_google_project_number: "REMOTE"]
     }
     buildTypes {
         release {
@@ -29,6 +32,10 @@ dependencies {
     compile 'com.android.support:design:25.3.1'
     compile 'com.mcxiaoke.volley:library:1.0.0'
     compile 'com.google.code.gson:gson:2.8.1'
-
+    compile 'com.google.android.gms:play-services-gcm:11.0.4'
+    compile 'com.google.android.gms:play-services-location:11.0.4'
+    compile 'com.onesignal:OneSignal:[3.5.8, 3.99.99]'
     testCompile 'junit:junit:4.12'
 }
+
+apply plugin: 'com.google.gms.google-services'

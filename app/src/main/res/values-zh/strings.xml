@@ -6,7 +6,7 @@
     <string name="add_bot_submit">完成</string>
     <string name="add_bot_token">您的 Bot Token</string>
     <string name="add_bot_token_invalid">Token 格式錯誤</string>
-    <string name="api_caller_check_text" translatable="false">檢測 JSON</string>
+    <string name="api_caller_check_text">檢測 JSON</string>
     <string name="api_caller_submit_text">送出</string>
     <string name="api_caller_result_placeholder">尚無內容</string>
     <string name="menu_api_caller">API 自由發揮</string>
@@ -17,4 +17,8 @@
     <string name="send_message_text_hint">自訂訊息</string>
     <string name="send_message_result_placeholder">尚無訊息</string>
     <string name="send_message_data_hint">選用參數</string>
+    <string name="action_edit">編輯</string>
+    <string name="action_remove">移除</string>
+    <string name="main_did_not_select_bot">您還沒選擇 Bot 喔!</string>
+    <string name="no_bot_warning">您還沒選擇 bot，現在新增一個吧</string>
 </resources>

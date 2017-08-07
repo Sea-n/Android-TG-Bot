@@ -19,6 +19,7 @@ public class AddBotActivity extends AppCompatActivity {
     private TextInputEditText tokenView;
     private TextInputEditText nameView;
     private SeanDBHelper db;
+    private long _id = -1;
 
     public AddBotActivity() {
         db = new SeanDBHelper(this, "data.db", null, 1);
@@ -33,6 +34,13 @@ public class AddBotActivity extends AppCompatActivity {
         tokenView = (TextInputEditText) findViewById(R.id.add_bot_token);
         nameView = (TextInputEditText) findViewById(R.id.add_bot_name);
 
+        Bundle bundle = getIntent().getExtras();
+        if ((bundle != null) && bundle.containsKey("id")) {
+            _id = bundle.getLong("id");
+            Log.d("add", "start restore data");
+            restoreData();
+        }
+
         Button submitButton = (Button) findViewById(R.id.add_bot_submit);
         submitButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -42,7 +50,6 @@ public class AddBotActivity extends AppCompatActivity {
         });
     }
 
-
     private void setupActionBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             // Show the Up button in the action bar.
@@ -50,6 +57,13 @@ public class AddBotActivity extends AppCompatActivity {
             if (null != actionBar)
                 actionBar.setDisplayHomeAsUpEnabled(true);
         }
+    }
+
+    private void restoreData() {
+        BotStructure bot = db.getBot(_id);
+        Log.d("add", "bot"+bot);
+        nameView.setText(bot.name);
+        tokenView.setText(bot.token);
     }
 
     private void addBot() {
@@ -81,8 +95,11 @@ public class AddBotActivity extends AppCompatActivity {
         ContentValues values = new ContentValues();
         values.put("token", token);
         values.put("name", name);
-        long id = db.insertBot(values);
-        Log.d("add", "inserted bot" + id);
+        if (_id > 0)
+            db.updateBot(_id, values);
+        else
+            _id = db.insertBot(values);
+        Log.d("add", "inserted bot" + _id);
         finish();
     }
 

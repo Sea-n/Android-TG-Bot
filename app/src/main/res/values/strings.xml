@@ -35,4 +35,8 @@
     <string name="send_message_result_placeholder">No Context Yet.</string>
     <string name="send_message_chat_hint" translatable="false">Chat ID</string>
     <string name="nav_header_photo" translatable="false">Bot Profile Photo</string>
+    <string name="no_bot_warning">Didn\'t select bot token, please add one first.</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_remove">Remove</string>
+    <string name="main_did_not_select_bot">You didn\'t select your bot.</string>
 </resources>
