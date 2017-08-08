@@ -1,15 +1,21 @@
 package taipei.sean.telegram.botplayground;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -20,9 +26,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.onesignal.OneSignal;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,6 +42,10 @@ public class MainActivity extends AppCompatActivity {
     private List<BotStructure> _bots = null;
     private boolean changeAccountMenuOpen = false;
     private BotStructure currentBot = null;
+    private final int _requestCode_addBot = 1;
+    private final int _requestCode_editBot = 2;
+    private final int _requestCode_reqPerm = 4;
+    private final int _requestCode_selectDb = 8;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.main_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,40 +84,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        initAccount();
-
-
-        Thread thread = new Thread() {
+        ViewTreeObserver vto = drawer.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener (new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
-            public void run() {
-                try {
-                    Thread.sleep(200);   /// Wait for UI ready
-                } catch (InterruptedException e) {
-                    Log.e("main", "sleep", e);
-                }
-                runOnUiThread(new Runnable() {
+            public void onGlobalLayout() {
+                final LinearLayout navHeader = (LinearLayout) findViewById(R.id.nav_header);
+                navHeader.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void run() {
-                        LinearLayout navHeader = (LinearLayout) findViewById(R.id.nav_header);
-                        navHeader.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                changeAccount(view);
-                            }
-                        });
-                        navHeader.setOnLongClickListener(new View.OnLongClickListener() {
-                            @Override
-                            public boolean onLongClick(View view) {
-                                initAccount();
-                                return false;
-                            }
-                        });
+                    public void onClick(View view) {
+                        changeAccount(view);
                     }
                 });
-
+                navHeader.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        initAccount();
+                        return false;
+                    }
+                });
             }
-        };
-        thread.start();
+        });
+
+        initAccount();
     }
 
     @Override
@@ -133,16 +137,16 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_edit:
                 Intent mIntent = new Intent(MainActivity.this, AddBotActivity.class);
                 if (null == currentBot) {
-                    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+                    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.main_fab);
                     Snackbar.make(fab, R.string.main_did_not_select_bot, Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 } else
                     mIntent.putExtra("id", currentBot._id);
-                startActivity(mIntent);
+                startActivityForResult(mIntent, _requestCode_editBot);
                 break;
             case R.id.action_remove:
                 if (null == currentBot) {
-                    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+                    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.main_fab);
                     Snackbar.make(fab, R.string.main_did_not_select_bot, Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                     break;
@@ -151,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             default:
                 if (null != currentBot)
-                Log.w("option", "Press unknow " + id);
+                    Log.w("option", "Press unknow " + id);
                 break;
         }
 
@@ -168,10 +172,35 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         db.deleteBot(id);
+                        _bots = db.getBots();
+                        if (_bots.size() == 0) {
+                            currentBot = null;
+                            askAddBot();
+                        } else {
+                            currentBot = null;
+                        }
+                        initAccount();
                     }
 
                 })
                 .setNegativeButton("No", null)
+                .show();
+    }
+
+    private void askAddBot() {
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.btn_plus)
+                .setTitle(R.string.main_ask_add_bot_title)
+                .setMessage(R.string.main_ask_add_bot_msg)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        addBot();
+                    }
+
+                })
+                .setNegativeButton("Not now", null)
                 .show();
     }
 
@@ -189,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_sendMessage:
                         if (null == currentBot) {
                             Log.w("nav", "no bots");
-                            View fab = findViewById(R.id.fab);
+                            View fab = findViewById(R.id.main_fab);
                             Snackbar.make(fab, R.string.no_bot_warning, Snackbar.LENGTH_LONG)
                                     .setAction("Action", null).show();
                             break;
@@ -201,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_caller:
                         if (null == currentBot) {
                             Log.w("nav", "no bots");
-                            View fab = findViewById(R.id.fab);
+                            View fab = findViewById(R.id.main_fab);
                             Snackbar.make(fab, R.string.no_bot_warning, Snackbar.LENGTH_LONG)
                                     .setAction("Action", null).show();
                             break;
@@ -212,10 +241,19 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.nav_add_bot:
                         addBot();
-                        initAccount();
+                        break;
+                    case R.id.nav_fav:
+                        Intent favIntent = new Intent(MainActivity.this, FavoriteActivity.class);
+                        startActivity(favIntent);
                         break;
                     case R.id.nav_join_group:
                         joinGroup();
+                        break;
+                    case R.id.nav_export:
+                        exportDB();
+                        break;
+                    case R.id.nav_import:
+                        importDB();
                         break;
                     default:
                         Log.w("nav", "press unknown item " + id);
@@ -229,9 +267,131 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        switch (requestCode) {
+            case _requestCode_addBot:
+                initAccount();
+                break;
+            case _requestCode_editBot:
+                initAccount();
+                break;
+            case _requestCode_reqPerm:
+                break;
+            case _requestCode_selectDb:
+                if (null == data) {
+                    break;
+                }
+                String backupFile = data.getData().getPath();
+                final File backupDb = new File(backupFile);
+                final File oldDb = this.getDatabasePath("data.db");
+                final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.main_fab);
+
+                try {
+                    db.copyDatabase(backupDb, oldDb);
+                    _bots = db.getBots();
+                } catch (IOException e) {
+                    Log.e("main", "export", e);
+                    Snackbar.make(fab, getString(R.string.main_db_import_fail)+e.getMessage(), Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    break;
+                }
+                Snackbar.make(fab, R.string.main_success_import, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                initAccount();
+                break;
+        }
+    }
+
+    private void exportDB() {
+        int permW = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (permW == PackageManager.PERMISSION_DENIED) {
+            Log.w("main", "permission WRITE_EXTERNAL_STORAGE denied");
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, _requestCode_reqPerm);
+            return;
+        }
+
+        final File oldDb = this.getDatabasePath("data.db");
+        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.main_fab);
+
+        final File backupDir = new File(Environment.getExternalStorageDirectory() + "/Sean");
+        if (!backupDir.exists()) {
+            if (!backupDir.mkdir()) {
+                Log.e("main", "export mkdir fail");
+                Snackbar.make(fab, R.string.main_mkdir_fail, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                return;
+            }
+        } else if (!backupDir.isDirectory()) {
+            Log.e("main", "export director is file");
+            Snackbar.make(fab, R.string.main_backup_dir_is_file, Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+            return;
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.main_save_db_title);
+
+        final EditText input = new EditText(this);
+        builder.setView(input);
+
+        builder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String filename = input.getText().toString();
+                String backupName = filename + ".db";
+
+                File backupFile = new File(backupDir, backupName);
+                Log.d("main", "db: "+backupFile);
+
+                try {
+                    db.copyDatabase(oldDb, backupFile);
+                } catch (IOException e) {
+                    Log.e("main", "export", e);
+                    Snackbar.make(fab, getString(R.string.main_db_export_fail)+e.getMessage(), Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    return;
+                }
+                Snackbar.make(fab, getString(R.string.main_export_to)+backupFile.toString(), Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
+
+    private void importDB() {
+        int permR = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+        if (permR == PackageManager.PERMISSION_DENIED) {
+            Log.w("main", "permission READ_EXTERNAL_STORAGE denied");
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, _requestCode_reqPerm);
+            return;
+        }
+
+//        int permDoc = ContextCompat.checkSelfPermission(this, Manifest.permission.MANAGE_DOCUMENTS);
+//        if (permDoc == PackageManager.PERMISSION_DENIED) {
+//            Log.w("main", "permission MANAGE_DOCUMENTS denied");
+//            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.MANAGE_DOCUMENTS}, _requestCode_reqPerm);
+//            return;
+//        }
+
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("*/*");
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+
+        startActivityForResult(Intent.createChooser(intent, "Select a Database"), _requestCode_selectDb);
+    }
+
     public void addBot() {
         Intent mIntent = new Intent(MainActivity.this, AddBotActivity.class);
-        startActivity(mIntent);
+        startActivityForResult(mIntent, _requestCode_addBot);
     }
 
     public void initAccount() {
@@ -244,7 +404,6 @@ public class MainActivity extends AppCompatActivity {
         _bots = db.getBots();
         for (int i = 0; i < _bots.size(); i++) {
             BotStructure bot = _bots.get(i);
-            Log.d("main", "append bot " + bot.name);
             subMenu.add(R.id.menu_accounts, Menu.FIRST + i, Menu.NONE, bot.name);
         }
 
@@ -273,15 +432,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void changeAccount(View view) {
-        if (changeAccountMenuOpen && null != view) {
-            Log.d("main", "close change acount list");
-            if (null != view)
-                restoreMenu();
+    public void changeAccount(@Nullable View view) {
+        if (changeAccountMenuOpen) {
+            restoreMenu();
             return;
         }
-
-        Log.d("main", "change account");
 
         NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
         Menu menu = navView.getMenu();
@@ -299,12 +454,13 @@ public class MainActivity extends AppCompatActivity {
         try {
             bot = _bots.get((int) id - 1);
         } catch (RuntimeException e) {
-            Log.e("main", "ct", e);
+            Log.e("main", "change token", e);
+            _bots = db.getBots();
             bot = db.getBot(id);
         }
 
         if (bot.name == null) {
-            Log.w("main", "ct null bot" + id);
+            Log.w("main", "change token null bot" + id);
             return false;
         }
 
@@ -338,7 +494,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void restoreMenu() {
-        Log.d("main", "restore menu");
         final NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
         runOnUiThread(new Runnable() {
             @Override

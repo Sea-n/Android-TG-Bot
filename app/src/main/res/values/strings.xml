@@ -9,7 +9,7 @@
 
     <string name="add_bot_token">Your Bot Token</string>
     <string name="add_bot_name">Nickname</string>
-    <string name="add_bot_submit">Done</string>
+    <string name="done">Done</string>
     <string name="add_bot_name_invalid">Nickname Invalid, please check again.</string>
     <string name="add_bot_token_invalid">Token format invalid</string>
     <string name="bot_token_regex" translatable="false">[0-9]{8,10}:[A-Za-z0-9_-]*</string>
@@ -39,4 +39,29 @@
     <string name="action_edit">Edit</string>
     <string name="action_remove">Remove</string>
     <string name="main_did_not_select_bot">You didn\'t select your bot.</string>
+    <string name="nav_export">Export Database to SD Card</string>
+    <string name="nav_import">Import Database from Device</string>
+    <string name="main_db_export_fail">Database export fail\nReason:</string>
+    <string name="main_mkdir_fail">Fail to make backup director</string>
+    <string name="main_export_to">"Exported to "</string>
+    <string name="main_db_import_fail">Database import fail\nReason:</string>
+    <string name="main_save_db_title">Save Databases</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="main_backup_dir_is_file">Fail to create director</string>
+    <string name="main_success_import">Success imported</string>
+    <string name="main_ask_add_bot_msg">Do you want to create new bot?</string>
+    <string name="main_ask_add_bot_title">New Bot</string>
+    <string name="nav_menu_fav">Favorite</string>
+    <string name="title_activity_favorite">Favorites</string>
+    <string name="fav_chat_id_title" translatable="false">Chat IDs</string>
+    <string name="fav_chat_id" translatable="false">Chat ID</string>
+    <string name="fav_msg">Message</string>
+    <string name="add_fav_prompt">Select kind</string>
+    <string name="add_fav_value_hint">Your Data</string>
+    <string name="parse_error">Parse Error</string>
+    <string-array name="add_fav_list">
+        <item>@string/fav_chat_id</item>
+        <item>@string/fav_msg</item>
+    </string-array>
 </resources>

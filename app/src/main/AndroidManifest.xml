@@ -3,6 +3,9 @@
     package="taipei.sean.telegram.botplayground">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MANAGE_DOCUMENTS" />
 
     <application
         android:allowBackup="true"
@@ -28,7 +31,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="www.sean.taipei"
+                    android:host="tg.app.sean.taipei"
                     android:scheme="https" />
             </intent-filter>
         </activity>
@@ -40,8 +43,32 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="taipei.sean.telegram.botplayground.MainActivity" />
         </activity>
-        <activity android:name=".ApiCallerActivity" />
-        <activity android:name=".SendMessageActivity" />
+        <activity
+            android:name=".ApiCallerActivity"
+            android:label="@string/menu_api_caller"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="taipei.sean.telegram.botplayground.MainActivity" />
+        </activity>
+        <activity
+            android:name=".SendMessageActivity"
+            android:label="@string/menu_send_message"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="taipei.sean.telegram.botplayground.MainActivity" />
+        </activity>
+        <activity
+            android:name=".FavoriteActivity"
+            android:label="@string/title_activity_favorite"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="taipei.sean.telegram.botplayground.MainActivity" />
+        </activity>
+        <activity android:name=".AddFavoriteActivity"></activity>
     </application>
 
 </manifest>

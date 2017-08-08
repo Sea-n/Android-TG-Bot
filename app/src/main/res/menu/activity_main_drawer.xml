@@ -32,9 +32,23 @@
                 android:icon="@android:drawable/ic_menu_add"
                 android:title="@string/nav_menu_add_bot" />
             <item
+                android:id="@+id/nav_fav"
+                android:icon="@android:drawable/star_big_off"
+                android:title="@string/nav_menu_fav"
+                android:visible="false" />
+            <item
                 android:id="@+id/nav_join_group"
                 android:icon="@drawable/ic_group_black_24dp"
                 android:title="@string/nav_menu_join_group" />
+            <item
+                android:id="@+id/nav_export"
+                android:icon="@drawable/ic_archive_black_24dp"
+                android:title="@string/nav_export" />
+            <item
+                android:id="@+id/nav_import"
+                android:icon="@drawable/ic_settings_backup_restore_black_24dp"
+                android:title="@string/nav_import"
+                android:visible="false" />
         </menu>
     </item>
 

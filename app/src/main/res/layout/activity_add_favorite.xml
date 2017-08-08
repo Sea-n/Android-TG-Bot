@@ -8,38 +8,37 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="taipei.sean.telegram.botplayground.AddBotActivity">
+    tools:context="taipei.sean.telegram.botplayground.AddFavoriteActivity">
+
+    <TextView
+        android:id="@+id/add_fav_prompt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_fav_prompt" />
+
+    <Spinner
+        android:id="@+id/add_fav_kind"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:maxLines="1" />
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <android.support.design.widget.TextInputEditText
-            android:id="@+id/add_bot_token"
+            android:id="@+id/add_fav_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/add_bot_token"
-            android:inputType="text"
-            android:maxLines="1" />
-
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/add_bot_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/add_bot_name"
+            android:hint="@string/add_fav_value_hint"
             android:inputType="textAutoComplete"
             android:maxLines="1" />
 
     </android.support.design.widget.TextInputLayout>
 
     <Button
-        android:id="@+id/add_bot_submit"
+        android:id="@+id/add_fav_submit"
         style="?android:textAppearanceSmall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

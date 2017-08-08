@@ -7,6 +7,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,6 +100,23 @@ public class SeanDBHelper extends SQLiteOpenHelper {
     public long deleteBot(long id) {
         SQLiteDatabase db = getWritableDatabase();
         Log.d("db", "del" + id);
-        return db.delete("tokens", "_id=?", new String[]{id + ""});
+        return db.delete("tokens", "_id="+id, null);
+    }
+
+    public boolean copyDatabase(File srcDB, File dstDB) throws IOException {
+        close();
+        if (srcDB.exists()) {
+            Log.d("db", "copying" + srcDB + dstDB);
+            FileChannel src = new FileInputStream(srcDB).getChannel();
+            FileChannel dst = new FileOutputStream(dstDB).getChannel();
+            dst.transferFrom(src, 0, src.size());
+            src.close();
+            dst.close();
+            getWritableDatabase().close();
+            return true;
+        } else {
+            Log.w("db", srcDB+" does not exists");
+        }
+        return false;
     }
 }
