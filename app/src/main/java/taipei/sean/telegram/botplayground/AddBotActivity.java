@@ -16,13 +16,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AddBotActivity extends AppCompatActivity {
+    final private int _dbVer = 2;
     private TextInputEditText tokenView;
     private TextInputEditText nameView;
     private SeanDBHelper db;
     private long _id = -1;
 
     public AddBotActivity() {
-        db = new SeanDBHelper(this, "data.db", null, 1);
+        db = new SeanDBHelper(this, "data.db", null, _dbVer);
     }
 
     @Override

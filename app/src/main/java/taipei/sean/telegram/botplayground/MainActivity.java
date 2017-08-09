@@ -38,6 +38,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    final private int _dbVer = 2;
     private SeanDBHelper db;
     private List<BotStructure> _bots = null;
     private boolean changeAccountMenuOpen = false;
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 .unsubscribeWhenNotificationsAreDisabled(true)
                 .init();
 
-        db = new SeanDBHelper(this, "data.db", null, 1);
+        db = new SeanDBHelper(this, "data.db", null, _dbVer);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -155,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             default:
                 if (null != currentBot)
-                    Log.w("option", "Press unknow " + id);
+                    Log.w("option", "Press unknown " + id);
                 break;
         }
 

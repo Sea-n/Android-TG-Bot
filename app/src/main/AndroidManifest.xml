@@ -68,7 +68,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="taipei.sean.telegram.botplayground.MainActivity" />
         </activity>
-        <activity android:name=".AddFavoriteActivity"></activity>
+        <activity
+            android:name=".AddFavoriteActivity"
+            android:label="Add Favorite"
+            android:parentActivityName=".FavoriteActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="taipei.sean.telegram.botplayground.FavoriteActivity" />
+        </activity>
     </application>
 
 </manifest>

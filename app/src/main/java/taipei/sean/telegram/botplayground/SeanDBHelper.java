@@ -4,10 +4,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.annotation.Nullable;
 import android.util.Log;
-
-import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -32,6 +32,38 @@ public class SeanDBHelper extends SQLiteOpenHelper {
                 "token TEXT NOT NULL, " +
                 "name TEXT NOT NULL, " +
                 "note TEXT)");
+
+        db.execSQL("CREATE TABLE main.favorites " +
+                "(_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                "kind TEXT NOT NULL, " +
+                "value INTEGER NOT NULL, " +
+                "name TEXT)");
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        switch (oldVersion) {
+            case 0:
+                try {
+                    db.execSQL("CREATE TABLE main.tokens " +
+                            "(_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                            "token TEXT NOT NULL, " +
+                            "name TEXT NOT NULL, " +
+                            "note TEXT)");
+                } catch (SQLiteException e) {
+                    Log.e("db", "onUpgrade", e);
+                }
+            case 1:
+                try {
+                    db.execSQL("CREATE TABLE main.favorites " +
+                            "(_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                            "kind TEXT NOT NULL, " +
+                            "value INTEGER NOT NULL, " +
+                            "name TEXT)");
+                } catch (SQLiteException e) {
+                    Log.e("db", "onUpgrade", e);
+                }
+        }
     }
 
     public List<BotStructure> getBots() {
@@ -44,7 +76,7 @@ public class SeanDBHelper extends SQLiteOpenHelper {
 
         while (cursor.moveToNext()) {
             BotStructure item = new BotStructure();
-            item._id = cursor.getInt(0);
+            item._id = cursor.getLong(0);
             item.token = cursor.getString(1);
             item.name = cursor.getString(2);
             item.note = cursor.getString(3);
@@ -52,7 +84,6 @@ public class SeanDBHelper extends SQLiteOpenHelper {
         }
 
         cursor.close();
-        Log.d("db", "Total" + result.size());
         return result;
     }
 
@@ -70,7 +101,7 @@ public class SeanDBHelper extends SQLiteOpenHelper {
         }
 
         try {
-            result._id = cursor.getInt(0);
+            result._id = cursor.getLong(0);
             result.token = cursor.getString(1);
             result.name = cursor.getString(2);
             result.note = cursor.getString(3);
@@ -83,8 +114,51 @@ public class SeanDBHelper extends SQLiteOpenHelper {
         return result;
     }
 
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    public List<FavStructure> getFavs(@Nullable String kind) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        List<FavStructure> result = new ArrayList<FavStructure>() {};
+        Cursor cursor = null;
+
+        if (null == kind) {
+            cursor = db.rawQuery("SELECT * FROM favorites", null);
+//            Log.d("db", "null"+cursor.getCount());
+        }
+        else {
+            cursor = db.rawQuery("SELECT * FROM favorites WHERE kind=?", new String[]{kind});
+//            Log.d("db", kind+cursor.getCount());
+        }
+
+        while (cursor.moveToNext()) {
+            FavStructure item = new FavStructure();
+            item._id = cursor.getLong(0);
+            item.kind = cursor.getString(1);
+            item.value = cursor.getString(2);
+            item.name = cursor.getString(3);
+            result.add(item);
+//            Log.d("db", item._id+item.name+item.value);
+        }
+
+        cursor.close();
+        return result;
+    }
+
+    public FavStructure getFav(long id) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        FavStructure result = new FavStructure();
+        Cursor cursor = null;
+
+        cursor = db.rawQuery("SELECT * FROM favorites WHERE _id=?", new String[]{id+""});
+        cursor.moveToNext();
+
+        result._id = cursor.getLong(0);
+        result.kind = cursor.getString(1);
+        result.value = cursor.getString(2);
+        result.name = cursor.getString(3);
+
+        cursor.close();
+        return result;
     }
 
     public long insertBot(ContentValues values) {
@@ -92,9 +166,49 @@ public class SeanDBHelper extends SQLiteOpenHelper {
         return db.insert("tokens", null, values);
     }
 
+    public long insertFavChat(String chatId, @Nullable String name) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("kind", "chat_id");
+        values.put("value", chatId);
+        if (null != name)
+            values.put("name", name);
+        return db.insert("favorites", null, values);
+    }
+
+    public long insertFavMsg(String msg, @Nullable String name) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("kind", "msg");
+        values.put("value", msg);
+        if (null != name)
+            values.put("name", name);
+        return db.insert("favorites", null, values);
+    }
+
     public long updateBot(long id, ContentValues values) {
         SQLiteDatabase db = getWritableDatabase();
         return db.update("tokens", values, "_id=?", new String[]{id + ""});
+    }
+
+    public long updateFavChat(long id, String chatId, @Nullable String name) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("kind", "chat_id");
+        values.put("value", chatId);
+        if (null != name)
+            values.put("name", name);
+        return db.update("favorites", values, "_id=?", new String[]{id + ""});
+    }
+
+    public long updateFavMsg(long id, String msg, @Nullable String name) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("kind", "msg");
+        values.put("value", msg);
+        if (null != name)
+            values.put("name", name);
+        return db.update("favorites", values, "_id=?", new String[]{id + ""});
     }
 
     public long deleteBot(long id) {

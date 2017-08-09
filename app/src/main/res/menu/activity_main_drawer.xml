@@ -23,9 +23,7 @@
             android:checkableBehavior="single" />
     </item>
 
-    <item
-        android:id="@+id/menu_functions"
-        android:title="@string/nav_menu_functions">
+    <item android:title="@string/nav_menu_functions">
         <menu>
             <item
                 android:id="@+id/nav_add_bot"
@@ -34,8 +32,7 @@
             <item
                 android:id="@+id/nav_fav"
                 android:icon="@android:drawable/star_big_off"
-                android:title="@string/nav_menu_fav"
-                android:visible="false" />
+                android:title="@string/nav_menu_fav" />
             <item
                 android:id="@+id/nav_join_group"
                 android:icon="@drawable/ic_group_black_24dp"
