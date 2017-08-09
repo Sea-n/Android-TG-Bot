@@ -38,6 +38,10 @@
                 android:icon="@drawable/ic_group_black_24dp"
                 android:title="@string/nav_menu_join_group" />
             <item
+                android:id="@+id/nav_github"
+                android:icon="@drawable/ic_mark_github"
+                android:title="@string/nav_menu_github" />
+            <item
                 android:id="@+id/nav_export"
                 android:icon="@drawable/ic_archive_black_24dp"
                 android:title="@string/nav_export" />

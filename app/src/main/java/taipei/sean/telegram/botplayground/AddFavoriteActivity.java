@@ -2,6 +2,7 @@ package taipei.sean.telegram.botplayground;
 
 import android.os.StrictMode;
 import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
@@ -27,6 +28,7 @@ public class AddFavoriteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_favorite);
 
         final Spinner spinner = (Spinner) findViewById(R.id.add_fav_kind);
+        final TextInputLayout valueLayout = (TextInputLayout) findViewById(R.id.add_fav_value_layout);
         final TextInputEditText valueInput = (TextInputEditText) findViewById(R.id.add_fav_value);
         final TextInputEditText nameInput = (TextInputEditText) findViewById(R.id.add_fav_name);
         final Button submitButton = (Button) findViewById(R.id.add_fav_submit);
@@ -64,10 +66,10 @@ public class AddFavoriteActivity extends AppCompatActivity {
                             case 0:
                                 valueInput.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
                             case 1:
-                                valueInput.setHint("Your Chat ID");
+                                valueLayout.setHint("Your Chat ID");
                                 break;
                             case 2:
-                                valueInput.setHint("Your Message Template");
+                                valueLayout.setHint("Your Message Template");
                                 valueInput.setInputType(InputType.TYPE_CLASS_TEXT);
                                 break;
                             default:

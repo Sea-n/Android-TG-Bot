@@ -248,7 +248,14 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(favIntent);
                         break;
                     case R.id.nav_join_group:
-                        joinGroup();
+                        Uri tgUri = Uri.parse(getString(R.string.telegram_group_join_link));
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, tgUri);
+                        startActivity(browserIntent);
+                        break;
+                    case R.id.nav_github:
+                        Uri githubUri = Uri.parse(getString(R.string.github_url));
+                        Intent githubIntent = new Intent(Intent.ACTION_VIEW, githubUri);
+                        startActivity(githubIntent);
                         break;
                     case R.id.nav_export:
                         exportDB();
@@ -506,11 +513,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         changeAccountMenuOpen = false;
-    }
-
-    private void joinGroup() {
-        Uri uri = Uri.parse("https://t.me/joinchat/AAAAAA7VO5bHlMdH9MPecA");
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, uri);
-        startActivity(browserIntent);
     }
 }
