@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 
 import java.util.List;
@@ -55,7 +54,7 @@ public class FavoriteActivity extends AppCompatActivity {
     private void initView() {
         List<FavStructure> chats = db.getFavs("chat_id");
         RecyclerView chatList = (RecyclerView) findViewById(R.id.fav_chat_id_list);
-        MyAdapter chatAdapter = new MyAdapter();
+        FavoriteAdapter chatAdapter = new FavoriteAdapter();
         for (FavStructure fav: chats) {
             chatAdapter.addData(fav);
         }
@@ -65,7 +64,7 @@ public class FavoriteActivity extends AppCompatActivity {
 
         List<FavStructure> msg = db.getFavs("msg");
         RecyclerView msgList = (RecyclerView) findViewById(R.id.fav_msg_list);
-        MyAdapter msgAdapter = new MyAdapter();
+        FavoriteAdapter msgAdapter = new FavoriteAdapter();
         for (FavStructure fav: msg) {
             msgAdapter.addData(fav);
         }

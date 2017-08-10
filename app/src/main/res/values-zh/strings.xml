@@ -42,4 +42,5 @@
     <string name="add_fav_unknown_select">未知選項</string>
     <string name="fav_chat_username">用戶名 (@username)</string>
     <string name="fav_name_title">名稱</string>
+    <string name="nav_menu_github">到 GitHub 給星星</string>
 </resources>

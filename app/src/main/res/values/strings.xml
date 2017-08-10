@@ -62,8 +62,8 @@
     <string name="fav_msg_title" translatable="false">Messages</string>
     <string name="fav_name_title">Kindly Name</string>
     <string name="nav_menu_github">Star on GitHub</string>
-    <string name="github_url">https://github.com/Sea-n/Android-TG-Bot</string>
-    <string name="telegram_group_join_link">https://t.me/joinchat/AAAAAA7VO5bHlMdH9MPecA</string>
+    <string name="github_url" translatable="false">https://github.com/Sea-n/Android-TG-Bot</string>
+    <string name="telegram_group_join_link" translatable="false">https://t.me/joinchat/AAAAAA7VO5bHlMdH9MPecA</string>
     <string-array name="add_fav_list">
         <item>@string/fav_chat_id</item>
         <item>@string/fav_chat_username</item>

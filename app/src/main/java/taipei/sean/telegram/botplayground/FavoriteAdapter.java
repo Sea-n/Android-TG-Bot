@@ -3,6 +3,7 @@ package taipei.sean.telegram.botplayground;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
@@ -11,10 +12,10 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+class FavoriteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ArrayList<FavStructure> iList;
 
-    MyAdapter() {
+    FavoriteAdapter() {
         iList = new ArrayList<>();
     }
 
@@ -42,22 +43,6 @@ class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         gridLayout.setLayoutParams(gridLayoutParams);
         gridLayout.setColumnCount(2);
         gridLayout.setOrientation(GridLayout.HORIZONTAL);
-        gridLayout.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                Intent mIntent = new Intent(view.getContext(), AddFavoriteActivity.class);
-                mIntent.putExtra("id", fav._id);
-                view.getContext().startActivity(mIntent);
-
-                return false;
-            }
-        });
-        gridLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Long Click to Edit", Toast.LENGTH_SHORT).show();
-            }
-        });
 
         GridLayout.LayoutParams valLayoutParams = new GridLayout.LayoutParams();
         valLayoutParams.columnSpec = GridLayout.spec(0, 1, 1f);
@@ -71,6 +56,8 @@ class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         TextView nameView = new TextView(gridLayout.getContext());
         nameView.setText(fav.name);
         gridLayout.addView(nameView, nameLayoutParams);
+
+        Log.d("ada", "add "+position);
     }
 
     @Override
