@@ -9,9 +9,9 @@
             android:icon="@android:drawable/ic_menu_call"
             android:title="@string/menu_api_caller" />
         <item
-            android:id="@+id/nav_sendMessage"
-            android:icon="@android:drawable/ic_menu_send"
-            android:title="@string/menu_send_message" />
+            android:id="@+id/nav_fav"
+            android:icon="@android:drawable/star_big_off"
+            android:title="@string/nav_menu_fav" />
     </group>
 
     <item
@@ -29,10 +29,6 @@
                 android:id="@+id/nav_add_bot"
                 android:icon="@android:drawable/ic_menu_add"
                 android:title="@string/nav_menu_add_bot" />
-            <item
-                android:id="@+id/nav_fav"
-                android:icon="@android:drawable/star_big_off"
-                android:title="@string/nav_menu_fav" />
             <item
                 android:id="@+id/nav_join_group"
                 android:icon="@drawable/ic_group_black_24dp"

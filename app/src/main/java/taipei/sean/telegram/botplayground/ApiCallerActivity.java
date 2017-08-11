@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -24,9 +23,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Objects;
 
 public class ApiCallerActivity extends AppCompatActivity {
-    private int _dbVer = 2;
+    final private int _dbVer = 2;
     private SeanDBHelper db;
     private String _token;
     private TelegramAPI _api;
@@ -52,7 +52,7 @@ public class ApiCallerActivity extends AppCompatActivity {
         final RecyclerView inputList = (RecyclerView) findViewById(R.id.api_caller_inputs);
         final Button submitButton = (Button) findViewById(R.id.api_caller_submit);
         final Button checkJsonButton = (Button) findViewById(R.id.api_caller_check);
-        final EditText jsonView = (EditText) findViewById(R.id.api_caller_data);
+        final TextInputEditText jsonView = (TextInputEditText) findViewById(R.id.api_caller_data);
         final TextView resultView = (TextView) findViewById(R.id.api_caller_result);
 
 
@@ -181,7 +181,13 @@ public class ApiCallerActivity extends AppCompatActivity {
             if (null == hint)
                 continue;
             String name = hint.toString();
-            String value = textInputEditText.getText().toString();
+            CharSequence valueChar = textInputEditText.getText();
+            if (null == valueChar)
+                continue;
+            String value = valueChar.toString();
+
+            if (Objects.equals(value, ""))
+                continue;
 
             try {
                 jsonObject.put(name, value);

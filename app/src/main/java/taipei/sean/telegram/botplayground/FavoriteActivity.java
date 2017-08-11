@@ -3,6 +3,7 @@ package taipei.sean.telegram.botplayground;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.util.ArrayMap;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -52,25 +53,31 @@ public class FavoriteActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        List<FavStructure> chats = db.getFavs("chat_id");
-        RecyclerView chatList = (RecyclerView) findViewById(R.id.fav_chat_id_list);
-        FavoriteAdapter chatAdapter = new FavoriteAdapter();
-        for (FavStructure fav: chats) {
-            chatAdapter.addData(fav);
-        }
-        chatList.setAdapter(chatAdapter);
-        chatList.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
-        chatList.setItemViewCacheSize(chats.size());
+        final RecyclerView favRecyclerView = (RecyclerView) findViewById(R.id.fav_list);
 
-        List<FavStructure> msg = db.getFavs("msg");
-        RecyclerView msgList = (RecyclerView) findViewById(R.id.fav_msg_list);
-        FavoriteAdapter msgAdapter = new FavoriteAdapter();
-        for (FavStructure fav: msg) {
-            msgAdapter.addData(fav);
+        ArrayMap<String, FavoriteItemAdapter> favAdas = new ArrayMap<>();
+        List<FavStructure> favs = db.getFavs(null);
+        for (FavStructure fav: favs) {
+            String kind = fav.kind;
+            if (favAdas.containsKey(kind)) {
+                FavoriteItemAdapter favAda = favAdas.get(kind);
+                favAda.addData(fav);
+            } else {
+                FavoriteItemAdapter favAda = new FavoriteItemAdapter();
+                favAda.addData(fav);
+                favAdas.put(kind, favAda);
+            }
         }
-        msgList.setAdapter(msgAdapter);
-        msgList.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
-        msgList.setItemViewCacheSize(msg.size());
+
+        FavoriteListAdapter favListAda = new FavoriteListAdapter();
+        for (int i=0; i<favAdas.size(); i++) {
+            String name = favAdas.keyAt(i);
+            FavoriteItemAdapter favAda = favAdas.get(name);
+            favListAda.addData(name, favAda);
+        }
+        favRecyclerView.setAdapter(favListAda);
+        favRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
+        favRecyclerView.setItemViewCacheSize(favAdas.size());
 
     }
 

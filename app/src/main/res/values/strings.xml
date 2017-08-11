@@ -15,7 +15,6 @@
     <string name="nav_header_default_title" translatable="false">Sean Bot</string>
     <string name="nav_header_default_subtitle" translatable="false">109780439:TEST_test</string>
     <string name="menu_api_caller">Free API Caller</string>
-    <string name="menu_send_message" translatable="false">sendMessage</string>
     <string name="nav_menu_account">Accounts</string>
     <string name="nav_menu_functions">Functions</string>
     <string name="nav_menu_join_group">Join Group</string>

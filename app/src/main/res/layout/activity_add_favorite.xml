@@ -10,17 +10,19 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="taipei.sean.telegram.botplayground.AddFavoriteActivity">
 
-    <TextView
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/add_fav_prompt" />
+        android:layout_height="wrap_content">
 
-    <Spinner
-        android:id="@+id/add_fav_kind"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:maxLines="1" />
+        <android.support.design.widget.TextInputEditText
+            android:hint="@string/add_fav_prompt"
+            android:id="@+id/add_fav_kind"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:maxLines="1" />
+
+    </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/add_fav_value_layout"

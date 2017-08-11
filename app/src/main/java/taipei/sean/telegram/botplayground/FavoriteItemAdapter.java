@@ -1,21 +1,19 @@
 package taipei.sean.telegram.botplayground;
 
 import android.content.Intent;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
+import android.widget.HorizontalScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
-class FavoriteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+class FavoriteItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ArrayList<FavStructure> iList;
 
-    FavoriteAdapter() {
+    FavoriteItemAdapter() {
         iList = new ArrayList<>();
     }
 
@@ -25,9 +23,9 @@ class FavoriteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        GridLayout view = new GridLayout(parent.getContext());
+        HorizontalScrollView view = new HorizontalScrollView(parent.getContext());
         ViewGroup.LayoutParams params = new RecyclerView.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         view.setLayoutParams(params);
 
         return new DummyViewHolder(view);
@@ -37,27 +35,33 @@ class FavoriteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final FavStructure fav = iList.get(position);
 
-        GridLayout gridLayout = (GridLayout) holder.itemView;
-        ViewGroup.LayoutParams gridLayoutParams = gridLayout.getLayoutParams();
-        gridLayoutParams.width = 1000;
-        gridLayout.setLayoutParams(gridLayoutParams);
+        HorizontalScrollView horizontalScrollView = (HorizontalScrollView) holder.itemView;
+
+        GridLayout gridLayout = new GridLayout(horizontalScrollView.getContext());
         gridLayout.setColumnCount(2);
         gridLayout.setOrientation(GridLayout.HORIZONTAL);
+        gridLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent mIntent = new Intent(view.getContext(), AddFavoriteActivity.class);
+                mIntent.putExtra("id", fav._id);
+                view.getContext().startActivity(mIntent);
+            }
+        });
 
         GridLayout.LayoutParams valLayoutParams = new GridLayout.LayoutParams();
-        valLayoutParams.columnSpec = GridLayout.spec(0, 1, 1f);
         valLayoutParams.width = 400;
         TextView valView = new TextView(gridLayout.getContext());
         valView.setText(fav.value);
         gridLayout.addView(valView, valLayoutParams);
 
         GridLayout.LayoutParams nameLayoutParams = new GridLayout.LayoutParams();
-        nameLayoutParams.columnSpec = GridLayout.spec(1, 1, 1f);
+        nameLayoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT;
         TextView nameView = new TextView(gridLayout.getContext());
         nameView.setText(fav.name);
         gridLayout.addView(nameView, nameLayoutParams);
 
-        Log.d("ada", "add "+position);
+        horizontalScrollView.addView(gridLayout);
     }
 
     @Override

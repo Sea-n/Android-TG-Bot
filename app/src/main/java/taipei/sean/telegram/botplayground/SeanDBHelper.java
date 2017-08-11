@@ -97,7 +97,8 @@ public class SeanDBHelper extends SQLiteOpenHelper {
 
         if (cursor.getColumnCount() == 0) {
             Log.w("db", "no token with id " + id);
-            return result;
+            cursor.close();
+            return null;
         }
 
         try {
@@ -107,7 +108,8 @@ public class SeanDBHelper extends SQLiteOpenHelper {
             result.note = cursor.getString(3);
         } catch (RuntimeException e) {
             Log.w("db", "Getting data error" + id);
-            return new BotStructure();
+            cursor.close();
+            return null;
         }
 
         cursor.close();
@@ -118,7 +120,7 @@ public class SeanDBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
 
         List<FavStructure> result = new ArrayList<FavStructure>() {};
-        Cursor cursor = null;
+        Cursor cursor;
 
         if (null == kind) {
             cursor = db.rawQuery("SELECT * FROM favorites", null);
@@ -147,7 +149,7 @@ public class SeanDBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
 
         FavStructure result = new FavStructure();
-        Cursor cursor = null;
+        Cursor cursor;
 
         cursor = db.rawQuery("SELECT * FROM favorites WHERE _id=?", new String[]{id+""});
         cursor.moveToNext();
@@ -170,8 +172,10 @@ public class SeanDBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
 
         Cursor cursor = db.rawQuery("SELECT count(*) FROM favorites WHERE kind=? AND value=?;", new String[]{kind, value});
-        if (cursor.getCount() == 0)
+        if (cursor.getCount() > 1) {
+            cursor.close();
             return -1;
+        }
         cursor.close();
 
         ContentValues values = new ContentValues();
@@ -200,7 +204,6 @@ public class SeanDBHelper extends SQLiteOpenHelper {
 
     public long deleteBot(long id) {
         SQLiteDatabase db = getWritableDatabase();
-        Log.d("db", "del" + id);
         return db.delete("tokens", "_id="+id, null);
     }
 

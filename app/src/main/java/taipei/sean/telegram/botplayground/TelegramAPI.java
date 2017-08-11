@@ -21,8 +21,8 @@ import com.google.gson.JsonSyntaxException;
 
 public class TelegramAPI {
     final private String _apiBaseUrl = "https://api.telegram.org/bot";
-    private Context _context;
-    private String _token;
+    final private Context _context;
+    final private String _token;
 
     public TelegramAPI(Context context, String token) {
         this._context = context;

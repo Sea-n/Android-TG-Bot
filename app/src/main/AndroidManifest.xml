@@ -52,14 +52,6 @@
                 android:value="taipei.sean.telegram.botplayground.MainActivity" />
         </activity>
         <activity
-            android:name=".SendMessageActivity"
-            android:label="@string/menu_send_message"
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="taipei.sean.telegram.botplayground.MainActivity" />
-        </activity>
-        <activity
             android:name=".FavoriteActivity"
             android:label="@string/title_activity_favorite"
             android:parentActivityName=".MainActivity"

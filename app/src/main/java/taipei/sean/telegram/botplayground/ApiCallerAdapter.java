@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private Context context;
+    final private Context context;
     final private int _dbVer = 2;
     private SeanDBHelper db;
     private ArrayList<String> iList;

@@ -216,18 +216,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
             default:
                 switch (id) {
-                    case R.id.nav_sendMessage:
-                        if (null == currentBot) {
-                            Log.w("nav", "no bots");
-                            View fab = findViewById(R.id.main_fab);
-                            Snackbar.make(fab, R.string.no_bot_warning, Snackbar.LENGTH_LONG)
-                                    .setAction("Action", null).show();
-                            break;
-                        }
-                        Intent sIntent = new Intent(MainActivity.this, SendMessageActivity.class);
-                        sIntent.putExtra("token", currentBot.token);
-                        startActivity(sIntent);
-                        break;
                     case R.id.nav_caller:
                         if (null == currentBot) {
                             Log.w("nav", "no bots");
