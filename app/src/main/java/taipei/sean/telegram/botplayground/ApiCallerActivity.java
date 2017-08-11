@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -25,6 +26,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class ApiCallerActivity extends AppCompatActivity {
+    private int _dbVer = 2;
+    private SeanDBHelper db;
     private String _token;
     private TelegramAPI _api;
 
@@ -40,6 +43,8 @@ public class ApiCallerActivity extends AppCompatActivity {
             Log.e("caller", "bundle error", e);
             finish();
         }
+
+        db = new SeanDBHelper(this, "data.db", null, _dbVer);
 
         _api = new TelegramAPI(this, _token);
 
@@ -65,7 +70,7 @@ public class ApiCallerActivity extends AppCompatActivity {
             Log.e("caller", "parse", e);
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_dropdown_item_1line, botApiMethodsList);
         textView.setAdapter(adapter);
 
@@ -78,14 +83,15 @@ public class ApiCallerActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-
                 JSONObject paramData;
                 String method = editable.toString();
                 try {
                     JSONObject apiMethods = (JSONObject) apiJson.get("methods");
                     if (!apiMethods.has(method)) {
                         textView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
-                        inputList.setAdapter(null);
+                        ViewGroup.LayoutParams layoutParams = inputList.getLayoutParams();
+                        layoutParams.height = 0;
+                        inputList.setLayoutParams(layoutParams);
                         return;
                     }
                     JSONObject methodData = (JSONObject) apiMethods.get(method);
@@ -94,23 +100,31 @@ public class ApiCallerActivity extends AppCompatActivity {
                     Log.e("caller", "1", e);
                     return;
                 }
-                ApiCallerAdapter msgAdapter = new ApiCallerAdapter();
+
+                int paramCount = paramData.length();
+                ViewGroup.LayoutParams layoutParams = inputList.getLayoutParams();
+                if (paramCount <= 3)
+                    layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                else
+                    layoutParams.height = 450;   // 3 params
+                inputList.setLayoutParams(layoutParams);
+
+                ApiCallerAdapter favAdapter = new ApiCallerAdapter(getApplicationContext());
 
                 try {
                     Iterator<String> temp = paramData.keys();
                     while (temp.hasNext()) {
                         String key = temp.next();
                         JSONObject value = (JSONObject) paramData.get(key);
-                        msgAdapter.addData(key, value);
+                        favAdapter.addData(key, value);
                     }
                 } catch (JSONException e) {
                     Log.e("caller", "parse", e);
                 }
 
-                inputList.setAdapter(msgAdapter);
+                inputList.setAdapter(favAdapter);
                 inputList.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
                 inputList.setItemViewCacheSize(paramData.length());
-                textView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_star_border_black_24dp, 0);
             }
         });
 
@@ -144,6 +158,7 @@ public class ApiCallerActivity extends AppCompatActivity {
             jsonObject = new JSONObject(jsonData);
         } catch (JSONException e) {
             Log.e("caller", "json", e);
+            dataView.setError(e.getLocalizedMessage());
             return;
         }
 
@@ -155,8 +170,11 @@ public class ApiCallerActivity extends AppCompatActivity {
 
         final int inputCount = inputAdapter.getItemCount();
         for (int i=0; i<inputCount; i++) {
-            TextInputLayout textInputLayout = (TextInputLayout) inputList.findViewHolderForAdapterPosition(i).itemView;
-            TextInputEditText textInputEditText = (TextInputEditText) textInputLayout.getEditText();
+            RecyclerView.ViewHolder viewHolder = inputList.findViewHolderForAdapterPosition(i);
+            if (null == viewHolder)
+                continue;
+            TextInputLayout textInputLayout = (TextInputLayout) viewHolder.itemView;
+            AutoCompleteTextView textInputEditText = (AutoCompleteTextView) textInputLayout.getEditText();
             if (null == textInputEditText)
                 continue;
             CharSequence hint = textInputLayout.getHint();
@@ -167,6 +185,7 @@ public class ApiCallerActivity extends AppCompatActivity {
 
             try {
                 jsonObject.put(name, value);
+                db.insertFav(name, value, method);
             } catch (JSONException e) {
                 Log.e("caller", "json", e);
             }

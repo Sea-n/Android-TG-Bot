@@ -166,23 +166,20 @@ public class SeanDBHelper extends SQLiteOpenHelper {
         return db.insert("tokens", null, values);
     }
 
-    public long insertFavChat(String chatId, @Nullable String name) {
+    public long insertFav(String kind, String value, @Nullable String name) {
         SQLiteDatabase db = getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("kind", "chat_id");
-        values.put("value", chatId);
-        if (null != name)
-            values.put("name", name);
-        return db.insert("favorites", null, values);
-    }
 
-    public long insertFavMsg(String msg, @Nullable String name) {
-        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT count(*) FROM favorites WHERE kind=? AND value=?;", new String[]{kind, value});
+        if (cursor.getCount() == 0)
+            return -1;
+        cursor.close();
+
         ContentValues values = new ContentValues();
-        values.put("kind", "msg");
-        values.put("value", msg);
-        if (null != name)
+        values.put("kind", kind);
+        values.put("value", value);
+        if (null != name) {
             values.put("name", name);
+        }
         return db.insert("favorites", null, values);
     }
 
@@ -191,21 +188,11 @@ public class SeanDBHelper extends SQLiteOpenHelper {
         return db.update("tokens", values, "_id=?", new String[]{id + ""});
     }
 
-    public long updateFavChat(long id, String chatId, @Nullable String name) {
+    public long updateFav(long id, String kind, String value, @Nullable String name) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("kind", "chat_id");
-        values.put("value", chatId);
-        if (null != name)
-            values.put("name", name);
-        return db.update("favorites", values, "_id=?", new String[]{id + ""});
-    }
-
-    public long updateFavMsg(long id, String msg, @Nullable String name) {
-        SQLiteDatabase db = getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("kind", "msg");
-        values.put("value", msg);
+        values.put("kind", kind);
+        values.put("value", value);
         if (null != name)
             values.put("name", name);
         return db.update("favorites", values, "_id=?", new String[]{id + ""});

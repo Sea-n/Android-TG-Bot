@@ -98,16 +98,16 @@ public class AddFavoriteActivity extends AppCompatActivity {
                     case 0:
                     case 1:
                         if (id > 0)
-                            db.updateFavChat(id, strVal, strName);
+                            db.updateFav(id, "chat_id", strVal, strName);
                         else
-                            db.insertFavChat(strVal, strName);
+                            db.insertFav("chat_id", strVal, strName);
                         finish();
                         break;
                     case 2:
                         if (id > 0)
-                            db.updateFavMsg(id, strVal, strName);
+                            db.updateFav(id, "msg", strVal, strName);
                         else
-                            db.insertFavMsg(strVal, strName);
+                            db.insertFav("msg", strVal, strName);
                         finish();
                         break;
                     default:

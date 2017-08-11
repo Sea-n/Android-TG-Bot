@@ -1,30 +1,36 @@
 package taipei.sean.telegram.botplayground;
 
-import android.content.Intent;
+import android.content.Context;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridLayout;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private Context context;
+    final private int _dbVer = 2;
+    private SeanDBHelper db;
     private ArrayList<String> iList;
     private ArrayList<String> iListType;
     private ArrayList<Boolean> iListReq;
     private ArrayList<String> iListDesc;
 
-    ApiCallerAdapter() {
+    ApiCallerAdapter(Context context) {
+        this.context = context;
+
+        db = new SeanDBHelper(context, "data.db", null, _dbVer);
+
         iList = new ArrayList<>();
         iListType = new ArrayList<>();
         iListDesc = new ArrayList<>();
@@ -70,22 +76,40 @@ class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         textInputLayout.setLayoutParams(layoutParams);
 
 
-        TextInputEditText textInputEditText = new TextInputEditText(textInputLayout.getContext());
+        AutoCompleteTextView autoCompleteTextView = new AutoCompleteTextView(textInputLayout.getContext());
 
         if (req)
-            textInputEditText.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_star_border_black_24dp, 0);
+            autoCompleteTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_star_border_black_24dp, 0);
 
         switch (type) {
+            case "Float number":
+                autoCompleteTextView.setRawInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                autoCompleteTextView.setSingleLine();
+                break;
             case "Boolean":
             case "Integer":
-                textInputEditText.setRawInputType(InputType.TYPE_CLASS_NUMBER);
-                break;
-            case "Float number":
-                textInputEditText.setRawInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                autoCompleteTextView.setRawInputType(InputType.TYPE_CLASS_NUMBER);
+            case "Integer or String":
+                autoCompleteTextView.setSingleLine();
                 break;
         }
 
-        textInputLayout.addView(textInputEditText);
+        List<FavStructure> favs = db.getFavs(name);
+        ArrayList<String> favList = new ArrayList<>();
+        for (int i=0; i<favs.size(); i++)
+            favList.add(favs.get(i).value);
+        ArrayAdapter<String> favAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, favList);
+        autoCompleteTextView.setAdapter(favAdapter);
+
+        autoCompleteTextView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Snackbar.make(view, desc, Snackbar.LENGTH_LONG).show();
+                return false;
+            }
+        });
+
+        textInputLayout.addView(autoCompleteTextView);
     }
 
     @Override

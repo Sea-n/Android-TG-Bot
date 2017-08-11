@@ -53,7 +53,7 @@ public class SendMessageActivity extends AppCompatActivity {
         String[] chatList = new String[chats.size()];
         for (int i=0; i<chats.size(); i++)
             chatList[i] = chats.get(i).value;
-        String[] chatListU = new HashSet<String>(Arrays.asList(chatList)).toArray(new String[0]);
+        String[] chatListU = new HashSet<>(Arrays.asList(chatList)).toArray(new String[0]);
         ArrayAdapter<String> chatAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, chatListU);
         chatView.setAdapter(chatAdapter);
 
@@ -62,7 +62,7 @@ public class SendMessageActivity extends AppCompatActivity {
         String[] msgList = new String[msg.size()];
         for (int i=0; i<msg.size(); i++)
             msgList[i] = msg.get(i).value;
-        String[] msgListU = new HashSet<String>(Arrays.asList(msgList)).toArray(new String[0]);
+        String[] msgListU = new HashSet<>(Arrays.asList(msgList)).toArray(new String[0]);
         ArrayAdapter<String> msgAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, msgListU);
         textView.setAdapter(msgAdapter);
 
@@ -121,7 +121,7 @@ public class SendMessageActivity extends AppCompatActivity {
 
         _api.callApi("sendMessage", resultView, jsonStr);
 
-        db.insertFavChat(chatId, getLocalClassName());
-        db.insertFavMsg(messageText, getLocalClassName());
+        db.insertFav("chat_id", chatId, getLocalClassName());
+        db.insertFav("msg", messageText, getLocalClassName());
     }
 }
