@@ -143,6 +143,44 @@ public class MainActivity extends AppCompatActivity {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
+        footer.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(final View view) {
+                final Context context = view.getContext();
+                final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+
+                new AlertDialog.Builder(context)
+                        .setTitle(R.string.footer_rate_title)
+                        .setMessage(R.string.footer_rate_msg)
+                        .setPositiveButton(R.string.footer_rate_yes, new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                final String packName = context.getPackageName();
+                                Uri uri = Uri.parse("market://details?id=" + packName);
+                                Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+                                // To count with Play market backstack, After pressing back button,
+                                // to taken back to our application, we need to add following flags to intent.
+                                goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+                                        Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
+                                        Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                                try {
+                                    startActivity(goToMarket);
+                                } catch (ActivityNotFoundException e) {
+                                    startActivity(new Intent(Intent.ACTION_VIEW,
+                                            Uri.parse("http://play.google.com/store/apps/details?id=" + packName)));
+                                }
+                            }
+
+                        })
+                        .setNegativeButton(R.string.not_now, null)
+                        .show();
+
+
+                return false;
+            }
+        });
     }
 
     @Override
@@ -249,7 +287,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                 })
-                .setNegativeButton("Not now", null)
+                .setNegativeButton(R.string.not_now, null)
                 .show();
     }
 

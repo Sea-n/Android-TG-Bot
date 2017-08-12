@@ -43,4 +43,13 @@
     <string name="fav_chat_username">用戶名 (@username)</string>
     <string name="fav_name_title">名稱</string>
     <string name="nav_menu_github">到 GitHub 給星星</string>
+    <string name="no">否</string>
+    <string name="yes">是</string>
+    <string name="main_del_bot_confirm_title">刪除 Bot</string>
+    <string name="main_del_bot_confirm_msg">您確定要刪除這隻 Bot 嗎？</string>
+    <string name="footer_rate_yes">評分</string>
+    <string name="footer_rate_msg">如果喜歡的話給個五星吧 :D</string>
+    <string name="footer_rate_title">給開發者精神支持</string>
+    <string name="not_now">改天再說</string>
+    <string name="main_no_bot">還沒有現成 Bot，請點右下角 + 以加入 Bot</string>
 </resources>

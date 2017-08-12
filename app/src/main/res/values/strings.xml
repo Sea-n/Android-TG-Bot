@@ -12,8 +12,8 @@
     <string name="add_bot_name_invalid">Nickname Invalid, please check again.</string>
     <string name="add_bot_token_invalid">Token format invalid</string>
     <string name="bot_token_regex" translatable="false">[0-9]{8,10}:[A-Za-z0-9_-]*</string>
-    <string name="nav_header_default_title" translatable="false">Sean Bot</string>
-    <string name="nav_header_default_subtitle" translatable="false">109780439:TEST_test</string>
+    <string name="nav_header_default_title" translatable="false">No Bot</string>
+    <string name="nav_header_default_subtitle" translatable="false">12345:AAJqs_w-4</string>
     <string name="menu_api_caller">Free API Caller</string>
     <string name="nav_menu_account">Accounts</string>
     <string name="nav_menu_functions">Functions</string>
@@ -64,6 +64,15 @@
     <string name="github_url" translatable="false">https://github.com/Sea-n/Android-TG-Bot</string>
     <string name="telegram_group_join_link" translatable="false">https://t.me/joinchat/AAAAAA7VO5bHlMdH9MPecA</string>
     <string name="main_footer" translatable="false">%1$s  v%2$s (%3$s)</string>
+    <string name="main_del_bot_confirm_msg">Are you sure you want to delete this bot?</string>
+    <string name="main_del_bot_confirm_title">Delete Bot</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="footer_rate_yes">GO</string>
+    <string name="footer_rate_msg">Click GO if you like it :)</string>
+    <string name="footer_rate_title">Rate this Application</string>
+    <string name="not_now">Not now</string>
+    <string name="main_no_bot">No Bot yet, please click + to create one.</string>
     <string-array name="add_fav_list">
         <item>@string/fav_chat_id</item>
         <item>@string/fav_chat_username</item>
