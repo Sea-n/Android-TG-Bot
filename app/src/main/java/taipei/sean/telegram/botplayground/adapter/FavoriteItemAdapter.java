@@ -1,4 +1,4 @@
-package taipei.sean.telegram.botplayground;
+package taipei.sean.telegram.botplayground.adapter;
 
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -10,10 +10,13 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-class FavoriteItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+import taipei.sean.telegram.botplayground.activity.AddFavoriteActivity;
+import taipei.sean.telegram.botplayground.FavStructure;
+
+public class FavoriteItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ArrayList<FavStructure> iList;
 
-    FavoriteItemAdapter() {
+    public FavoriteItemAdapter() {
         iList = new ArrayList<>();
     }
 

@@ -12,6 +12,6 @@
     android:orientation="vertical"
     android:columnCount="1"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="taipei.sean.telegram.botplayground.FavoriteActivity"
+    tools:context="taipei.sean.telegram.botplayground.activity.FavoriteActivity"
     tools:showIn="@layout/activity_favorite">
 </android.support.v7.widget.RecyclerView>

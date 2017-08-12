@@ -1,10 +1,14 @@
-package taipei.sean.telegram.botplayground;
+package taipei.sean.telegram.botplayground.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+
+import taipei.sean.telegram.botplayground.FavStructure;
+import taipei.sean.telegram.botplayground.R;
+import taipei.sean.telegram.botplayground.SeanDBHelper;
 
 public class AddFavoriteActivity extends AppCompatActivity {
     final private int _dbVer = 2;

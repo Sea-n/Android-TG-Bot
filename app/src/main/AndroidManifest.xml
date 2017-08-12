@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -36,37 +36,37 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AddBotActivity"
+            android:name=".activity.AddBotActivity"
             android:label="@string/title_activity_add_bot"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".activity.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="taipei.sean.telegram.botplayground.MainActivity" />
+                android:value="taipei.sean.telegram.botplayground.activity.MainActivity" />
         </activity>
         <activity
-            android:name=".ApiCallerActivity"
+            android:name=".activity.ApiCallerActivity"
             android:label="@string/menu_api_caller"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".activity.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="taipei.sean.telegram.botplayground.MainActivity" />
+                android:value="taipei.sean.telegram.botplayground.activity.MainActivity" />
         </activity>
         <activity
-            android:name=".FavoriteActivity"
+            android:name=".activity.FavoriteActivity"
             android:label="@string/title_activity_favorite"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="taipei.sean.telegram.botplayground.MainActivity" />
+                android:value="taipei.sean.telegram.botplayground.activity.MainActivity" />
         </activity>
         <activity
-            android:name=".AddFavoriteActivity"
+            android:name=".activity.AddFavoriteActivity"
             android:label="Add Favorite"
-            android:parentActivityName=".FavoriteActivity">
+            android:parentActivityName=".activity.FavoriteActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="taipei.sean.telegram.botplayground.FavoriteActivity" />
+                android:value="taipei.sean.telegram.botplayground.activity.FavoriteActivity" />
         </activity>
     </application>
 

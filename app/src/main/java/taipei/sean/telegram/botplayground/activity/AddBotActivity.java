@@ -1,4 +1,4 @@
-package taipei.sean.telegram.botplayground;
+package taipei.sean.telegram.botplayground.activity;
 
 import android.content.ContentValues;
 import android.os.Build;
@@ -14,6 +14,10 @@ import android.widget.Button;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import taipei.sean.telegram.botplayground.BotStructure;
+import taipei.sean.telegram.botplayground.R;
+import taipei.sean.telegram.botplayground.SeanDBHelper;
 
 public class AddBotActivity extends AppCompatActivity {
     final private int _dbVer = 2;

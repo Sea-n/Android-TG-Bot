@@ -1,4 +1,4 @@
-package taipei.sean.telegram.botplayground;
+package taipei.sean.telegram.botplayground.adapter;
 
 import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,11 +11,11 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-class FavoriteListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class FavoriteListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ArrayList<String> iList;
     private ArrayList<FavoriteItemAdapter> iListAda;
 
-    FavoriteListAdapter() {
+    public FavoriteListAdapter() {
         iList = new ArrayList<>();
         iListAda = new ArrayList<>();
     }

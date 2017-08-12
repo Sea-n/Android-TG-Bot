@@ -1,4 +1,4 @@
-package taipei.sean.telegram.botplayground;
+package taipei.sean.telegram.botplayground.adapter;
 
 import android.content.Context;
 import android.support.design.widget.Snackbar;
@@ -17,7 +17,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+import taipei.sean.telegram.botplayground.FavStructure;
+import taipei.sean.telegram.botplayground.R;
+import taipei.sean.telegram.botplayground.SeanDBHelper;
+
+//import taipei.sean.telegram.botplayground.ada
+
+public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     final private Context context;
     final private int _dbVer = 2;
     private SeanDBHelper db;
@@ -26,7 +32,7 @@ class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ArrayList<Boolean> iListReq;
     private ArrayList<String> iListDesc;
 
-    ApiCallerAdapter(Context context) {
+    public ApiCallerAdapter(Context context) {
         this.context = context;
 
         db = new SeanDBHelper(context, "data.db", null, _dbVer);

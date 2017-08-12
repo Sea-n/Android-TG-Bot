@@ -1,4 +1,4 @@
-package taipei.sean.telegram.botplayground;
+package taipei.sean.telegram.botplayground.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
@@ -24,6 +24,11 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Objects;
+
+import taipei.sean.telegram.botplayground.adapter.ApiCallerAdapter;
+import taipei.sean.telegram.botplayground.R;
+import taipei.sean.telegram.botplayground.SeanDBHelper;
+import taipei.sean.telegram.botplayground.TelegramAPI;
 
 public class ApiCallerActivity extends AppCompatActivity {
     final private int _dbVer = 2;

@@ -1,4 +1,4 @@
-package taipei.sean.telegram.botplayground;
+package taipei.sean.telegram.botplayground.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import java.util.List;
+
+import taipei.sean.telegram.botplayground.FavStructure;
+import taipei.sean.telegram.botplayground.R;
+import taipei.sean.telegram.botplayground.SeanDBHelper;
+import taipei.sean.telegram.botplayground.adapter.FavoriteItemAdapter;
+import taipei.sean.telegram.botplayground.adapter.FavoriteListAdapter;
 
 public class FavoriteActivity extends AppCompatActivity {
     final private int _dbVer = 2;
