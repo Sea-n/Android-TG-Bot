@@ -95,11 +95,29 @@ public class MainActivity extends AppCompatActivity {
         vto.addOnGlobalLayoutListener (new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
+                final NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
                 final LinearLayout navHeader = (LinearLayout) findViewById(R.id.nav_header);
+                final Menu menu = navView.getMenu();
                 navHeader.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        changeAccount(view);
+                        if (null == _bots)
+                            _bots = db.getBots();
+
+                        if (_bots.size() == 0) {
+                            askAddBot();
+                            return;
+                        }
+
+                        if (changeAccountMenuOpen) {
+                            restoreMenu();
+                            changeAccountMenuOpen = false;
+                         } else {
+                            menu.setGroupVisible(R.id.menu_api, false);
+                            menu.setGroupVisible(R.id.menu_accounts, true);
+                            menu.getItem(2).setVisible(true);
+                            changeAccountMenuOpen = true;
+                        }
                     }
                 });
                 navHeader.setOnLongClickListener(new View.OnLongClickListener() {
@@ -132,7 +150,18 @@ public class MainActivity extends AppCompatActivity {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-            restoreMenu();
+            Thread sleepThread = new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        Log.e("restore", "sleep", e);
+                    }
+                    restoreMenu();
+                }
+            };
+            sleepThread.start();
         } else {
             super.onBackPressed();
         }
@@ -184,9 +213,9 @@ public class MainActivity extends AppCompatActivity {
     private void deleteBot(final long id) {
         new AlertDialog.Builder(this)
                 .setIcon(android.R.drawable.ic_dialog_alert)
-                .setTitle("Closing Activity")
-                .setMessage("Are you sure you want to delete this bot?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                .setTitle(R.string.main_del_bot_confirm_title)
+                .setMessage(R.string.main_del_bot_confirm_msg)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener()
                 {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -194,24 +223,25 @@ public class MainActivity extends AppCompatActivity {
                         _bots = db.getBots();
                         if (_bots.size() == 0) {
                             currentBot = null;
+                            changeToken();
                             askAddBot();
                         } else {
-                            currentBot = null;
+                            currentBot = _bots.get(0);
+                            changeToken();
                         }
                         initAccount();
                     }
 
                 })
-                .setNegativeButton("No", null)
+                .setNegativeButton(R.string.no, null)
                 .show();
     }
 
     private void askAddBot() {
         new AlertDialog.Builder(this)
-                .setIcon(android.R.drawable.btn_plus)
                 .setTitle(R.string.main_ask_add_bot_title)
                 .setMessage(R.string.main_ask_add_bot_msg)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener()
                 {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -230,7 +260,9 @@ public class MainActivity extends AppCompatActivity {
 
         switch (gid) {
             case R.id.menu_accounts:
-                changeToken(id);
+                _bots = db.getBots();
+                currentBot = _bots.get(id - 1);
+                changeToken();
                 break;
             default:
                 switch (id) {
@@ -287,6 +319,15 @@ public class MainActivity extends AppCompatActivity {
         switch (requestCode) {
             case _requestCode_addBot:
                 initAccount();
+                if (null == _bots)
+                    _bots = db.getBots();
+                if (_bots.size() == 0)
+                    askAddBot();
+                else {
+                    if (null == currentBot)
+                        currentBot = _bots.get(0);
+                        changeToken();
+                }
                 break;
             case _requestCode_editBot:
                 initAccount();
@@ -438,72 +479,71 @@ public class MainActivity extends AppCompatActivity {
                     } catch (InterruptedException e) {
                         Log.e("main", "sleep", e);
                     }
-                    Log.d("main", "restore bot " + finalId);
-                    changeToken(finalId);
+                    if (finalId <= _bots.size())
+                        currentBot = _bots.get((int) finalId - 1);
+                    else
+                        currentBot = null;
+                        changeToken();
                 }
             };
             thread.start();
         }
     }
 
-    public void changeAccount(@Nullable View view) {
-        if (changeAccountMenuOpen) {
-            restoreMenu();
-            return;
-        }
+    private boolean changeToken() {
 
-        NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
-        Menu menu = navView.getMenu();
-
-        menu.setGroupVisible(R.id.menu_api, false);
-        menu.setGroupVisible(R.id.menu_accounts, true);
-        menu.getItem(2).setVisible(true);
-        changeAccountMenuOpen = true;
-    }
-
-    private boolean changeToken(final long id) {
-        Log.d("main", "Changing Token to bot" + id);
-
-        BotStructure bot;
-        try {
-            bot = _bots.get((int) id - 1);
-        } catch (RuntimeException e) {
-            Log.e("main", "change token", e);
-            _bots = db.getBots();
-            bot = db.getBot(id);
-        }
-
-        if (bot.name == null) {
-            Log.w("main", "change token null bot" + id);
-            return false;
-        }
-
-
-        final BotStructure finalBot = bot;
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                try {
+        if (null == currentBot) {
+            Log.w("main", "change token null bot");
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
                     TextView title = (TextView) findViewById(R.id.nav_header_title);
                     TextView subtitle = (TextView) findViewById(R.id.nav_header_subtitle);
                     TextView main = (TextView) findViewById(R.id.main_content);
 
-                    title.setText(finalBot.name);
-                    subtitle.setText(finalBot.token);
-                    main.setText(finalBot.name);
-                } catch (NullPointerException e) {
-                    Log.e("main", "Switching Account Error" + id, e);
+                    title.setText(R.string.nav_header_default_title);
+                    subtitle.setText(R.string.nav_header_default_subtitle);
+                    main.setText(R.string.main_no_bot);
                 }
+            });
+            SharedPreferences settings = getSharedPreferences("data", MODE_PRIVATE);
+            settings.edit()
+                    .putLong("currentBotId", -1)
+                    .apply();
+            return false;
+        }
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                TextView title = (TextView) findViewById(R.id.nav_header_title);
+                TextView subtitle = (TextView) findViewById(R.id.nav_header_subtitle);
+                TextView main = (TextView) findViewById(R.id.main_content);
+
+                title.setText(currentBot.name);
+                subtitle.setText(currentBot.token);
+                main.setText(currentBot.name);
             }
         });
-        currentBot = bot;
 
         SharedPreferences settings = getSharedPreferences("data", MODE_PRIVATE);
         settings.edit()
-                .putLong("currentBotId", id)
+                .putLong("currentBotId", currentBot._id)
                 .apply();
 
-        restoreMenu();
+
+        Thread sleepThread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    Log.e("restore", "sleep", e);
+                }
+                restoreMenu();
+            }
+        };
+        sleepThread.start();
         return true;
     }
 
@@ -518,6 +558,5 @@ public class MainActivity extends AppCompatActivity {
                 menu.getItem(2).setVisible(false);
             }
         });
-        changeAccountMenuOpen = false;
     }
 }
