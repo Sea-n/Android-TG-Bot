@@ -63,6 +63,7 @@
     <string name="nav_menu_github">Star on GitHub</string>
     <string name="github_url" translatable="false">https://github.com/Sea-n/Android-TG-Bot</string>
     <string name="telegram_group_join_link" translatable="false">https://t.me/joinchat/AAAAAA7VO5bHlMdH9MPecA</string>
+    <string name="main_footer" translatable="false">%1$s  v%2$s (%3$s)</string>
     <string-array name="add_fav_list">
         <item>@string/fav_chat_id</item>
         <item>@string/fav_chat_username</item>

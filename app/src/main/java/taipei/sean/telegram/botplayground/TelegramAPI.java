@@ -52,6 +52,8 @@ public class TelegramAPI {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                if (null == error.networkResponse)
+                    return;
                 String response = new String(error.networkResponse.data);
                 Log.d("api", "error" + response);
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
