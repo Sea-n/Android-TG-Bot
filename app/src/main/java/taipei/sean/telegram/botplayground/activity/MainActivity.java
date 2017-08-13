@@ -28,7 +28,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -38,6 +37,7 @@ import com.onesignal.OneSignal;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 import taipei.sean.telegram.botplayground.BotStructure;
 import taipei.sean.telegram.botplayground.R;
@@ -58,6 +58,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Intent intent = getIntent();
+        Uri intentData = intent.getData();
+        if (null != intentData)
+            Log.d("main", "url data   " + intentData);
+
 
         OneSignal.startInit(this)
                 .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
@@ -83,72 +89,62 @@ public class MainActivity extends AppCompatActivity {
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        final NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
+        navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 return navItemSelected(item);
             }
         });
 
-        final ViewTreeObserver vto = drawer.getViewTreeObserver();
-        vto.addOnGlobalLayoutListener (new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                final NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
-                final LinearLayout navHeader = (LinearLayout) findViewById(R.id.nav_header);
-                final Menu menu = navView.getMenu();
-                navHeader.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (null == _bots)
-                            _bots = db.getBots();
-
-                        if (_bots.size() == 0) {
-                            askAddBot();
-                            return;
-                        }
-
-                        if (changeAccountMenuOpen) {
-                            restoreMenu();
-                            changeAccountMenuOpen = false;
-                         } else {
-                            menu.setGroupVisible(R.id.menu_api, false);
-                            menu.setGroupVisible(R.id.menu_accounts, true);
-                            menu.getItem(2).setVisible(true);
-                            changeAccountMenuOpen = true;
-                        }
-                    }
-                });
-                navHeader.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View view) {
-                        initAccount();
-                        return false;
-                    }
-                });
-            }
-        });
-
         initAccount();
 
-        final TextView footer = (TextView) findViewById(R.id.main_footer);
+        String appName = getString(R.string.app_name);
+        String footerStr = "";
         try {
-            String appName = getString(R.string.app_name);
             PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
             String verName = pInfo.versionName;
             int verCode = pInfo.versionCode;
-            String footerStr = getString(R.string.main_footer, appName, verName, verCode+"");
-            footer.setText(footerStr);
+            footerStr = getString(R.string.main_footer, appName, verName, verCode+"");
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
+            if (Objects.equals(footerStr, "")) {
+                footerStr = e.getLocalizedMessage();
+            }
         }
+
+        final LinearLayout navHeader = (LinearLayout) navView.getHeaderView(0);
+        final Menu menu = navView.getMenu();
+        final MenuItem accountItem = menu.findItem(R.id.menu_accounts_item);
+        navHeader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (null == _bots)
+                    _bots = db.getBots();
+
+                if (_bots.size() == 0) {
+                    Log.d("main", "no bot");
+                    askAddBot();
+                    return;
+                }
+
+                if (changeAccountMenuOpen) {
+                    restoreMenu();
+                    changeAccountMenuOpen = false;
+                } else {
+                    menu.setGroupVisible(R.id.menu_api, false);
+                    accountItem.setVisible(true);
+                    changeAccountMenuOpen = true;
+                }
+            }
+        });
+
+        final TextView footer = (TextView) findViewById(R.id.main_footer);
+        footer.setText(footerStr);
         footer.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(final View view) {
                 final Context context = view.getContext();
-                final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
 
                 new AlertDialog.Builder(context)
                         .setTitle(R.string.footer_rate_title)
@@ -221,13 +217,16 @@ public class MainActivity extends AppCompatActivity {
 
         switch (id) {
             case R.id.action_edit:
-                Intent mIntent = new Intent(MainActivity.this, AddBotActivity.class);
                 if (null == currentBot) {
                     FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.main_fab);
                     Snackbar.make(fab, R.string.main_did_not_select_bot, Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
-                } else
-                    mIntent.putExtra("id", currentBot._id);
+                    askAddBot();
+                    break;
+                }
+
+                Intent mIntent = new Intent(MainActivity.this, AddBotActivity.class);
+                mIntent.putExtra("id", currentBot._id);
                 startActivityForResult(mIntent, _requestCode_editBot);
                 break;
             case R.id.action_remove:
@@ -237,6 +236,7 @@ public class MainActivity extends AppCompatActivity {
                             .setAction("Action", null).show();
                     break;
                 }
+
                 deleteBot(currentBot._id);
                 break;
             default:
@@ -364,7 +364,7 @@ public class MainActivity extends AppCompatActivity {
                 else {
                     if (null == currentBot)
                         currentBot = _bots.get(0);
-                        changeToken();
+                    changeToken();
                 }
                 break;
             case _requestCode_editBot:
@@ -488,11 +488,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void initAccount() {
-        NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
-        Menu navMenu = navView.getMenu();
-        MenuItem menuItem = navMenu.findItem(R.id.menu_accounts_item);
+        final NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
+        final Menu navMenu = navView.getMenu();
+        final MenuItem menuItem = navMenu.findItem(R.id.menu_accounts_item);
         SubMenu subMenu = menuItem.getSubMenu();
-        subMenu.clear();
+        if (subMenu.size() > 0) {
+            subMenu.clear();
+        }
 
         _bots = db.getBots();
         for (int i = 0; i < _bots.size(); i++) {
@@ -517,26 +519,33 @@ public class MainActivity extends AppCompatActivity {
                     } catch (InterruptedException e) {
                         Log.e("main", "sleep", e);
                     }
-                    if (finalId <= _bots.size())
-                        currentBot = _bots.get((int) finalId - 1);
-                    else
-                        currentBot = null;
-                        changeToken();
+                    currentBot = db.getBot(finalId);
                 }
             };
             thread.start();
         }
+
+        if (null == currentBot) {
+            if (_bots.size() == 0) {
+                askAddBot();
+            } else {
+                currentBot = _bots.get(0);
+                changeToken();
+            }
+        }
     }
 
     private boolean changeToken() {
+        final NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
+        final LinearLayout navHeader = (LinearLayout) navView.getHeaderView(0);
 
         if (null == currentBot) {
             Log.w("main", "change token null bot");
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    TextView title = (TextView) findViewById(R.id.nav_header_title);
-                    TextView subtitle = (TextView) findViewById(R.id.nav_header_subtitle);
+                    TextView title = (TextView) navHeader.findViewById(R.id.nav_header_title);
+                    TextView subtitle = (TextView) navHeader.findViewById(R.id.nav_header_subtitle);
                     TextView main = (TextView) findViewById(R.id.main_content);
 
                     title.setText(R.string.nav_header_default_title);
@@ -554,8 +563,8 @@ public class MainActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                TextView title = (TextView) findViewById(R.id.nav_header_title);
-                TextView subtitle = (TextView) findViewById(R.id.nav_header_subtitle);
+                TextView title = (TextView) navHeader.findViewById(R.id.nav_header_title);
+                TextView subtitle = (TextView) navHeader.findViewById(R.id.nav_header_subtitle);
                 TextView main = (TextView) findViewById(R.id.main_content);
 
                 title.setText(currentBot.name);
@@ -575,6 +584,7 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 try {
                     Thread.sleep(500);
+                    // Sleep for menu close
                 } catch (InterruptedException e) {
                     Log.e("restore", "sleep", e);
                 }
@@ -587,13 +597,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void restoreMenu() {
         final NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
+        final Menu menu = navView.getMenu();
+        final MenuItem accountItem = menu.findItem(R.id.menu_accounts_item);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Menu menu = navView.getMenu();
                 menu.setGroupVisible(R.id.menu_api, true);
-                menu.setGroupVisible(R.id.menu_accounts, false);
-                menu.getItem(2).setVisible(false);
+                accountItem.setVisible(false);
             }
         });
     }

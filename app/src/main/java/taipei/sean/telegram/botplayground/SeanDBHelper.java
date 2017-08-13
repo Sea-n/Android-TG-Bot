@@ -124,11 +124,9 @@ public class SeanDBHelper extends SQLiteOpenHelper {
 
         if (null == kind) {
             cursor = db.rawQuery("SELECT * FROM favorites", null);
-//            Log.d("db", "null"+cursor.getCount());
         }
         else {
-            cursor = db.rawQuery("SELECT * FROM favorites WHERE kind=?", new String[]{kind});
-//            Log.d("db", kind+cursor.getCount());
+            cursor = db.rawQuery("SELECT * FROM favorites WHERE kind = ?", new String[]{kind});
         }
 
         while (cursor.moveToNext()) {
@@ -138,7 +136,6 @@ public class SeanDBHelper extends SQLiteOpenHelper {
             item.value = cursor.getString(2);
             item.name = cursor.getString(3);
             result.add(item);
-//            Log.d("db", item._id+item.name+item.value);
         }
 
         cursor.close();
@@ -151,7 +148,7 @@ public class SeanDBHelper extends SQLiteOpenHelper {
         FavStructure result = new FavStructure();
         Cursor cursor;
 
-        cursor = db.rawQuery("SELECT * FROM favorites WHERE _id=?", new String[]{id+""});
+        cursor = db.rawQuery("SELECT * FROM favorites WHERE _id = ?", new String[]{id+""});
         cursor.moveToNext();
 
         result._id = cursor.getLong(0);
@@ -171,7 +168,7 @@ public class SeanDBHelper extends SQLiteOpenHelper {
     public long insertFav(String kind, String value, @Nullable String name) {
         SQLiteDatabase db = getWritableDatabase();
 
-        Cursor cursor = db.rawQuery("SELECT count(*) FROM favorites WHERE kind=? AND value=?;", new String[]{kind, value});
+        Cursor cursor = db.rawQuery("SELECT count(*) FROM favorites WHERE kind = ? AND value = ?;", new String[]{kind, value});
         if (cursor.getCount() > 1) {
             cursor.close();
             return -1;
@@ -189,7 +186,7 @@ public class SeanDBHelper extends SQLiteOpenHelper {
 
     public long updateBot(long id, ContentValues values) {
         SQLiteDatabase db = getWritableDatabase();
-        return db.update("tokens", values, "_id=?", new String[]{id + ""});
+        return db.update("tokens", values, "_id = ?", new String[]{id + ""});
     }
 
     public long updateFav(long id, String kind, String value, @Nullable String name) {
@@ -199,12 +196,12 @@ public class SeanDBHelper extends SQLiteOpenHelper {
         values.put("value", value);
         if (null != name)
             values.put("name", name);
-        return db.update("favorites", values, "_id=?", new String[]{id + ""});
+        return db.update("favorites", values, "_id = ?", new String[]{id + ""});
     }
 
     public long deleteBot(long id) {
         SQLiteDatabase db = getWritableDatabase();
-        return db.delete("tokens", "_id="+id, null);
+        return db.delete("tokens", "_id = ?", new String[]{id + ""});
     }
 
     public boolean copyDatabase(File srcDB, File dstDB) throws IOException {

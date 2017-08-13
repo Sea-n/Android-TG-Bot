@@ -31,7 +31,11 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="tg.app.sean.taipei"
+                    android:host="tg.sean.taipei"
+                    android:scheme="http" />
+
+                <data
+                    android:host="tg.sean.taipei"
                     android:scheme="https" />
             </intent-filter>
         </activity>

@@ -46,7 +46,12 @@
                 android:icon="@drawable/ic_settings_backup_restore_black_24dp"
                 android:title="@string/nav_import"
                 android:visible="false" />
+            <item
+                android:id="@+id/footer_spacer"
+                android:checkable="false"
+                android:enabled="false"
+                android:orderInCategory="200"
+                android:title="" />
         </menu>
     </item>
-
 </menu>
