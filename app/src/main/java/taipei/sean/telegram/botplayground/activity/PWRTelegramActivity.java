@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -24,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Objects;
 
+import taipei.sean.telegram.botplayground.InstantComplete;
 import taipei.sean.telegram.botplayground.PWRTelegramAPI;
 import taipei.sean.telegram.botplayground.R;
 import taipei.sean.telegram.botplayground.SeanDBHelper;
@@ -52,26 +52,16 @@ public class PWRTelegramActivity extends AppCompatActivity {
 
         _api = new PWRTelegramAPI(this, _token);
 
-        final AutoCompleteTextView methodView = (AutoCompleteTextView) findViewById(R.id.pwrtelegram_method);
+        final InstantComplete methodView = (InstantComplete) findViewById(R.id.pwrtelegram_method);
         final RecyclerView inputList = (RecyclerView) findViewById(R.id.pwrtelegram_inputs);
         final Button submitButton = (Button) findViewById(R.id.pwrtelegram_submit);
         final TextView resultView = (TextView) findViewById(R.id.pwrtelegram_result);
 
 
         final ArrayList<String> botApiMethodsList = new ArrayList<String>() {};
-        final JSONObject apiJson = loadMethods();
         final JSONObject pApiJson = loadPMethods();
+        final JSONObject apiJson = loadMethods();
 
-        try {
-            JSONObject apiMethods = (JSONObject) apiJson.get("methods");
-            Iterator<String> temp = apiMethods.keys();
-            while (temp.hasNext()) {
-                String key = temp.next();
-                botApiMethodsList.add(key);
-            }
-        } catch (JSONException e) {
-            Log.e("caller", "parse", e);
-        }
 
         try {
             JSONObject apiMethods = (JSONObject) pApiJson.get("methods");
@@ -82,6 +72,16 @@ public class PWRTelegramActivity extends AppCompatActivity {
             }
         } catch (JSONException e) {
             Log.e("caller", "parse p", e);
+        }
+        try {
+            JSONObject apiMethods = (JSONObject) apiJson.get("methods");
+            Iterator<String> temp = apiMethods.keys();
+            while (temp.hasNext()) {
+                String key = temp.next();
+                botApiMethodsList.add(key);
+            }
+        } catch (JSONException e) {
+            Log.e("caller", "parse", e);
         }
 
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
@@ -158,7 +158,7 @@ public class PWRTelegramActivity extends AppCompatActivity {
     }
 
     private void submit() {
-        final AutoCompleteTextView methodView = (AutoCompleteTextView) findViewById(R.id.pwrtelegram_method);
+        final InstantComplete methodView = (InstantComplete) findViewById(R.id.pwrtelegram_method);
         final RecyclerView inputList = (RecyclerView) findViewById(R.id.pwrtelegram_inputs);
         final TextView resultView = (TextView) findViewById(R.id.pwrtelegram_result);
 
@@ -178,7 +178,7 @@ public class PWRTelegramActivity extends AppCompatActivity {
             if (null == viewHolder)
                 continue;
             TextInputLayout textInputLayout = (TextInputLayout) viewHolder.itemView;
-            AutoCompleteTextView textInputEditText = (AutoCompleteTextView) textInputLayout.getEditText();
+            InstantComplete textInputEditText = (InstantComplete) textInputLayout.getEditText();
             if (null == textInputEditText)
                 continue;
             CharSequence hint = textInputLayout.getHint();

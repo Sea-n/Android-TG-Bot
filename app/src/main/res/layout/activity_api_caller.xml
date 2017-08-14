@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <AutoCompleteTextView
+        <taipei.sean.telegram.botplayground.InstantComplete
             android:id="@+id/api_caller_method"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

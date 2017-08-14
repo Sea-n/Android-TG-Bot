@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -25,10 +24,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Objects;
 
-import taipei.sean.telegram.botplayground.adapter.ApiCallerAdapter;
+import taipei.sean.telegram.botplayground.InstantComplete;
 import taipei.sean.telegram.botplayground.R;
 import taipei.sean.telegram.botplayground.SeanDBHelper;
 import taipei.sean.telegram.botplayground.TelegramAPI;
+import taipei.sean.telegram.botplayground.adapter.ApiCallerAdapter;
 
 public class ApiCallerActivity extends AppCompatActivity {
     final private int _dbVer = 2;
@@ -53,7 +53,7 @@ public class ApiCallerActivity extends AppCompatActivity {
 
         _api = new TelegramAPI(this, _token);
 
-        final AutoCompleteTextView textView = (AutoCompleteTextView) findViewById(R.id.api_caller_method);
+        final InstantComplete textView = (InstantComplete) findViewById(R.id.api_caller_method);
         final RecyclerView inputList = (RecyclerView) findViewById(R.id.api_caller_inputs);
         final Button submitButton = (Button) findViewById(R.id.api_caller_submit);
         final Button checkJsonButton = (Button) findViewById(R.id.api_caller_check);
@@ -150,7 +150,7 @@ public class ApiCallerActivity extends AppCompatActivity {
     }
 
     private void submit() {
-        final AutoCompleteTextView methodView = (AutoCompleteTextView) findViewById(R.id.api_caller_method);
+        final InstantComplete methodView = (InstantComplete) findViewById(R.id.api_caller_method);
         final RecyclerView inputList = (RecyclerView) findViewById(R.id.api_caller_inputs);
         final TextInputEditText dataView = (TextInputEditText) findViewById(R.id.api_caller_data);
         final TextView resultView = (TextView) findViewById(R.id.api_caller_result);
@@ -179,7 +179,7 @@ public class ApiCallerActivity extends AppCompatActivity {
             if (null == viewHolder)
                 continue;
             TextInputLayout textInputLayout = (TextInputLayout) viewHolder.itemView;
-            AutoCompleteTextView textInputEditText = (AutoCompleteTextView) textInputLayout.getEditText();
+            InstantComplete textInputEditText = (InstantComplete) textInputLayout.getEditText();
             if (null == textInputEditText)
                 continue;
             CharSequence hint = textInputLayout.getHint();

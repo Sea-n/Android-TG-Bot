@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import taipei.sean.telegram.botplayground.FavStructure;
+import taipei.sean.telegram.botplayground.InstantComplete;
 import taipei.sean.telegram.botplayground.R;
 import taipei.sean.telegram.botplayground.SeanDBHelper;
 
@@ -82,7 +82,7 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         textInputLayout.setLayoutParams(layoutParams);
 
 
-        AutoCompleteTextView autoCompleteTextView = new AutoCompleteTextView(textInputLayout.getContext());
+        InstantComplete autoCompleteTextView = new InstantComplete(textInputLayout.getContext());
 
         if (req)
             autoCompleteTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_star_border_black_24dp, 0);
