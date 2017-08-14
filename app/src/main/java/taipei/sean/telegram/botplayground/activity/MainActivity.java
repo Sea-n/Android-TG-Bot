@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
     private final int _requestCode_addBot = 1;
     private final int _requestCode_editBot = 2;
     private final int _requestCode_reqPerm = 4;
-    private final int _requestCode_selectDb = 8;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -348,9 +347,6 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_export:
                         exportDB();
                         break;
-                    case R.id.nav_import:
-                        importDB();
-                        break;
                     default:
                         Log.w("nav", "press unknown item " + id);
                         break;
@@ -383,28 +379,6 @@ public class MainActivity extends AppCompatActivity {
                 initAccount();
                 break;
             case _requestCode_reqPerm:
-                break;
-            case _requestCode_selectDb:
-                if (null == data) {
-                    break;
-                }
-                String backupFile = data.getData().getPath();
-                final File backupDb = new File(backupFile);
-                final File oldDb = this.getDatabasePath("data.db");
-                final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.main_fab);
-
-                try {
-                    db.copyDatabase(backupDb, oldDb);
-                    _bots = db.getBots();
-                } catch (IOException e) {
-                    Log.e("main", "export", e);
-                    Snackbar.make(fab, getString(R.string.main_db_import_fail)+e.getMessage(), Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                    break;
-                }
-                Snackbar.make(fab, R.string.main_success_import, Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                initAccount();
                 break;
         }
     }
@@ -470,28 +444,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         builder.show();
-    }
-
-    private void importDB() {
-        int permR = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
-        if (permR == PackageManager.PERMISSION_DENIED) {
-            Log.w("main", "permission READ_EXTERNAL_STORAGE denied");
-            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, _requestCode_reqPerm);
-            return;
-        }
-
-//        int permDoc = ContextCompat.checkSelfPermission(this, Manifest.permission.MANAGE_DOCUMENTS);
-//        if (permDoc == PackageManager.PERMISSION_DENIED) {
-//            Log.w("main", "permission MANAGE_DOCUMENTS denied");
-//            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.MANAGE_DOCUMENTS}, _requestCode_reqPerm);
-//            return;
-//        }
-
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("*/*");
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-
-        startActivityForResult(Intent.createChooser(intent, "Select a Database"), _requestCode_selectDb);
     }
 
     public void addBot() {

@@ -32,16 +32,13 @@
     <string name="action_remove">Remove</string>
     <string name="main_did_not_select_bot">You didn\'t select your bot.</string>
     <string name="nav_export">Export Database to SD Card</string>
-    <string name="nav_import">Import Database from Device</string>
     <string name="main_db_export_fail">Database export fail\nReason:</string>
     <string name="main_mkdir_fail">Fail to make backup director</string>
     <string name="main_export_to">"Exported to "</string>
-    <string name="main_db_import_fail">Database import fail\nReason:</string>
     <string name="main_save_db_title">Save Databases</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
     <string name="main_backup_dir_is_file">Fail to create director</string>
-    <string name="main_success_import">Success imported</string>
     <string name="main_ask_add_bot_msg">Do you want to create new bot?</string>
     <string name="main_ask_add_bot_title">New Bot</string>
     <string name="nav_menu_fav">Favorite</string>

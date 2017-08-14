@@ -24,16 +24,13 @@
     <string name="main_ask_add_bot_title">新增 Bot</string>
     <string name="main_backup_dir_is_file">建立資料夾失敗</string>
     <string name="main_db_export_fail">匯出失敗</string>
-    <string name="main_db_import_fail">匯入失敗</string>
     <string name="main_export_to">匯出至</string>
     <string name="nav_menu_fav">我的最愛</string>
     <string name="title_activity_favorite">我的最愛</string>
     <string name="save">儲存</string>
     <string name="nav_export">將資料庫匯出至 SD Card</string>
-    <string name="nav_import">將資料庫由裝置匯入</string>
     <string name="main_save_db_title">保存資料庫</string>
     <string name="main_mkdir_fail">建立備份資料夾失敗</string>
-    <string name="main_success_import">匯入成功</string>
     <string name="add_fav_name_hint">名稱</string>
     <string name="nav_menu_github">到 GitHub 給星星</string>
     <string name="no">否</string>
