@@ -8,7 +8,6 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,9 +18,8 @@ import java.util.List;
 import taipei.sean.telegram.botplayground.FavStructure;
 import taipei.sean.telegram.botplayground.InstantComplete;
 import taipei.sean.telegram.botplayground.R;
+import taipei.sean.telegram.botplayground.SeanAdapter;
 import taipei.sean.telegram.botplayground.SeanDBHelper;
-
-//import taipei.sean.telegram.botplayground.ada
 
 public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     final private Context context;
@@ -109,7 +107,7 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         ArrayList<String> favList = new ArrayList<>();
         for (int i=0; i<favs.size(); i++)
             favList.add(favs.get(i).value);
-        ArrayAdapter<String> favAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, favList);
+        SeanAdapter<String> favAdapter = new SeanAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, favList);
         autoCompleteTextView.setAdapter(favAdapter);
 
         autoCompleteTextView.setOnLongClickListener(new View.OnLongClickListener() {

@@ -11,7 +11,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -26,6 +25,7 @@ import java.util.Objects;
 
 import taipei.sean.telegram.botplayground.InstantComplete;
 import taipei.sean.telegram.botplayground.R;
+import taipei.sean.telegram.botplayground.SeanAdapter;
 import taipei.sean.telegram.botplayground.SeanDBHelper;
 import taipei.sean.telegram.botplayground.TelegramAPI;
 import taipei.sean.telegram.botplayground.adapter.ApiCallerAdapter;
@@ -70,7 +70,7 @@ public class ApiCallerActivity extends AppCompatActivity {
             botApiMethodsList.add(key);
         }
 
-        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+        final SeanAdapter<String> adapter = new SeanAdapter<>(this,
                 android.R.layout.simple_dropdown_item_1line, botApiMethodsList);
         textView.setAdapter(adapter);
 
