@@ -6,16 +6,13 @@
     <string name="add_bot_token">您的 Bot Token</string>
     <string name="add_bot_token_invalid">Token 格式錯誤</string>
     <string name="api_caller_check_text">檢測 JSON</string>
-    <string name="api_caller_submit_text">送出</string>
+    <string name="submit">送出</string>
     <string name="api_caller_result_placeholder">尚無內容</string>
     <string name="menu_api_caller">API 自由發揮</string>
     <string name="nav_menu_account">帳號</string>
     <string name="nav_menu_add_bot">新增 Bot</string>
     <string name="nav_menu_functions">功能</string>
     <string name="nav_menu_join_group">加入群組</string>
-    <string name="send_message_text_hint">自訂訊息</string>
-    <string name="send_message_result_placeholder">尚無訊息</string>
-    <string name="send_message_data_hint">選用參數</string>
     <string name="action_edit">編輯</string>
     <string name="action_remove">移除</string>
     <string name="main_did_not_select_bot">您還沒選擇 Bot 喔!</string>
@@ -23,7 +20,6 @@
     <string name="add_fav_prompt">選取類別</string>
     <string name="add_fav_value_hint">您的資料</string>
     <string name="cancel">取消</string>
-    <string name="fav_msg">訊息</string>
     <string name="main_ask_add_bot_msg">您想要建立新 Bot 嗎？</string>
     <string name="main_ask_add_bot_title">新增 Bot</string>
     <string name="main_backup_dir_is_file">建立資料夾失敗</string>
@@ -39,9 +35,6 @@
     <string name="main_mkdir_fail">建立備份資料夾失敗</string>
     <string name="main_success_import">匯入成功</string>
     <string name="add_fav_name_hint">名稱</string>
-    <string name="add_fav_unknown_select">未知選項</string>
-    <string name="fav_chat_username">用戶名 (@username)</string>
-    <string name="fav_name_title">名稱</string>
     <string name="nav_menu_github">到 GitHub 給星星</string>
     <string name="no">否</string>
     <string name="yes">是</string>
@@ -52,4 +45,6 @@
     <string name="footer_rate_title">給開發者精神支持</string>
     <string name="not_now">改天再說</string>
     <string name="main_no_bot">還沒有現成 Bot，請點右下角 + 以加入 Bot</string>
+    <string name="menu_file_downloader">檔案下載器</string>
+    <string name="file_download_description">所有成功下載的檔案儲存於 /sdcard/Sean 目錄中</string>
 </resources>

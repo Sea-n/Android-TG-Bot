@@ -24,12 +24,8 @@
     <string name="api_caller_data_hint" translatable="false">JSON Data</string>
     <string name="json_empty_object" translatable="false">{}</string>
     <string name="api_caller_check_text">Check JSON</string>
-    <string name="api_caller_submit_text">Submit</string>
+    <string name="submit">Submit</string>
     <string name="api_caller_result_placeholder">No Context Yet.</string>
-    <string name="send_message_text_hint">Your Message</string>
-    <string name="send_message_data_hint">Optional Params</string>
-    <string name="send_message_result_placeholder">No Context Yet.</string>
-    <string name="send_message_chat_hint" translatable="false">Chat ID</string>
     <string name="nav_header_photo" translatable="false">Bot Profile Photo</string>
     <string name="no_bot_warning">Didn\'t select bot token, please add one first.</string>
     <string name="action_edit">Edit</string>
@@ -50,16 +46,9 @@
     <string name="main_ask_add_bot_title">New Bot</string>
     <string name="nav_menu_fav">Favorite</string>
     <string name="title_activity_favorite">Favorites</string>
-    <string name="fav_chat_id_title" translatable="false">Chat IDs</string>
-    <string name="fav_chat_id" translatable="false">Chat ID</string>
-    <string name="fav_chat_username">Chat ID (@username)</string>
-    <string name="fav_msg">Message</string>
     <string name="add_fav_prompt">Select kind</string>
     <string name="add_fav_value_hint">Your Data</string>
     <string name="add_fav_name_hint">Kindly Name</string>
-    <string name="add_fav_unknown_select">Unknown select</string>
-    <string name="fav_msg_title" translatable="false">Messages</string>
-    <string name="fav_name_title">Kindly Name</string>
     <string name="nav_menu_github">Star on GitHub</string>
     <string name="github_url" translatable="false">https://github.com/Sea-n/Android-TG-Bot</string>
     <string name="telegram_group_join_link" translatable="false">https://t.me/joinchat/AAAAAA7VO5bHlMdH9MPecA</string>
@@ -73,9 +62,7 @@
     <string name="footer_rate_title">Rate this Application</string>
     <string name="not_now">Not now</string>
     <string name="main_no_bot">No Bot yet, please click + to create one.</string>
-    <string-array name="add_fav_list">
-        <item>@string/fav_chat_id</item>
-        <item>@string/fav_chat_username</item>
-        <item>@string/fav_msg</item>
-    </string-array>
+    <string name="menu_file_downloader">File Downloader</string>
+    <string name="file_download_description">All Downloaded File will Storaged in /sdcard/Sean Directory.</string>
+    <string name="file_id" translatable="false">File ID</string>
 </resources>

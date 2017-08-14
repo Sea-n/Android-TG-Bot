@@ -316,6 +316,18 @@ public class MainActivity extends AppCompatActivity {
                         mIntent.putExtra("token", currentBot.token);
                         startActivity(mIntent);
                         break;
+                    case R.id.nav_file_dl:
+                        if (null == currentBot) {
+                            Log.w("nav", "no bots");
+                            View fab = findViewById(R.id.main_fab);
+                            Snackbar.make(fab, R.string.no_bot_warning, Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
+                            break;
+                        }
+                        Intent dlIntent = new Intent(MainActivity.this, FileDownloadActivity.class);
+                        dlIntent.putExtra("token", currentBot.token);
+                        startActivity(dlIntent);
+                        break;
                     case R.id.nav_add_bot:
                         addBot();
                         break;

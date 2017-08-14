@@ -9,6 +9,10 @@
             android:icon="@drawable/ic_call_black_24dp"
             android:title="@string/menu_api_caller" />
         <item
+            android:id="@+id/nav_file_dl"
+            android:icon="@drawable/ic_file_download_black_24dp"
+            android:title="@string/menu_file_downloader" />
+        <item
             android:id="@+id/nav_fav"
             android:icon="@drawable/ic_grade_black_24dp"
             android:title="@string/nav_menu_fav" />
