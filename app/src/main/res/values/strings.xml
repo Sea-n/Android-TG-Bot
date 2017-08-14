@@ -11,7 +11,7 @@
     <string name="done">Done</string>
     <string name="add_bot_name_invalid">Nickname Invalid, please check again.</string>
     <string name="add_bot_token_invalid">Token format invalid</string>
-    <string name="bot_token_regex" translatable="false">[0-9]{8,10}:[A-Za-z0-9_-]*</string>
+    <string name="bot_token_regex" translatable="false">[0-9]{5,10}:[A-Za-z0-9_-]*</string>
     <string name="nav_header_default_title" translatable="false">No Bot</string>
     <string name="nav_header_default_subtitle" translatable="false">12345:AAJqs_w-4</string>
     <string name="menu_api_caller">Free API Caller</string>
@@ -67,4 +67,14 @@
     <string name="madeline_default_method" translatable="false"><![CDATA[help->getConfig]]></string>
     <string name="menu_madeline">Switch to Madeline Proto</string>
     <string name="pwrt_menu_info">What is PWRTelegram?</string>
+    <string name="token_type">Token Type</string>
+    <string name="token_type_normal">Normal Bot</string>
+    <string name="token_type_deep" translatable="false">Deep Telegram</string>
+    <string name="token_type_user">PWRTelegram User</string>
+    <string name="not_normal_bot">Please use Normal Bot Token</string>
+    <string-array name="token_type_list">
+        <item>@string/token_type_normal</item>
+        <item>@string/token_type_deep</item>
+        <item>@string/token_type_user</item>
+    </string-array>
 </resources>

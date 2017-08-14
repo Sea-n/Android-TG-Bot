@@ -35,9 +35,10 @@ import taipei.sean.telegram.botplayground.SeanDBHelper;
 import taipei.sean.telegram.botplayground.adapter.ApiCallerAdapter;
 
 public class PWRTelegramActivity extends AppCompatActivity {
-    final private int _dbVer = 2;
+    final private int _dbVer = 3;
     private SeanDBHelper db;
     private String _token;
+    private int _type;
     private PWRTelegramAPI _api;
 
     @Override
@@ -53,14 +54,23 @@ public class PWRTelegramActivity extends AppCompatActivity {
         try {
             Bundle bundle = getIntent().getExtras();
             _token = bundle.getString("token");
+            _type = bundle.getInt("type");
         } catch (NullPointerException e) {
             Log.e("caller", "bundle error", e);
             finish();
         }
 
+        if (_type == 2) {
+            Intent mIntent = new Intent(PWRTelegramActivity.this, MadelineActivity.class);
+            mIntent.putExtra("token", _token);
+            mIntent.putExtra("type", _type);
+            startActivity(mIntent);
+            finish();
+        }
+
         db = new SeanDBHelper(this, "data.db", null, _dbVer);
 
-        _api = new PWRTelegramAPI(this, _token);
+        _api = new PWRTelegramAPI(this, _token, _type);
 
         final InstantComplete methodView = (InstantComplete) findViewById(R.id.pwrtelegram_method);
         final RecyclerView inputList = (RecyclerView) findViewById(R.id.pwrtelegram_inputs);
@@ -98,15 +108,17 @@ public class PWRTelegramActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                JSONObject paramData;
+                JSONObject paramData = new JSONObject();
                 String method = editable.toString();
                 try {
                     if (pApiMethods.has(method)) {
                         JSONObject methodData = (JSONObject) pApiMethods.get(method);
-                        paramData = (JSONObject) methodData.get("params");
+                        if (methodData.has("params"))
+                            paramData = (JSONObject) methodData.get("params");
                     } else if (apiMethods.has(method)) {
                         JSONObject methodData = (JSONObject) apiMethods.get(method);
-                        paramData = (JSONObject) methodData.get("params");
+                        if (methodData.has("params"))
+                            paramData = (JSONObject) methodData.get("params");
                     } else {
                         methodView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
                         ViewGroup.LayoutParams layoutParams = inputList.getLayoutParams();
@@ -134,6 +146,8 @@ public class PWRTelegramActivity extends AppCompatActivity {
                     while (temp.hasNext()) {
                         String key = temp.next();
                         JSONObject value = (JSONObject) paramData.get(key);
+                        if (!value.has("description"))
+                            value.put("description", "");
                         apiCallerAdapter.addData(key, value);
                     }
                 } catch (JSONException e) {
@@ -171,6 +185,7 @@ public class PWRTelegramActivity extends AppCompatActivity {
             case R.id.pwrt_menu_madeline:
                 Intent mIntent = new Intent(PWRTelegramActivity.this, MadelineActivity.class);
                 mIntent.putExtra("token", _token);
+                mIntent.putExtra("type", _type);
                 startActivity(mIntent);
                 break;
             case R.id.pwrt_menu_info:

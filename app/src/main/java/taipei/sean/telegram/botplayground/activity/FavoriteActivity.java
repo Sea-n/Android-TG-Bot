@@ -20,7 +20,7 @@ import taipei.sean.telegram.botplayground.adapter.FavoriteItemAdapter;
 import taipei.sean.telegram.botplayground.adapter.FavoriteListAdapter;
 
 public class FavoriteActivity extends AppCompatActivity {
-    final private int _dbVer = 2;
+    final private int _dbVer = 3;
     final private int _reqCode_addFav = 1;
     private SeanDBHelper db = null;
 

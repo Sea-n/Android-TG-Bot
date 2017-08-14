@@ -31,7 +31,8 @@ public class SeanDBHelper extends SQLiteOpenHelper {
                 "(_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
                 "token TEXT NOT NULL, " +
                 "name TEXT NOT NULL, " +
-                "note TEXT)");
+                "note TEXT, " +
+                "type INTEGER NOT NULL)");
 
         db.execSQL("CREATE TABLE main.favorites " +
                 "(_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
@@ -63,6 +64,12 @@ public class SeanDBHelper extends SQLiteOpenHelper {
                 } catch (SQLiteException e) {
                     Log.e("db", "onUpgrade", e);
                 }
+            case 2:
+                try {
+                    db.execSQL("ALTER TABLE main.tokens ADD COLUMN type INTEGER DEFAULT 0;");
+                } catch (SQLiteException e) {
+                    Log.e("db", "onUpgrade", e);
+                }
         }
     }
 
@@ -80,6 +87,7 @@ public class SeanDBHelper extends SQLiteOpenHelper {
             item.token = cursor.getString(1);
             item.name = cursor.getString(2);
             item.note = cursor.getString(3);
+            item.type = cursor.getInt(4);
             result.add(item);
         }
 
@@ -106,6 +114,7 @@ public class SeanDBHelper extends SQLiteOpenHelper {
             result.token = cursor.getString(1);
             result.name = cursor.getString(2);
             result.note = cursor.getString(3);
+            result.type = cursor.getInt(4);
         } catch (RuntimeException e) {
             Log.w("db", "Getting data error" + id);
             cursor.close();

@@ -23,7 +23,7 @@ import taipei.sean.telegram.botplayground.SeanDBHelper;
 
 public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     final private Context context;
-    final private int _dbVer = 2;
+    final private int _dbVer = 3;
     private SeanDBHelper db;
     private ArrayList<String> iList;
     private ArrayList<String> iListType;
@@ -43,9 +43,15 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     public void addData(String name, JSONObject data) {
         try {
-            String type = data.getString("type");
-            Boolean required = data.getBoolean("required");
-            String desc = data.getString("description");
+            String type = "String";
+            Boolean required = false;
+            String desc = "";
+            if (data.has("type"))
+                type = data.getString("type");
+            if (data.has("required"))
+                required = data.getBoolean("required");
+            if (data.has("description"))
+                desc = data.getString("description");
 
             iList.add(name);
             iListType.add(type);

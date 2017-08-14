@@ -22,13 +22,27 @@ import org.json.JSONObject;
 import java.util.Iterator;
 
 public class PWRTelegramAPI {
-    final private String _apiBaseUrl = "https://api.pwrtelegram.xyz/bot";
+    final private String _apiBaseUrl;
     final private Context _context;
     final private String _token;
 
-    public PWRTelegramAPI(Context context, String token) {
+    public PWRTelegramAPI(Context context, String token, int type) {
+        final String _apiBaseUrlNormal = "https://api.pwrtelegram.xyz/bot";
+        final String _apiBaseUrlDeep = "https://deepapi.pwrtelegram.xyz/bot";
+        final String _apiBaseUrlUser = "https://api.pwrtelegram.xyz/user";
+
         this._context = context;
         this._token = token;
+        switch (type) {
+            case 1:
+                _apiBaseUrl = _apiBaseUrlDeep;
+                break;
+            case 2:
+                _apiBaseUrl = _apiBaseUrlUser;
+                break;
+            default:
+                _apiBaseUrl = _apiBaseUrlNormal;
+        }
     }
 
     public void callApi(String method, final TextView resultView, final JSONObject params) {

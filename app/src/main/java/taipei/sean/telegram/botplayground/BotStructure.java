@@ -5,4 +5,5 @@ public class BotStructure {
     public String name;
     public String token;
     public String note;
+    public int type;
 }

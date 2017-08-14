@@ -30,9 +30,10 @@ import taipei.sean.telegram.botplayground.SeanDBHelper;
 import taipei.sean.telegram.botplayground.adapter.ApiCallerAdapter;
 
 public class MadelineActivity extends AppCompatActivity {
-    final private int _dbVer = 2;
+    final private int _dbVer = 3;
     private SeanDBHelper db;
     private String _token;
+    private int _type;
     private PWRTelegramAPI _api;
 
     @Override
@@ -43,6 +44,7 @@ public class MadelineActivity extends AppCompatActivity {
         try {
             Bundle bundle = getIntent().getExtras();
             _token = bundle.getString("token");
+            _type = bundle.getInt("type");
         } catch (NullPointerException e) {
             Log.e("ml", "bundle error", e);
             finish();
@@ -50,7 +52,7 @@ public class MadelineActivity extends AppCompatActivity {
 
         db = new SeanDBHelper(this, "data.db", null, _dbVer);
 
-        _api = new PWRTelegramAPI(this, _token);
+        _api = new PWRTelegramAPI(this, _token, _type);
 
         final InstantComplete methodView = (InstantComplete) findViewById(R.id.madeline_method);
         final RecyclerView inputList = (RecyclerView) findViewById(R.id.madeline_inputs);

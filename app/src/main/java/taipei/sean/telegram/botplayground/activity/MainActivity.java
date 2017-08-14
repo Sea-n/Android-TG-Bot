@@ -44,7 +44,7 @@ import taipei.sean.telegram.botplayground.R;
 import taipei.sean.telegram.botplayground.SeanDBHelper;
 
 public class MainActivity extends AppCompatActivity {
-    final private int _dbVer = 2;
+    final private int _dbVer = 3;
     private SeanDBHelper db;
     private List<BotStructure> _bots = null;
     private boolean changeAccountMenuOpen = false;
@@ -311,6 +311,14 @@ public class MainActivity extends AppCompatActivity {
                                     .setAction("Action", null).show();
                             break;
                         }
+
+                        if (currentBot.type != 0) {
+                            View fab = findViewById(R.id.main_fab);
+                            Snackbar.make(fab, R.string.not_normal_bot, Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
+                            break;
+                        }
+
                         Intent mIntent = new Intent(MainActivity.this, ApiCallerActivity.class);
                         mIntent.putExtra("token", currentBot.token);
                         startActivity(mIntent);
@@ -325,6 +333,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         Intent pIntent = new Intent(MainActivity.this, PWRTelegramActivity.class);
                         pIntent.putExtra("token", currentBot.token);
+                        pIntent.putExtra("type", currentBot.type);
                         startActivity(pIntent);
                         break;
                     case R.id.nav_file_dl:
@@ -335,6 +344,14 @@ public class MainActivity extends AppCompatActivity {
                                     .setAction("Action", null).show();
                             break;
                         }
+
+                        if (currentBot.type != 0) {
+                            View fab = findViewById(R.id.main_fab);
+                            Snackbar.make(fab, R.string.not_normal_bot, Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
+                            break;
+                        }
+
                         Intent dlIntent = new Intent(MainActivity.this, FileDownloadActivity.class);
                         dlIntent.putExtra("token", currentBot.token);
                         startActivity(dlIntent);
@@ -546,6 +563,15 @@ public class MainActivity extends AppCompatActivity {
                 title.setText(currentBot.name);
                 subtitle.setText(currentBot.token);
                 main.setText(currentBot.name);
+
+
+                final Menu menu = navView.getMenu();
+                final MenuItem caller = menu.findItem(R.id.nav_caller);
+                if (currentBot.type == 0) {
+                    caller.setVisible(true);
+                } else {
+                    caller.setVisible(false);
+                }
             }
         });
 

@@ -47,4 +47,8 @@
     <string name="menu_pwrtelegram">PWRTelegram API (非官方)</string>
     <string name="menu_madeline">切換為 Madeline Proto</string>
     <string name="pwrt_menu_info">PWRTelegram 是做什麼的？</string>
+    <string name="token_type">Token 類別</string>
+    <string name="token_type_normal">普通 Bot</string>
+    <string name="token_type_user">PWRTelegram 使用者</string>
+    <string name="not_normal_bot">請使用普通 Bot Token</string>
 </resources>
