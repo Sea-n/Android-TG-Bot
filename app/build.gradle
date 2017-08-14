@@ -40,4 +40,13 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
+allprojects {
+    repositories {
+        jcenter()
+        maven {
+            url "https://maven.google.com"
+        }
+    }
+}
+
 apply plugin: 'com.google.gms.google-services'
