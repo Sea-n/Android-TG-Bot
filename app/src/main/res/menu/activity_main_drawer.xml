@@ -6,11 +6,11 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_caller"
-            android:icon="@android:drawable/ic_menu_call"
+            android:icon="@drawable/ic_call_black_24dp"
             android:title="@string/menu_api_caller" />
         <item
             android:id="@+id/nav_fav"
-            android:icon="@android:drawable/star_big_off"
+            android:icon="@drawable/ic_grade_black_24dp"
             android:title="@string/nav_menu_fav" />
     </group>
 
@@ -27,7 +27,7 @@
         <menu>
             <item
                 android:id="@+id/nav_add_bot"
-                android:icon="@android:drawable/ic_menu_add"
+                android:icon="@drawable/ic_control_point_black_24dp"
                 android:title="@string/nav_menu_add_bot" />
             <item
                 android:id="@+id/nav_join_group"
