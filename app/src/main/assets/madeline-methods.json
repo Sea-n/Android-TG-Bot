@@ -1,0 +1,1676 @@
+{
+  "account->changePhone": {
+    "params": {
+      "phone_number": "string",
+      "phone_code_hash": "string",
+      "phone_code": "string"
+    },
+    "return": "User"
+  },
+  "account->checkUsername": {
+    "params": {
+      "username": "string"
+    },
+    "return": "Bool"
+  },
+  "account->confirmPhone": {
+    "params": {
+      "phone_code_hash": "string",
+      "phone_code": "string"
+    },
+    "return": "Bool"
+  },
+  "account->deleteAccount": {
+    "params": {
+      "reason": "string"
+    },
+    "return": "Bool"
+  },
+  "account->getAccountTTL": {
+    "params": {},
+    "return": "AccountDaysTTL"
+  },
+  "account->getAuthorizations": {
+    "params": {},
+    "return": "account_Authorizations"
+  },
+  "account->getNotifySettings": {
+    "params": {
+      "peer": "InputNotifyPeer"
+    },
+    "return": "PeerNotifySettings"
+  },
+  "account->getPassword": {
+    "params": {},
+    "return": "account_Password"
+  },
+  "account->getPasswordSettings": {
+    "params": {
+      "current_password_hash": "bytes"
+    },
+    "return": "account_PasswordSettings"
+  },
+  "account->getPrivacy": {
+    "params": {
+      "key": "InputPrivacyKey"
+    },
+    "return": "account_PrivacyRules"
+  },
+  "account->getTmpPassword": {
+    "params": {
+      "password_hash": "bytes",
+      "period": "int"
+    },
+    "return": "account_TmpPassword"
+  },
+  "account->getWallPapers": {
+    "params": {},
+    "return": "Vector_of_WallPaper"
+  },
+  "account->registerDevice": {
+    "params": {
+      "token_type": "int",
+      "token": "string"
+    },
+    "return": "Bool"
+  },
+  "account->reportPeer": {
+    "params": {
+      "peer": "InputPeer",
+      "reason": "ReportReason"
+    },
+    "return": "Bool"
+  },
+  "account->resetAuthorization": {
+    "params": {
+      "hash": "long"
+    },
+    "return": "Bool"
+  },
+  "account->resetNotifySettings": {
+    "params": {},
+    "return": "Bool"
+  },
+  "account->sendChangePhoneCode": {
+    "params": {
+      "allow_flashcall": "Bool",
+      "phone_number": "string",
+      "current_number": "Bool"
+    },
+    "return": "auth_SentCode"
+  },
+  "account->sendConfirmPhoneCode": {
+    "params": {
+      "allow_flashcall": "Bool",
+      "hash": "string",
+      "current_number": "Bool"
+    },
+    "return": "auth_SentCode"
+  },
+  "account->setAccountTTL": {
+    "params": {
+      "ttl": "AccountDaysTTL"
+    },
+    "return": "Bool"
+  },
+  "account->setPrivacy": {
+    "params": {
+      "key": "InputPrivacyKey",
+      "rules": "Array of InputPrivacyRule"
+    },
+    "return": "account_PrivacyRules"
+  },
+  "account->unregisterDevice": {
+    "params": {
+      "token_type": "int",
+      "token": "string"
+    },
+    "return": "Bool"
+  },
+  "account->updateDeviceLocked": {
+    "params": {
+      "period": "int"
+    },
+    "return": "Bool"
+  },
+  "account->updateNotifySettings": {
+    "params": {
+      "peer": "InputNotifyPeer",
+      "settings": "InputPeerNotifySettings"
+    },
+    "return": "Bool"
+  },
+  "account->updatePasswordSettings": {
+    "params": {
+      "current_password_hash": "bytes",
+      "new_settings": "account_PasswordInputSettings"
+    },
+    "return": "Bool"
+  },
+  "account->updateProfile": {
+    "params": {
+      "first_name": "string",
+      "last_name": "string",
+      "about": "string"
+    },
+    "return": "User"
+  },
+  "account->updateStatus": {
+    "params": {
+      "offline": "Bool"
+    },
+    "return": "Bool"
+  },
+  "account->updateUsername": {
+    "params": {
+      "username": "string"
+    },
+    "return": "User"
+  },
+  "auth->bindTempAuthKey": {
+    "params": {
+      "perm_auth_key_id": "long",
+      "nonce": "long",
+      "expires_at": "int",
+      "encrypted_message": "bytes"
+    },
+    "return": "Bool"
+  },
+  "auth->cancelCode": {
+    "params": {
+      "phone_number": "string",
+      "phone_code_hash": "string"
+    },
+    "return": "Bool"
+  },
+  "auth->checkPassword": {
+    "params": {
+      "password_hash": "bytes"
+    },
+    "return": "auth_Authorization"
+  },
+  "auth->checkPhone": {
+    "params": {
+      "phone_number": "string"
+    },
+    "return": "auth_CheckedPhone"
+  },
+  "auth->dropTempAuthKeys": {
+    "params": {
+      "except_auth_keys": "Array of long"
+    },
+    "return": "Bool"
+  },
+  "auth->exportAuthorization": {
+    "params": {
+      "dc_id": "int"
+    },
+    "return": "auth_ExportedAuthorization"
+  },
+  "auth->importAuthorization": {
+    "params": {
+      "id": "int",
+      "bytes": "bytes"
+    },
+    "return": "auth_Authorization"
+  },
+  "auth->importBotAuthorization": {
+    "params": {
+      "api_id": "int",
+      "api_hash": "string",
+      "bot_auth_token": "string"
+    },
+    "return": "auth_Authorization"
+  },
+  "auth->logOut": {
+    "params": {},
+    "return": "Bool"
+  },
+  "auth->recoverPassword": {
+    "params": {
+      "code": "string"
+    },
+    "return": "auth_Authorization"
+  },
+  "auth->requestPasswordRecovery": {
+    "params": {},
+    "return": "auth_PasswordRecovery"
+  },
+  "auth->resendCode": {
+    "params": {
+      "phone_number": "string",
+      "phone_code_hash": "string"
+    },
+    "return": "auth_SentCode"
+  },
+  "auth->resetAuthorizations": {
+    "params": {},
+    "return": "Bool"
+  },
+  "auth->sendCode": {
+    "params": {
+      "allow_flashcall": "Bool",
+      "phone_number": "string",
+      "current_number": "Bool",
+      "api_id": "int",
+      "api_hash": "string"
+    },
+    "return": "auth_SentCode"
+  },
+  "auth->sendInvites": {
+    "params": {
+      "phone_numbers": "Array of string",
+      "message": "string"
+    },
+    "return": "Bool"
+  },
+  "auth->signIn": {
+    "params": {
+      "phone_number": "string",
+      "phone_code_hash": "string",
+      "phone_code": "string"
+    },
+    "return": "auth_Authorization"
+  },
+  "auth->signUp": {
+    "params": {
+      "phone_number": "string",
+      "phone_code_hash": "string",
+      "phone_code": "string",
+      "first_name": "string",
+      "last_name": "string"
+    },
+    "return": "auth_Authorization"
+  },
+  "bots->answerWebhookJSONQuery": {
+    "params": {
+      "query_id": "long",
+      "data": "DataJSON"
+    },
+    "return": "Bool"
+  },
+  "bots->sendCustomRequest": {
+    "params": {
+      "custom_method": "string",
+      "params": "DataJSON"
+    },
+    "return": "DataJSON"
+  },
+  "channels->checkUsername": {
+    "params": {
+      "channel": "InputChannel",
+      "username": "string"
+    },
+    "return": "Bool"
+  },
+  "channels->createChannel": {
+    "params": {
+      "broadcast": "Bool",
+      "megagroup": "Bool",
+      "title": "string",
+      "about": "string"
+    },
+    "return": "Updates"
+  },
+  "channels->deleteChannel": {
+    "params": {
+      "channel": "InputChannel"
+    },
+    "return": "Updates"
+  },
+  "channels->deleteMessages": {
+    "params": {
+      "channel": "InputChannel",
+      "id": "Array of int"
+    },
+    "return": "messages_AffectedMessages"
+  },
+  "channels->deleteUserHistory": {
+    "params": {
+      "channel": "InputChannel",
+      "user_id": "InputUser"
+    },
+    "return": "messages_AffectedHistory"
+  },
+  "channels->editAbout": {
+    "params": {
+      "channel": "InputChannel",
+      "about": "string"
+    },
+    "return": "Bool"
+  },
+  "channels->editAdmin": {
+    "params": {
+      "channel": "InputChannel",
+      "user_id": "InputUser",
+      "admin_rights": "ChannelAdminRights"
+    },
+    "return": "Updates"
+  },
+  "channels->editBanned": {
+    "params": {
+      "channel": "InputChannel",
+      "user_id": "InputUser",
+      "banned_rights": "ChannelBannedRights"
+    },
+    "return": "Updates"
+  },
+  "channels->editPhoto": {
+    "params": {
+      "channel": "InputChannel",
+      "photo": "InputChatPhoto"
+    },
+    "return": "Updates"
+  },
+  "channels->editTitle": {
+    "params": {
+      "channel": "InputChannel",
+      "title": "string"
+    },
+    "return": "Updates"
+  },
+  "channels->exportInvite": {
+    "params": {
+      "channel": "InputChannel"
+    },
+    "return": "ExportedChatInvite"
+  },
+  "channels->exportMessageLink": {
+    "params": {
+      "channel": "InputChannel",
+      "id": "int"
+    },
+    "return": "ExportedMessageLink"
+  },
+  "channels->getAdminLog": {
+    "params": {
+      "channel": "InputChannel",
+      "q": "string",
+      "events_filter": "ChannelAdminLogEventsFilter",
+      "admins": "Array of InputUser",
+      "max_id": "long",
+      "min_id": "long",
+      "limit": "int"
+    },
+    "return": "channels_AdminLogResults"
+  },
+  "channels->getAdminedPublicChannels": {
+    "params": {},
+    "return": "messages_Chats"
+  },
+  "channels->getChannels": {
+    "params": {
+      "id": "Array of InputChannel"
+    },
+    "return": "messages_Chats"
+  },
+  "channels->getFullChannel": {
+    "params": {
+      "channel": "InputChannel"
+    },
+    "return": "messages_ChatFull"
+  },
+  "channels->getMessages": {
+    "params": {
+      "channel": "InputChannel",
+      "id": "Array of int"
+    },
+    "return": "messages_Messages"
+  },
+  "channels->getParticipant": {
+    "params": {
+      "channel": "InputChannel",
+      "user_id": "InputUser"
+    },
+    "return": "channels_ChannelParticipant"
+  },
+  "channels->getParticipants": {
+    "params": {
+      "channel": "InputChannel",
+      "filter": "ChannelParticipantsFilter",
+      "offset": "int",
+      "limit": "int"
+    },
+    "return": "channels_ChannelParticipants"
+  },
+  "channels->inviteToChannel": {
+    "params": {
+      "channel": "InputChannel",
+      "users": "Array of InputUser"
+    },
+    "return": "Updates"
+  },
+  "channels->joinChannel": {
+    "params": {
+      "channel": "InputChannel"
+    },
+    "return": "Updates"
+  },
+  "channels->leaveChannel": {
+    "params": {
+      "channel": "InputChannel"
+    },
+    "return": "Updates"
+  },
+  "channels->readHistory": {
+    "params": {
+      "channel": "InputChannel",
+      "max_id": "int"
+    },
+    "return": "Bool"
+  },
+  "channels->reportSpam": {
+    "params": {
+      "channel": "InputChannel",
+      "user_id": "InputUser",
+      "id": "Array of int"
+    },
+    "return": "Bool"
+  },
+  "channels->toggleInvites": {
+    "params": {
+      "channel": "InputChannel",
+      "enabled": "Bool"
+    },
+    "return": "Updates"
+  },
+  "channels->toggleSignatures": {
+    "params": {
+      "channel": "InputChannel",
+      "enabled": "Bool"
+    },
+    "return": "Updates"
+  },
+  "channels->updatePinnedMessage": {
+    "params": {
+      "silent": "Bool",
+      "channel": "InputChannel",
+      "id": "int"
+    },
+    "return": "Updates"
+  },
+  "channels->updateUsername": {
+    "params": {
+      "channel": "InputChannel",
+      "username": "string"
+    },
+    "return": "Bool"
+  },
+  "contacts->block": {
+    "params": {
+      "id": "InputUser"
+    },
+    "return": "Bool"
+  },
+  "contacts->deleteContact": {
+    "params": {
+      "id": "InputUser"
+    },
+    "return": "contacts_Link"
+  },
+  "contacts->deleteContacts": {
+    "params": {
+      "id": "Array of InputUser"
+    },
+    "return": "Bool"
+  },
+  "contacts->exportCard": {
+    "params": {},
+    "return": "Vector_of_int"
+  },
+  "contacts->getBlocked": {
+    "params": {
+      "offset": "int",
+      "limit": "int"
+    },
+    "return": "contacts_Blocked"
+  },
+  "contacts->getContacts": {
+    "params": {
+      "hash": "string"
+    },
+    "return": "contacts_Contacts"
+  },
+  "contacts->getStatuses": {
+    "params": {},
+    "return": "Vector_of_ContactStatus"
+  },
+  "contacts->getTopPeers": {
+    "params": {
+      "correspondents": "Bool",
+      "bots_pm": "Bool",
+      "bots_inline": "Bool",
+      "phone_calls": "Bool",
+      "groups": "Bool",
+      "channels": "Bool",
+      "offset": "int",
+      "limit": "int",
+      "hash": "int"
+    },
+    "return": "contacts_TopPeers"
+  },
+  "contacts->importCard": {
+    "params": {
+      "export_card": "Array of int"
+    },
+    "return": "User"
+  },
+  "contacts->importContacts": {
+    "params": {
+      "contacts": "Array of InputContact",
+      "replace": "Bool"
+    },
+    "return": "contacts_ImportedContacts"
+  },
+  "contacts->resetTopPeerRating": {
+    "params": {
+      "category": "TopPeerCategory",
+      "peer": "InputPeer"
+    },
+    "return": "Bool"
+  },
+  "contacts->resolveUsername": {
+    "params": {
+      "username": "string"
+    },
+    "return": "contacts_ResolvedPeer"
+  },
+  "contacts->search": {
+    "params": {
+      "q": "string",
+      "limit": "int"
+    },
+    "return": "contacts_Found"
+  },
+  "contacts->unblock": {
+    "params": {
+      "id": "InputUser"
+    },
+    "return": "Bool"
+  },
+  "contest->saveDeveloperInfo": {
+    "params": {
+      "vk_id": "int",
+      "name": "string",
+      "phone_number": "string",
+      "age": "int",
+      "city": "string"
+    },
+    "return": "Bool"
+  },
+  "destroy_auth_key": {
+    "params": {},
+    "return": "DestroyAuthKeyRes"
+  },
+  "destroy_session": {
+    "params": {
+      "session_id": "long"
+    },
+    "return": "DestroySessionRes"
+  },
+  "get_future_salts": {
+    "params": {
+      "num": "int"
+    },
+    "return": "FutureSalts"
+  },
+  "help->getAppChangelog": {
+    "params": {
+      "prev_app_version": "string"
+    },
+    "return": "Updates"
+  },
+  "help->getAppUpdate": {
+    "params": {},
+    "return": "help_AppUpdate"
+  },
+  "help->getCdnConfig": {
+    "params": {},
+    "return": "CdnConfig"
+  },
+  "help->getConfig": {
+    "params": {},
+    "return": "Config"
+  },
+  "help->getInviteText": {
+    "params": {},
+    "return": "help_InviteText"
+  },
+  "help->getNearestDc": {
+    "params": {},
+    "return": "NearestDc"
+  },
+  "help->getSupport": {
+    "params": {},
+    "return": "help_Support"
+  },
+  "help->getTermsOfService": {
+    "params": {},
+    "return": "help_TermsOfService"
+  },
+  "help->saveAppLog": {
+    "params": {
+      "events": "Array of InputAppEvent"
+    },
+    "return": "Bool"
+  },
+  "help->setBotUpdatesStatus": {
+    "params": {
+      "pending_updates_count": "int",
+      "message": "string"
+    },
+    "return": "Bool"
+  },
+  "initConnection": {
+    "params": {
+      "api_id": "int",
+      "device_model": "string",
+      "system_version": "string",
+      "app_version": "string",
+      "system_lang_code": "string",
+      "lang_pack": "string",
+      "lang_code": "string",
+      "query": "!X"
+    },
+    "return": "X"
+  },
+  "invokeAfterMsg": {
+    "params": {
+      "msg_id": "long",
+      "query": "!X"
+    },
+    "return": "X"
+  },
+  "invokeAfterMsgs": {
+    "params": {
+      "msg_ids": "Array of long",
+      "query": "!X"
+    },
+    "return": "X"
+  },
+  "invokeWithLayer": {
+    "params": {
+      "layer": "int",
+      "query": "!X"
+    },
+    "return": "X"
+  },
+  "invokeWithoutUpdates": {
+    "params": {
+      "query": "!X"
+    },
+    "return": "X"
+  },
+  "langpack->getDifference": {
+    "params": {
+      "from_version": "int"
+    },
+    "return": "LangPackDifference"
+  },
+  "langpack->getLangPack": {
+    "params": {
+      "lang_code": "string"
+    },
+    "return": "LangPackDifference"
+  },
+  "langpack->getLanguages": {
+    "params": {},
+    "return": "Vector_of_LangPackLanguage"
+  },
+  "langpack->getStrings": {
+    "params": {
+      "lang_code": "string",
+      "keys": "Array of string"
+    },
+    "return": "Vector_of_LangPackString"
+  },
+  "messages->acceptEncryption": {
+    "params": {
+      "peer": "InputEncryptedChat",
+      "g_b": "bytes",
+      "key_fingerprint": "long"
+    },
+    "return": "EncryptedChat"
+  },
+  "messages->addChatUser": {
+    "params": {
+      "chat_id": "InputPeer",
+      "user_id": "InputUser",
+      "fwd_limit": "int"
+    },
+    "return": "Updates"
+  },
+  "messages->checkChatInvite": {
+    "params": {
+      "hash": "string"
+    },
+    "return": "ChatInvite"
+  },
+  "messages->clearRecentStickers": {
+    "params": {
+      "attached": "Bool"
+    },
+    "return": "Bool"
+  },
+  "messages->createChat": {
+    "params": {
+      "users": "Array of InputUser",
+      "title": "string"
+    },
+    "return": "Updates"
+  },
+  "messages->deleteChatUser": {
+    "params": {
+      "chat_id": "InputPeer",
+      "user_id": "InputUser"
+    },
+    "return": "Updates"
+  },
+  "messages->deleteHistory": {
+    "params": {
+      "just_clear": "Bool",
+      "peer": "InputPeer",
+      "max_id": "int"
+    },
+    "return": "messages_AffectedHistory"
+  },
+  "messages->deleteMessages": {
+    "params": {
+      "revoke": "Bool",
+      "id": "Array of int"
+    },
+    "return": "messages_AffectedMessages"
+  },
+  "messages->discardEncryption": {
+    "params": {
+      "chat_id": "int"
+    },
+    "return": "Bool"
+  },
+  "messages->editChatAdmin": {
+    "params": {
+      "chat_id": "InputPeer",
+      "user_id": "InputUser",
+      "is_admin": "Bool"
+    },
+    "return": "Bool"
+  },
+  "messages->editChatPhoto": {
+    "params": {
+      "chat_id": "InputPeer",
+      "photo": "InputChatPhoto"
+    },
+    "return": "Updates"
+  },
+  "messages->editChatTitle": {
+    "params": {
+      "chat_id": "InputPeer",
+      "title": "string"
+    },
+    "return": "Updates"
+  },
+  "messages->editInlineBotMessage": {
+    "params": {
+      "no_webpage": "Bool",
+      "id": "InputBotInlineMessageID",
+      "message": "string",
+      "reply_markup": "ReplyMarkup",
+      "entities": "Array of MessageEntity"
+    },
+    "return": "Bool"
+  },
+  "messages->editMessage": {
+    "params": {
+      "no_webpage": "Bool",
+      "peer": "InputPeer",
+      "id": "int",
+      "message": "string",
+      "reply_markup": "ReplyMarkup",
+      "entities": "Array of MessageEntity"
+    },
+    "return": "Updates"
+  },
+  "messages->exportChatInvite": {
+    "params": {
+      "chat_id": "InputPeer"
+    },
+    "return": "ExportedChatInvite"
+  },
+  "messages->forwardMessage": {
+    "params": {
+      "peer": "InputPeer",
+      "id": "int"
+    },
+    "return": "Updates"
+  },
+  "messages->forwardMessages": {
+    "params": {
+      "silent": "Bool",
+      "background": "Bool",
+      "with_my_score": "Bool",
+      "from_peer": "InputPeer",
+      "id": "Array of int",
+      "to_peer": "InputPeer"
+    },
+    "return": "Updates"
+  },
+  "messages->getAllChats": {
+    "params": {
+      "except_ids": "Array of int"
+    },
+    "return": "messages_Chats"
+  },
+  "messages->getAllDrafts": {
+    "params": {},
+    "return": "Updates"
+  },
+  "messages->getAllStickers": {
+    "params": {
+      "hash": "int"
+    },
+    "return": "messages_AllStickers"
+  },
+  "messages->getArchivedStickers": {
+    "params": {
+      "masks": "Bool",
+      "offset_id": "long",
+      "limit": "int"
+    },
+    "return": "messages_ArchivedStickers"
+  },
+  "messages->getAttachedStickers": {
+    "params": {
+      "media": "InputStickeredMedia"
+    },
+    "return": "Vector_of_StickerSetCovered"
+  },
+  "messages->getBotCallbackAnswer": {
+    "params": {
+      "game": "Bool",
+      "peer": "InputPeer",
+      "msg_id": "int",
+      "data": "bytes"
+    },
+    "return": "messages_BotCallbackAnswer"
+  },
+  "messages->getChats": {
+    "params": {
+      "id": "Array of int"
+    },
+    "return": "messages_Chats"
+  },
+  "messages->getCommonChats": {
+    "params": {
+      "user_id": "InputUser",
+      "max_id": "int",
+      "limit": "int"
+    },
+    "return": "messages_Chats"
+  },
+  "messages->getDhConfig": {
+    "params": {
+      "version": "int",
+      "random_length": "int"
+    },
+    "return": "messages_DhConfig"
+  },
+  "messages->getDialogs": {
+    "params": {
+      "exclude_pinned": "Bool",
+      "offset_date": "int",
+      "offset_id": "int",
+      "offset_peer": "InputPeer",
+      "limit": "int"
+    },
+    "return": "messages_Dialogs"
+  },
+  "messages->getDocumentByHash": {
+    "params": {
+      "sha256": "bytes",
+      "size": "int",
+      "mime_type": "string"
+    },
+    "return": "Document"
+  },
+  "messages->getFeaturedStickers": {
+    "params": {
+      "hash": "int"
+    },
+    "return": "messages_FeaturedStickers"
+  },
+  "messages->getFullChat": {
+    "params": {
+      "chat_id": "InputPeer"
+    },
+    "return": "messages_ChatFull"
+  },
+  "messages->getGameHighScores": {
+    "params": {
+      "peer": "InputPeer",
+      "id": "int",
+      "user_id": "InputUser"
+    },
+    "return": "messages_HighScores"
+  },
+  "messages->getHistory": {
+    "params": {
+      "peer": "InputPeer",
+      "offset_id": "int",
+      "offset_date": "int",
+      "add_offset": "int",
+      "limit": "int",
+      "max_id": "int",
+      "min_id": "int"
+    },
+    "return": "messages_Messages"
+  },
+  "messages->getInlineBotResults": {
+    "params": {
+      "bot": "InputUser",
+      "peer": "InputPeer",
+      "geo_point": "InputGeoPoint",
+      "query": "string",
+      "offset": "string"
+    },
+    "return": "messages_BotResults"
+  },
+  "messages->getInlineGameHighScores": {
+    "params": {
+      "id": "InputBotInlineMessageID",
+      "user_id": "InputUser"
+    },
+    "return": "messages_HighScores"
+  },
+  "messages->getMaskStickers": {
+    "params": {
+      "hash": "int"
+    },
+    "return": "messages_AllStickers"
+  },
+  "messages->getMessageEditData": {
+    "params": {
+      "peer": "InputPeer",
+      "id": "int"
+    },
+    "return": "messages_MessageEditData"
+  },
+  "messages->getMessages": {
+    "params": {
+      "id": "Array of int"
+    },
+    "return": "messages_Messages"
+  },
+  "messages->getMessagesViews": {
+    "params": {
+      "peer": "InputPeer",
+      "id": "Array of int",
+      "increment": "Bool"
+    },
+    "return": "Vector_of_int"
+  },
+  "messages->getPeerDialogs": {
+    "params": {
+      "peers": "Array of InputPeer"
+    },
+    "return": "messages_PeerDialogs"
+  },
+  "messages->getPeerSettings": {
+    "params": {
+      "peer": "InputPeer"
+    },
+    "return": "PeerSettings"
+  },
+  "messages->getPinnedDialogs": {
+    "params": {},
+    "return": "messages_PeerDialogs"
+  },
+  "messages->getRecentStickers": {
+    "params": {
+      "attached": "Bool",
+      "hash": "int"
+    },
+    "return": "messages_RecentStickers"
+  },
+  "messages->getSavedGifs": {
+    "params": {
+      "hash": "int"
+    },
+    "return": "messages_SavedGifs"
+  },
+  "messages->getStickerSet": {
+    "params": {
+      "stickerset": "InputStickerSet"
+    },
+    "return": "messages_StickerSet"
+  },
+  "messages->getWebPage": {
+    "params": {
+      "url": "string",
+      "hash": "int"
+    },
+    "return": "WebPage"
+  },
+  "messages->getWebPagePreview": {
+    "params": {
+      "message": "string"
+    },
+    "return": "MessageMedia"
+  },
+  "messages->hideReportSpam": {
+    "params": {
+      "peer": "InputPeer"
+    },
+    "return": "Bool"
+  },
+  "messages->importChatInvite": {
+    "params": {
+      "hash": "string"
+    },
+    "return": "Updates"
+  },
+  "messages->installStickerSet": {
+    "params": {
+      "stickerset": "InputStickerSet",
+      "archived": "Bool"
+    },
+    "return": "messages_StickerSetInstallResult"
+  },
+  "messages->migrateChat": {
+    "params": {
+      "chat_id": "InputPeer"
+    },
+    "return": "Updates"
+  },
+  "messages->readEncryptedHistory": {
+    "params": {
+      "peer": "InputEncryptedChat",
+      "max_date": "int"
+    },
+    "return": "Bool"
+  },
+  "messages->readFeaturedStickers": {
+    "params": {
+      "id": "Array of long"
+    },
+    "return": "Bool"
+  },
+  "messages->readHistory": {
+    "params": {
+      "peer": "InputPeer",
+      "max_id": "int"
+    },
+    "return": "messages_AffectedMessages"
+  },
+  "messages->readMessageContents": {
+    "params": {
+      "id": "Array of int"
+    },
+    "return": "messages_AffectedMessages"
+  },
+  "messages->receivedMessages": {
+    "params": {
+      "max_id": "int"
+    },
+    "return": "Vector_of_ReceivedNotifyMessage"
+  },
+  "messages->receivedQueue": {
+    "params": {
+      "max_qts": "int"
+    },
+    "return": "Vector_of_long"
+  },
+  "messages->reorderPinnedDialogs": {
+    "params": {
+      "force": "Bool",
+      "order": "Array of InputPeer"
+    },
+    "return": "Bool"
+  },
+  "messages->reorderStickerSets": {
+    "params": {
+      "masks": "Bool",
+      "order": "Array of long"
+    },
+    "return": "Bool"
+  },
+  "messages->reportEncryptedSpam": {
+    "params": {
+      "peer": "InputEncryptedChat"
+    },
+    "return": "Bool"
+  },
+  "messages->reportSpam": {
+    "params": {
+      "peer": "InputPeer"
+    },
+    "return": "Bool"
+  },
+  "messages->requestEncryption": {
+    "params": {
+      "user_id": "InputUser",
+      "g_a": "bytes"
+    },
+    "return": "EncryptedChat"
+  },
+  "messages->saveDraft": {
+    "params": {
+      "no_webpage": "Bool",
+      "reply_to_msg_id": "int",
+      "peer": "InputPeer",
+      "message": "string",
+      "entities": "Array of MessageEntity"
+    },
+    "return": "Bool"
+  },
+  "messages->saveGif": {
+    "params": {
+      "id": "InputDocument",
+      "unsave": "Bool"
+    },
+    "return": "Bool"
+  },
+  "messages->saveRecentSticker": {
+    "params": {
+      "attached": "Bool",
+      "id": "InputDocument",
+      "unsave": "Bool"
+    },
+    "return": "Bool"
+  },
+  "messages->search": {
+    "params": {
+      "peer": "InputPeer",
+      "q": "string",
+      "from_id": "InputUser",
+      "filter": "MessagesFilter",
+      "min_date": "int",
+      "max_date": "int",
+      "offset": "int",
+      "max_id": "int",
+      "limit": "int"
+    },
+    "return": "messages_Messages"
+  },
+  "messages->searchGifs": {
+    "params": {
+      "q": "string",
+      "offset": "int"
+    },
+    "return": "messages_FoundGifs"
+  },
+  "messages->searchGlobal": {
+    "params": {
+      "q": "string",
+      "offset_date": "int",
+      "offset_peer": "InputPeer",
+      "offset_id": "int",
+      "limit": "int"
+    },
+    "return": "messages_Messages"
+  },
+  "messages->sendEncrypted": {
+    "params": {
+      "peer": "InputEncryptedChat",
+      "message": "DecryptedMessage"
+    },
+    "return": "messages_SentEncryptedMessage"
+  },
+  "messages->sendEncryptedFile": {
+    "params": {
+      "peer": "InputEncryptedChat",
+      "message": "DecryptedMessage",
+      "file": "InputEncryptedFile"
+    },
+    "return": "messages_SentEncryptedMessage"
+  },
+  "messages->sendEncryptedService": {
+    "params": {
+      "peer": "InputEncryptedChat",
+      "message": "DecryptedMessage"
+    },
+    "return": "messages_SentEncryptedMessage"
+  },
+  "messages->sendInlineBotResult": {
+    "params": {
+      "silent": "Bool",
+      "background": "Bool",
+      "clear_draft": "Bool",
+      "peer": "InputPeer",
+      "reply_to_msg_id": "int",
+      "query_id": "long",
+      "id": "string"
+    },
+    "return": "Updates"
+  },
+  "messages->sendMedia": {
+    "params": {
+      "silent": "Bool",
+      "background": "Bool",
+      "clear_draft": "Bool",
+      "peer": "InputPeer",
+      "reply_to_msg_id": "int",
+      "media": "InputMedia",
+      "reply_markup": "ReplyMarkup"
+    },
+    "return": "Updates"
+  },
+  "messages->sendMessage": {
+    "params": {
+      "no_webpage": "Bool",
+      "silent": "Bool",
+      "background": "Bool",
+      "clear_draft": "Bool",
+      "peer": "InputPeer",
+      "reply_to_msg_id": "int",
+      "message": "string",
+      "reply_markup": "ReplyMarkup",
+      "entities": "Array of MessageEntity"
+    },
+    "return": "Updates"
+  },
+  "messages->sendScreenshotNotification": {
+    "params": {
+      "peer": "InputPeer",
+      "reply_to_msg_id": "int"
+    },
+    "return": "Updates"
+  },
+  "messages->setBotCallbackAnswer": {
+    "params": {
+      "alert": "Bool",
+      "query_id": "long",
+      "message": "string",
+      "url": "string",
+      "cache_time": "int"
+    },
+    "return": "Bool"
+  },
+  "messages->setBotPrecheckoutResults": {
+    "params": {
+      "success": "Bool",
+      "query_id": "long",
+      "error": "string"
+    },
+    "return": "Bool"
+  },
+  "messages->setBotShippingResults": {
+    "params": {
+      "query_id": "long",
+      "error": "string",
+      "shipping_options": "Array of ShippingOption"
+    },
+    "return": "Bool"
+  },
+  "messages->setEncryptedTyping": {
+    "params": {
+      "peer": "InputEncryptedChat",
+      "typing": "Bool"
+    },
+    "return": "Bool"
+  },
+  "messages->setGameScore": {
+    "params": {
+      "edit_message": "Bool",
+      "force": "Bool",
+      "peer": "InputPeer",
+      "id": "int",
+      "user_id": "InputUser",
+      "score": "int"
+    },
+    "return": "Updates"
+  },
+  "messages->setInlineBotResults": {
+    "params": {
+      "gallery": "Bool",
+      "private": "Bool",
+      "query_id": "long",
+      "results": "Array of InputBotInlineResult",
+      "cache_time": "int",
+      "next_offset": "string",
+      "switch_pm": "InlineBotSwitchPM"
+    },
+    "return": "Bool"
+  },
+  "messages->setInlineGameScore": {
+    "params": {
+      "edit_message": "Bool",
+      "force": "Bool",
+      "id": "InputBotInlineMessageID",
+      "user_id": "InputUser",
+      "score": "int"
+    },
+    "return": "Bool"
+  },
+  "messages->setTyping": {
+    "params": {
+      "peer": "InputPeer",
+      "action": "SendMessageAction"
+    },
+    "return": "Bool"
+  },
+  "messages->startBot": {
+    "params": {
+      "bot": "InputUser",
+      "peer": "InputPeer",
+      "start_param": "string"
+    },
+    "return": "Updates"
+  },
+  "messages->toggleChatAdmins": {
+    "params": {
+      "chat_id": "InputPeer",
+      "enabled": "Bool"
+    },
+    "return": "Updates"
+  },
+  "messages->toggleDialogPin": {
+    "params": {
+      "pinned": "Bool",
+      "peer": "InputPeer"
+    },
+    "return": "Bool"
+  },
+  "messages->uninstallStickerSet": {
+    "params": {
+      "stickerset": "InputStickerSet"
+    },
+    "return": "Bool"
+  },
+  "messages->uploadMedia": {
+    "params": {
+      "peer": "InputPeer",
+      "media": "InputMedia"
+    },
+    "return": "MessageMedia"
+  },
+  "payments->clearSavedInfo": {
+    "params": {
+      "credentials": "Bool",
+      "info": "Bool"
+    },
+    "return": "Bool"
+  },
+  "payments->getPaymentForm": {
+    "params": {
+      "msg_id": "int"
+    },
+    "return": "payments_PaymentForm"
+  },
+  "payments->getPaymentReceipt": {
+    "params": {
+      "msg_id": "int"
+    },
+    "return": "payments_PaymentReceipt"
+  },
+  "payments->getSavedInfo": {
+    "params": {},
+    "return": "payments_SavedInfo"
+  },
+  "payments->sendPaymentForm": {
+    "params": {
+      "msg_id": "int",
+      "requested_info_id": "string",
+      "shipping_option_id": "string",
+      "credentials": "InputPaymentCredentials"
+    },
+    "return": "payments_PaymentResult"
+  },
+  "payments->validateRequestedInfo": {
+    "params": {
+      "save": "Bool",
+      "msg_id": "int",
+      "info": "PaymentRequestedInfo"
+    },
+    "return": "payments_ValidatedRequestedInfo"
+  },
+  "phone->acceptCall": {
+    "params": {
+      "peer": "InputPhoneCall",
+      "g_b": "bytes",
+      "protocol": "PhoneCallProtocol"
+    },
+    "return": "phone_PhoneCall"
+  },
+  "phone->confirmCall": {
+    "params": {
+      "peer": "InputPhoneCall",
+      "g_a": "bytes",
+      "key_fingerprint": "long",
+      "protocol": "PhoneCallProtocol"
+    },
+    "return": "phone_PhoneCall"
+  },
+  "phone->discardCall": {
+    "params": {
+      "peer": "InputPhoneCall",
+      "duration": "int",
+      "reason": "PhoneCallDiscardReason",
+      "connection_id": "long"
+    },
+    "return": "Updates"
+  },
+  "phone->getCallConfig": {
+    "params": {},
+    "return": "DataJSON"
+  },
+  "phone->receivedCall": {
+    "params": {
+      "peer": "InputPhoneCall"
+    },
+    "return": "Bool"
+  },
+  "phone->requestCall": {
+    "params": {
+      "user_id": "InputUser",
+      "g_a_hash": "bytes",
+      "protocol": "PhoneCallProtocol"
+    },
+    "return": "phone_PhoneCall"
+  },
+  "phone->saveCallDebug": {
+    "params": {
+      "peer": "InputPhoneCall",
+      "debug": "DataJSON"
+    },
+    "return": "Bool"
+  },
+  "phone->setCallRating": {
+    "params": {
+      "peer": "InputPhoneCall",
+      "rating": "int",
+      "comment": "string"
+    },
+    "return": "Updates"
+  },
+  "photos->deletePhotos": {
+    "params": {
+      "id": "Array of InputPhoto"
+    },
+    "return": "Vector_of_long"
+  },
+  "photos->getUserPhotos": {
+    "params": {
+      "user_id": "InputUser",
+      "offset": "int",
+      "max_id": "long",
+      "limit": "int"
+    },
+    "return": "photos_Photos"
+  },
+  "photos->updateProfilePhoto": {
+    "params": {
+      "id": "InputPhoto"
+    },
+    "return": "UserProfilePhoto"
+  },
+  "photos->uploadProfilePhoto": {
+    "params": {
+      "file": "InputFile"
+    },
+    "return": "photos_Photo"
+  },
+  "ping": {
+    "params": {
+      "ping_id": "long"
+    },
+    "return": "Pong"
+  },
+  "ping_delay_disconnect": {
+    "params": {
+      "ping_id": "long",
+      "disconnect_delay": "int"
+    },
+    "return": "Pong"
+  },
+  "req_DH_params": {
+    "params": {
+      "nonce": "int128",
+      "server_nonce": "int128",
+      "p": "string",
+      "q": "string",
+      "public_key_fingerprint": "long",
+      "encrypted_data": "string"
+    },
+    "return": "Server_DH_Params"
+  },
+  "req_pq": {
+    "params": {
+      "nonce": "int128"
+    },
+    "return": "ResPQ"
+  },
+  "rpc_drop_answer": {
+    "params": {
+      "req_msg_id": "long"
+    },
+    "return": "RpcDropAnswer"
+  },
+  "set_client_DH_params": {
+    "params": {
+      "nonce": "int128",
+      "server_nonce": "int128",
+      "encrypted_data": "string"
+    },
+    "return": "Set_client_DH_params_answer"
+  },
+  "stickers->addStickerToSet": {
+    "params": {
+      "stickerset": "InputStickerSet",
+      "sticker": "InputStickerSetItem"
+    },
+    "return": "messages_StickerSet"
+  },
+  "stickers->changeStickerPosition": {
+    "params": {
+      "sticker": "InputDocument",
+      "position": "int"
+    },
+    "return": "messages_StickerSet"
+  },
+  "stickers->createStickerSet": {
+    "params": {
+      "masks": "Bool",
+      "user_id": "InputUser",
+      "title": "string",
+      "short_name": "string",
+      "stickers": "Array of InputStickerSetItem"
+    },
+    "return": "messages_StickerSet"
+  },
+  "stickers->removeStickerFromSet": {
+    "params": {
+      "sticker": "InputDocument"
+    },
+    "return": "messages_StickerSet"
+  },
+  "updates->getChannelDifference": {
+    "params": {
+      "force": "Bool",
+      "channel": "InputChannel",
+      "filter": "ChannelMessagesFilter",
+      "pts": "int",
+      "limit": "int"
+    },
+    "return": "updates_ChannelDifference"
+  },
+  "updates->getDifference": {
+    "params": {
+      "pts": "int",
+      "pts_total_limit": "int",
+      "date": "int",
+      "qts": "int"
+    },
+    "return": "updates_Difference"
+  },
+  "updates->getState": {
+    "params": {},
+    "return": "updates_State"
+  },
+  "upload->getCdnFile": {
+    "params": {
+      "file_token": "bytes",
+      "offset": "int",
+      "limit": "int"
+    },
+    "return": "upload_CdnFile"
+  },
+  "upload->getCdnFileHashes": {
+    "params": {
+      "file_token": "bytes",
+      "offset": "int"
+    },
+    "return": "Vector_of_CdnFileHash"
+  },
+  "upload->getFile": {
+    "params": {
+      "location": "InputFileLocation",
+      "offset": "int",
+      "limit": "int"
+    },
+    "return": "upload_File"
+  },
+  "upload->getWebFile": {
+    "params": {
+      "location": "InputWebFileLocation",
+      "offset": "int",
+      "limit": "int"
+    },
+    "return": "upload_WebFile"
+  },
+  "upload->reuploadCdnFile": {
+    "params": {
+      "file_token": "bytes",
+      "request_token": "bytes"
+    },
+    "return": "Vector_of_CdnFileHash"
+  },
+  "upload->saveBigFilePart": {
+    "params": {
+      "file_id": "long",
+      "file_part": "int",
+      "file_total_parts": "int",
+      "bytes": "bytes"
+    },
+    "return": "Bool"
+  },
+  "upload->saveFilePart": {
+    "params": {
+      "file_id": "long",
+      "file_part": "int",
+      "bytes": "bytes"
+    },
+    "return": "Bool"
+  },
+  "users->getFullUser": {
+    "params": {
+      "id": "InputUser"
+    },
+    "return": "UserFull"
+  },
+  "users->getUsers": {
+    "params": {
+      "id": "Array of InputUser"
+    },
+    "return": "Vector_of_User"
+  }
+}

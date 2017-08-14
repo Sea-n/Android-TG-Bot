@@ -88,6 +88,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="taipei.sean.telegram.botplayground.activity.MainActivity" />
         </activity>
+        <activity
+            android:name=".activity.MadelineActivity"
+            android:label="Madeline API"
+            android:parentActivityName=".activity.PWRTelegramActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="taipei.sean.telegram.botplayground.activity.PWRTelegramActivity" />
+        </activity>
     </application>
 
 </manifest>

@@ -64,4 +64,7 @@
     <string name="file_id" translatable="false">File ID</string>
     <string name="menu_pwrtelegram">PWRTelegram API (unofficial)</string>
     <string name="pwrtelegram_default_method" translatable="false">enableGetMTProtoUpdates</string>
+    <string name="madeline_default_method" translatable="false"><![CDATA[help->getConfig]]></string>
+    <string name="menu_madeline">Switch to Madeline Proto</string>
+    <string name="pwrt_menu_info">What is PWRTelegram?</string>
 </resources>

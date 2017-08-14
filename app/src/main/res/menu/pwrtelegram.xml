@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/pwrt_menu_madeline"
+        android:title="@string/menu_madeline"
+        android:icon="@drawable/ic_madeline_192x"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/pwrt_menu_info"
+        android:title="@string/pwrt_menu_info"
+        android:icon="@drawable/ic_info_outline_black_24dp"
+        app:showAsAction="never" />
+</menu>

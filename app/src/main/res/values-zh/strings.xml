@@ -45,4 +45,6 @@
     <string name="menu_file_downloader">檔案下載器</string>
     <string name="file_download_description">所有成功下載的檔案儲存於 /sdcard/Sean 目錄中</string>
     <string name="menu_pwrtelegram">PWRTelegram API (非官方)</string>
+    <string name="menu_madeline">切換為 Madeline Proto</string>
+    <string name="pwrt_menu_info">PWRTelegram 是做什麼的？</string>
 </resources>

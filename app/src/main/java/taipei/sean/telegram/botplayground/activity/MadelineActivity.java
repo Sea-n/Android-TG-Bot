@@ -1,18 +1,13 @@
 package taipei.sean.telegram.botplayground.activity;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -34,7 +29,7 @@ import taipei.sean.telegram.botplayground.R;
 import taipei.sean.telegram.botplayground.SeanDBHelper;
 import taipei.sean.telegram.botplayground.adapter.ApiCallerAdapter;
 
-public class PWRTelegramActivity extends AppCompatActivity {
+public class MadelineActivity extends AppCompatActivity {
     final private int _dbVer = 2;
     private SeanDBHelper db;
     private String _token;
@@ -43,18 +38,13 @@ public class PWRTelegramActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pwrtelegram);
-
-        ActionBar actionBar = getSupportActionBar();
-        if (null != actionBar)
-            actionBar.setDisplayHomeAsUpEnabled(true);
-
+        setContentView(R.layout.activity_madeline);
 
         try {
             Bundle bundle = getIntent().getExtras();
             _token = bundle.getString("token");
         } catch (NullPointerException e) {
-            Log.e("caller", "bundle error", e);
+            Log.e("ml", "bundle error", e);
             finish();
         }
 
@@ -62,22 +52,14 @@ public class PWRTelegramActivity extends AppCompatActivity {
 
         _api = new PWRTelegramAPI(this, _token);
 
-        final InstantComplete methodView = (InstantComplete) findViewById(R.id.pwrtelegram_method);
-        final RecyclerView inputList = (RecyclerView) findViewById(R.id.pwrtelegram_inputs);
-        final Button submitButton = (Button) findViewById(R.id.pwrtelegram_submit);
-        final TextView resultView = (TextView) findViewById(R.id.pwrtelegram_result);
+        final InstantComplete methodView = (InstantComplete) findViewById(R.id.madeline_method);
+        final RecyclerView inputList = (RecyclerView) findViewById(R.id.madeline_inputs);
+        final Button submitButton = (Button) findViewById(R.id.madeline_submit);
 
 
         final ArrayList<String> botApiMethodsList = new ArrayList<String>() {};
-        final JSONObject pApiMethods = loadPMethods();
         final JSONObject apiMethods = loadMethods();
 
-
-        Iterator<String> pTemp = pApiMethods.keys();
-        while (pTemp.hasNext()) {
-            String key = pTemp.next();
-            botApiMethodsList.add(key);
-        }
 
         Iterator<String> temp = apiMethods.keys();
         while (temp.hasNext()) {
@@ -101,10 +83,7 @@ public class PWRTelegramActivity extends AppCompatActivity {
                 JSONObject paramData;
                 String method = editable.toString();
                 try {
-                    if (pApiMethods.has(method)) {
-                        JSONObject methodData = (JSONObject) pApiMethods.get(method);
-                        paramData = (JSONObject) methodData.get("params");
-                    } else if (apiMethods.has(method)) {
+                    if (apiMethods.has(method)) {
                         JSONObject methodData = (JSONObject) apiMethods.get(method);
                         paramData = (JSONObject) methodData.get("params");
                     } else {
@@ -115,7 +94,7 @@ public class PWRTelegramActivity extends AppCompatActivity {
                         return;
                     }
                 } catch (JSONException e) {
-                    Log.e("caller", "json", e);
+                    Log.e("ml", "json", e);
                     return;
                 }
 
@@ -137,7 +116,7 @@ public class PWRTelegramActivity extends AppCompatActivity {
                         apiCallerAdapter.addData(key, value);
                     }
                 } catch (JSONException e) {
-                    Log.e("caller", "parse", e);
+                    Log.e("ml", "parse", e);
                 }
 
                 inputList.setAdapter(apiCallerAdapter);
@@ -156,45 +135,25 @@ public class PWRTelegramActivity extends AppCompatActivity {
         submit();   // default enableGetMTProtoUpdates
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.pwrtelegram, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        switch (id) {
-            case R.id.pwrt_menu_madeline:
-                Intent mIntent = new Intent(PWRTelegramActivity.this, MadelineActivity.class);
-                mIntent.putExtra("token", _token);
-                startActivity(mIntent);
-                break;
-            case R.id.pwrt_menu_info:
-                Uri infoUri = Uri.parse("https://t.me/PWRTelegram");
-                Intent iIntent = new Intent(Intent.ACTION_VIEW, infoUri);
-                startActivity(iIntent);
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     private void submit() {
-        final InstantComplete methodView = (InstantComplete) findViewById(R.id.pwrtelegram_method);
-        final RecyclerView inputList = (RecyclerView) findViewById(R.id.pwrtelegram_inputs);
-        final TextView resultView = (TextView) findViewById(R.id.pwrtelegram_result);
+        final InstantComplete methodView = (InstantComplete) findViewById(R.id.madeline_method);
+        final RecyclerView inputList = (RecyclerView) findViewById(R.id.madeline_inputs);
+        final TextView resultView = (TextView) findViewById(R.id.madeline_result);
 
         String method = methodView.getText().toString();
 
         JSONObject jsonObject = new JSONObject();
+        JSONObject paramObject = new JSONObject();
+        try {
+            jsonObject.put("method", method);
+        } catch (JSONException e) {
+            Log.e("ml", "method", e);
+            return;
+        }
 
         final RecyclerView.Adapter inputAdapter = inputList.getAdapter();
         if (null == inputAdapter) {
-            _api.callApi(method, resultView, jsonObject);
+            _api.callApi("madeline", resultView, jsonObject);
             return;
         }
 
@@ -220,21 +179,28 @@ public class PWRTelegramActivity extends AppCompatActivity {
                 continue;
 
             try {
-                jsonObject.put(name, value);
+                paramObject.put(name, value);
                 db.insertFav(name, value, method);
             } catch (JSONException e) {
-                Log.e("caller", "json", e);
+                Log.e("ml", "json", e);
             }
         }
 
-        _api.callApi(method, resultView, jsonObject);
+        try {
+            jsonObject.put("params", paramObject);
+        } catch (JSONException e) {
+            Log.e("ml", "method", e);
+            return;
+        }
+
+        _api.callApi("madeline", resultView, jsonObject);
     }
 
     public JSONObject loadMethods() {
         String jsonStr;
         JSONObject json;
         try {
-            InputStream is = getAssets().open("api-methods.json");
+            InputStream is = getAssets().open("madeline-methods.json");
 
             int size = is.available();
             byte[] buffer = new byte[size];
@@ -245,40 +211,13 @@ public class PWRTelegramActivity extends AppCompatActivity {
             is.close();
             jsonStr = new String(buffer, "UTF-8");
         } catch (IOException e) {
-            Log.e("caller", "get", e);
+            Log.e("ml", "get", e);
             return null;
         }
         try {
             json = new JSONObject(jsonStr);
         } catch (JSONException e) {
-            Log.e("caller", "parse", e);
-            return null;
-        }
-        return json;
-    }
-
-    public JSONObject loadPMethods() {
-        String jsonStr;
-        JSONObject json;
-        try {
-            InputStream is = getAssets().open("pwrtelegram-methods.json");
-
-            int size = is.available();
-            byte[] buffer = new byte[size];
-
-            if (is.read(buffer) < 0)
-                return null;
-
-            is.close();
-            jsonStr = new String(buffer, "UTF-8");
-        } catch (IOException e) {
-            Log.e("caller", "get", e);
-            return null;
-        }
-        try {
-            json = new JSONObject(jsonStr);
-        } catch (JSONException e) {
-            Log.e("caller", "parse", e);
+            Log.e("ml", "parse", e);
             return null;
         }
         return json;
