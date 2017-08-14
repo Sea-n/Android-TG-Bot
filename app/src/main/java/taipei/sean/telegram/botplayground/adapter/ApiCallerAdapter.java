@@ -93,9 +93,14 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 autoCompleteTextView.setSingleLine();
                 break;
             case "Boolean":
+            case "Bool":
             case "Integer":
+            case "int":
+            case "int128":
+            case "long":
                 autoCompleteTextView.setRawInputType(InputType.TYPE_CLASS_NUMBER);
             case "Integer or String":
+            case "string":
                 autoCompleteTextView.setSingleLine();
                 break;
         }
