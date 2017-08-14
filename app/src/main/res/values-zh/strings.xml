@@ -20,7 +20,7 @@
     <string name="add_fav_prompt">選取類別</string>
     <string name="add_fav_value_hint">您的資料</string>
     <string name="cancel">取消</string>
-    <string name="main_ask_add_bot_msg">您想要建立新 Bot 嗎？</string>
+    <string name="main_ask_add_bot_msg">您想要加入新 Bot 嗎？</string>
     <string name="main_ask_add_bot_title">新增 Bot</string>
     <string name="main_backup_dir_is_file">建立資料夾失敗</string>
     <string name="main_db_export_fail">匯出失敗</string>

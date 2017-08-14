@@ -39,7 +39,7 @@
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
     <string name="main_backup_dir_is_file">Fail to create director</string>
-    <string name="main_ask_add_bot_msg">Do you want to create new bot?</string>
+    <string name="main_ask_add_bot_msg">Do you want to add new bot?</string>
     <string name="main_ask_add_bot_title">New Bot</string>
     <string name="nav_menu_fav">Favorite</string>
     <string name="title_activity_favorite">Favorites</string>
@@ -58,7 +58,7 @@
     <string name="footer_rate_msg">Click GO if you like it :)</string>
     <string name="footer_rate_title">Rate this Application</string>
     <string name="not_now">Not now</string>
-    <string name="main_no_bot">No Bot yet, please click + to create one.</string>
+    <string name="main_no_bot">No Bot yet, please click + to add one.</string>
     <string name="menu_file_downloader">File Downloader</string>
     <string name="file_download_description">All Downloaded File will Storaged in /sdcard/Sean Directory.</string>
     <string name="file_id" translatable="false">File ID</string>
