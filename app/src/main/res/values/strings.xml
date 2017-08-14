@@ -19,13 +19,13 @@
     <string name="nav_menu_functions">Functions</string>
     <string name="nav_menu_join_group">Join Group</string>
     <string name="nav_menu_add_bot">Add Bot</string>
-    <string name="api_caller_method_hint" translatable="false">Method</string>
+    <string name="method" translatable="false">Method</string>
     <string name="api_caller_method_default_text" translatable="false">getMe</string>
-    <string name="api_caller_data_hint" translatable="false">JSON Data</string>
+    <string name="json_data" translatable="false">JSON Data</string>
     <string name="json_empty_object" translatable="false">{}</string>
-    <string name="api_caller_check_text">Check JSON</string>
+    <string name="check_json">Check JSON</string>
     <string name="submit">Submit</string>
-    <string name="api_caller_result_placeholder">No Context Yet.</string>
+    <string name="no_context_yet">No Context Yet.</string>
     <string name="nav_header_photo" translatable="false">Bot Profile Photo</string>
     <string name="no_bot_warning">Didn\'t select bot token, please add one first.</string>
     <string name="action_edit">Edit</string>
@@ -62,4 +62,6 @@
     <string name="menu_file_downloader">File Downloader</string>
     <string name="file_download_description">All Downloaded File will Storaged in /sdcard/Sean Directory.</string>
     <string name="file_id" translatable="false">File ID</string>
+    <string name="menu_pwrtelegram">PWRTelegram API (unofficial)</string>
+    <string name="pwrtelegram_default_method" translatable="false">enableGetMTProtoUpdates</string>
 </resources>

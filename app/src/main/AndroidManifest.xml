@@ -80,6 +80,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="taipei.sean.telegram.botplayground.activity.MainActivity" />
         </activity>
+        <activity
+            android:name=".activity.PWRTelegramActivity"
+            android:label="PWRTelegram API"
+            android:parentActivityName=".activity.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="taipei.sean.telegram.botplayground.activity.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

@@ -1,7 +1,6 @@
 package taipei.sean.telegram.botplayground.activity;
 
 import android.os.Bundle;
-import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -25,21 +24,21 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Objects;
 
-import taipei.sean.telegram.botplayground.adapter.ApiCallerAdapter;
+import taipei.sean.telegram.botplayground.PWRTelegramAPI;
 import taipei.sean.telegram.botplayground.R;
 import taipei.sean.telegram.botplayground.SeanDBHelper;
-import taipei.sean.telegram.botplayground.TelegramAPI;
+import taipei.sean.telegram.botplayground.adapter.ApiCallerAdapter;
 
-public class ApiCallerActivity extends AppCompatActivity {
+public class PWRTelegramActivity extends AppCompatActivity {
     final private int _dbVer = 2;
     private SeanDBHelper db;
     private String _token;
-    private TelegramAPI _api;
+    private PWRTelegramAPI _api;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_api_caller);
+        setContentView(R.layout.activity_pwrtelegram);
 
         try {
             Bundle bundle = getIntent().getExtras();
@@ -51,18 +50,17 @@ public class ApiCallerActivity extends AppCompatActivity {
 
         db = new SeanDBHelper(this, "data.db", null, _dbVer);
 
-        _api = new TelegramAPI(this, _token);
+        _api = new PWRTelegramAPI(this, _token);
 
-        final AutoCompleteTextView textView = (AutoCompleteTextView) findViewById(R.id.api_caller_method);
-        final RecyclerView inputList = (RecyclerView) findViewById(R.id.api_caller_inputs);
-        final Button submitButton = (Button) findViewById(R.id.api_caller_submit);
-        final Button checkJsonButton = (Button) findViewById(R.id.api_caller_check);
-        final TextInputEditText jsonView = (TextInputEditText) findViewById(R.id.api_caller_data);
-        final TextView resultView = (TextView) findViewById(R.id.api_caller_result);
+        final AutoCompleteTextView methodView = (AutoCompleteTextView) findViewById(R.id.pwrtelegram_method);
+        final RecyclerView inputList = (RecyclerView) findViewById(R.id.pwrtelegram_inputs);
+        final Button submitButton = (Button) findViewById(R.id.pwrtelegram_submit);
+        final TextView resultView = (TextView) findViewById(R.id.pwrtelegram_result);
 
 
         final ArrayList<String> botApiMethodsList = new ArrayList<String>() {};
         final JSONObject apiJson = loadMethods();
+        final JSONObject pApiJson = loadPMethods();
 
         try {
             JSONObject apiMethods = (JSONObject) apiJson.get("methods");
@@ -75,11 +73,22 @@ public class ApiCallerActivity extends AppCompatActivity {
             Log.e("caller", "parse", e);
         }
 
+        try {
+            JSONObject apiMethods = (JSONObject) pApiJson.get("methods");
+            Iterator<String> temp = apiMethods.keys();
+            while (temp.hasNext()) {
+                String key = temp.next();
+                botApiMethodsList.add(key);
+            }
+        } catch (JSONException e) {
+            Log.e("caller", "parse p", e);
+        }
+
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_dropdown_item_1line, botApiMethodsList);
-        textView.setAdapter(adapter);
+        methodView.setAdapter(adapter);
 
-        textView.addTextChangedListener(new TextWatcher() {
+        methodView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
@@ -92,26 +101,31 @@ public class ApiCallerActivity extends AppCompatActivity {
                 String method = editable.toString();
                 try {
                     JSONObject apiMethods = (JSONObject) apiJson.get("methods");
-                    if (!apiMethods.has(method)) {
-                        textView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
+                    JSONObject pApiMethods = (JSONObject) pApiJson.get("methods");
+                    if (pApiMethods.has(method)) {
+                        JSONObject methodData = (JSONObject) pApiMethods.get(method);
+                        paramData = (JSONObject) methodData.get("params");
+                    } else if (apiMethods.has(method)) {
+                        JSONObject methodData = (JSONObject) apiMethods.get(method);
+                        paramData = (JSONObject) methodData.get("params");
+                    } else {
+                        methodView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
                         ViewGroup.LayoutParams layoutParams = inputList.getLayoutParams();
                         layoutParams.height = 0;
                         inputList.setLayoutParams(layoutParams);
                         return;
                     }
-                    JSONObject methodData = (JSONObject) apiMethods.get(method);
-                    paramData = (JSONObject) methodData.get("params");
                 } catch (JSONException e) {
-                    Log.e("caller", "1", e);
+                    Log.e("caller", "json", e);
                     return;
                 }
 
                 int paramCount = paramData.length();
                 ViewGroup.LayoutParams layoutParams = inputList.getLayoutParams();
-                if (paramCount <= 3)
+                if (paramCount <= 4)
                     layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
                 else
-                    layoutParams.height = 450;   // 3 params
+                    layoutParams.height = 600;   // 4 params
                 inputList.setLayoutParams(layoutParams);
 
                 ApiCallerAdapter apiCallerAdapter = new ApiCallerAdapter(getApplicationContext());
@@ -139,37 +153,22 @@ public class ApiCallerActivity extends AppCompatActivity {
                 submit();
             }
         });
-        checkJsonButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                _api.checkJson(jsonView, resultView);
-            }
-        });
 
-        submit();   // default getMe
+        submit();   // default enableGetMTProtoUpdates
     }
 
     private void submit() {
-        final AutoCompleteTextView methodView = (AutoCompleteTextView) findViewById(R.id.api_caller_method);
-        final RecyclerView inputList = (RecyclerView) findViewById(R.id.api_caller_inputs);
-        final TextInputEditText dataView = (TextInputEditText) findViewById(R.id.api_caller_data);
-        final TextView resultView = (TextView) findViewById(R.id.api_caller_result);
+        final AutoCompleteTextView methodView = (AutoCompleteTextView) findViewById(R.id.pwrtelegram_method);
+        final RecyclerView inputList = (RecyclerView) findViewById(R.id.pwrtelegram_inputs);
+        final TextView resultView = (TextView) findViewById(R.id.pwrtelegram_result);
 
         String method = methodView.getText().toString();
-        String jsonData = dataView.getText().toString();
-        JSONObject jsonObject;
 
-        try {
-            jsonObject = new JSONObject(jsonData);
-        } catch (JSONException e) {
-            Log.e("caller", "json", e);
-            dataView.setError(e.getLocalizedMessage());
-            return;
-        }
+        JSONObject jsonObject = new JSONObject();
 
         final RecyclerView.Adapter inputAdapter = inputList.getAdapter();
         if (null == inputAdapter) {
-            _api.callApi(method, resultView, jsonData);
+            _api.callApi(method, resultView, jsonObject);
             return;
         }
 
@@ -202,9 +201,7 @@ public class ApiCallerActivity extends AppCompatActivity {
             }
         }
 
-        String json = jsonObject.toString();
-
-        _api.callApi(method, resultView, json);
+        _api.callApi(method, resultView, jsonObject);
     }
 
     public JSONObject loadMethods() {
@@ -232,6 +229,32 @@ public class ApiCallerActivity extends AppCompatActivity {
             return null;
         }
         return json;
+    }
 
+    public JSONObject loadPMethods() {
+        String jsonStr;
+        JSONObject json;
+        try {
+            InputStream is = getAssets().open("pwrtelegram-methods.json");
+
+            int size = is.available();
+            byte[] buffer = new byte[size];
+
+            if (is.read(buffer) < 0)
+                return null;
+
+            is.close();
+            jsonStr = new String(buffer, "UTF-8");
+        } catch (IOException e) {
+            Log.e("caller", "get", e);
+            return null;
+        }
+        try {
+            json = new JSONObject(jsonStr);
+        } catch (JSONException e) {
+            Log.e("caller", "parse", e);
+            return null;
+        }
+        return json;
     }
 }

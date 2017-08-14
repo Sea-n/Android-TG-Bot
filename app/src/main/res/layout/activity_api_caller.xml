@@ -18,7 +18,7 @@
             android:id="@+id/api_caller_method"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/api_caller_method_hint"
+            android:hint="@string/method"
             android:inputType="text"
             android:maxLines="1"
             android:selectAllOnFocus="true"
@@ -39,7 +39,7 @@
             android:id="@+id/api_caller_data"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/api_caller_data_hint"
+            android:hint="@string/json_data"
             android:inputType="textMultiLine"
             android:text="@string/json_empty_object" />
 
@@ -61,7 +61,7 @@
             android:layout_marginEnd="5dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="16dp"
-            android:text="@string/api_caller_check_text"
+            android:text="@string/check_json"
             android:textStyle="bold" />
 
         <Button
@@ -85,6 +85,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textIsSelectable="true"
-            android:text="@string/api_caller_result_placeholder" />
+            android:text="@string/no_context_yet" />
     </ScrollView>
 </LinearLayout>
