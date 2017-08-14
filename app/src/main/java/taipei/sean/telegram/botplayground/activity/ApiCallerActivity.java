@@ -62,17 +62,12 @@ public class ApiCallerActivity extends AppCompatActivity {
 
 
         final ArrayList<String> botApiMethodsList = new ArrayList<String>() {};
-        final JSONObject apiJson = loadMethods();
+        final JSONObject apiMethods = loadMethods();
 
-        try {
-            JSONObject apiMethods = (JSONObject) apiJson.get("methods");
-            Iterator<String> temp = apiMethods.keys();
-            while (temp.hasNext()) {
-                String key = temp.next();
-                botApiMethodsList.add(key);
-            }
-        } catch (JSONException e) {
-            Log.e("caller", "parse", e);
+        Iterator<String> temp = apiMethods.keys();
+        while (temp.hasNext()) {
+            String key = temp.next();
+            botApiMethodsList.add(key);
         }
 
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
@@ -90,15 +85,16 @@ public class ApiCallerActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 JSONObject paramData;
                 String method = editable.toString();
+
+                if (!apiMethods.has(method)) {
+                    textView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
+                    ViewGroup.LayoutParams layoutParams = inputList.getLayoutParams();
+                    layoutParams.height = 0;
+                    inputList.setLayoutParams(layoutParams);
+                    return;
+                }
+
                 try {
-                    JSONObject apiMethods = (JSONObject) apiJson.get("methods");
-                    if (!apiMethods.has(method)) {
-                        textView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
-                        ViewGroup.LayoutParams layoutParams = inputList.getLayoutParams();
-                        layoutParams.height = 0;
-                        inputList.setLayoutParams(layoutParams);
-                        return;
-                    }
                     JSONObject methodData = (JSONObject) apiMethods.get(method);
                     paramData = (JSONObject) methodData.get("params");
                 } catch (JSONException e) {

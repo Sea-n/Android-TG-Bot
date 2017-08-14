@@ -59,29 +59,20 @@ public class PWRTelegramActivity extends AppCompatActivity {
 
 
         final ArrayList<String> botApiMethodsList = new ArrayList<String>() {};
-        final JSONObject pApiJson = loadPMethods();
-        final JSONObject apiJson = loadMethods();
+        final JSONObject pApiMethods = loadPMethods();
+        final JSONObject apiMethods = loadMethods();
 
 
-        try {
-            JSONObject apiMethods = (JSONObject) pApiJson.get("methods");
-            Iterator<String> temp = apiMethods.keys();
-            while (temp.hasNext()) {
-                String key = temp.next();
-                botApiMethodsList.add(key);
-            }
-        } catch (JSONException e) {
-            Log.e("caller", "parse p", e);
+        Iterator<String> pTemp = pApiMethods.keys();
+        while (pTemp.hasNext()) {
+            String key = pTemp.next();
+            botApiMethodsList.add(key);
         }
-        try {
-            JSONObject apiMethods = (JSONObject) apiJson.get("methods");
-            Iterator<String> temp = apiMethods.keys();
-            while (temp.hasNext()) {
-                String key = temp.next();
-                botApiMethodsList.add(key);
-            }
-        } catch (JSONException e) {
-            Log.e("caller", "parse", e);
+
+        Iterator<String> temp = apiMethods.keys();
+        while (temp.hasNext()) {
+            String key = temp.next();
+            botApiMethodsList.add(key);
         }
 
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
@@ -100,8 +91,6 @@ public class PWRTelegramActivity extends AppCompatActivity {
                 JSONObject paramData;
                 String method = editable.toString();
                 try {
-                    JSONObject apiMethods = (JSONObject) apiJson.get("methods");
-                    JSONObject pApiMethods = (JSONObject) pApiJson.get("methods");
                     if (pApiMethods.has(method)) {
                         JSONObject methodData = (JSONObject) pApiMethods.get(method);
                         paramData = (JSONObject) methodData.get("params");

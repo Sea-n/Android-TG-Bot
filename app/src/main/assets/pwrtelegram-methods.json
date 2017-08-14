@@ -1,340 +1,333 @@
 {
-  "methods": {
-    "enableGetMTProtoUpdates": {
-    },
-    "disableGetMTProtoUpdates": {
-    },
-    "setMTProtoWebhook": {
-      "params": {
-        "url": {
-          "type": "String",
-          "required": false
-        }
+  "enableGetMTProtoUpdates": {},
+  "disableGetMTProtoUpdates": {},
+  "setMTProtoWebhook": {
+    "params": {
+      "url": {
+        "type": "String",
+        "required": false
       }
-    },
-    "deleteMTProtoWebhook": {
-    },
-    "sendMedia": {
-      "params": {
-        "a": {
-
-        }
+    }
+  },
+  "deleteMTProtoWebhook": {},
+  "sendMedia": {
+    "params": {
+      "a": {}
+    }
+  },
+  "getChatByFile": {
+    "params": {
+      "file_id": {
+        "type": "String",
+        "required": true,
+        "description": "File id of a file"
       }
-    },
-    "getChatByFile": {
-      "params": {
-        "file_id": {
-          "type": "String",
-          "required": true,
-          "description": "File id of a file"
-        }
+    }
+  },
+  "madeline": {
+    "params": {
+      "method": {
+        "type": "String",
+        "required": true
       }
-    },
-    "madeline": {
-      "params": {
-        "method": {
-          "type": "String",
-          "required": true
-        }
+    }
+  },
+  "sendFile": {
+    "params": {
+      "chat_id": {
+        "type": "Integer or String",
+        "required": true,
+        "description": "Unique identifier for the target chat or username of the target channel, group or user (in the format @username)"
+      },
+      "file": {
+        "type": "String",
+        "required": true,
+        "description": "File to send. You can either pass a URL as String to send a file from a URL, or a file ID as a string to re-upload a file already present on the Telegram servers or upload a new file using multipart/form-data."
+      },
+      "caption": {
+        "type": "String",
+        "required": false,
+        "description": "File caption (will only be applied if the sent file/URL is a photo, a video or a document), 0-200 characters"
+      },
+      "duration": {
+        "type": "Integer",
+        "required": false,
+        "description": "Duration of the sent file/URL in seconds (will only be applied if the sent file/URL is an audio file, a video or a voice recording)"
+      },
+      "performer": {
+        "type": "String",
+        "required": false,
+        "description": "Performer of the sent file/URL (will only be applied if the sent file/URL is an audio file)"
+      },
+      "title": {
+        "type": "String",
+        "required": false,
+        "description": "Title of the sent file/URL (will only be applied if the sent file/URL is an audio file)"
+      },
+      "width": {
+        "type": "Integer",
+        "required": false,
+        "description": "Width of the sent file/URL (will only be applied if the sent file/URL is a video file)"
+      },
+      "height": {
+        "type": "Integer",
+        "required": false,
+        "description": "Height of the sent file/URL (will only be applied if the sent file/URL is a video file)"
+      },
+      "file_name": {
+        "type": "String",
+        "required": false,
+        "description": "Name of the file to be sent. If set, the file will be sent with the specified file name."
+      },
+      "disable_notification": {
+        "type": "Boolean",
+        "required": false,
+        "description": "Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound."
+      },
+      "reply_to_message_id": {
+        "type": "Integer",
+        "required": false,
+        "description": "If the message is a reply, ID of the original message"
+      },
+      "reply_markup": {
+        "type": "InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardHide or ForceReply",
+        "required": false,
+        "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to hide reply keyboard or to force a reply from the user."
       }
-    },
-    "sendFile": {
-      "params": {
-        "chat_id": {
-          "type": "Integer or String",
-          "required": true,
-          "description": "Unique identifier for the target chat or username of the target channel, group or user (in the format @username)"
-        },
-        "file": {
-          "type": "String",
-          "required": true,
-          "description": "File to send. You can either pass a URL as String to send a file from a URL, or a file ID as a string to re-upload a file already present on the Telegram servers or upload a new file using multipart/form-data."
-        },
-        "caption": {
-          "type": "String",
-          "required": false,
-          "description": "File caption (will only be applied if the sent file/URL is a photo, a video or a document), 0-200 characters"
-        },
-        "duration": {
-          "type": "Integer",
-          "required": false,
-          "description": "Duration of the sent file/URL in seconds (will only be applied if the sent file/URL is an audio file, a video or a voice recording)"
-        },
-        "performer": {
-          "type": "String",
-          "required": false,
-          "description": "Performer of the sent file/URL (will only be applied if the sent file/URL is an audio file)"
-        },
-        "title": {
-          "type": "String",
-          "required": false,
-          "description": "Title of the sent file/URL (will only be applied if the sent file/URL is an audio file)"
-        },
-        "width": {
-          "type": "Integer",
-          "required": false,
-          "description": "Width of the sent file/URL (will only be applied if the sent file/URL is a video file)"
-        },
-        "height": {
-          "type": "Integer",
-          "required": false,
-          "description": "Height of the sent file/URL (will only be applied if the sent file/URL is a video file)"
-        },
-        "file_name": {
-          "type": "String",
-          "required": false,
-          "description": "Name of the file to be sent. If set, the file will be sent with the specified file name."
-        },
-        "disable_notification": {
-          "type": "Boolean",
-          "required": false,
-          "description": "Sends the message silently. iOS users will not receive a notification, Android users will receive a notification with no sound."
-        },
-        "reply_to_message_id": {
-          "type": "Integer",
-          "required": false,
-          "description": "If the message is a reply, ID of the original message"
-        },
-        "reply_markup": {
-          "type": "InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardHide or ForceReply",
-          "required": false,
-          "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to hide reply keyboard or to force a reply from the user."
-        }
+    }
+  },
+  "uploadFile": {
+    "params": {
+      "file": {
+        "type": "String",
+        "required": true,
+        "description": "File to send. You can either pass a URL as String to send a file from a URL, or a file ID as a string to re-upload a file already present on the Telegram servers or upload a new file using multipart/form-data."
+      },
+      "caption": {
+        "type": "String",
+        "required": false,
+        "description": "File caption (will only be applied if the sent file/URL is a photo, a video or a document), 0-200 characters"
+      },
+      "duration": {
+        "type": "Integer",
+        "required": false,
+        "description": "Duration of the sent file/URL in seconds (will only be applied if the sent file/URL is an audio file, a video or a voice recording)"
+      },
+      "performer": {
+        "type": "String",
+        "required": false,
+        "description": "Performer of the sent file/URL (will only be applied if the sent file/URL is an audio file)"
+      },
+      "title": {
+        "type": "String",
+        "required": false,
+        "description": "Title of the sent file/URL (will only be applied if the sent file/URL is an audio file)"
+      },
+      "width": {
+        "type": "Integer",
+        "required": false,
+        "description": "Width of the sent file/URL (will only be applied if the sent file/URL is a video file)"
+      },
+      "height": {
+        "type": "Integer",
+        "required": false,
+        "description": "Height of the sent file/URL (will only be applied if the sent file/URL is a video file)"
+      },
+      "file_name": {
+        "type": "String",
+        "required": false,
+        "description": "Name of the file to be sent. If set, the file will be sent with the specified file name."
       }
-    },
-    "uploadFile": {
-      "params": {
-        "file": {
-          "type": "String",
-          "required": true,
-          "description": "File to send. You can either pass a URL as String to send a file from a URL, or a file ID as a string to re-upload a file already present on the Telegram servers or upload a new file using multipart/form-data."
-        },
-        "caption": {
-          "type": "String",
-          "required": false,
-          "description": "File caption (will only be applied if the sent file/URL is a photo, a video or a document), 0-200 characters"
-        },
-        "duration": {
-          "type": "Integer",
-          "required": false,
-          "description": "Duration of the sent file/URL in seconds (will only be applied if the sent file/URL is an audio file, a video or a voice recording)"
-        },
-        "performer": {
-          "type": "String",
-          "required": false,
-          "description": "Performer of the sent file/URL (will only be applied if the sent file/URL is an audio file)"
-        },
-        "title": {
-          "type": "String",
-          "required": false,
-          "description": "Title of the sent file/URL (will only be applied if the sent file/URL is an audio file)"
-        },
-        "width": {
-          "type": "Integer",
-          "required": false,
-          "description": "Width of the sent file/URL (will only be applied if the sent file/URL is a video file)"
-        },
-        "height": {
-          "type": "Integer",
-          "required": false,
-          "description": "Height of the sent file/URL (will only be applied if the sent file/URL is a video file)"
-        },
-        "file_name": {
-          "type": "String",
-          "required": false,
-          "description": "Name of the file to be sent. If set, the file will be sent with the specified file name."
-        }
+    }
+  },
+  "uploadPhoto": {
+    "description": "Use this method to send photos. On success, the sent Message is returned.",
+    "params": {
+      "photo": {
+        "type": "InputFile or String",
+        "required": true,
+        "description": "Photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet, or upload a new photo using multipart/form-data. More info on Sending Files »"
+      },
+      "caption": {
+        "type": "String",
+        "required": false,
+        "description": "Photo caption (may also be used when resending photos by __file_id__), 0-200 characters"
       }
-    },
-    "uploadPhoto": {
-      "description": "Use this method to send photos. On success, the sent Message is returned.",
-      "params": {
-        "photo": {
-          "type": "InputFile or String",
-          "required": true,
-          "description": "Photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet, or upload a new photo using multipart/form-data. More info on Sending Files »"
-        },
-        "caption": {
-          "type": "String",
-          "required": false,
-          "description": "Photo caption (may also be used when resending photos by __file_id__), 0-200 characters"
-        }
+    }
+  },
+  "uploadAudio": {
+    "description": "For sending voice messages, use the sendVoice method instead.",
+    "params": {
+      "audio": {
+        "type": "InputFile or String",
+        "required": true,
+        "description": "Audio file to send. Pass a file_id as String to send an audio file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »"
+      },
+      "caption": {
+        "type": "String",
+        "required": false,
+        "description": "Audio caption, 0-200 characters"
+      },
+      "duration": {
+        "type": "Integer",
+        "required": false,
+        "description": "Duration of the audio in seconds"
+      },
+      "performer": {
+        "type": "String",
+        "required": false,
+        "description": "Performer"
+      },
+      "title": {
+        "type": "String",
+        "required": false,
+        "description": "Track name"
       }
-    },
-    "uploadAudio": {
-      "description": "For sending voice messages, use the sendVoice method instead.",
-      "params": {
-        "audio": {
-          "type": "InputFile or String",
-          "required": true,
-          "description": "Audio file to send. Pass a file_id as String to send an audio file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »"
-        },
-        "caption": {
-          "type": "String",
-          "required": false,
-          "description": "Audio caption, 0-200 characters"
-        },
-        "duration": {
-          "type": "Integer",
-          "required": false,
-          "description": "Duration of the audio in seconds"
-        },
-        "performer": {
-          "type": "String",
-          "required": false,
-          "description": "Performer"
-        },
-        "title": {
-          "type": "String",
-          "required": false,
-          "description": "Track name"
-        }
+    }
+  },
+  "uploadDocument": {
+    "description": "Use this method to send general files. On success, the sent Message is returned. Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.",
+    "params": {
+      "document": {
+        "type": "InputFile or String",
+        "required": true,
+        "description": "File to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »"
+      },
+      "caption": {
+        "type": "String",
+        "required": false,
+        "description": "Document caption (may also be used when resending documents by __file_id__), 0-200 characters"
       }
-    },
-    "uploadDocument": {
-      "description": "Use this method to send general files. On success, the sent Message is returned. Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.",
-      "params": {
-        "document": {
-          "type": "InputFile or String",
-          "required": true,
-          "description": "File to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »"
-        },
-        "caption": {
-          "type": "String",
-          "required": false,
-          "description": "Document caption (may also be used when resending documents by __file_id__), 0-200 characters"
-        }
+    }
+  },
+  "uploadVideo": {
+    "description": "Use this method to send video files, Telegram clients support mp4 videos (other formats may be sent as Document). On success, the sent Message is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.",
+    "params": {
+      "video": {
+        "type": "InputFile or String",
+        "required": true,
+        "description": "Video to send. Pass a file_id as String to send a video that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a video from the Internet, or upload a new video using multipart/form-data. More info on Sending Files »"
+      },
+      "duration": {
+        "type": "Integer",
+        "required": false,
+        "description": "Duration of sent video in seconds"
+      },
+      "width": {
+        "type": "Integer",
+        "required": false,
+        "description": "Video width"
+      },
+      "height": {
+        "type": "Integer",
+        "required": false,
+        "description": "Video height"
+      },
+      "caption": {
+        "type": "String",
+        "required": false,
+        "description": "Video caption (may also be used when resending videos by __file_id__), 0-200 characters"
       }
-    },
-    "uploadVideo": {
-      "description": "Use this method to send video files, Telegram clients support mp4 videos (other formats may be sent as Document). On success, the sent Message is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.",
-      "params": {
-        "video": {
-          "type": "InputFile or String",
-          "required": true,
-          "description": "Video to send. Pass a file_id as String to send a video that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a video from the Internet, or upload a new video using multipart/form-data. More info on Sending Files »"
-        },
-        "duration": {
-          "type": "Integer",
-          "required": false,
-          "description": "Duration of sent video in seconds"
-        },
-        "width": {
-          "type": "Integer",
-          "required": false,
-          "description": "Video width"
-        },
-        "height": {
-          "type": "Integer",
-          "required": false,
-          "description": "Video height"
-        },
-        "caption": {
-          "type": "String",
-          "required": false,
-          "description": "Video caption (may also be used when resending videos by __file_id__), 0-200 characters"
-        }
+    }
+  },
+  "uploadVoice": {
+    "description": "Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .ogg file encoded with OPUS (other formats may be sent as Audio or Document). On success, the sent Message is returned. Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.",
+    "params": {
+      "voice": {
+        "type": "InputFile or String",
+        "required": true,
+        "description": "Audio file to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »"
+      },
+      "caption": {
+        "type": "String",
+        "required": false,
+        "description": "Voice message caption, 0-200 characters"
+      },
+      "duration": {
+        "type": "Integer",
+        "required": false,
+        "description": "Duration of the voice message in seconds"
       }
-    },
-    "uploadVoice": {
-      "description": "Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .ogg file encoded with OPUS (other formats may be sent as Audio or Document). On success, the sent Message is returned. Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.",
-      "params": {
-        "voice": {
-          "type": "InputFile or String",
-          "required": true,
-          "description": "Audio file to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »"
-        },
-        "caption": {
-          "type": "String",
-          "required": false,
-          "description": "Voice message caption, 0-200 characters"
-        },
-        "duration": {
-          "type": "Integer",
-          "required": false,
-          "description": "Duration of the voice message in seconds"
-        }
+    }
+  },
+  "uploadSticker": {
+    "description": "Use this method to send .webp stickers. On success, the sent Message is returned.",
+    "params": {
+      "sticker": {
+        "type": "InputFile or String",
+        "required": true,
+        "description": "Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .webp file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »"
       }
-    },
-    "uploadSticker": {
-      "description": "Use this method to send .webp stickers. On success, the sent Message is returned.",
-      "params": {
-        "sticker": {
-          "type": "InputFile or String",
-          "required": true,
-          "description": "Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .webp file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »"
-        }
+    }
+  },
+  "deleteMessage": {
+    "params": {
+      "chat_id": {
+        "type": "Integer or String",
+        "required": true,
+        "description": "Unique identifier for the target chat or username of the target channel, group or user (in the format @username)"
+      },
+      "ids": {
+        "type": "Integer",
+        "required": true,
+        "description": "Json array containing the ids of the messages to delete"
       }
-    },
-    "deleteMessage": {
-      "params": {
-        "chat_id": {
-          "type": "Integer or String",
-          "required": true,
-          "description": "Unique identifier for the target chat or username of the target channel, group or user (in the format @username)"
-        },
-        "ids": {
-          "type": "Integer",
-          "required": true,
-          "description": "Json array containing the ids of the messages to delete"
-        }
+    }
+  },
+  "getBackend": {
+    "description": "This method returns a Chat object with info about the backend pwrtelegram user."
+  },
+  "getMessage": {
+    "description": "This message returns a Message object with info about the provided message.",
+    "params": {
+      "chat_id": {
+        "type": "Integer or String",
+        "required": true,
+        "description": "Unique identifier for the target chat or username of the target channel, group or user (in the format @username)"
+      },
+      "message_id": {
+        "type": "Integer",
+        "required": true,
+        "description": "Unique identifier of the sent message"
       }
-    },
-    "getBackend": {
-      "description": "This method returns a Chat object with info about the backend pwrtelegram user."
-    },
-    "getMessage": {
-      "description": "This message returns a Message object with info about the provided message.",
-      "params": {
-        "chat_id": {
-          "type": "Integer or String",
-          "required": true,
-          "description": "Unique identifier for the target chat or username of the target channel, group or user (in the format @username)"
-        },
-        "message_id": {
-          "type": "Integer",
-          "required": true,
-          "description": "Unique identifier of the sent message"
-        }
+    }
+  },
+  "sendChatAction": {
+    "description": "We only recommend using this method when a response from the bot will take a **noticeable** amount of time to arrive.",
+    "params": {
+      "chat_id": {
+        "type": "Integer or String",
+        "required": true,
+        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+      },
+      "action": {
+        "type": "String",
+        "required": true,
+        "description": "Type of action to broadcast. Choose one, depending on what the user is about to receive: __typing__ for text messages, __upload_photo__ for photos, __record_video__ or __upload_video__ for videos, __record_audio__ or __upload_audio__ for audio files, __upload_document__ for general files, __find_location__ for location data, __record_video_note__ or __upload_video_note__ for video notes."
+      },
+      "duration": {
+        "type": "Integer",
+        "required": false
       }
-    },
-    "sendChatAction": {
-      "description": "We only recommend using this method when a response from the bot will take a **noticeable** amount of time to arrive.",
-      "params": {
-        "chat_id": {
-          "type": "Integer or String",
-          "required": true,
-          "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
-        },
-        "action": {
-          "type": "String",
-          "required": true,
-          "description": "Type of action to broadcast. Choose one, depending on what the user is about to receive: __typing__ for text messages, __upload_photo__ for photos, __record_video__ or __upload_video__ for videos, __record_audio__ or __upload_audio__ for audio files, __upload_document__ for general files, __find_location__ for location data, __record_video_note__ or __upload_video_note__ for video notes."
-        },
-        "duration": {
-          "type": "Integer",
-          "required": false
-        }
-      }
-    },
-    "getProfilePhotos": {
-      "description": "Use this method to get a list of profile pictures for a user, chat or channel. Returns a UserProfilePhotos object.",
-      "params": {
-        "chat_id": {
-          "type": "Integer or String",
-          "required": true,
-          "description": "Unique identifier for the target chat or username of the target channel, group or user (in the format @username)"
-        },
-        "offset": {
-          "type": "Integer",
-          "required": false,
-          "description": "Sequential number of the first photo to be returned. By default, all photos are returned."
-        },
-        "limit": {
-          "type": "Integer",
-          "required": false,
-          "description": "Limits the number of photos to be retrieved. Values between 1—100 are accepted. Defaults to 100."
-        }
+    }
+  },
+  "getProfilePhotos": {
+    "description": "Use this method to get a list of profile pictures for a user, chat or channel. Returns a UserProfilePhotos object.",
+    "params": {
+      "chat_id": {
+        "type": "Integer or String",
+        "required": true,
+        "description": "Unique identifier for the target chat or username of the target channel, group or user (in the format @username)"
+      },
+      "offset": {
+        "type": "Integer",
+        "required": false,
+        "description": "Sequential number of the first photo to be returned. By default, all photos are returned."
+      },
+      "limit": {
+        "type": "Integer",
+        "required": false,
+        "description": "Limits the number of photos to be retrieved. Values between 1—100 are accepted. Defaults to 100."
       }
     }
   }
