@@ -100,14 +100,6 @@ public class MadelineActivity extends AppCompatActivity {
                     return;
                 }
 
-                int paramCount = paramData.length();
-                ViewGroup.LayoutParams layoutParams = inputList.getLayoutParams();
-                if (paramCount <= 4)
-                    layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-                else
-                    layoutParams.height = 600;   // 4 params
-                inputList.setLayoutParams(layoutParams);
-
                 ApiCallerAdapter apiCallerAdapter = new ApiCallerAdapter(getApplicationContext());
 
                 try {
@@ -129,6 +121,17 @@ public class MadelineActivity extends AppCompatActivity {
                 inputList.setAdapter(apiCallerAdapter);
                 inputList.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
                 inputList.setItemViewCacheSize(paramData.length());
+
+
+                inputList.measure(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                final int inputHeight = inputList.getMeasuredHeight();
+                final int rootHeight = inputList.getRootView().getHeight();
+
+                if (inputHeight > rootHeight / 3) {
+                    ViewGroup.LayoutParams inputLayoutParams = inputList.getLayoutParams();
+                    inputLayoutParams.height = rootHeight / 4;
+                    inputList.setLayoutParams(inputLayoutParams);
+                }
             }
         });
 
