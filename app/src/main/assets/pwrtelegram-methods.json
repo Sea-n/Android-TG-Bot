@@ -10,25 +10,12 @@
     }
   },
   "deleteMTProtoWebhook": {},
-  "sendMedia": {
-    "params": {
-      "a": {}
-    }
-  },
   "getChatByFile": {
     "params": {
       "file_id": {
         "type": "String",
         "required": true,
         "description": "File id of a file"
-      }
-    }
-  },
-  "madeline": {
-    "params": {
-      "method": {
-        "type": "String",
-        "required": true
       }
     }
   },
