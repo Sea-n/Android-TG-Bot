@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <android.support.design.widget.TextInputEditText
+        <taipei.sean.telegram.botplayground.InstantComplete
             android:id="@+id/file_download_file_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

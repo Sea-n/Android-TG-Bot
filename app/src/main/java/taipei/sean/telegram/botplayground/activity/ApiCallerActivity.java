@@ -31,8 +31,7 @@ import taipei.sean.telegram.botplayground.TelegramAPI;
 import taipei.sean.telegram.botplayground.adapter.ApiCallerAdapter;
 
 public class ApiCallerActivity extends AppCompatActivity {
-    final private int _dbVer = 3
-            ;
+    final private int _dbVer = 3;
     private SeanDBHelper db;
     private String _token;
     private TelegramAPI _api;
