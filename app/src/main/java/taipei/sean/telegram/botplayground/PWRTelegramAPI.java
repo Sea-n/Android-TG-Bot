@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -57,7 +58,14 @@ public class PWRTelegramAPI {
                     public void onResponse(String response) {
                         Gson gson = new GsonBuilder().setPrettyPrinting().create();
                         JsonParser jp = new JsonParser();
-                        JsonElement je = jp.parse(response);
+                        JsonElement je;
+                        try {
+                            je = jp.parse(response);
+                        } catch (JsonSyntaxException e) {
+                            Log.e("papi", "parse", e);
+                            resultView.setText(response);
+                            return;
+                        }
                         String json = gson.toJson(je);
                         Log.d("papi", "resp: " + json);
 
@@ -72,7 +80,14 @@ public class PWRTelegramAPI {
                 Log.d("papi", "error" + response);
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
                 JsonParser jp = new JsonParser();
-                JsonElement je = jp.parse(response);
+                JsonElement je;
+                try {
+                    je = jp.parse(response);
+                } catch (JsonSyntaxException e) {
+                    Log.e("papi", "parse", e);
+                    resultView.setText(response);
+                    return;
+                }
                 String json = gson.toJson(je);
 
                 resultView.setText(json);

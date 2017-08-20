@@ -43,7 +43,14 @@ public class TelegramAPI {
                     public void onResponse(String response) {
                         Gson gson = new GsonBuilder().setPrettyPrinting().create();
                         JsonParser jp = new JsonParser();
-                        JsonElement je = jp.parse(response);
+                        JsonElement je;
+                        try {
+                            je = jp.parse(response);
+                        } catch (JsonSyntaxException e) {
+                            Log.e("api", "parse", e);
+                            resultView.setText(response);
+                            return;
+                        }
                         String json = gson.toJson(je);
                         Log.d("api", "resp:" + json);
 
@@ -58,7 +65,14 @@ public class TelegramAPI {
                 Log.d("api", "error" + response);
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
                 JsonParser jp = new JsonParser();
-                JsonElement je = jp.parse(response);
+                JsonElement je;
+                try {
+                    je = jp.parse(response);
+                } catch (JsonSyntaxException e) {
+                    Log.e("papi", "parse", e);
+                    resultView.setText(response);
+                    return;
+                }
                 String json = gson.toJson(je);
 
                 resultView.setText(json);
