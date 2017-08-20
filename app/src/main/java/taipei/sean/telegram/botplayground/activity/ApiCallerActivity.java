@@ -83,6 +83,7 @@ public class ApiCallerActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
+                JSONObject methodData;
                 JSONObject paramData;
                 String method = editable.toString();
 
@@ -95,10 +96,16 @@ public class ApiCallerActivity extends AppCompatActivity {
                 }
 
                 try {
-                    JSONObject methodData = (JSONObject) apiMethods.get(method);
+                    methodData = (JSONObject) apiMethods.get(method);
+                } catch (JSONException e) {
+                    Log.e("caller", apiMethods.toString(), e);
+                    return;
+                }
+
+                try {
                     paramData = (JSONObject) methodData.get("params");
                 } catch (JSONException e) {
-                    Log.e("caller", "1", e);
+                    Log.e("caller", methodData.toString(), e);
                     return;
                 }
 
@@ -119,15 +126,7 @@ public class ApiCallerActivity extends AppCompatActivity {
                 inputList.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
                 inputList.setItemViewCacheSize(paramData.length());
 
-                inputList.measure(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                final int inputHeight = inputList.getMeasuredHeight();
-                final int rootHeight = inputList.getRootView().getHeight();
-
-                if (inputHeight > rootHeight / 3) {
-                    ViewGroup.LayoutParams inputLayoutParams = inputList.getLayoutParams();
-                    inputLayoutParams.height = rootHeight / 4;
-                    inputList.setLayoutParams(inputLayoutParams);
-                }
+                apiCallerAdapter.fitView(inputList);
 
             }
         });

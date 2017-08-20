@@ -150,16 +150,7 @@ public class PWRTelegramActivity extends AppCompatActivity {
                 inputList.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
                 inputList.setItemViewCacheSize(paramData.length());
 
-
-                inputList.measure(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                final int inputHeight = inputList.getMeasuredHeight();
-                final int rootHeight = inputList.getRootView().getHeight();
-
-                if (inputHeight > rootHeight / 3) {
-                    ViewGroup.LayoutParams inputLayoutParams = inputList.getLayoutParams();
-                    inputLayoutParams.height = rootHeight / 4;
-                    inputList.setLayoutParams(inputLayoutParams);
-                }
+                apiCallerAdapter.fitView(inputList);
             }
         });
 

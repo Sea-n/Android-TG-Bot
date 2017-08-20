@@ -57,6 +57,7 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             iListType.add(type);
             iListReq.add(required);
             iListDesc.add(desc);
+            Log.d("ada", "add " + name);
         } catch (JSONException e) {
             Log.e("caller", "ada", e);
         }
@@ -132,9 +133,27 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         return iList.size();
     }
 
+
     private class DummyViewHolder extends RecyclerView.ViewHolder {
         public DummyViewHolder(View itemView) {
             super(itemView);
         }
+    }
+
+    public void fitView(RecyclerView recyclerView) {
+        final int maxHeightPercentage = 30;
+        final int fitHeightPercentage = 25;
+
+        final int screenHeight = recyclerView.getRootView().getHeight();
+        recyclerView.measure(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);   // Measure height when wrap content
+        final int recyclerHeight = recyclerView.getMeasuredHeight();
+
+        ViewGroup.LayoutParams inputLayoutParams = recyclerView.getLayoutParams();
+        if (recyclerHeight > (screenHeight * maxHeightPercentage / 100)) {   // If child exceed max% of screen height
+            inputLayoutParams.height = (screenHeight * fitHeightPercentage / 100);   // Set height to fit% of screen
+        } else {
+            inputLayoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;   // Under max% of screen height, just wrap content
+        }
+        recyclerView.setLayoutParams(inputLayoutParams);   // Set Layout Parameter to original view
     }
 }
