@@ -10,29 +10,26 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
 import org.apache.commons.io.FilenameUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 import taipei.sean.telegram.botplayground.FavStructure;
 import taipei.sean.telegram.botplayground.InstantComplete;
 import taipei.sean.telegram.botplayground.R;
@@ -97,102 +94,113 @@ public class FileDownloadActivity extends AppCompatActivity {
                 }
                 final String json = jsonObject.toString();
 
-                RequestQueue queue = Volley.newRequestQueue(view.getContext());
-                String url = "https://api.telegram.org/bot" + _token + "/getFile";
-
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                final String filePath;
-                                try {
-                                    JSONObject jsonObject = new JSONObject(response);
-                                    if (!jsonObject.getBoolean("ok")) {
-                                        Log.w("fd", "getFile reponse not ok");
-                                        return;
-                                    }
-                                    JSONObject result = jsonObject.getJSONObject("result");
-                                    filePath = result.getString("file_path");
-                                } catch (JSONException e) {
-                                    Log.e("fd", "getFile", e);
-                                    return;
-                                }
+                final String url = "https://api.telegram.org/bot" + _token + "/getFile";
 
 
-                                final URL url;
-                                try {
-                                    url = new URL("https://api.telegram.org/file/bot" + _token + "/" + filePath);
-                                } catch (MalformedURLException e) {
-                                    Log.e("fd", "getFile", e);
-                                    return;
-                                }
-
-                                final File downloadDir = new File(Environment.getExternalStorageDirectory() + "/Sean");
-                                if (!downloadDir.exists()) {
-                                    if (!downloadDir.mkdir()) {
-                                        Log.e("main", "export mkdir fail");
-                                        return;
-                                    }
-                                } else if (!downloadDir.isDirectory()) {
-                                    Log.e("main", "export director is file");
-                                    return;
-                                }
-                                final String extName = FilenameUtils.getExtension(filePath);
-                                final String fileName = fileId + "." + extName;
-                                final File file = new File(downloadDir, fileName);
-
-                                Log.d("fd", "getFile URL: " + url);
-
-                                Thread thread = new Thread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        URLConnection ucon;
-                                        InputStream is;
-                                        try {
-                                            ucon = url.openConnection();
-
-                                            is = ucon.getInputStream();
-                                            BufferedInputStream bis = new BufferedInputStream(is);
-
-                                            FileOutputStream fos = new FileOutputStream(file);
-
-                                            int current;
-                                            while ((current = bis.read()) != -1) {
-                                                fos.write(current);
-                                            }
-                                            fos.close();
-
-                                            Log.d("fd", "getFile Success");
-                                        } catch (IOException e) {
-                                            Log.e("fd", "getFile", e);
-                                        }
-                                    }
-                                });
-                                thread.start();
-                            }
-                        }, new Response.ErrorListener() {
+                Thread thread = new Thread(new Runnable() {
                     @Override
-                    public void onErrorResponse(VolleyError error) {
-                        if (null == error.networkResponse) {
-                            Log.e("fd", "error" + error.getLocalizedMessage());
+                    public void run() {
+                        String response = "";
+                        try {
+                            final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+
+                            RequestBody body = RequestBody.create(JSON, json);
+                            Request request = new Request.Builder()
+                                    .url(url)
+                                    .post(body)
+                                    .build();
+                            OkHttpClient client = new OkHttpClient();
+                            Response resp = client.newCall(request).execute();
+                            response = resp.body().string();
+                        } catch (final MalformedURLException e) {
+                            Log.e("fd", "Malformed URL", e);
+                            return;
+                        } catch (final IOException e) {
+                            Log.e("fd", "IO", e);
+                            return;
+                        } catch (final NullPointerException e) {
+                            Log.e("fd", "Null Pointer", e);
                             return;
                         }
-                        String response = new String(error.networkResponse.data);
-                        Log.e("fd", "error" + response);
-                    }
-                }) {
-                    @Override
-                    public byte[] getBody() throws AuthFailureError {
-                        return json.getBytes();
-                    }
 
-                    @Override
-                    public String getBodyContentType() {
-                        return "application/json";
+                        final String filePath;
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            if (!jsonObject.getBoolean("ok")) {
+                                Log.w("fd", "getFile reponse not ok");
+                                return;
+                            }
+                            JSONObject result = jsonObject.getJSONObject("result");
+                            filePath = result.getString("file_path");
+                        } catch (JSONException e) {
+                            Log.e("fd", "getFile", e);
+                            return;
+                        }
+
+                        final URL url;
+                        try {
+                            url = new URL("https://api.telegram.org/file/bot" + _token + "/" + filePath);
+                        } catch (MalformedURLException e) {
+                            Log.e("fd", "getFile", e);
+                            return;
+                        }
+
+                        final File downloadDir = new File(Environment.getExternalStorageDirectory() + "/Sean");
+                        if (!downloadDir.exists()) {
+                            if (!downloadDir.mkdir()) {
+                                Log.e("main", "export mkdir fail");
+                                return;
+                            }
+                        } else if (!downloadDir.isDirectory()) {
+                            Log.e("main", "export director is file");
+                            return;
+                        }
+                        final String extName = FilenameUtils.getExtension(filePath);
+                        final String fileName = fileId + "." + extName;
+                        final File file = new File(downloadDir, fileName);
+
+
+                        OkHttpClient client = new OkHttpClient();
+                        Request request = new Request.Builder().url(url)
+                                .build();
+                        Response resp;
+                        try {
+                            resp = client.newCall(request).execute();
+                        } catch (IOException e) {
+                            Log.e("fd", "IO", e);
+                            return;
+                        }
+
+                        if (null == resp.body()) {
+                            Log.e("fd", "Resp Body null");
+                            return;
+                        }
+
+                        InputStream in = resp.body().byteStream();
+                        FileOutputStream fos;
+                        try {
+                            fos = new FileOutputStream(file);
+                        } catch (FileNotFoundException e) {
+                            Log.e("fd", "File Not Found", e);
+                            return;
+                        }
+
+                        BufferedInputStream bis = new BufferedInputStream(in);
+                        try {
+
+                            int current;
+                            while ((current = bis.read()) != -1) {
+                                fos.write(current);
+                            }
+                            fos.close();
+                        } catch (IOException e) {
+                            Log.e("fd", "IO", e);
+                            return;
+                        }
+                        resp.body().close();
                     }
-                };
-                stringRequest.setShouldCache(true);
-                queue.add(stringRequest);
+                });
+                thread.start();
             }
         });
     }

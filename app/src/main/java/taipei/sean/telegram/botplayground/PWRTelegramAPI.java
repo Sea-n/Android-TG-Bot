@@ -1,16 +1,10 @@
 package taipei.sean.telegram.botplayground;
 
 import android.content.Context;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -20,12 +14,17 @@ import com.google.gson.JsonSyntaxException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.Iterator;
+
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
 
 public class PWRTelegramAPI {
     final private String _apiBaseUrl;
     final private Context _context;
-    final private String _token;
 
     public PWRTelegramAPI(Context context, String token, int type) {
         final String _apiBaseUrlNormal = "https://api.pwrtelegram.xyz/bot";
@@ -33,83 +32,91 @@ public class PWRTelegramAPI {
         final String _apiBaseUrlUser = "https://api.pwrtelegram.xyz/user";
 
         this._context = context;
-        this._token = token;
+
+        String apiBaseUrl;
+
         switch (type) {
             case 1:
-                _apiBaseUrl = _apiBaseUrlDeep;
+                apiBaseUrl = _apiBaseUrlDeep;
                 break;
             case 2:
-                _apiBaseUrl = _apiBaseUrlUser;
+                apiBaseUrl = _apiBaseUrlUser;
                 break;
             default:
-                _apiBaseUrl = _apiBaseUrlNormal;
+                apiBaseUrl = _apiBaseUrlNormal;
         }
+        apiBaseUrl += token;
+        _apiBaseUrl = apiBaseUrl;
     }
 
-    public void callApi(String method, final TextView resultView, final JSONObject params) {
-        Log.d("api", method + params);
+    public void callApi(final String method, final TextView resultView, final JSONObject params) {
+        Log.d("papi", method + params);
 
-        RequestQueue queue = Volley.newRequestQueue(_context);
-        String url = _apiBaseUrl + _token + "/" + method;
+        final String url = _apiBaseUrl + "/" + method;
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                        JsonParser jp = new JsonParser();
-                        JsonElement je;
-                        try {
-                            je = jp.parse(response);
-                        } catch (JsonSyntaxException e) {
-                            Log.e("papi", "parse", e);
-                            resultView.setText(response);
-                            return;
-                        }
-                        String json = gson.toJson(je);
-                        Log.d("papi", "resp: " + json);
-
-                        resultView.setText(json);
-                    }
-                }, new Response.ErrorListener() {
+        Thread thread = new Thread(new Runnable() {
             @Override
-            public void onErrorResponse(VolleyError error) {
-                if (null == error.networkResponse)
-                    return;
-                String response = new String(error.networkResponse.data);
-                Log.d("papi", "error" + response);
+            public void run() {
+                String response = "";
+                String resultText = "";
+                try {
+                    final MediaType FORM = MediaType.parse("application/x-www-form-urlencoded; charset=utf-8");
+
+                    String postData = "";
+                    try {
+                        Iterator<String> temp = params.keys();
+                        while (temp.hasNext()) {
+                            String key = temp.next();
+                            String value = params.get(key).toString();
+                            postData += key + "=" + value + "&";
+                        }
+                    } catch (JSONException e) {
+                        Log.w("papi", "JSON", e);
+                    }
+                    RequestBody body = RequestBody.create(FORM, postData);
+                    okhttp3.Request request = new okhttp3.Request.Builder()
+                            .url(url)
+                            .post(body)
+                            .build();
+                    OkHttpClient client = new OkHttpClient();
+                    okhttp3.Response resp = client.newCall(request).execute();
+                    response = resp.body().string();
+                } catch (final MalformedURLException e) {
+                    Log.e("papi", "Malformed URL", e);
+                    resultText += e.getLocalizedMessage();
+                } catch (final IOException e) {
+                    Log.e("papi", "IO", e);
+                    resultText += e.getLocalizedMessage();
+                } catch (final NullPointerException e) {
+                    Log.e("papi", "Null Pointer", e);
+                    resultText += e.getLocalizedMessage();
+                }
+
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
                 JsonParser jp = new JsonParser();
                 JsonElement je;
+                String json = "";
                 try {
                     je = jp.parse(response);
+                    json = gson.toJson(je);
                 } catch (JsonSyntaxException e) {
                     Log.e("papi", "parse", e);
-                    resultView.setText(response);
-                    return;
+                    resultText += response;
                 }
-                String json = gson.toJson(je);
+                Log.d("papi", "resp:" + json);
 
-                resultView.setText(json);
-            }
-        }) {
-            @Override
-            public byte[] getBody() throws AuthFailureError {
-                String postData = "";
-                try {
-                    Iterator<String> temp = params.keys();
-                    while (temp.hasNext()) {
-                        String key = temp.next();
-                        String value = params.get(key).toString();
-                        postData += key + "=" + value + "&";
+                resultText += json;
+
+                final String finalResultText = resultText;
+                Handler handler = new Handler(_context.getMainLooper());
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        resultView.setText(finalResultText);
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                return postData.getBytes();
+                });
             }
-        };
-        stringRequest.setShouldCache(false);
-        queue.add(stringRequest);
+        });
+        thread.start();
     }
 }
