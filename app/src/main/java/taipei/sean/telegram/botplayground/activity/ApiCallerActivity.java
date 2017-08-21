@@ -102,10 +102,15 @@ public class ApiCallerActivity extends AppCompatActivity {
                     return;
                 }
 
-                try {
-                    paramData = (JSONObject) methodData.get("params");
-                } catch (JSONException e) {
-                    Log.e("caller", methodData.toString(), e);
+                if (methodData.has("params")) {
+                    try {
+                        paramData = methodData.getJSONObject("params");
+                    } catch (JSONException e) {
+                        Log.e("caller", methodData.toString(), e);
+                        return;
+                    }
+                } else {
+                    Log.d("caller", "No params: " + method);
                     return;
                 }
 
