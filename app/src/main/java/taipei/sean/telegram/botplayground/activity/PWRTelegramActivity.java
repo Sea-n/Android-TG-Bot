@@ -112,13 +112,13 @@ public class PWRTelegramActivity extends AppCompatActivity {
                 String method = editable.toString();
                 try {
                     if (pApiMethods.has(method)) {
-                        JSONObject methodData = (JSONObject) pApiMethods.get(method);
+                        JSONObject methodData = pApiMethods.getJSONObject(method);
                         if (methodData.has("params"))
-                            paramData = (JSONObject) methodData.get("params");
+                            paramData = methodData.getJSONObject("params");
                     } else if (apiMethods.has(method)) {
-                        JSONObject methodData = (JSONObject) apiMethods.get(method);
+                        JSONObject methodData = apiMethods.getJSONObject(method);
                         if (methodData.has("params"))
-                            paramData = (JSONObject) methodData.get("params");
+                            paramData = methodData.getJSONObject("params");
                     } else {
                         methodView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
                         ViewGroup.LayoutParams layoutParams = inputList.getLayoutParams();
@@ -137,7 +137,7 @@ public class PWRTelegramActivity extends AppCompatActivity {
                     Iterator<String> temp = paramData.keys();
                     while (temp.hasNext()) {
                         String key = temp.next();
-                        JSONObject value = (JSONObject) paramData.get(key);
+                        JSONObject value = paramData.getJSONObject(key);
                         if (!value.has("description"))
                             value.put("description", "");
                         apiCallerAdapter.addData(key, value);

@@ -96,7 +96,7 @@ public class ApiCallerActivity extends AppCompatActivity {
                 }
 
                 try {
-                    methodData = (JSONObject) apiMethods.get(method);
+                    methodData = apiMethods.getJSONObject(method);
                 } catch (JSONException e) {
                     Log.e("caller", apiMethods.toString(), e);
                     return;
@@ -115,7 +115,7 @@ public class ApiCallerActivity extends AppCompatActivity {
                     Iterator<String> temp = paramData.keys();
                     while (temp.hasNext()) {
                         String key = temp.next();
-                        JSONObject value = (JSONObject) paramData.get(key);
+                        JSONObject value = paramData.getJSONObject(key);
                         apiCallerAdapter.addData(key, value);
                     }
                 } catch (JSONException e) {

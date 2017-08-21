@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
             int verCode = pInfo.versionCode;
             footerStr = getString(R.string.main_footer, appName, verName, verCode+"");
         } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
+            Log.e("main", "Name Not Found", e);
             if (Objects.equals(footerStr, "")) {
                 footerStr = e.getLocalizedMessage();
             }

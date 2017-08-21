@@ -86,8 +86,8 @@ public class MadelineActivity extends AppCompatActivity {
                 String method = editable.toString();
                 try {
                     if (apiMethods.has(method)) {
-                        JSONObject methodData = (JSONObject) apiMethods.get(method);
-                        paramData = (JSONObject) methodData.get("params");
+                        JSONObject methodData = apiMethods.getJSONObject(method);
+                        paramData = methodData.getJSONObject("params");
                     } else {
                         methodView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
                         ViewGroup.LayoutParams layoutParams = inputList.getLayoutParams();
