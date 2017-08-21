@@ -51,4 +51,7 @@
     <string name="token_type_normal">普通 Bot</string>
     <string name="token_type_user">PWRTelegram 使用者</string>
     <string name="not_normal_bot">請使用普通 Bot Token</string>
+    <string name="title_activity_file_downloader">檔案下載器</string>
+    <string name="title_activity_add_favorite">新增最愛</string>
+    <string name="title_activity_add_bot">加入 Bot</string>
 </resources>

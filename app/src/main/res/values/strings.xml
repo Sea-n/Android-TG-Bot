@@ -4,7 +4,7 @@
     <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
     <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
 
-    <string name="title_activity_add_bot" translatable="false">New Bot</string>
+    <string name="title_activity_add_bot">New Bot</string>
 
     <string name="add_bot_token">Your Bot Token</string>
     <string name="add_bot_name">Nickname</string>
@@ -72,6 +72,10 @@
     <string name="token_type_deep" translatable="false">Deep Telegram</string>
     <string name="token_type_user">PWRTelegram User</string>
     <string name="not_normal_bot">Please use Normal Bot Token</string>
+    <string name="title_activity_add_favorite">Add Favorite</string>
+    <string name="title_activity_file_downloader">File Downloader</string>
+    <string name="title_activity_pwrtelegram_api" translatable="false">PWRTelegram API</string>
+    <string name="title_activity_madeline_api" translatable="false">Madeline API</string>
     <string-array name="token_type_list">
         <item>@string/token_type_normal</item>
         <item>@string/token_type_deep</item>

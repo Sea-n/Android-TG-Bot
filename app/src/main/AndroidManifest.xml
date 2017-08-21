@@ -66,7 +66,7 @@
         </activity>
         <activity
             android:name=".activity.AddFavoriteActivity"
-            android:label="Add Favorite"
+            android:label="@string/title_activity_add_favorite"
             android:parentActivityName=".activity.FavoriteActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -74,7 +74,7 @@
         </activity>
         <activity
             android:name=".activity.FileDownloadActivity"
-            android:label="File Downloader"
+            android:label="@string/title_activity_file_downloader"
             android:parentActivityName=".activity.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -82,7 +82,7 @@
         </activity>
         <activity
             android:name=".activity.PWRTelegramActivity"
-            android:label="PWRTelegram API"
+            android:label="@string/title_activity_pwrtelegram_api"
             android:parentActivityName=".activity.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -90,7 +90,7 @@
         </activity>
         <activity
             android:name=".activity.MadelineActivity"
-            android:label="Madeline API"
+            android:label="@string/title_activity_madeline_api"
             android:parentActivityName=".activity.PWRTelegramActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
