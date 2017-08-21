@@ -14,7 +14,7 @@
     <string name="bot_token_regex" translatable="false">[0-9]{5,10}:[A-Za-z0-9_-]*</string>
     <string name="nav_header_default_title" translatable="false">No Bot</string>
     <string name="nav_header_default_subtitle" translatable="false">12345:AAJqs_w-4</string>
-    <string name="menu_api_caller">Free API Caller</string>
+    <string name="menu_api_caller">Bot API</string>
     <string name="nav_menu_account">Accounts</string>
     <string name="nav_menu_functions">Functions</string>
     <string name="nav_menu_join_group">Join Group</string>

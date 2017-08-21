@@ -5,10 +5,10 @@
     <string name="done">完成</string>
     <string name="add_bot_token">您的 Bot Token</string>
     <string name="add_bot_token_invalid">Token 格式錯誤</string>
-    <string name="check_json">檢測 JSON</string>
+    <string name="check_json">檢測 JSON 格式</string>
     <string name="submit">送出</string>
     <string name="no_context_yet">尚無內容</string>
-    <string name="menu_api_caller">API 自由發揮</string>
+    <string name="menu_api_caller">Bot API 發送器</string>
     <string name="nav_menu_account">帳號</string>
     <string name="nav_menu_add_bot">新增 Bot</string>
     <string name="nav_menu_functions">功能</string>
@@ -16,7 +16,7 @@
     <string name="action_edit">編輯</string>
     <string name="action_remove">移除</string>
     <string name="main_did_not_select_bot">您還沒選擇 Bot 喔!</string>
-    <string name="no_bot_warning">您還沒選擇 bot，現在新增一個吧</string>
+    <string name="no_bot_warning">您還沒選擇 Bot，現在新增一個吧</string>
     <string name="add_fav_prompt">選取類別</string>
     <string name="add_fav_value_hint">您的資料</string>
     <string name="cancel">取消</string>
