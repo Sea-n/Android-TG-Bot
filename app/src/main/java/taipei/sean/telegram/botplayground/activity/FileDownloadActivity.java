@@ -1,13 +1,18 @@
 package taipei.sean.telegram.botplayground.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 
 import org.apache.commons.io.FilenameUtils;
@@ -58,7 +63,7 @@ public class FileDownloadActivity extends AppCompatActivity {
 
         int permW = ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
         if (permW == PackageManager.PERMISSION_DENIED) {
-            Log.w("main", "permission WRITE_EXTERNAL_STORAGE denied");
+            Log.w("fd", "permission WRITE_EXTERNAL_STORAGE denied");
             ActivityCompat.requestPermissions(this, new String[] {android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
             finish();
         }
@@ -76,6 +81,8 @@ public class FileDownloadActivity extends AppCompatActivity {
                 android.R.layout.simple_dropdown_item_1line, favList);
         fileIdView.setAdapter(adapter);
 
+
+        final Context context = this;
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,12 +121,15 @@ public class FileDownloadActivity extends AppCompatActivity {
                             response = resp.body().string();
                         } catch (final MalformedURLException e) {
                             Log.e("fd", "Malformed URL", e);
+                            showError(e.getLocalizedMessage());
                             return;
                         } catch (final IOException e) {
                             Log.e("fd", "IO", e);
+                            showError(e.getLocalizedMessage());
                             return;
                         } catch (final NullPointerException e) {
                             Log.e("fd", "Null Pointer", e);
+                            showError(e.getLocalizedMessage());
                             return;
                         }
 
@@ -127,13 +137,15 @@ public class FileDownloadActivity extends AppCompatActivity {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             if (!jsonObject.getBoolean("ok")) {
-                                Log.w("fd", "getFile reponse not ok");
+                                Log.w("fd", "getFile response ok=false");
+                                showError("getFile response ok=false");
                                 return;
                             }
                             JSONObject result = jsonObject.getJSONObject("result");
                             filePath = result.getString("file_path");
                         } catch (JSONException e) {
                             Log.e("fd", "getFile", e);
+                            showError(e.getLocalizedMessage());
                             return;
                         }
 
@@ -142,22 +154,34 @@ public class FileDownloadActivity extends AppCompatActivity {
                             url = new URL("https://api.telegram.org/file/bot" + _token + "/" + filePath);
                         } catch (MalformedURLException e) {
                             Log.e("fd", "getFile", e);
+                            showError(e.getLocalizedMessage());
                             return;
                         }
 
                         final File downloadDir = new File(Environment.getExternalStorageDirectory() + "/Sean");
                         if (!downloadDir.exists()) {
                             if (!downloadDir.mkdir()) {
-                                Log.e("main", "export mkdir fail");
+                                Log.e("fd", "Fail to make directory");
+                                showError("Fail to make directory");
                                 return;
                             }
                         } else if (!downloadDir.isDirectory()) {
-                            Log.e("main", "export director is file");
+                            Log.e("fd", "Directory is file");
+                            showError("Directory is file");
                             return;
                         }
                         final String extName = FilenameUtils.getExtension(filePath);
-                        final String fileName = fileId + "." + extName;
+                        final String fileName;
+                        boolean noExt = false;
+                        if (null == extName || extName.length() == 0)
+                            noExt = true;
+                        if (noExt)
+                            fileName = fileId;
+                        else
+
+                            fileName = fileId + "." + extName;
                         final File file = new File(downloadDir, fileName);
+                        Log.d("fd", file.toString());
 
 
                         OkHttpClient client = new OkHttpClient();
@@ -168,11 +192,13 @@ public class FileDownloadActivity extends AppCompatActivity {
                             resp = client.newCall(request).execute();
                         } catch (IOException e) {
                             Log.e("fd", "IO", e);
+                            showError(e.getLocalizedMessage());
                             return;
                         }
 
                         if (null == resp.body()) {
                             Log.e("fd", "Resp Body null");
+                            showError("File Empty");
                             return;
                         }
 
@@ -182,6 +208,7 @@ public class FileDownloadActivity extends AppCompatActivity {
                             fos = new FileOutputStream(file);
                         } catch (FileNotFoundException e) {
                             Log.e("fd", "File Not Found", e);
+                            showError(e.getLocalizedMessage());
                             return;
                         }
 
@@ -195,12 +222,35 @@ public class FileDownloadActivity extends AppCompatActivity {
                             fos.close();
                         } catch (IOException e) {
                             Log.e("fd", "IO", e);
+                            showError(e.getLocalizedMessage());
                             return;
                         }
                         resp.body().close();
+
+                        final String mime;
+                        if (noExt)
+                            mime = "*/*";
+                        else
+                            mime = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extName);
+                        String authority = context.getApplicationContext().getPackageName() + ".provider";
+                        Uri fileURI = FileProvider.getUriForFile(context, authority, file);
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setDataAndType(fileURI, mime);
+                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        startActivity(intent);
                     }
                 });
                 thread.start();
+            }
+        });
+    }
+
+    private void showError(final String str) {
+        final InstantComplete view = (InstantComplete) findViewById(R.id.file_download_file_id);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                view.setError(str);
             }
         });
     }
