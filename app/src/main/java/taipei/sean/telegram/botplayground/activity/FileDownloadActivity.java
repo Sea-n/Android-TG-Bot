@@ -37,7 +37,7 @@ import taipei.sean.telegram.botplayground.SeanAdapter;
 import taipei.sean.telegram.botplayground.SeanDBHelper;
 
 public class FileDownloadActivity extends AppCompatActivity {
-    private final int _dbVer = 3;
+    final private int _dbVer = 4;
     private SeanDBHelper db;
     private String _token;
 

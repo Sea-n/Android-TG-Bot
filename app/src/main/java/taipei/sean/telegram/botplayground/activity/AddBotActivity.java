@@ -22,7 +22,7 @@ import taipei.sean.telegram.botplayground.R;
 import taipei.sean.telegram.botplayground.SeanDBHelper;
 
 public class AddBotActivity extends AppCompatActivity {
-    final private int _dbVer = 3;
+    final private int _dbVer = 4;
     private TextInputEditText tokenView;
     private TextInputEditText nameView;
     private Spinner typeView;

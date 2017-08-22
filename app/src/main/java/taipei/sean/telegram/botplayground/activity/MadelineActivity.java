@@ -30,11 +30,12 @@ import taipei.sean.telegram.botplayground.SeanDBHelper;
 import taipei.sean.telegram.botplayground.adapter.ApiCallerAdapter;
 
 public class MadelineActivity extends AppCompatActivity {
-    final private int _dbVer = 3;
+    final private int _dbVer = 4;
     private SeanDBHelper db;
     private String _token;
     private int _type;
     private PWRTelegramAPI _api;
+    private JSONObject apiMethods;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +61,7 @@ public class MadelineActivity extends AppCompatActivity {
 
 
         final ArrayList<String> botApiMethodsList = new ArrayList<String>() {};
-        final JSONObject apiMethods = loadMethods();
+        apiMethods = loadMethods();
 
 
         Iterator<String> temp = apiMethods.keys();
@@ -82,47 +83,7 @@ public class MadelineActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                JSONObject paramData;
-                String method = editable.toString();
-                try {
-                    if (apiMethods.has(method)) {
-                        JSONObject methodData = apiMethods.getJSONObject(method);
-                        paramData = methodData.getJSONObject("params");
-                    } else {
-                        methodView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
-                        ViewGroup.LayoutParams layoutParams = inputList.getLayoutParams();
-                        layoutParams.height = 0;
-                        inputList.setLayoutParams(layoutParams);
-                        return;
-                    }
-                } catch (JSONException e) {
-                    Log.e("ml", "json", e);
-                    return;
-                }
-
-                ApiCallerAdapter apiCallerAdapter = new ApiCallerAdapter(getApplicationContext());
-
-                try {
-                    JSONObject wrapValue = new JSONObject();
-                    wrapValue.put("required", false);
-                    wrapValue.put("description", "");
-
-                    Iterator<String> temp = paramData.keys();
-                    while (temp.hasNext()) {
-                        String key = temp.next();
-                        String type = paramData.getString(key);
-                        wrapValue.put("type", type);
-                        apiCallerAdapter.addData(key, wrapValue);
-                    }
-                } catch (JSONException e) {
-                    Log.e("ml", "parse", e);
-                }
-
-                inputList.setAdapter(apiCallerAdapter);
-                inputList.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
-                inputList.setItemViewCacheSize(paramData.length());
-
-                apiCallerAdapter.fitView(inputList);
+                updateMethod();
             }
         });
 
@@ -133,12 +94,76 @@ public class MadelineActivity extends AppCompatActivity {
             }
         });
 
-        submit();   // default enableGetMTProtoUpdates
+        String method = db.getParam("_method_ml");
+        if (apiMethods.has(method))
+            methodView.setText(method);
+
+        updateMethod();
+    }
+
+    private void updateMethod() {
+        final InstantComplete methodView = (InstantComplete) findViewById(R.id.madeline_method);
+        final RecyclerView paramView = (RecyclerView) findViewById(R.id.madeline_inputs);
+        final String method = methodView.getText().toString();
+
+        JSONObject methodData;
+        JSONObject paramData;
+
+        if (!apiMethods.has(method)) {
+            methodView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
+            ViewGroup.LayoutParams layoutParams = paramView.getLayoutParams();
+            layoutParams.height = 0;
+            paramView.setLayoutParams(layoutParams);
+            return;
+        }
+
+        try {
+            methodData = apiMethods.getJSONObject(method);
+        } catch (JSONException e) {
+            Log.e("ml", apiMethods.toString(), e);
+            return;
+        }
+
+        if (methodData.has("params")) {
+            try {
+                paramData = methodData.getJSONObject("params");
+            } catch (JSONException e) {
+                Log.e("ml", "json", e);
+                return;
+            }
+        } else {
+            Log.d("ml", "No params: " + method);
+            return;
+        }
+
+        ApiCallerAdapter apiCallerAdapter = new ApiCallerAdapter(getApplicationContext());
+
+        try {
+            JSONObject wrapValue = new JSONObject();
+
+            Iterator<String> temp = paramData.keys();
+            while (temp.hasNext()) {
+                String key = temp.next();
+                String type = paramData.getString(key);
+                wrapValue.put("type", type);
+                apiCallerAdapter.addData(key, wrapValue);
+            }
+        } catch (JSONException e) {
+            Log.e("ml", "parse", e);
+        }
+
+        paramView.setAdapter(apiCallerAdapter);
+        paramView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
+        paramView.setItemViewCacheSize(paramData.length());
+
+        db.updateParam("_method_ml", method);
+
+        apiCallerAdapter.fitView(paramView);
     }
 
     private void submit() {
         final InstantComplete methodView = (InstantComplete) findViewById(R.id.madeline_method);
-        final RecyclerView inputList = (RecyclerView) findViewById(R.id.madeline_inputs);
+        final RecyclerView paramList = (RecyclerView) findViewById(R.id.madeline_inputs);
         final TextView resultView = (TextView) findViewById(R.id.madeline_result);
 
         String method = methodView.getText().toString();
@@ -152,32 +177,38 @@ public class MadelineActivity extends AppCompatActivity {
             return;
         }
 
-        final RecyclerView.Adapter inputAdapter = inputList.getAdapter();
-        if (null == inputAdapter) {
+        final ApiCallerAdapter paramAdapter = (ApiCallerAdapter) paramList.getAdapter();
+        final int paramHeight = paramList.getHeight();
+        if (null == paramAdapter || paramHeight == 0) {
             _api.callApi("madeline", resultView, jsonObject);
             return;
         }
 
-        final int inputCount = inputAdapter.getItemCount();
+        final int inputCount = paramAdapter.getItemCount();
         for (int i=0; i<inputCount; i++) {
-            RecyclerView.ViewHolder viewHolder = inputList.findViewHolderForAdapterPosition(i);
-            if (null == viewHolder)
-                continue;
-            TextInputLayout textInputLayout = (TextInputLayout) viewHolder.itemView;
+            TextInputLayout textInputLayout = (TextInputLayout) paramAdapter.getViewByPos(i);
             InstantComplete textInputEditText = (InstantComplete) textInputLayout.getEditText();
-            if (null == textInputEditText)
+            if (null == textInputEditText) {
+                Log.w("ml", "edit text null");
                 continue;
+            }
             CharSequence hint = textInputLayout.getHint();
-            if (null == hint)
+            if (null == hint) {
+                Log.w("ml", "hint null");
                 continue;
+            }
             String name = hint.toString();
             CharSequence valueChar = textInputEditText.getText();
-            if (null == valueChar)
+            if (null == valueChar) {
+                Log.w("ml", "value char null");
                 continue;
+            }
             String value = valueChar.toString();
 
-            if (Objects.equals(value, ""))
+            if (Objects.equals(value, "")) {
+                Log.w("ml", "value empty");
                 continue;
+            }
 
             try {
                 paramObject.put(name, value);

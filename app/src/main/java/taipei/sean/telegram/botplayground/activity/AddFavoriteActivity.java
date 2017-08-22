@@ -11,7 +11,7 @@ import taipei.sean.telegram.botplayground.R;
 import taipei.sean.telegram.botplayground.SeanDBHelper;
 
 public class AddFavoriteActivity extends AppCompatActivity {
-    final private int _dbVer = 3;
+    final private int _dbVer = 4;
     private long id = -1;
     private SeanDBHelper db;
 

@@ -4,7 +4,9 @@ import android.content.Context;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,12 +25,13 @@ import taipei.sean.telegram.botplayground.SeanDBHelper;
 
 public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     final private Context context;
-    final private int _dbVer = 3;
+    final private int _dbVer = 4;
     private SeanDBHelper db;
     private ArrayList<String> iList;
     private ArrayList<String> iListType;
     private ArrayList<Boolean> iListReq;
     private ArrayList<String> iListDesc;
+    private ArrayList<View> iListView;
 
     public ApiCallerAdapter(Context context) {
         this.context = context;
@@ -39,6 +42,7 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         iListType = new ArrayList<>();
         iListDesc = new ArrayList<>();
         iListReq = new ArrayList<>();
+        iListView = new ArrayList<>();
     }
 
     public void addData(String name, JSONObject data) {
@@ -86,6 +90,8 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
         textInputLayout.setLayoutParams(layoutParams);
 
+        iListView.add(textInputLayout);
+
 
         InstantComplete autoCompleteTextView = new InstantComplete(textInputLayout.getContext());
 
@@ -110,6 +116,9 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 break;
         }
 
+        String text = db.getParam(name);
+        autoCompleteTextView.setText(text);
+
         List<FavStructure> favs = db.getFavs(name);
         ArrayList<String> favList = new ArrayList<>();
         for (int i=0; i<favs.size(); i++)
@@ -122,6 +131,21 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             public boolean onLongClick(View view) {
                 Snackbar.make(view, desc, Snackbar.LENGTH_LONG).show();
                 return false;
+            }
+        });
+
+        autoCompleteTextView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String value = editable.toString();
+
+                db.updateParam(name, value);
             }
         });
 
@@ -155,5 +179,9 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             inputLayoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;   // Under max% of screen height, just wrap content
         }
         recyclerView.setLayoutParams(inputLayoutParams);   // Set Layout Parameter to original view
+    }
+
+    public View getViewByPos(int pos) {
+        return iListView.get(pos);
     }
 }

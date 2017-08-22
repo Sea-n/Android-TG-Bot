@@ -31,10 +31,11 @@ import taipei.sean.telegram.botplayground.TelegramAPI;
 import taipei.sean.telegram.botplayground.adapter.ApiCallerAdapter;
 
 public class ApiCallerActivity extends AppCompatActivity {
-    final private int _dbVer = 3;
+    final private int _dbVer = 4;
     private SeanDBHelper db;
     private String _token;
     private TelegramAPI _api;
+    private JSONObject apiMethods;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,16 +54,15 @@ public class ApiCallerActivity extends AppCompatActivity {
 
         _api = new TelegramAPI(this, _token);
 
-        final InstantComplete textView = (InstantComplete) findViewById(R.id.api_caller_method);
-        final RecyclerView inputList = (RecyclerView) findViewById(R.id.api_caller_inputs);
+        final InstantComplete methodView = (InstantComplete) findViewById(R.id.api_caller_method);
         final Button submitButton = (Button) findViewById(R.id.api_caller_submit);
         final Button checkJsonButton = (Button) findViewById(R.id.api_caller_check);
         final TextInputEditText jsonView = (TextInputEditText) findViewById(R.id.api_caller_data);
         final TextView resultView = (TextView) findViewById(R.id.api_caller_result);
 
 
-        final ArrayList<String> botApiMethodsList = new ArrayList<String>() {};
-        final JSONObject apiMethods = loadMethods();
+        ArrayList<String> botApiMethodsList = new ArrayList<String>() {};
+        apiMethods = loadMethods();
 
         Iterator<String> temp = apiMethods.keys();
         while (temp.hasNext()) {
@@ -72,9 +72,9 @@ public class ApiCallerActivity extends AppCompatActivity {
 
         final SeanAdapter<String> adapter = new SeanAdapter<>(this,
                 android.R.layout.simple_dropdown_item_1line, botApiMethodsList);
-        textView.setAdapter(adapter);
+        methodView.setAdapter(adapter);
 
-        textView.addTextChangedListener(new TextWatcher() {
+        methodView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
@@ -83,56 +83,7 @@ public class ApiCallerActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                JSONObject methodData;
-                JSONObject paramData;
-                String method = editable.toString();
-
-                if (!apiMethods.has(method)) {
-                    textView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
-                    ViewGroup.LayoutParams layoutParams = inputList.getLayoutParams();
-                    layoutParams.height = 0;
-                    inputList.setLayoutParams(layoutParams);
-                    return;
-                }
-
-                try {
-                    methodData = apiMethods.getJSONObject(method);
-                } catch (JSONException e) {
-                    Log.e("caller", apiMethods.toString(), e);
-                    return;
-                }
-
-                if (methodData.has("params")) {
-                    try {
-                        paramData = methodData.getJSONObject("params");
-                    } catch (JSONException e) {
-                        Log.e("caller", methodData.toString(), e);
-                        return;
-                    }
-                } else {
-                    Log.d("caller", "No params: " + method);
-                    return;
-                }
-
-                ApiCallerAdapter apiCallerAdapter = new ApiCallerAdapter(getApplicationContext());
-
-                try {
-                    Iterator<String> temp = paramData.keys();
-                    while (temp.hasNext()) {
-                        String key = temp.next();
-                        JSONObject value = paramData.getJSONObject(key);
-                        apiCallerAdapter.addData(key, value);
-                    }
-                } catch (JSONException e) {
-                    Log.e("caller", "parse", e);
-                }
-
-                inputList.setAdapter(apiCallerAdapter);
-                inputList.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
-                inputList.setItemViewCacheSize(paramData.length());
-
-                apiCallerAdapter.fitView(inputList);
-
+                updateMethod();
             }
         });
 
@@ -149,12 +100,75 @@ public class ApiCallerActivity extends AppCompatActivity {
             }
         });
 
-        submit();   // default getMe
+        String method = db.getParam("_method");
+        if (apiMethods.has(method))
+            methodView.setText(method);
+
+        updateMethod();
+    }
+
+    private void updateMethod() {
+        final InstantComplete methodView = (InstantComplete) findViewById(R.id.api_caller_method);
+        final RecyclerView paramList = (RecyclerView) findViewById(R.id.api_caller_inputs);
+        final String method = methodView.getText().toString();
+
+        JSONObject methodData;
+        JSONObject paramData;
+
+        if (!apiMethods.has(method)) {
+            methodView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
+            ViewGroup.LayoutParams layoutParams = paramList.getLayoutParams();
+            layoutParams.height = 0;
+            paramList.setLayoutParams(layoutParams);
+            return;
+        }
+
+        methodView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_star_border_black_24dp, 0);
+
+        try {
+            methodData = apiMethods.getJSONObject(method);
+        } catch (JSONException e) {
+            Log.e("caller", apiMethods.toString(), e);
+            return;
+        }
+
+        if (methodData.has("params")) {
+            try {
+                paramData = methodData.getJSONObject("params");
+            } catch (JSONException e) {
+                Log.e("caller", methodData.toString(), e);
+                return;
+            }
+        } else {
+            Log.d("caller", "No params: " + method);
+            return;
+        }
+
+        ApiCallerAdapter apiCallerAdapter = new ApiCallerAdapter(getApplicationContext());
+
+        try {
+            Iterator<String> temp = paramData.keys();
+            while (temp.hasNext()) {
+                String key = temp.next();
+                JSONObject value = paramData.getJSONObject(key);
+                apiCallerAdapter.addData(key, value);
+            }
+        } catch (JSONException e) {
+            Log.e("caller", "parse", e);
+        }
+
+        paramList.setAdapter(apiCallerAdapter);
+        paramList.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
+        paramList.setItemViewCacheSize(paramData.length());
+
+        db.updateParam("_method", method);
+
+        apiCallerAdapter.fitView(paramList);
     }
 
     private void submit() {
         final InstantComplete methodView = (InstantComplete) findViewById(R.id.api_caller_method);
-        final RecyclerView inputList = (RecyclerView) findViewById(R.id.api_caller_inputs);
+        final RecyclerView paramList = (RecyclerView) findViewById(R.id.api_caller_inputs);
         final TextInputEditText dataView = (TextInputEditText) findViewById(R.id.api_caller_data);
         final TextView resultView = (TextView) findViewById(R.id.api_caller_result);
 
@@ -170,32 +184,38 @@ public class ApiCallerActivity extends AppCompatActivity {
             return;
         }
 
-        final RecyclerView.Adapter inputAdapter = inputList.getAdapter();
-        if (null == inputAdapter) {
+        final ApiCallerAdapter paramAdapter = (ApiCallerAdapter) paramList.getAdapter();
+        final int paramHeight = paramList.getHeight();
+        if (null == paramAdapter || paramHeight == 0) {
             _api.callApi(method, resultView, jsonData);
             return;
         }
 
-        final int inputCount = inputAdapter.getItemCount();
+        final int inputCount = paramAdapter.getItemCount();
         for (int i=0; i<inputCount; i++) {
-            RecyclerView.ViewHolder viewHolder = inputList.findViewHolderForAdapterPosition(i);
-            if (null == viewHolder)
-                continue;
-            TextInputLayout textInputLayout = (TextInputLayout) viewHolder.itemView;
+            TextInputLayout textInputLayout = (TextInputLayout) paramAdapter.getViewByPos(i);
             InstantComplete textInputEditText = (InstantComplete) textInputLayout.getEditText();
-            if (null == textInputEditText)
+            if (null == textInputEditText) {
+                Log.w("caller", "edit text null");
                 continue;
+            }
             CharSequence hint = textInputLayout.getHint();
-            if (null == hint)
+            if (null == hint) {
+                Log.w("caller", "hint null");
                 continue;
+            }
             String name = hint.toString();
             CharSequence valueChar = textInputEditText.getText();
-            if (null == valueChar)
+            if (null == valueChar) {
+                Log.w("caller", "value char null");
                 continue;
+            }
             String value = valueChar.toString();
 
-            if (Objects.equals(value, ""))
+            if (Objects.equals(value, "")) {
+                Log.w("caller", "value empty");
                 continue;
+            }
 
             try {
                 jsonObject.put(name, value);

@@ -37,8 +37,13 @@ public class SeanDBHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE main.favorites " +
                 "(_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
                 "kind TEXT NOT NULL, " +
-                "value INTEGER NOT NULL, " +
+                "value TEXT NOT NULL, " +
                 "name TEXT)");
+
+        db.execSQL("CREATE TABLE main.params " +
+                "(_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                "kind TEXT NOT NULL, " +
+                "value TEXT)");
     }
 
     @Override
@@ -46,7 +51,7 @@ public class SeanDBHelper extends SQLiteOpenHelper {
         switch (oldVersion) {
             case 0:
                 try {
-                    db.execSQL("CREATE TABLE main.tokens " +
+                    db.execSQL("CREATE TABLE IF NOT EXISTS main.tokens " +
                             "(_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
                             "token TEXT NOT NULL, " +
                             "name TEXT NOT NULL, " +
@@ -56,10 +61,10 @@ public class SeanDBHelper extends SQLiteOpenHelper {
                 }
             case 1:
                 try {
-                    db.execSQL("CREATE TABLE main.favorites " +
+                    db.execSQL("CREATE TABLE IF NOT EXISTS main.favorites " +
                             "(_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
                             "kind TEXT NOT NULL, " +
-                            "value INTEGER NOT NULL, " +
+                            "value TEXT NOT NULL, " +
                             "name TEXT)");
                 } catch (SQLiteException e) {
                     Log.e("db", "onUpgrade", e);
@@ -67,6 +72,15 @@ public class SeanDBHelper extends SQLiteOpenHelper {
             case 2:
                 try {
                     db.execSQL("ALTER TABLE main.tokens ADD COLUMN type INTEGER DEFAULT 0;");
+                } catch (SQLiteException e) {
+                    Log.e("db", "onUpgrade", e);
+                }
+            case 3:
+                try {
+                db.execSQL("CREATE TABLE IF NOT EXISTS main.params " +
+                        "(_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                        "kind TEXT NOT NULL, " +
+                        "value TEXT)");
                 } catch (SQLiteException e) {
                     Log.e("db", "onUpgrade", e);
                 }
@@ -103,7 +117,7 @@ public class SeanDBHelper extends SQLiteOpenHelper {
         cursor.moveToNext();
         BotStructure result = new BotStructure();
 
-        if (cursor.getColumnCount() == 0) {
+        if (cursor.getCount() == 0) {
             Log.w("db", "no token with id " + id);
             cursor.close();
             return null;
@@ -116,7 +130,7 @@ public class SeanDBHelper extends SQLiteOpenHelper {
             result.note = cursor.getString(3);
             result.type = cursor.getInt(4);
         } catch (RuntimeException e) {
-            Log.w("db", "Getting data error" + id);
+            Log.w("db", "Getting data error " + id, e);
             cursor.close();
             return null;
         }
@@ -169,6 +183,22 @@ public class SeanDBHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    public String getParam(String kind) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM params WHERE kind = ?;", new String[]{kind});
+        int count = cursor.getCount();
+        if (count == 0) {
+            cursor.close();
+            return "";
+        } else {
+            cursor.moveToNext();
+            String value = cursor.getString(2);
+            cursor.close();
+            return value;
+        }
+    }
+
     public long insertBot(ContentValues values) {
         SQLiteDatabase db = getWritableDatabase();
         return db.insert("tokens", null, values);
@@ -177,12 +207,13 @@ public class SeanDBHelper extends SQLiteOpenHelper {
     public long insertFav(String kind, String value, @Nullable String name) {
         SQLiteDatabase db = getWritableDatabase();
 
-        Cursor cursor = db.rawQuery("SELECT count(*) FROM favorites WHERE kind = ? AND value = ?;", new String[]{kind, value});
-        if (cursor.getCount() > 1) {
-            cursor.close();
+        Cursor cursor = db.rawQuery("SELECT * FROM favorites WHERE kind = ? AND value = ?;", new String[]{kind, value});
+        int count = cursor.getCount();
+        cursor.close();
+        if (count > 0) {
+            Log.d("db", "Fav already exists");
             return -1;
         }
-        cursor.close();
 
         ContentValues values = new ContentValues();
         values.put("kind", kind);
@@ -206,6 +237,25 @@ public class SeanDBHelper extends SQLiteOpenHelper {
         if (null != name)
             values.put("name", name);
         return db.update("favorites", values, "_id = ?", new String[]{id + ""});
+    }
+
+    public long updateParam(String kind, String value) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put("kind", kind);
+        values.put("value", value);
+
+        Cursor cursor = db.rawQuery("SELECT * FROM params WHERE kind = ?;", new String[]{kind});
+        int count = cursor.getCount();
+        cursor.close();
+        if (count == 0) {
+            Log.d("db", "param insert " + values);
+            return db.insert("params", null, values);
+        } else {
+            Log.d("db", "param update " + values);
+            return db.update("params", values, "kind = ?", new String[]{kind + ""});
+        }
     }
 
     public long deleteBot(long id) {
