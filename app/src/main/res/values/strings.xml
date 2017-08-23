@@ -20,7 +20,6 @@
     <string name="nav_menu_join_group">Join Group</string>
     <string name="nav_menu_add_bot">Add Bot</string>
     <string name="method" translatable="false">Method</string>
-    <string name="api_caller_method_default_text" translatable="false">getMe</string>
     <string name="json_data" translatable="false">JSON Data</string>
     <string name="json_empty_object" translatable="false">{}</string>
     <string name="check_json">Check JSON</string>
@@ -63,8 +62,6 @@
     <string name="file_download_description">File will automatically open when download complete.\nAll Downloaded File will Storaged in /sdcard/TeleBot Directory.</string>
     <string name="file_id" translatable="false">File ID</string>
     <string name="menu_pwrtelegram">PWRTelegram API (unofficial)</string>
-    <string name="pwrtelegram_default_method" translatable="false">enableGetMTProtoUpdates</string>
-    <string name="madeline_default_method" translatable="false"><![CDATA[help->getConfig]]></string>
     <string name="menu_madeline">Switch to Madeline Proto</string>
     <string name="pwrt_menu_info">What is PWRTelegram?</string>
     <string name="token_type">Token Type</string>

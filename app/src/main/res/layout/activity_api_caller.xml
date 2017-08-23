@@ -21,8 +21,7 @@
             android:hint="@string/method"
             android:inputType="text"
             android:maxLines="1"
-            android:selectAllOnFocus="true"
-            android:text="@string/api_caller_method_default_text" />
+            android:selectAllOnFocus="true" />
 
     </android.support.design.widget.TextInputLayout>
 
