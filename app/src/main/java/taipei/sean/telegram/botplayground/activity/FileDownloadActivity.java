@@ -181,51 +181,54 @@ public class FileDownloadActivity extends AppCompatActivity {
 
                             fileName = fileId + "." + extName;
                         final File file = new File(downloadDir, fileName);
-                        Log.d("fd", file.toString());
 
-
-                        OkHttpClient client = new OkHttpClient();
-                        Request request = new Request.Builder().url(url)
-                                .build();
-                        Response resp;
-                        try {
-                            resp = client.newCall(request).execute();
-                        } catch (IOException e) {
-                            Log.e("fd", "IO", e);
-                            showError(e.getLocalizedMessage());
-                            return;
-                        }
-
-                        if (null == resp.body()) {
-                            Log.e("fd", "Resp Body null");
-                            showError("File Empty");
-                            return;
-                        }
-
-                        InputStream in = resp.body().byteStream();
-                        FileOutputStream fos;
-                        try {
-                            fos = new FileOutputStream(file);
-                        } catch (FileNotFoundException e) {
-                            Log.e("fd", "File Not Found", e);
-                            showError(e.getLocalizedMessage());
-                            return;
-                        }
-
-                        BufferedInputStream bis = new BufferedInputStream(in);
-                        try {
-
-                            int current;
-                            while ((current = bis.read()) != -1) {
-                                fos.write(current);
+                        if (file.exists()) {
+                            Log.d("fd", "File already exists");
+                        } else {
+                            Log.d("fd", "Start download " + file.toString());
+                            OkHttpClient client = new OkHttpClient();
+                            Request request = new Request.Builder().url(url)
+                                    .build();
+                            Response resp;
+                            try {
+                                resp = client.newCall(request).execute();
+                            } catch (IOException e) {
+                                Log.e("fd", "IO", e);
+                                showError(e.getLocalizedMessage());
+                                return;
                             }
-                            fos.close();
-                        } catch (IOException e) {
-                            Log.e("fd", "IO", e);
-                            showError(e.getLocalizedMessage());
-                            return;
+
+                            if (null == resp.body()) {
+                                Log.e("fd", "Resp Body null");
+                                showError("File Empty");
+                                return;
+                            }
+
+                            InputStream in = resp.body().byteStream();
+                            FileOutputStream fos;
+                            try {
+                                fos = new FileOutputStream(file);
+                            } catch (FileNotFoundException e) {
+                                Log.e("fd", "File Not Found", e);
+                                showError(e.getLocalizedMessage());
+                                return;
+                            }
+
+                            BufferedInputStream bis = new BufferedInputStream(in);
+                            try {
+
+                                int current;
+                                while ((current = bis.read()) != -1) {
+                                    fos.write(current);
+                                }
+                                fos.close();
+                            } catch (IOException e) {
+                                Log.e("fd", "IO", e);
+                                showError(e.getLocalizedMessage());
+                                return;
+                            }
+                            resp.body().close();
                         }
-                        resp.body().close();
 
                         final String mime;
                         if (noExt)
