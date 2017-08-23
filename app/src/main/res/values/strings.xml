@@ -60,7 +60,7 @@
     <string name="not_now">Not now</string>
     <string name="main_no_bot">No Bot yet, please click + to add one.</string>
     <string name="menu_file_downloader">File Downloader</string>
-    <string name="file_download_description">File will automatically open when download complete.\nAll Downloaded File will Storaged in /sdcard/Sean Directory.</string>
+    <string name="file_download_description">File will automatically open when download complete.\nAll Downloaded File will Storaged in /sdcard/TeleBot Directory.</string>
     <string name="file_id" translatable="false">File ID</string>
     <string name="menu_pwrtelegram">PWRTelegram API (unofficial)</string>
     <string name="pwrtelegram_default_method" translatable="false">enableGetMTProtoUpdates</string>

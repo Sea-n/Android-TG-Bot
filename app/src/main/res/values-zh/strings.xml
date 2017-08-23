@@ -43,7 +43,7 @@
     <string name="not_now">改天再說</string>
     <string name="main_no_bot">還沒有現成 Bot，請點右下角 + 以加入 Bot</string>
     <string name="menu_file_downloader">檔案下載器</string>
-    <string name="file_download_description">檔案將自動於成功下載後開啟\n所有成功下載的檔案儲存於 /sdcard/Sean 目錄中</string>
+    <string name="file_download_description">檔案將自動於成功下載後開啟\n所有成功下載的檔案儲存於 /sdcard/TeleBot 目錄中</string>
     <string name="menu_pwrtelegram">PWRTelegram API (非官方)</string>
     <string name="menu_madeline">切換為 Madeline Proto</string>
     <string name="pwrt_menu_info">PWRTelegram 是做什麼的？</string>

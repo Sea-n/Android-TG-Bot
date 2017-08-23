@@ -423,7 +423,7 @@ public class MainActivity extends AppCompatActivity {
         final File oldDb = this.getDatabasePath("data.db");
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.main_fab);
 
-        final File backupDir = new File(Environment.getExternalStorageDirectory() + "/Sean");
+        final File backupDir = new File(Environment.getExternalStorageDirectory() + "/TeleBot");
         if (!backupDir.exists()) {
             if (!backupDir.mkdir()) {
                 Log.e("main", "export mkdir fail");

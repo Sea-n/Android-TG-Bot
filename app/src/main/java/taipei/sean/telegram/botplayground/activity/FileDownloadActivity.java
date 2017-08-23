@@ -158,7 +158,7 @@ public class FileDownloadActivity extends AppCompatActivity {
                             return;
                         }
 
-                        final File downloadDir = new File(Environment.getExternalStorageDirectory() + "/Sean");
+                        final File downloadDir = new File(Environment.getExternalStorageDirectory() + "/TeleBot");
                         if (!downloadDir.exists()) {
                             if (!downloadDir.mkdir()) {
                                 Log.e("fd", "Fail to make directory");
