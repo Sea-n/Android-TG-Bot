@@ -58,7 +58,7 @@
     <string name="footer_rate_title">Rate this Application</string>
     <string name="not_now">Not now</string>
     <string name="main_no_bot">No Bot yet, please click + to add one.</string>
-    <string name="menu_file_downloader">File Downloader</string>
+    <string name="file_downloader">File Downloader</string>
     <string name="file_download_description">File will automatically open when download complete.\nAll Downloaded File will Storaged in /sdcard/TeleBot Directory.</string>
     <string name="file_id" translatable="false">File ID</string>
     <string name="menu_pwrtelegram">PWRTelegram API (unofficial)</string>
@@ -70,7 +70,6 @@
     <string name="token_type_user">PWRTelegram User</string>
     <string name="not_normal_bot">Please use Normal Bot Token</string>
     <string name="title_activity_add_favorite">Add Favorite</string>
-    <string name="title_activity_file_downloader">File Downloader</string>
     <string name="title_activity_pwrtelegram_api" translatable="false">PWRTelegram API</string>
     <string name="title_activity_madeline_api" translatable="false">Madeline API</string>
     <string-array name="token_type_list">

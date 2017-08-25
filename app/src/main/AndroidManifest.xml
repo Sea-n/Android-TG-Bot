@@ -86,7 +86,7 @@
         </activity>
         <activity
             android:name=".activity.FileDownloadActivity"
-            android:label="@string/title_activity_file_downloader"
+            android:label="@string/file_downloader"
             android:parentActivityName=".activity.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

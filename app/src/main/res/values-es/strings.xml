@@ -42,7 +42,7 @@
     <string name="footer_rate_title">Califica esta Aplicación</string>
     <string name="not_now">Ahora no</string>
     <string name="main_no_bot">No hay BOT, haz clic en + para añadir uno.</string>
-    <string name="menu_file_downloader">Descargador de archivos</string>
+    <string name="file_downloader">Descargador de archivos</string>
     <string name="file_download_description">El archivo se abrirá automáticamente cuando se complete la descarga.\nTodos los archivos descargados se almacenarán en /sdcard/TeleBot Directory.</string>
     <string name="menu_pwrtelegram">PWRTelegram API (no oficial)</string>
     <string name="menu_madeline">Cambiar a Madeline Proto</string>
@@ -51,7 +51,6 @@
     <string name="token_type_normal">Normal Bot</string>
     <string name="token_type_user">Usuario PWRTelegram</string>
     <string name="not_normal_bot">Por favor, utilice Botón de Bot Normal</string>
-    <string name="title_activity_file_downloader">Descargador de archivos</string>
     <string name="title_activity_add_favorite">Agregar favorito</string>
     <string name="title_activity_add_bot">Nuevo Bot</string>
 </resources>
