@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
-import android.widget.HorizontalScrollView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -15,9 +14,11 @@ import taipei.sean.telegram.botplayground.FavStructure;
 
 public class FavoriteItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ArrayList<FavStructure> iList;
+    private int parentWidth;
 
-    public FavoriteItemAdapter() {
+    public FavoriteItemAdapter(int width) {
         iList = new ArrayList<>();
+        parentWidth = width;
     }
 
     public void addData(FavStructure fav) {
@@ -26,10 +27,13 @@ public class FavoriteItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        HorizontalScrollView view = new HorizontalScrollView(parent.getContext());
+        GridLayout view = new GridLayout(parent.getContext());
         ViewGroup.LayoutParams params = new RecyclerView.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         view.setLayoutParams(params);
+
+        view.setColumnCount(2);
+        view.setOrientation(GridLayout.HORIZONTAL);
 
         return new DummyViewHolder(view);
     }
@@ -38,11 +42,8 @@ public class FavoriteItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final FavStructure fav = iList.get(position);
 
-        HorizontalScrollView horizontalScrollView = (HorizontalScrollView) holder.itemView;
+        GridLayout gridLayout = (GridLayout) holder.itemView;
 
-        GridLayout gridLayout = new GridLayout(horizontalScrollView.getContext());
-        gridLayout.setColumnCount(2);
-        gridLayout.setOrientation(GridLayout.HORIZONTAL);
         gridLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,19 +53,19 @@ public class FavoriteItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             }
         });
 
-        GridLayout.LayoutParams valLayoutParams = new GridLayout.LayoutParams();
-        valLayoutParams.width = 400;
+        final int valWidth = parentWidth * 2 / 3;
+        final int nameWidth = parentWidth - valWidth;
+
         TextView valView = new TextView(gridLayout.getContext());
         valView.setText(fav.value);
-        gridLayout.addView(valView, valLayoutParams);
+        valView.setWidth(valWidth);
+        valView.setPaddingRelative(0, 0, 20, 0);
+        gridLayout.addView(valView);
 
-        GridLayout.LayoutParams nameLayoutParams = new GridLayout.LayoutParams();
-        nameLayoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT;
         TextView nameView = new TextView(gridLayout.getContext());
         nameView.setText(fav.name);
-        gridLayout.addView(nameView, nameLayoutParams);
-
-        horizontalScrollView.addView(gridLayout);
+        nameView.setWidth(nameWidth);
+        gridLayout.addView(nameView);
     }
 
     @Override

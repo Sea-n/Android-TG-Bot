@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.view.View;
 
 import java.util.List;
@@ -61,6 +62,11 @@ public class FavoriteActivity extends AppCompatActivity {
     private void initView() {
         final RecyclerView favRecyclerView = (RecyclerView) findViewById(R.id.fav_list);
 
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int screenWidth = displayMetrics.widthPixels;
+        int paddingWidth = getResources().getDimensionPixelSize(R.dimen.activity_horizontal_margin);
+
         ArrayMap<String, FavoriteItemAdapter> favAdas = new ArrayMap<>();
         List<FavStructure> favs = db.getFavs(null);
         for (FavStructure fav: favs) {
@@ -69,7 +75,7 @@ public class FavoriteActivity extends AppCompatActivity {
                 FavoriteItemAdapter favAda = favAdas.get(kind);
                 favAda.addData(fav);
             } else {
-                FavoriteItemAdapter favAda = new FavoriteItemAdapter();
+                FavoriteItemAdapter favAda = new FavoriteItemAdapter(screenWidth - paddingWidth*2);
                 favAda.addData(fav);
                 favAdas.put(kind, favAda);
             }
