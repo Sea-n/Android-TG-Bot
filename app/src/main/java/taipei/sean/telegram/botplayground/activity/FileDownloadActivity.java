@@ -90,7 +90,7 @@ public class FileDownloadActivity extends AppCompatActivity {
                 final String fileId = fileIdView.getText().toString();
                 Log.d("fd", "getFile " + fileId);
 
-                db.insertFav("file_id", fileId, getLocalClassName());
+                db.insertFav("file_id", fileId, getResources().getString(R.string.file_downloader));
 
                 JSONObject jsonObject = new JSONObject();
                 try {
@@ -184,6 +184,7 @@ public class FileDownloadActivity extends AppCompatActivity {
 
                         if (file.exists()) {
                             Log.d("fd", "File already exists");
+                            return;
                         } else {
                             Log.d("fd", "Start download " + file.toString());
                             OkHttpClient client = new OkHttpClient();
