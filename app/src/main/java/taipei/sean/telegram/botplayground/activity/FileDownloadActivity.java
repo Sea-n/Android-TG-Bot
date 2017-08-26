@@ -184,7 +184,6 @@ public class FileDownloadActivity extends AppCompatActivity {
 
                         if (file.exists()) {
                             Log.d("fd", "File already exists");
-                            return;
                         } else {
                             Log.d("fd", "Start download " + file.toString());
                             OkHttpClient client = new OkHttpClient();
