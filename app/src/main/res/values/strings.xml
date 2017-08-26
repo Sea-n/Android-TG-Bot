@@ -10,9 +10,6 @@
     <string name="menu_join_group">Join Group</string>
     <string name="menu_github">Star on GitHub</string>
     <string name="menu_export">Export Database to SD Card</string>
-    <string name="nav_header_photo" translatable="false">Bot Profile Photo</string>
-    <string name="nav_header_default_title" translatable="false">No Bot</string>
-    <string name="nav_footer" translatable="false">%1$s  v%2$s (%3$s)</string>
 
     <string name="title_activity_add_bot">New Bot</string>
     <string name="title_activity_bot_api">Bot API</string>
@@ -73,6 +70,9 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
 
+    <string name="nav_header_photo" translatable="false">Bot Profile Photo</string>
+    <string name="nav_header_default_title" translatable="false">No Bot</string>
+    <string name="nav_footer" translatable="false">%1$s  v%2$s (%3$s)</string>
     <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
     <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
     <string name="json_empty_object" translatable="false">{}</string>
