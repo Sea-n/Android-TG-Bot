@@ -12,9 +12,9 @@ Issues, Pull Requests are **always welcome**
 
 
 ## Translator
-Spanish by [Chaky El Pipe](http://telegra.ph/Biografía-Chaky-El-Pipe-07-24)  
-Russian by [Smartman\_ru](https://github.com/smartmanru)  
-Chinese by [Sean](https://www.sean.taipei)  
+Spanish🇪🇸 by [Chaky El Pipe](http://telegra.ph/Biografía-Chaky-El-Pipe-07-24)  
+Russian🇷🇺 by [Smartman\_ru](https://github.com/smartmanru)  
+Chinese🇹🇼 by [Sean](https://www.sean.taipei)  
 If you want to translate this app to your native language, please [email me](mailto:sean@sean.taipei)
 
 
