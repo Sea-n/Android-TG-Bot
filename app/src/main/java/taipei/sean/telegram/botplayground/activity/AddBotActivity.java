@@ -1,7 +1,6 @@
 package taipei.sean.telegram.botplayground.activity;
 
 import android.content.ContentValues;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.ActionBar;
@@ -65,12 +64,10 @@ public class AddBotActivity extends AppCompatActivity {
     }
 
     private void setupActionBar() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            // Show the Up button in the action bar.
-            ActionBar actionBar = getSupportActionBar();
-            if (null != actionBar)
-                actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+        // Show the Up button in the action bar.
+        ActionBar actionBar = getSupportActionBar();
+        if (null != actionBar)
+            actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     private void restoreData() {

@@ -4,7 +4,7 @@
     <item
         android:id="@+id/pwrt_menu_madeline"
         android:title="@string/menu_madeline"
-        android:icon="@drawable/ic_madeline_192x"
+        android:icon="@raw/ic_madeline_192x"
         app:showAsAction="never" />
     <item
         android:id="@+id/pwrt_menu_info"

@@ -8,6 +8,7 @@ import android.widget.Filterable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class SeanAdapter<T> extends ArrayAdapter<T> implements Filterable {
     // Needed data structures
@@ -25,8 +26,8 @@ public class SeanAdapter<T> extends ArrayAdapter<T> implements Filterable {
                 for (int i=0; i<length; i++) {
                     T item = _objects.get(i);
 
-                    String lowerItem = item.toString().toLowerCase();
-                    String lowerCon = constraint.toString().toLowerCase();
+                    String lowerItem = item.toString().toLowerCase(Locale.ENGLISH);
+                    String lowerCon = constraint.toString().toLowerCase(Locale.ENGLISH);
 
                     if (lowerItem.contains(lowerCon))
                         tempList.add(item);
