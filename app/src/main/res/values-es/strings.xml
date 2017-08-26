@@ -39,12 +39,12 @@
     <string name="del_bot_confirm_title">Eliminar Bot</string>
     <string name="del_bot_confirm_msg">¿Estás seguro de que quieres eliminar este bot?</string>
 
-    <string name="json_data">JSON Data</string>
+    <string name="json_data">Datos JSON</string>
     <string name="check_json">Comprobar JSON</string>
     <string name="no_context_yet">Todavía no hay contexto.</string>
 
     <string name="file_downloader">Descargador de archivos</string>
-    <string name="file_id">File ID</string>
+    <string name="file_id">ID del archivo</string>
     <string name="file_downloader_description">El archivo se abrirá automáticamente cuando se complete la descarga.\nTodos los archivos descargados se almacenarán en /sdcard/TeleBot Directory.</string>
 
     <string name="add_fav_prompt">Seleccionar tipo</string>
@@ -69,5 +69,5 @@
     <string name="cancel">Cancelar</string>
     <string name="yes">Si</string>
     <string name="no">No</string>
-    <string name="method">Method</string>
+    <string name="method">Procedimiento</string>
 </resources>
