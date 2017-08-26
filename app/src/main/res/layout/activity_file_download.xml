@@ -42,5 +42,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="@string/file_download_description" />
+        android:text="@string/file_downloader_description" />
 </LinearLayout>

@@ -1,77 +1,86 @@
 <resources>
-    <string name="app_name" translatable="false">Awesome Telegram Bot</string>
+    <string name="app_name">Awesome Telegram Bot</string>
 
-    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
-    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
-
-    <string name="title_activity_add_bot">New Bot</string>
-
-    <string name="add_bot_token">Your Bot Token</string>
-    <string name="add_bot_name">Nickname</string>
-    <string name="done">Done</string>
-    <string name="add_bot_name_invalid">Nickname Invalid, please check again.</string>
-    <string name="add_bot_token_invalid">Token format invalid</string>
-    <string name="bot_token_regex" translatable="false">[0-9]{5,10}:[A-Za-z0-9_-]*</string>
-    <string name="nav_header_default_title" translatable="false">No Bot</string>
-    <string name="nav_header_default_subtitle" translatable="false">12345:AAJqs_w-4</string>
-    <string name="menu_api_caller">Bot API</string>
-    <string name="nav_menu_account">Accounts</string>
-    <string name="nav_menu_functions">Functions</string>
-    <string name="nav_menu_join_group">Join Group</string>
-    <string name="nav_menu_add_bot">Add Bot</string>
-    <string name="method" translatable="false">Method</string>
-    <string name="json_data" translatable="false">JSON Data</string>
-    <string name="json_empty_object" translatable="false">{}</string>
-    <string name="check_json">Check JSON</string>
-    <string name="submit">Submit</string>
-    <string name="no_context_yet">No Context Yet.</string>
-    <string name="nav_header_photo" translatable="false">Bot Profile Photo</string>
-    <string name="no_bot_warning">Didn\'t select bot token, please add one first.</string>
-    <string name="action_edit">Edit</string>
-    <string name="action_remove">Remove</string>
-    <string name="main_did_not_select_bot">You didn\'t select your bot.</string>
-    <string name="nav_export">Export Database to SD Card</string>
-    <string name="main_db_export_fail">Database export fail\nReason:</string>
-    <string name="main_mkdir_fail">Fail to make backup director</string>
-    <string name="main_export_to">"Exported to "</string>
-    <string name="main_save_db_title">Save Databases</string>
-    <string name="save">Save</string>
-    <string name="cancel">Cancel</string>
-    <string name="main_backup_dir_is_file">Fail to create director</string>
-    <string name="main_ask_add_bot_msg">Do you want to add new bot?</string>
-    <string name="main_ask_add_bot_title">New Bot</string>
-    <string name="nav_menu_fav">Favorite</string>
-    <string name="title_activity_favorite">Favorites</string>
-    <string name="add_fav_prompt">Select kind</string>
-    <string name="add_fav_value_hint">Your Data</string>
-    <string name="add_fav_name_hint">Kindly Name</string>
-    <string name="nav_menu_github">Star on GitHub</string>
-    <string name="github_url" translatable="false">https://github.com/Sea-n/Android-TG-Bot</string>
-    <string name="telegram_group_join_link" translatable="false">https://t.me/joinchat/AAAAAA7VO5bHlMdH9MPecA</string>
-    <string name="main_footer" translatable="false">%1$s  v%2$s (%3$s)</string>
-    <string name="main_del_bot_confirm_msg">Are you sure you want to delete this bot?</string>
-    <string name="main_del_bot_confirm_title">Delete Bot</string>
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
-    <string name="footer_rate_yes">GO</string>
-    <string name="footer_rate_msg">Click GO if you like it :)</string>
-    <string name="footer_rate_title">Rate this Application</string>
-    <string name="not_now">Not now</string>
-    <string name="main_no_bot">No Bot yet, please click + to add one.</string>
-    <string name="file_downloader">File Downloader</string>
-    <string name="file_download_description">File will automatically open when download complete.\nAll Downloaded File will Storaged in /sdcard/TeleBot Directory.</string>
-    <string name="file_id" translatable="false">File ID</string>
+    <string name="menu_account">Accounts</string>
     <string name="menu_pwrtelegram">PWRTelegram API (unofficial)</string>
     <string name="menu_madeline">Switch to Madeline Proto</string>
     <string name="pwrt_menu_info">What is PWRTelegram?</string>
+    <string name="menu_functions">Functions</string>
+    <string name="menu_add_bot">Add Bot</string>
+    <string name="menu_join_group">Join Group</string>
+    <string name="menu_github">Star on GitHub</string>
+    <string name="menu_export">Export Database to SD Card</string>
+    <string name="nav_header_photo" translatable="false">Bot Profile Photo</string>
+    <string name="nav_header_default_title" translatable="false">No Bot</string>
+    <string name="nav_footer" translatable="false">%1$s  v%2$s (%3$s)</string>
+
+    <string name="title_activity_add_bot">New Bot</string>
+    <string name="title_activity_bot_api">Bot API</string>
+    <string name="title_activity_pwrtelegram_api">PWRTelegram API</string>
+    <string name="title_activity_madeline_api">Madeline API</string>
+    <string name="title_activity_favorite">Favorites</string>
+    <string name="title_activity_add_favorite">Add Favorite</string>
+
+    <string name="no_bot_placeholder">No Bot yet, please click + to add one.</string>
+    <string name="not_normal_bot">Please use Normal Bot Token</string>
+
+    <string name="add_bot_token">Your Bot Token</string>
+    <string name="add_bot_name">Nickname</string>
     <string name="token_type">Token Type</string>
     <string name="token_type_normal">Normal Bot</string>
-    <string name="token_type_deep" translatable="false">Deep Telegram</string>
+    <string name="token_type_deep">Deep Telegram</string>
     <string name="token_type_user">PWRTelegram User</string>
-    <string name="not_normal_bot">Please use Normal Bot Token</string>
-    <string name="title_activity_add_favorite">Add Favorite</string>
-    <string name="title_activity_pwrtelegram_api" translatable="false">PWRTelegram API</string>
-    <string name="title_activity_madeline_api" translatable="false">Madeline API</string>
+    <string name="add_bot_name_invalid">Nickname Invalid, please check again.</string>
+    <string name="add_bot_token_invalid">Token format invalid</string>
+
+    <string name="no_bot_warning">Didn\'t select bot token, please add one first.</string>
+    <string name="no_bot_selected">You didn\'t select your bot.</string>
+    <string name="ask_add_bot_title">New Bot</string>
+    <string name="ask_add_bot_msg">Do you want to add new bot?</string>
+
+    <string name="del_bot_confirm_title">Delete Bot</string>
+    <string name="del_bot_confirm_msg">Are you sure you want to delete this bot?</string>
+
+    <string name="json_data">JSON Data</string>
+    <string name="check_json">Check JSON</string>
+    <string name="no_context_yet">No Context Yet.</string>
+
+    <string name="file_downloader">File Downloader</string>
+    <string name="file_id">File ID</string>
+    <string name="file_downloader_description">File will automatically open when download complete.\nAll Downloaded File will Storaged in /sdcard/TeleBot Directory.</string>
+
+    <string name="add_fav_prompt">Select kind</string>
+    <string name="add_fav_value_hint">Your Data</string>
+    <string name="add_fav_name_hint">Kindly Name</string>
+
+    <string name="save_db">Save Databases</string>
+    <string name="export_mkdir_fail">Fail to create backup director</string>
+    <string name="db_export_fail">Database export fail\nReason:</string>
+    <string name="export_to">"Exported to "</string>
+
+    <string name="footer_rate_title">Rate this Application</string>
+    <string name="footer_rate_msg">Click GO if you like it :)</string>
+    <string name="footer_rate_yes">GO</string>
+    <string name="footer_rate_no">Not now</string>
+
+    <string name="method">Method</string>
+    <string name="done">Done</string>
+    <string name="save">Save</string>
+    <string name="submit">Submit</string>
+    <string name="cancel">Cancel</string>
+    <string name="edit">Edit</string>
+    <string name="remove">Remove</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+    <string name="json_empty_object" translatable="false">{}</string>
+    <string name="bot_token_regex" translatable="false">[0-9]{5,10}:[A-Za-z0-9_-]*</string>
+    <string name="nav_header_default_subtitle" translatable="false">12345:AAJqs_w-4</string>
+    <string name="github_url" translatable="false">https://github.com/Sea-n/Android-TG-Bot</string>
+    <string name="telegram_group_join_link" translatable="false">https://t.me/joinchat/AAAAAA7VO5bHlMdH9MPecA</string>
+
     <string-array name="token_type_list">
         <item>@string/token_type_normal</item>
         <item>@string/token_type_deep</item>

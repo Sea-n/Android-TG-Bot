@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
             PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
             String verName = pInfo.versionName;
             int verCode = pInfo.versionCode;
-            footerStr = getString(R.string.main_footer, appName, verName, verCode+"");
+            footerStr = getString(R.string.nav_footer, appName, verName, verCode+"");
         } catch (PackageManager.NameNotFoundException e) {
             Log.e("main", "Name Not Found", e);
             if (Objects.equals(footerStr, "")) {
@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
                             }
 
                         })
-                        .setNegativeButton(R.string.not_now, null)
+                        .setNegativeButton(R.string.footer_rate_no, null)
                         .show();
 
 
@@ -218,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_edit:
                 if (null == currentBot) {
                     FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.main_fab);
-                    Snackbar.make(fab, R.string.main_did_not_select_bot, Snackbar.LENGTH_LONG)
+                    Snackbar.make(fab, R.string.no_bot_selected, Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                     askAddBot();
                     break;
@@ -231,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_remove:
                 if (null == currentBot) {
                     FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.main_fab);
-                    Snackbar.make(fab, R.string.main_did_not_select_bot, Snackbar.LENGTH_LONG)
+                    Snackbar.make(fab, R.string.no_bot_selected, Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                     break;
                 }
@@ -250,8 +250,8 @@ public class MainActivity extends AppCompatActivity {
     private void deleteBot(final long id) {
         new AlertDialog.Builder(this)
                 .setIcon(android.R.drawable.ic_dialog_alert)
-                .setTitle(R.string.main_del_bot_confirm_title)
-                .setMessage(R.string.main_del_bot_confirm_msg)
+                .setTitle(R.string.del_bot_confirm_title)
+                .setMessage(R.string.del_bot_confirm_msg)
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener()
                 {
                     @Override
@@ -276,8 +276,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void askAddBot() {
         new AlertDialog.Builder(this)
-                .setTitle(R.string.main_ask_add_bot_title)
-                .setMessage(R.string.main_ask_add_bot_msg)
+                .setTitle(R.string.ask_add_bot_title)
+                .setMessage(R.string.ask_add_bot_msg)
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener()
                 {
                     @Override
@@ -286,7 +286,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                 })
-                .setNegativeButton(R.string.not_now, null)
+                .setNegativeButton(R.string.footer_rate_no, null)
                 .show();
     }
 
@@ -427,19 +427,19 @@ public class MainActivity extends AppCompatActivity {
         if (!backupDir.exists()) {
             if (!backupDir.mkdir()) {
                 Log.e("main", "export mkdir fail");
-                Snackbar.make(fab, R.string.main_mkdir_fail, Snackbar.LENGTH_LONG)
+                Snackbar.make(fab, R.string.export_mkdir_fail, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 return;
             }
         } else if (!backupDir.isDirectory()) {
             Log.e("main", "export director is file");
-            Snackbar.make(fab, R.string.main_backup_dir_is_file, Snackbar.LENGTH_LONG)
+            Snackbar.make(fab, R.string.export_mkdir_fail, Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
             return;
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.main_save_db_title);
+        builder.setTitle(R.string.save_db);
 
         final EditText input = new EditText(this);
         builder.setView(input);
@@ -457,11 +457,11 @@ public class MainActivity extends AppCompatActivity {
                     db.copyDatabase(oldDb, backupFile);
                 } catch (IOException e) {
                     Log.e("main", "export", e);
-                    Snackbar.make(fab, getString(R.string.main_db_export_fail)+e.getMessage(), Snackbar.LENGTH_LONG)
+                    Snackbar.make(fab, getString(R.string.db_export_fail)+e.getMessage(), Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                     return;
                 }
-                Snackbar.make(fab, getString(R.string.main_export_to)+backupFile.toString(), Snackbar.LENGTH_LONG)
+                Snackbar.make(fab, getString(R.string.export_to)+backupFile.toString(), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -543,7 +543,7 @@ public class MainActivity extends AppCompatActivity {
 
                     title.setText(R.string.nav_header_default_title);
                     subtitle.setText(R.string.nav_header_default_subtitle);
-                    main.setText(R.string.main_no_bot);
+                    main.setText(R.string.no_bot_placeholder);
                 }
             });
             SharedPreferences settings = getSharedPreferences("data", MODE_PRIVATE);

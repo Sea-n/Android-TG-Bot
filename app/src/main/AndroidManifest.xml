@@ -47,7 +47,7 @@
         </activity>
         <activity
             android:name=".activity.ApiCallerActivity"
-            android:label="@string/menu_api_caller"
+            android:label="@string/title_activity_bot_api"
             android:parentActivityName=".activity.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
