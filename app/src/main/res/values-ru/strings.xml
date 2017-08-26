@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Awesome Telegram Bot</string>
+
+    <string name="menu_account">Аккаунты</string>
+    <string name="menu_pwrtelegram">PWRTelegram API (unofficial)</string>
+    <string name="menu_madeline">Переключиться на Madeline Proto</string>
+    <string name="pwrt_menu_info">Что такое PWRTelegram?</string>
+    <string name="menu_functions">Функции</string>
+    <string name="menu_add_bot">Добавить Бота</string>
+    <string name="menu_join_group">Вступить В Группу</string>
+    <string name="menu_github">В избранное на Github</string>
+    <string name="menu_export">Экспорт базы данных на внутренний накопитель</string>
+
+    <string name="title_activity_add_bot">Новый Бот</string>
+    <string name="title_activity_bot_api">Bot API</string>
+    <string name="title_activity_pwrtelegram_api">PWRTelegram API</string>
+    <string name="title_activity_madeline_api">Madeline API</string>
+    <string name="title_activity_favorite">Избранное</string>
+    <string name="title_activity_add_favorite">Добавить В Избранное</string>
+
+    <string name="no_bot_placeholder">Бот не найден, нажмите + чтобы добавить бота</string>
+    <string name="not_normal_bot">Пожалуйста, используйте корренктный token</string>
+
+    <string name="add_bot_token">Ваш токен</string>
+    <string name="add_bot_name">Ник</string>
+    <string name="token_type">Тип токена</string>
+    <string name="token_type_normal">Обычный бот</string>
+    <string name="token_type_deep">Deep Telegram</string>
+    <string name="token_type_user">PWRTelegram User</string>
+    <string name="add_bot_name_invalid">Ник неверный, пожалуйста, проверьте еще раз.</string>
+    <string name="add_bot_token_invalid">Неверный формат токена</string>
+
+    <string name="no_bot_warning">Не выбран токен бота, пожалуйста добавьте токен.</string>
+    <string name="no_bot_selected">Вы не выбрали бота</string>
+    <string name="ask_add_bot_title">Новый Бот</string>
+    <string name="ask_add_bot_msg">Вы действительно хотите добавить нового бота?</string>
+
+    <string name="del_bot_confirm_title">Удалить Бота</string>
+    <string name="del_bot_confirm_msg">Вы уверены, что хотите удалить этот бота?</string>
+
+    <string name="json_data">JSON Data</string>
+    <string name="check_json">Проверить JSON</string>
+    <string name="no_context_yet">No Context Yet.</string>
+
+    <string name="file_downloader">Загрузчик Файлов</string>
+    <string name="file_id">ID файла</string>
+    <string name="file_downloader_description">Файл будет автоматически открыт, когда загрузка завершена.\nВсе загруженный Файл будет храниться в папке /sdcard/TeleBot</string>
+
+    <string name="add_fav_prompt">Выберите вид</string>
+    <string name="add_fav_value_hint">Ваши Данные</string>
+    <string name="add_fav_name_hint">Введите название </string>
+
+    <string name="save_db">Сохранить Базу Данных</string>
+    <string name="export_mkdir_fail">Не удается создать резервную копию папки</string>
+    <string name="db_export_fail">Ошибки при экспорте базы данных\nПричина:</string>
+    <string name="export_to">"Экспортировать в "</string>
+
+    <string name="footer_rate_title">Оцените это приложение</string>
+    <string name="footer_rate_msg">Нажмите Go, если вам это нравится :)</string>
+    <string name="footer_rate_yes">GO</string>
+    <string name="footer_rate_no">Не сейчас</string>
+
+    <string name="method">Метод</string>
+    <string name="done">Сделано</string>
+    <string name="save">Сохранить</string>
+    <string name="submit">Подтвердить</string>
+    <string name="cancel">Отменить</string>
+    <string name="edit">Редактировать</string>
+    <string name="remove">Удалить</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+</resources>
