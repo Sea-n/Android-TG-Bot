@@ -73,6 +73,7 @@ public class AddBotActivity extends AppCompatActivity {
     private void restoreData() {
         BotStructure bot = db.getBot(_id);
         Log.d("add", "bot"+bot);
+        typeView.setSelection(bot.type);
         nameView.setText(bot.name);
         tokenView.setText(bot.token);
     }
