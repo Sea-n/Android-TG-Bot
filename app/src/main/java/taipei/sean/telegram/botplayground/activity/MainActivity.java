@@ -129,7 +129,6 @@ public class MainActivity extends AppCompatActivity {
 
                 if (changeAccountMenuOpen) {
                     restoreMenu();
-                    changeAccountMenuOpen = false;
                 } else {
                     menu.setGroupVisible(R.id.menu_api, false);
                     accountItem.setVisible(true);
@@ -513,39 +512,40 @@ public class MainActivity extends AppCompatActivity {
                         Log.e("main", "sleep", e);
                     }
                     currentBot = db.getBot(finalId);
+
+                    if (null == currentBot) {
+                        if (_bots.size() > 0)
+                            currentBot = _bots.get(0);
+                        else
+                            askAddBot();
+                    }
+
+                    changeToken();
                 }
             };
             thread.start();
-        }
-
-        if (null == currentBot) {
-            if (_bots.size() == 0) {
-                askAddBot();
-            } else {
-                currentBot = _bots.get(0);
-                changeToken();
-            }
         }
     }
 
     private boolean changeToken() {
         final NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
         final LinearLayout navHeader = (LinearLayout) navView.getHeaderView(0);
+        final TextView title = (TextView) navHeader.findViewById(R.id.nav_header_title);
+        final TextView subtitle = (TextView) navHeader.findViewById(R.id.nav_header_subtitle);
+        final TextView main = (TextView) findViewById(R.id.main_content);
 
         if (null == currentBot) {
             Log.w("main", "change token null bot");
+
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    TextView title = (TextView) navHeader.findViewById(R.id.nav_header_title);
-                    TextView subtitle = (TextView) navHeader.findViewById(R.id.nav_header_subtitle);
-                    TextView main = (TextView) findViewById(R.id.main_content);
-
                     title.setText(R.string.nav_header_default_title);
                     subtitle.setText(R.string.nav_header_default_subtitle);
                     main.setText(R.string.no_bot_placeholder);
                 }
             });
+
             SharedPreferences settings = getSharedPreferences("data", MODE_PRIVATE);
             settings.edit()
                     .putLong("currentBotId", -1)
@@ -556,22 +556,9 @@ public class MainActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                TextView title = (TextView) navHeader.findViewById(R.id.nav_header_title);
-                TextView subtitle = (TextView) navHeader.findViewById(R.id.nav_header_subtitle);
-                TextView main = (TextView) findViewById(R.id.main_content);
-
                 title.setText(currentBot.name);
                 subtitle.setText(currentBot.token);
                 main.setText(currentBot.name);
-
-
-                final Menu menu = navView.getMenu();
-                final MenuItem caller = menu.findItem(R.id.nav_caller);
-                if (currentBot.type == 0) {
-                    caller.setVisible(true);
-                } else {
-                    caller.setVisible(false);
-                }
             }
         });
 
@@ -601,11 +588,31 @@ public class MainActivity extends AppCompatActivity {
         final NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
         final Menu menu = navView.getMenu();
         final MenuItem accountItem = menu.findItem(R.id.menu_accounts_item);
+        final MenuItem caller = menu.findItem(R.id.nav_caller);
+        final MenuItem downloader = menu.findItem(R.id.nav_file_dl);
+
+        changeAccountMenuOpen = false;
+
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 menu.setGroupVisible(R.id.menu_api, true);
                 accountItem.setVisible(false);
+
+                switch (currentBot.type) {
+                    case 0:
+                        caller.setEnabled(true);
+                        downloader.setEnabled(true);
+                        break;
+                    case 1:
+                    case 2:
+                        caller.setEnabled(false);
+                        downloader.setEnabled(false);
+                        break;
+                    default:
+                        Log.d("main", "Unknown type " + currentBot.type);
+                        break;
+                }
             }
         });
     }
