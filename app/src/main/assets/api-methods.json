@@ -69,7 +69,7 @@
       "text": {
         "type": "String",
         "required": true,
-        "description": "Text of the message to be sent"
+        "description": "Texto del mensaje a enviar"
       },
       "parse_mode": {
         "type": "String",
@@ -119,7 +119,7 @@
       "message_id": {
         "type": "Integer",
         "required": true,
-        "description": "Message identifier in the chat specified in __from_chat_id__"
+        "description": "Identificador de mensaje en el chat especificado en __from_chat_id__"
       }
     }
   },
@@ -134,7 +134,7 @@
       "photo": {
         "type": "InputFile or String",
         "required": true,
-        "description": "Photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet, or upload a new photo using multipart/form-data. More info on Sending Files »"
+        "description": "Foto para enviar. Pase un file_id como String para enviar una foto que existe en los servidores Telegram (recomendado), pase una URL HTTP como String para Telegram para obtener una foto de Internet o cargue una nueva foto usando multipart/form-data. Más información sobre Envío de archivos »"
       },
       "caption": {
         "type": "String",
@@ -164,12 +164,12 @@
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+        "description": "Identificador único para el chat de destino o el nombre de usuario del canal de destino (en el formato `@channelusername`)"
       },
       "audio": {
         "type": "InputFile or String",
         "required": true,
-        "description": "Audio file to send. Pass a file_id as String to send an audio file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »"
+        "description": "Archivo de audio para enviar. Pase un file_id como String para enviar un archivo de audio que existe en los servidores Telegram (recomendado), pase una URL HTTP como String para Telegram para obtener un archivo de audio de Internet o cargue uno nuevo usando multipart/form-data. Más información sobre Envío de archivos »"
       },
       "caption": {
         "type": "String",
@@ -214,12 +214,12 @@
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+        "description": "Identificador único para el chat de destino o el nombre de usuario del canal de destino (en el formato `@channelusername`)"
       },
       "document": {
         "type": "InputFile or String",
         "required": true,
-        "description": "File to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »"
+        "description": "Archivo para enviar. Pase un file_id como String para enviar un archivo que existe en los servidores Telegram (recomendado), pase una URL HTTP como String para Telegram para obtener un archivo desde Internet, o cargue una nueva usando multipart/form-data. Más información sobre Envío de archivos »"
       },
       "caption": {
         "type": "String",
@@ -254,7 +254,7 @@
       "video": {
         "type": "InputFile or String",
         "required": true,
-        "description": "Video to send. Pass a file_id as String to send a video that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a video from the Internet, or upload a new video using multipart/form-data. More info on Sending Files »"
+        "description": "Video para enviar. Pase un file_id como String para enviar un video que existe en los servidores de Telegram (recomendado), pase una URL HTTP como String para Telegram para obtener un video de Internet o cargue un video nuevo usando multipart/form-data. Más información sobre Envío de archivos »"
       },
       "duration": {
         "type": "Integer",
@@ -299,12 +299,12 @@
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+        "description": "Identificador único para el chat de destino o el nombre de usuario del canal de destino (en el formato `@channelusername`)"
       },
       "voice": {
         "type": "InputFile or String",
         "required": true,
-        "description": "Audio file to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »"
+        "description": "Archivo de audio para enviar. Pase un file_id como String para enviar un archivo que existe en los servidores Telegram (recomendado), pase una URL HTTP como String para Telegram para obtener un archivo desde Internet, o cargue una nueva usando multipart/form-data. Más información sobre Envío de archivos »"
       },
       "caption": {
         "type": "String",
@@ -339,12 +339,12 @@
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+        "description": "Identificador único para el chat de destino o el nombre de usuario del canal de destino (en el formato `@channelusername`)"
       },
       "video_note": {
         "type": "InputFile or String",
         "required": true,
-        "description": "Video note to send. Pass a file_id as String to send a video note that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. More info on Sending Files ». Sending video notes by a URL is currently unsupported"
+        "description": "Nota de video para enviar. Pase un file_id como String para enviar una nota de video que existe en los servidores Telegram (recomendado) o cargue un video nuevo usando multipart/form-data. Más información sobre Envío de archivos ». El envío de notas de vídeo por una URL no está soportado actualmente"
       },
       "duration": {
         "type": "Integer",
@@ -379,17 +379,17 @@
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+        "description": "Identificador único para el chat de destino o el nombre de usuario del canal de destino (en el formato `@channelusername`)"
       },
       "latitude": {
         "type": "Float number",
         "required": true,
-        "description": "Latitude of location"
+        "description": "Latitud de la ubicación"
       },
       "longitude": {
         "type": "Float number",
         "required": true,
-        "description": "Longitude of location"
+        "description": "Longitud de la ubicación"
       },
       "disable_notification": {
         "type": "Boolean",
@@ -414,27 +414,27 @@
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+        "description": "Identificador único para el chat de destino o el nombre de usuario del canal de destino (en el formato `@channelusername`)"
       },
       "latitude": {
         "type": "Float number",
         "required": true,
-        "description": "Latitude of the venue"
+        "description": "Latitud del lugar"
       },
       "longitude": {
         "type": "Float number",
         "required": true,
-        "description": "Longitude of the venue"
+        "description": "Longitud del lugar"
       },
       "title": {
         "type": "String",
         "required": true,
-        "description": "Name of the venue"
+        "description": "Nombre del lugar"
       },
       "address": {
         "type": "String",
         "required": true,
-        "description": "Address of the venue"
+        "description": "Dirección del lugar"
       },
       "foursquare_id": {
         "type": "String",
@@ -464,17 +464,17 @@
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+        "description": "Identificador único para el chat de destino o el nombre de usuario del canal de destino (en el formato `@channelusername`)"
       },
       "phone_number": {
         "type": "String",
         "required": true,
-        "description": "Contact's phone number"
+        "description": "Número de teléfono del contacto"
       },
       "first_name": {
         "type": "String",
         "required": true,
-        "description": "Contact's first name"
+        "description": "Nombre del contacto"
       },
       "last_name": {
         "type": "String",
@@ -504,12 +504,12 @@
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+        "description": "Identificador único para el chat de destino o el nombre de usuario del canal de destino (en el formato `@channelusername`)"
       },
       "action": {
         "type": "String",
         "required": true,
-        "description": "Type of action to broadcast. Choose one, depending on what the user is about to receive: __typing__ for text messages, __upload_photo__ for photos, __record_video__ or __upload_video__ for videos, __record_audio__ or __upload_audio__ for audio files, __upload_document__ for general files, __find_location__ for location data, __record_video_note__ or __upload_video_note__ for video notes."
+        "description": "Tipo de acción a difundir. Elija uno, dependiendo de lo que el usuario esté a punto de recibir: __typing__ para mensajes de texto, __upload_photo__ para fotos, __record_video__ o __upload_video__ para videos, __record_audio__ o __upload_audio__ para archivos de audio, __upload_document__ para archivos generales, __find_location__ para datos de ubicación, __record_video_note__ o __upload_video_note__ para video Notas."
       }
     }
   },
@@ -519,7 +519,7 @@
       "user_id": {
         "type": "Integer",
         "required": true,
-        "description": "Unique identifier of the target user"
+        "description": "Identificador único del usuario de destino"
       },
       "offset": {
         "type": "Integer",
@@ -539,7 +539,7 @@
       "file_id": {
         "type": "String",
         "required": true,
-        "description": "File identifier to get info about"
+        "description": "Identificador de archivo para obtener información sobre"
       }
     }
   },
@@ -548,12 +548,12 @@
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target group or username of the target supergroup or channel (in the format `@channelusername`)"
+        "description": "Identificador único para el grupo de destino o nombre de usuario del supergrupo o canal de destino (en el formato `@channelusername`)"
       },
       "user_id": {
         "type": "Integer",
         "required": true,
-        "description": "Unique identifier of the target user"
+        "description": "Identificador único del usuario de destino"
       },
       "until_date": {
         "type": "Integer",
@@ -568,27 +568,27 @@
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target group or username of the target supergroup or channel (in the format `@username`)"
+        "description": "Identificador único para el grupo de destino o el nombre de usuario del supergrupo o canal de destino (en el formato «@nombredeusuario`)"
       },
       "user_id": {
         "type": "Integer",
         "required": true,
-        "description": "Unique identifier of the target user"
+        "description": "Identificador único del usuario de destino"
       }
     }
   },
   "restrictChatMember": {
-    "description": "Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this to work and must have the appropriate admin rights. Pass __True__ for all boolean parameters to lift restrictions from a user. Returns __True__ on success.",
+    "description": "Utilice este método para restringir un usuario en un supergrupo. El bot debe ser un administrador del supergrupo para que funcione y debe tener los derechos de administrador adecuados. Pase __True__ para todos los parámetros booleanos para levantar las restricciones de un usuario. Devuelve __True__ en caso de éxito.",
     "params": {
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)"
+        "description": "Identificador único para el chat de destino o nombre de usuario del supergrupo de destino (en el formato `@supergroupusername`)"
       },
       "user_id": {
         "type": "Integer",
         "required": true,
-        "description": "Unique identifier of the target user"
+        "description": "Identificador único del usuario de destino"
       },
       "until_date": {
         "type": "Integer",
@@ -623,12 +623,12 @@
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+        "description": "Identificador único para el chat de destino o el nombre de usuario del canal de destino (en el formato `@channelusername`)"
       },
       "user_id": {
         "type": "Integer",
         "required": true,
-        "description": "Unique identifier of the target user"
+        "description": "Identificador único del usuario de destino"
       },
       "can_change_info": {
         "type": "Boolean",
@@ -678,7 +678,7 @@
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+        "description": "Identificador único para el chat de destino o el nombre de usuario del canal de destino (en el formato `@channelusername`)"
       }
     }
   },
@@ -688,12 +688,12 @@
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+        "description": "Identificador único para el chat de destino o el nombre de usuario del canal de destino (en el formato `@channelusername`)"
       },
       "photo": {
         "type": "InputFile",
         "required": true,
-        "description": "New chat photo, uploaded using multipart/form-data"
+        "description": "Nueva foto de chat, subida mediante multipart/form-data"
       }
     }
   },
@@ -702,7 +702,7 @@
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+        "description": "Identificador único para el chat de destino o el nombre de usuario del canal de destino (en el formato `@channelusername`)"
       }
     }
   },
@@ -711,22 +711,22 @@
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+        "description": "Identificador único para el chat de destino o el nombre de usuario del canal de destino (en el formato `@channelusername`)"
       },
       "title": {
         "type": "String",
         "required": true,
-        "description": "New chat title, 1-255 characters"
+        "description": "Nuevo título de chat, 1-255 caracteres"
       }
     }
   },
   "setChatDescription": {
-    "description": "Use this method to change the description of a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns __True__ on success. ",
+    "description": "Utilice este método para cambiar la descripción de un supergrupo o un canal. El bot debe ser un administrador en el chat para que esto funcione y debe tener los derechos de administrador adecuados. Devuelve __True__ en caso de éxito. ",
     "params": {
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+        "description": "Identificador único para el chat de destino o el nombre de usuario del canal de destino (en el formato `@channelusername`)"
       },
       "description": {
         "type": "String",
@@ -741,12 +741,12 @@
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)"
+        "description": "Identificador único para el chat de destino o nombre de usuario del supergrupo de destino (en el formato `@supergroupusername`)"
       },
       "message_id": {
         "type": "Integer",
         "required": true,
-        "description": "Identifier of a message to pin"
+        "description": "Identificador de un mensaje a pin"
       },
       "disable_notification": {
         "type": "Boolean",
@@ -761,62 +761,62 @@
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)"
+        "description": "Identificador único para el chat de destino o nombre de usuario del supergrupo de destino (en el formato `@supergroupusername`)"
       }
     }
   },
   "leaveChat": {
-    "description": "Use this method for your bot to leave a group, supergroup or channel. Returns __True__ on success.",
+    "description": "Utilice este método para que su bot deje un grupo, supergrupo o canal. Devuelve __True__ en caso de éxito.",
     "params": {
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target supergroup or channel (in the format `@channelusername`)"
+        "description": "Identificador único para el chat de destino o nombre de usuario del supergrupo o canal de destino (en el formato `@channelusername`)"
       }
     }
   },
   "getChat": {
-    "description": "Use this method to get up to date information about the chat (current name of the user for one-on-one conversations, current username of a user, group or channel, etc.). Returns a Chat object on success.",
+    "description": "Utilice este método para obtener información actualizada sobre el chat (nombre actual del usuario para las conversaciones uno a uno, nombre de usuario actual de un usuario, grupo o canal, etc.). Devuelve un objeto Chat en caso de éxito.",
     "params": {
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target supergroup or channel (in the format `@channelusername`)"
+        "description": "Identificador único para el chat de destino o nombre de usuario del supergrupo o canal de destino (en el formato `@channelusername`)"
       }
     }
   },
   "getChatAdministrators": {
-    "description": "Use this method to get a list of administrators in a chat. On success, returns an Array of ChatMember objects that contains information about all chat administrators except other bots. If the chat is a group or a supergroup and no administrators were appointed, only the creator will be returned.",
+    "description": "Utilice este método para obtener una lista de administradores en una conversación. En caso de éxito, devuelve una matriz de objetos ChatMember que contiene información sobre todos los administradores de chat excepto otros bots. Si el chat es un grupo o un supergrupo y no se nombraron administradores, solo se devolverá el creador.",
     "params": {
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target supergroup or channel (in the format `@channelusername`)"
+        "description": "Identificador único para el chat de destino o nombre de usuario del supergrupo o canal de destino (en el formato `@channelusername`)"
       }
     }
   },
   "getChatMembersCount": {
-    "description": "Use this method to get the number of members in a chat. Returns __Int__ on success.",
+    "description": "Utilice este método para obtener el número de miembros en un chat. Devuelve __Int__ en caso de éxito.",
     "params": {
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target supergroup or channel (in the format `@channelusername`)"
+        "description": "Identificador único para el chat de destino o nombre de usuario del supergrupo o canal de destino (en el formato `@channelusername`)"
       }
     }
   },
   "getChatMember": {
-    "description": "Use this method to get information about a member of a chat. Returns a ChatMember object on success.",
+    "description": "Utilice este método para obtener información sobre un miembro de un chat. Devuelve un objeto ChatMember en caso de éxito.",
     "params": {
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target supergroup or channel (in the format `@channelusername`)"
+        "description": "Identificador único para el chat de destino o nombre de usuario del supergrupo o canal de destino (en el formato `@channelusername`)"
       },
       "user_id": {
         "type": "Integer",
         "required": true,
-        "description": "Unique identifier of the target user"
+        "description": "Identificador único del usuario de destino"
       }
     }
   },
@@ -825,7 +825,7 @@
       "callback_query_id": {
         "type": "String",
         "required": true,
-        "description": "Unique identifier for the query to be answered"
+        "description": "Identificador único para que la consulta sea respondida"
       },
       "text": {
         "type": "String",
@@ -870,7 +870,7 @@
       "text": {
         "type": "String",
         "required": true,
-        "description": "New text of the message"
+        "description": "Nuevo texto del mensaje"
       },
       "parse_mode": {
         "type": "String",
@@ -945,32 +945,32 @@
     }
   },
   "deleteMessage": {
-    "description": "Use this method to delete a message, including service messages, with the following limitations:\n- A message can only be deleted if it was sent less than 48 hours ago.\n- Bots can delete outgoing messages in groups and supergroups.\n- Bots granted __can_post_messages__ permissions can delete outgoing messages in channels.\n- If the bot is an administrator of a group, it can delete any message there.\n- If the bot has __can_delete_messages__ permission in a supergroup or a channel, it can delete any message there.\nReturns __True__ on success.",
+    "description": "Utilice este método para eliminar un mensaje, incluidos los mensajes de servicio, con las siguientes limitaciones:\n- Un mensaje sólo se puede eliminar si se envió hace menos de 48 horas.\n- Los bots pueden eliminar mensajes salientes en grupos y supergrupos.\n- Bots concedidos __can_post_messages__ permisos pueden borrar mensajes salientes en canales.\n- Si el bot es un administrador de un grupo, puede borrar cualquier mensaje allí.\n- Si el bot tiene permiso __can_delete_messages__ en un supergrupo o un canal, Puede borrar cualquier mensaje allí.\nReturns __True__ en caso de éxito.",
     "params": {
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+        "description": "Identificador único para el chat de destino o el nombre de usuario del canal de destino (en el formato `@channelusername`)"
       },
       "message_id": {
         "type": "Integer",
         "required": true,
-        "description": "Identifier of the message to delete"
+        "description": "Identificador del mensaje a eliminar"
       }
     }
   },
   "sendSticker": {
-    "description": "Use this method to send .webp stickers. On success, the sent Message is returned.",
+    "description": "Utilice este método para enviar pegatinas .webp. En caso de éxito, se devuelve el mensaje enviado.",
     "params": {
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+        "description": "Identificador único para el chat de destino o el nombre de usuario del canal de destino (en el formato `@channelusername`)"
       },
       "sticker": {
         "type": "InputFile or String",
         "required": true,
-        "description": "Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .webp file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »"
+        "description": "Sticker para enviar. Pase un file_id como String para enviar un archivo que existe en los servidores de Telegram (recomendado), pase una URL HTTP como String para Telegram para obtener un archivo .webp desde Internet o cargue uno nuevo usando multipart / form-data. Más información sobre Envío de archivos »"
       },
       "disable_notification": {
         "type": "Boolean",
@@ -995,22 +995,22 @@
       "name": {
         "type": "String",
         "required": true,
-        "description": "Name of the sticker set"
+        "description": "Nombre del conjunto de stickers"
       }
     }
   },
   "uploadStickerFile": {
-    "description": "Use this method to upload a .png file with a sticker for later use in __createNewStickerSet__ and __addStickerToSet__ methods (can be used multiple times). Returns the uploaded File on success.",
+    "description": "Utilice este método para cargar un archivo .png de un sticker para su uso posterior en los métodos __createNewStickerSet__ y __addStickerToSet__ (puede utilizarse varias veces). Devuelve el archivo cargado en caso de éxito.",
     "params": {
       "user_id": {
         "type": "Integer",
         "required": true,
-        "description": "User identifier of sticker file owner"
+        "description": "Identificador de usuario propietario del archivo sticker"
       },
       "png_sticker": {
         "type": "InputFile",
         "required": true,
-        "description": "**Png** image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. More info on Sending Files »"
+        "description": "**Png** Imagen con la etiqueta, debe tener un tamaño de hasta 512 kilobytes, las dimensiones no deben exceder 512px, y el ancho o la altura deben ser exactamente 512px. Más información sobre Envío de archivos »"
       }
     }
   },
