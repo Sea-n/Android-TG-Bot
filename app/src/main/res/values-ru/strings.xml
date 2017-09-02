@@ -12,7 +12,7 @@
     <string name="menu_add_bot">Добавить Бота</string>
     <string name="menu_join_group">Вступить В Группу</string>
     <string name="menu_github">В избранное на Github</string>
-    <string name="menu_export">Экспорт базы данных на внутренний накопитель</string>
+    <string name="menu_export">Экспорт БД в память телефона</string>
 
     <string name="title_activity_add_bot">Новый Бот</string>
     <string name="title_activity_bot_api">Bot API</string>
@@ -62,7 +62,7 @@
     <string name="footer_rate_no">Не сейчас</string>
 
     <string name="method">Метод</string>
-    <string name="done">Сделано</string>
+    <string name="done">Ок</string>
     <string name="save">Сохранить</string>
     <string name="submit">Подтвердить</string>
     <string name="cancel">Отменить</string>
