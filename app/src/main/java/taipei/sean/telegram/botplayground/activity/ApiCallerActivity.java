@@ -61,9 +61,26 @@ public class ApiCallerActivity extends AppCompatActivity {
         final TextInputEditText jsonView = (TextInputEditText) findViewById(R.id.api_caller_data);
         final TextView resultView = (TextView) findViewById(R.id.api_caller_result);
 
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                submit();
+            }
+        });
+        checkJsonButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                _api.checkJson(jsonView, resultView);
+            }
+        });
 
         ArrayList<String> botApiMethodsList = new ArrayList<String>() {};
         apiMethods = loadMethods();
+
+        if (null == apiMethods) {
+            Log.e("caller", "no methods");
+            return;
+        }
 
         Iterator<String> temp = apiMethods.keys();
         while (temp.hasNext()) {
@@ -88,19 +105,6 @@ public class ApiCallerActivity extends AppCompatActivity {
             }
         });
 
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                submit();
-            }
-        });
-        checkJsonButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                _api.checkJson(jsonView, resultView);
-            }
-        });
-
         String method = db.getParam("_method");
         if (apiMethods.has(method))
             methodView.setText(method);
@@ -115,6 +119,11 @@ public class ApiCallerActivity extends AppCompatActivity {
 
         JSONObject methodData;
         JSONObject paramData;
+
+        if (null == apiMethods) {
+            Log.d("caller", "no methods");
+            return;
+        }
 
         if (!apiMethods.has(method)) {
             methodView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);

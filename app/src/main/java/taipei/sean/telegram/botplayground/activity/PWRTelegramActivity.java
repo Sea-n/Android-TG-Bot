@@ -77,10 +77,20 @@ public class PWRTelegramActivity extends AppCompatActivity {
         final InstantComplete methodView = (InstantComplete) findViewById(R.id.pwrtelegram_method);
         final Button submitButton = (Button) findViewById(R.id.pwrtelegram_submit);
 
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                submit();
+            }
+        });
 
         final ArrayList<String> botApiMethodsList = new ArrayList<String>() {};
         apiMethods = loadMethods();
 
+        if (null == apiMethods) {
+            Log.e("pwrt", "no methods");
+            return;
+        }
 
         final SeanAdapter<String> adapter = new SeanAdapter<>(this,
                 android.R.layout.simple_dropdown_item_1line, botApiMethodsList);
@@ -99,13 +109,6 @@ public class PWRTelegramActivity extends AppCompatActivity {
             }
         });
 
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                submit();
-            }
-        });
-
         String method = db.getParam("_method_pwrt");
         if (apiMethods.has(method))
             methodView.setText(method);
@@ -119,6 +122,11 @@ public class PWRTelegramActivity extends AppCompatActivity {
 
         JSONObject methodData;
         JSONObject paramData;
+
+        if (null == apiMethods) {
+            Log.e("pwrt", "no methods");
+            return;
+        }
 
         if (!apiMethods.has(method)) {
             methodView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
