@@ -52,6 +52,15 @@ public class PWRTelegramAPI {
     public void callApi(final String method, final TextView resultView, final JSONObject params) {
         Log.d("papi", method + params);
 
+        String json = params.toString();
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        JsonParser jp = new JsonParser();
+        JsonElement je = jp.parse(json);
+        String prettyJson = gson.toJson(je);
+        String resultText = method + prettyJson;
+        resultView.setText(resultText);
+
         final String url = _apiBaseUrl + "/" + method;
 
         Thread thread = new Thread(new Runnable() {

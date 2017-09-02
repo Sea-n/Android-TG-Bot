@@ -13,6 +13,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 
@@ -31,12 +33,17 @@ public class TelegramAPI {
         _apiBaseUrl = "https://api.telegram.org/bot" + token;
     }
 
-    public void callApi(final String method, final TextView resultView, @Nullable String j) {
-        if (null == j)
-            j = "{}";
-        final String json = j;
+    public void callApi(final String method, final TextView resultView, JSONObject j) {
+        final String json = j.toString();
 
         Log.d("api", method + json);
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        JsonParser jp = new JsonParser();
+        JsonElement je = jp.parse(json);
+        String prettyJson = gson.toJson(je);
+        String resultText = method + prettyJson;
+        resultView.setText(resultText);
 
         final String url = _apiBaseUrl + "/" + method;
 

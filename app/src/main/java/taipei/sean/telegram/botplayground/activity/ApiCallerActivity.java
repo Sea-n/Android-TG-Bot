@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -247,17 +248,26 @@ public class ApiCallerActivity extends AppCompatActivity {
                 continue;
             }
 
+            db.insertFav(name, value, method);
+
             try {
-                jsonObject.put(name, value);
-                db.insertFav(name, value, method);
-            } catch (JSONException e) {
-                Log.e("caller", "json", e);
+                JSONObject valueJson = new JSONObject(value);   // if can be JSON Object
+                jsonObject.put(name, valueJson);   // treat as JSON Object
+            } catch (JSONException e1) {
+                try {
+                    JSONArray valueJson = new JSONArray(value);   // if not Object, but can be Array
+                    jsonObject.put(name, valueJson);   // treat as Array
+                } catch (JSONException e2) {
+                    try {
+                        jsonObject.put(name, value);   // not JSON, treat as string
+                    } catch (JSONException e3) {
+                        Log.e("caller", "put", e3);   // Can't put value to jsonObject
+                    }
+                }
             }
         }
 
-        String json = jsonObject.toString();
-
-        _api.callApi(method, resultView, json);
+        _api.callApi(method, resultView, jsonObject);
     }
 
     public JSONObject loadMethods() {
