@@ -155,14 +155,12 @@ public class MadelineActivity extends AppCompatActivity {
         final ApiCallerAdapter apiCallerAdapter = new ApiCallerAdapter(getApplicationContext());
 
         try {
-            JSONObject wrapValue = new JSONObject();
 
             Iterator<String> temp = paramData.keys();
             while (temp.hasNext()) {
                 String key = temp.next();
-                String type = paramData.getString(key);
-                wrapValue.put("type", type);
-                apiCallerAdapter.addData(key, wrapValue);
+                JSONObject value = paramData.getJSONObject(key);
+                apiCallerAdapter.addData(key, value);
             }
         } catch (JSONException e) {
             Log.e("madeline", "parse", e);

@@ -1,28 +1,42 @@
 {
   "account->changePhone": {
     "params": {
-      "phone_number": "string",
-      "phone_code_hash": "string",
-      "phone_code": "string"
+      "phone_number": {
+        "type": "string"
+      },
+      "phone_code_hash": {
+        "type": "string"
+      },
+      "phone_code": {
+        "type": "string"
+      }
     },
     "return": "User"
   },
   "account->checkUsername": {
     "params": {
-      "username": "string"
+      "username": {
+        "type": "string"
+      }
     },
     "return": "Bool"
   },
   "account->confirmPhone": {
     "params": {
-      "phone_code_hash": "string",
-      "phone_code": "string"
+      "phone_code_hash": {
+        "type": "string"
+      },
+      "phone_code": {
+        "type": "string"
+      }
     },
     "return": "Bool"
   },
   "account->deleteAccount": {
     "params": {
-      "reason": "string"
+      "reason": {
+        "type": "string"
+      }
     },
     "return": "Bool"
   },
@@ -36,7 +50,9 @@
   },
   "account->getNotifySettings": {
     "params": {
-      "peer": "InputNotifyPeer"
+      "peer": {
+        "type": "InputNotifyPeer"
+      }
     },
     "return": "PeerNotifySettings"
   },
@@ -46,20 +62,28 @@
   },
   "account->getPasswordSettings": {
     "params": {
-      "current_password_hash": "bytes"
+      "current_password_hash": {
+        "type": "bytes"
+      }
     },
     "return": "account_PasswordSettings"
   },
   "account->getPrivacy": {
     "params": {
-      "key": "InputPrivacyKey"
+      "key": {
+        "type": "InputPrivacyKey"
+      }
     },
     "return": "account_PrivacyRules"
   },
   "account->getTmpPassword": {
     "params": {
-      "password_hash": "bytes",
-      "period": "int"
+      "password_hash": {
+        "type": "bytes"
+      },
+      "period": {
+        "type": "int"
+      }
     },
     "return": "account_TmpPassword"
   },
@@ -69,21 +93,31 @@
   },
   "account->registerDevice": {
     "params": {
-      "token_type": "int",
-      "token": "string"
+      "token_type": {
+        "type": "int"
+      },
+      "token": {
+        "type": "string"
+      }
     },
     "return": "Bool"
   },
   "account->reportPeer": {
     "params": {
-      "peer": "InputPeer",
-      "reason": "ReportReason"
+      "peer": {
+        "type": "InputPeer"
+      },
+      "reason": {
+        "type": "ReportReason"
+      }
     },
     "return": "Bool"
   },
   "account->resetAuthorization": {
     "params": {
-      "hash": "long"
+      "hash": {
+        "type": "long"
+      }
     },
     "return": "Bool"
   },
@@ -93,132 +127,204 @@
   },
   "account->sendChangePhoneCode": {
     "params": {
-      "allow_flashcall": "Bool",
-      "phone_number": "string",
-      "current_number": "Bool"
+      "allow_flashcall": {
+        "type": "Bool"
+      },
+      "phone_number": {
+        "type": "string"
+      },
+      "current_number": {
+        "type": "Bool"
+      }
     },
     "return": "auth_SentCode"
   },
   "account->sendConfirmPhoneCode": {
     "params": {
-      "allow_flashcall": "Bool",
-      "hash": "string",
-      "current_number": "Bool"
+      "allow_flashcall": {
+        "type": "Bool"
+      },
+      "hash": {
+        "type": "string"
+      },
+      "current_number": {
+        "type": "Bool"
+      }
     },
     "return": "auth_SentCode"
   },
   "account->setAccountTTL": {
     "params": {
-      "ttl": "AccountDaysTTL"
+      "ttl": {
+        "type": "AccountDaysTTL"
+      }
     },
     "return": "Bool"
   },
   "account->setPrivacy": {
     "params": {
-      "key": "InputPrivacyKey",
-      "rules": "Array of InputPrivacyRule"
+      "key": {
+        "type": "InputPrivacyKey"
+      },
+      "rules": {
+        "type": "Array of InputPrivacyRule"
+      }
     },
     "return": "account_PrivacyRules"
   },
   "account->unregisterDevice": {
     "params": {
-      "token_type": "int",
-      "token": "string"
+      "token_type": {
+        "type": "int"
+      },
+      "token": {
+        "type": "string"
+      }
     },
     "return": "Bool"
   },
   "account->updateDeviceLocked": {
     "params": {
-      "period": "int"
+      "period": {
+        "type": "int"
+      }
     },
     "return": "Bool"
   },
   "account->updateNotifySettings": {
     "params": {
-      "peer": "InputNotifyPeer",
-      "settings": "InputPeerNotifySettings"
+      "peer": {
+        "type": "InputNotifyPeer"
+      },
+      "settings": {
+        "type": "InputPeerNotifySettings"
+      }
     },
     "return": "Bool"
   },
   "account->updatePasswordSettings": {
     "params": {
-      "current_password_hash": "bytes",
-      "new_settings": "account_PasswordInputSettings"
+      "current_password_hash": {
+        "type": "bytes"
+      },
+      "new_settings": {
+        "type": "account_PasswordInputSettings"
+      }
     },
     "return": "Bool"
   },
   "account->updateProfile": {
     "params": {
-      "first_name": "string",
-      "last_name": "string",
-      "about": "string"
+      "first_name": {
+        "type": "string"
+      },
+      "last_name": {
+        "type": "string"
+      },
+      "about": {
+        "type": "string"
+      }
     },
     "return": "User"
   },
   "account->updateStatus": {
     "params": {
-      "offline": "Bool"
+      "offline": {
+        "type": "Bool"
+      }
     },
     "return": "Bool"
   },
   "account->updateUsername": {
     "params": {
-      "username": "string"
+      "username": {
+        "type": "string"
+      }
     },
     "return": "User"
   },
   "auth->bindTempAuthKey": {
     "params": {
-      "perm_auth_key_id": "long",
-      "nonce": "long",
-      "expires_at": "int",
-      "encrypted_message": "bytes"
+      "perm_auth_key_id": {
+        "type": "long"
+      },
+      "nonce": {
+        "type": "long"
+      },
+      "expires_at": {
+        "type": "int"
+      },
+      "encrypted_message": {
+        "type": "bytes"
+      }
     },
     "return": "Bool"
   },
   "auth->cancelCode": {
     "params": {
-      "phone_number": "string",
-      "phone_code_hash": "string"
+      "phone_number": {
+        "type": "string"
+      },
+      "phone_code_hash": {
+        "type": "string"
+      }
     },
     "return": "Bool"
   },
   "auth->checkPassword": {
     "params": {
-      "password_hash": "bytes"
+      "password_hash": {
+        "type": "bytes"
+      }
     },
     "return": "auth_Authorization"
   },
   "auth->checkPhone": {
     "params": {
-      "phone_number": "string"
+      "phone_number": {
+        "type": "string"
+      }
     },
     "return": "auth_CheckedPhone"
   },
   "auth->dropTempAuthKeys": {
     "params": {
-      "except_auth_keys": "Array of long"
+      "except_auth_keys": {
+        "type": "Array of long"
+      }
     },
     "return": "Bool"
   },
   "auth->exportAuthorization": {
     "params": {
-      "dc_id": "int"
+      "dc_id": {
+        "type": "int"
+      }
     },
     "return": "auth_ExportedAuthorization"
   },
   "auth->importAuthorization": {
     "params": {
-      "id": "int",
-      "bytes": "bytes"
+      "id": {
+        "type": "int"
+      },
+      "bytes": {
+        "type": "bytes"
+      }
     },
     "return": "auth_Authorization"
   },
   "auth->importBotAuthorization": {
     "params": {
-      "api_id": "int",
-      "api_hash": "string",
-      "bot_auth_token": "string"
+      "api_id": {
+        "type": "int"
+      },
+      "api_hash": {
+        "type": "string"
+      },
+      "bot_auth_token": {
+        "type": "string"
+      }
     },
     "return": "auth_Authorization"
   },
@@ -228,7 +334,9 @@
   },
   "auth->recoverPassword": {
     "params": {
-      "code": "string"
+      "code": {
+        "type": "string"
+      }
     },
     "return": "auth_Authorization"
   },
@@ -238,8 +346,12 @@
   },
   "auth->resendCode": {
     "params": {
-      "phone_number": "string",
-      "phone_code_hash": "string"
+      "phone_number": {
+        "type": "string"
+      },
+      "phone_code_hash": {
+        "type": "string"
+      }
     },
     "return": "auth_SentCode"
   },
@@ -249,148 +361,252 @@
   },
   "auth->sendCode": {
     "params": {
-      "allow_flashcall": "Bool",
-      "phone_number": "string",
-      "current_number": "Bool",
-      "api_id": "int",
-      "api_hash": "string"
+      "allow_flashcall": {
+        "type": "Bool"
+      },
+      "phone_number": {
+        "type": "string"
+      },
+      "current_number": {
+        "type": "Bool"
+      },
+      "api_id": {
+        "type": "int"
+      },
+      "api_hash": {
+        "type": "string"
+      }
     },
     "return": "auth_SentCode"
   },
   "auth->sendInvites": {
     "params": {
-      "phone_numbers": "Array of string",
-      "message": "string"
+      "phone_numbers": {
+        "type": "Array of string"
+      },
+      "message": {
+        "type": "string"
+      }
     },
     "return": "Bool"
   },
   "auth->signIn": {
     "params": {
-      "phone_number": "string",
-      "phone_code_hash": "string",
-      "phone_code": "string"
+      "phone_number": {
+        "type": "string"
+      },
+      "phone_code_hash": {
+        "type": "string"
+      },
+      "phone_code": {
+        "type": "string"
+      }
     },
     "return": "auth_Authorization"
   },
   "auth->signUp": {
     "params": {
-      "phone_number": "string",
-      "phone_code_hash": "string",
-      "phone_code": "string",
-      "first_name": "string",
-      "last_name": "string"
+      "phone_number": {
+        "type": "string"
+      },
+      "phone_code_hash": {
+        "type": "string"
+      },
+      "phone_code": {
+        "type": "string"
+      },
+      "first_name": {
+        "type": "string"
+      },
+      "last_name": {
+        "type": "string"
+      }
     },
     "return": "auth_Authorization"
   },
   "bots->answerWebhookJSONQuery": {
     "params": {
-      "query_id": "long",
-      "data": "DataJSON"
+      "query_id": {
+        "type": "long"
+      },
+      "data": {
+        "type": "DataJSON"
+      }
     },
     "return": "Bool"
   },
   "bots->sendCustomRequest": {
     "params": {
-      "custom_method": "string",
-      "params": "DataJSON"
+      "custom_method": {
+        "type": "string"
+      },
+      "params": {
+        "type": "DataJSON"
+      }
     },
     "return": "DataJSON"
   },
   "channels->checkUsername": {
     "params": {
-      "channel": "InputChannel",
-      "username": "string"
+      "channel": {
+        "type": "InputChannel"
+      },
+      "username": {
+        "type": "string"
+      }
     },
     "return": "Bool"
   },
   "channels->createChannel": {
     "params": {
-      "broadcast": "Bool",
-      "megagroup": "Bool",
-      "title": "string",
-      "about": "string"
+      "broadcast": {
+        "type": "Bool"
+      },
+      "megagroup": {
+        "type": "Bool"
+      },
+      "title": {
+        "type": "string"
+      },
+      "about": {
+        "type": "string"
+      }
     },
     "return": "Updates"
   },
   "channels->deleteChannel": {
     "params": {
-      "channel": "InputChannel"
+      "channel": {
+        "type": "InputChannel"
+      }
     },
     "return": "Updates"
   },
   "channels->deleteMessages": {
     "params": {
-      "channel": "InputChannel",
-      "id": "Array of int"
+      "channel": {
+        "type": "InputChannel"
+      },
+      "id": {
+        "type": "Array of int"
+      }
     },
     "return": "messages_AffectedMessages"
   },
   "channels->deleteUserHistory": {
     "params": {
-      "channel": "InputChannel",
-      "user_id": "InputUser"
+      "channel": {
+        "type": "InputChannel"
+      },
+      "user_id": {
+        "type": "InputUser"
+      }
     },
     "return": "messages_AffectedHistory"
   },
   "channels->editAbout": {
     "params": {
-      "channel": "InputChannel",
-      "about": "string"
+      "channel": {
+        "type": "InputChannel"
+      },
+      "about": {
+        "type": "string"
+      }
     },
     "return": "Bool"
   },
   "channels->editAdmin": {
     "params": {
-      "channel": "InputChannel",
-      "user_id": "InputUser",
-      "admin_rights": "ChannelAdminRights"
+      "channel": {
+        "type": "InputChannel"
+      },
+      "user_id": {
+        "type": "InputUser"
+      },
+      "admin_rights": {
+        "type": "ChannelAdminRights"
+      }
     },
     "return": "Updates"
   },
   "channels->editBanned": {
     "params": {
-      "channel": "InputChannel",
-      "user_id": "InputUser",
-      "banned_rights": "ChannelBannedRights"
+      "channel": {
+        "type": "InputChannel"
+      },
+      "user_id": {
+        "type": "InputUser"
+      },
+      "banned_rights": {
+        "type": "ChannelBannedRights"
+      }
     },
     "return": "Updates"
   },
   "channels->editPhoto": {
     "params": {
-      "channel": "InputChannel",
-      "photo": "InputChatPhoto"
+      "channel": {
+        "type": "InputChannel"
+      },
+      "photo": {
+        "type": "InputChatPhoto"
+      }
     },
     "return": "Updates"
   },
   "channels->editTitle": {
     "params": {
-      "channel": "InputChannel",
-      "title": "string"
+      "channel": {
+        "type": "InputChannel"
+      },
+      "title": {
+        "type": "string"
+      }
     },
     "return": "Updates"
   },
   "channels->exportInvite": {
     "params": {
-      "channel": "InputChannel"
+      "channel": {
+        "type": "InputChannel"
+      }
     },
     "return": "ExportedChatInvite"
   },
   "channels->exportMessageLink": {
     "params": {
-      "channel": "InputChannel",
-      "id": "int"
+      "channel": {
+        "type": "InputChannel"
+      },
+      "id": {
+        "type": "int"
+      }
     },
     "return": "ExportedMessageLink"
   },
   "channels->getAdminLog": {
     "params": {
-      "channel": "InputChannel",
-      "q": "string",
-      "events_filter": "ChannelAdminLogEventsFilter",
-      "admins": "Array of InputUser",
-      "max_id": "long",
-      "min_id": "long",
-      "limit": "int"
+      "channel": {
+        "type": "InputChannel"
+      },
+      "q": {
+        "type": "string"
+      },
+      "events_filter": {
+        "type": "ChannelAdminLogEventsFilter"
+      },
+      "admins": {
+        "type": "Array of InputUser"
+      },
+      "max_id": {
+        "type": "long"
+      },
+      "min_id": {
+        "type": "long"
+      },
+      "limit": {
+        "type": "int"
+      }
     },
     "return": "channels_AdminLogResults"
   },
@@ -400,117 +616,179 @@
   },
   "channels->getChannels": {
     "params": {
-      "id": "Array of InputChannel"
+      "id": {
+        "type": "Array of InputChannel"
+      }
     },
     "return": "messages_Chats"
   },
   "channels->getFullChannel": {
     "params": {
-      "channel": "InputChannel"
+      "channel": {
+        "type": "InputChannel"
+      }
     },
     "return": "messages_ChatFull"
   },
   "channels->getMessages": {
     "params": {
-      "channel": "InputChannel",
-      "id": "Array of int"
+      "channel": {
+        "type": "InputChannel"
+      },
+      "id": {
+        "type": "Array of int"
+      }
     },
     "return": "messages_Messages"
   },
   "channels->getParticipant": {
     "params": {
-      "channel": "InputChannel",
-      "user_id": "InputUser"
+      "channel": {
+        "type": "InputChannel"
+      },
+      "user_id": {
+        "type": "InputUser"
+      }
     },
     "return": "channels_ChannelParticipant"
   },
   "channels->getParticipants": {
     "params": {
-      "channel": "InputChannel",
-      "filter": "ChannelParticipantsFilter",
-      "offset": "int",
-      "limit": "int"
+      "channel": {
+        "type": "InputChannel"
+      },
+      "filter": {
+        "type": "ChannelParticipantsFilter"
+      },
+      "offset": {
+        "type": "int"
+      },
+      "limit": {
+        "type": "int"
+      }
     },
     "return": "channels_ChannelParticipants"
   },
   "channels->inviteToChannel": {
     "params": {
-      "channel": "InputChannel",
-      "users": "Array of InputUser"
+      "channel": {
+        "type": "InputChannel"
+      },
+      "users": {
+        "type": "Array of InputUser"
+      }
     },
     "return": "Updates"
   },
   "channels->joinChannel": {
     "params": {
-      "channel": "InputChannel"
+      "channel": {
+        "type": "InputChannel"
+      }
     },
     "return": "Updates"
   },
   "channels->leaveChannel": {
     "params": {
-      "channel": "InputChannel"
+      "channel": {
+        "type": "InputChannel"
+      }
     },
     "return": "Updates"
   },
   "channels->readHistory": {
     "params": {
-      "channel": "InputChannel",
-      "max_id": "int"
+      "channel": {
+        "type": "InputChannel"
+      },
+      "max_id": {
+        "type": "int"
+      }
     },
     "return": "Bool"
   },
   "channels->reportSpam": {
     "params": {
-      "channel": "InputChannel",
-      "user_id": "InputUser",
-      "id": "Array of int"
+      "channel": {
+        "type": "InputChannel"
+      },
+      "user_id": {
+        "type": "InputUser"
+      },
+      "id": {
+        "type": "Array of int"
+      }
     },
     "return": "Bool"
   },
   "channels->toggleInvites": {
     "params": {
-      "channel": "InputChannel",
-      "enabled": "Bool"
+      "channel": {
+        "type": "InputChannel"
+      },
+      "enabled": {
+        "type": "Bool"
+      }
     },
     "return": "Updates"
   },
   "channels->toggleSignatures": {
     "params": {
-      "channel": "InputChannel",
-      "enabled": "Bool"
+      "channel": {
+        "type": "InputChannel"
+      },
+      "enabled": {
+        "type": "Bool"
+      }
     },
     "return": "Updates"
   },
   "channels->updatePinnedMessage": {
     "params": {
-      "silent": "Bool",
-      "channel": "InputChannel",
-      "id": "int"
+      "silent": {
+        "type": "Bool"
+      },
+      "channel": {
+        "type": "InputChannel"
+      },
+      "id": {
+        "type": "int"
+      }
     },
     "return": "Updates"
   },
   "channels->updateUsername": {
     "params": {
-      "channel": "InputChannel",
-      "username": "string"
+      "channel": {
+        "type": "InputChannel"
+      },
+      "username": {
+        "type": "string"
+      }
     },
     "return": "Bool"
   },
   "contacts->block": {
     "params": {
-      "id": "InputUser"
+      "id": {
+        "type": "InputUser"
+      }
     },
     "return": "Bool"
   },
   "contacts->deleteContact": {
     "params": {
-      "id": "InputUser"
+      "id": {
+        "type": "InputUser"
+      }
     },
     "return": "contacts_Link"
   },
   "contacts->deleteContacts": {
     "params": {
-      "id": "Array of InputUser"
+      "id": {
+        "type": "Array of InputUser"
+      }
     },
     "return": "Bool"
   },
@@ -520,14 +798,20 @@
   },
   "contacts->getBlocked": {
     "params": {
-      "offset": "int",
-      "limit": "int"
+      "offset": {
+        "type": "int"
+      },
+      "limit": {
+        "type": "int"
+      }
     },
     "return": "contacts_Blocked"
   },
   "contacts->getContacts": {
     "params": {
-      "hash": "string"
+      "hash": {
+        "type": "string"
+      }
     },
     "return": "contacts_Contacts"
   },
@@ -537,64 +821,110 @@
   },
   "contacts->getTopPeers": {
     "params": {
-      "correspondents": "Bool",
-      "bots_pm": "Bool",
-      "bots_inline": "Bool",
-      "phone_calls": "Bool",
-      "groups": "Bool",
-      "channels": "Bool",
-      "offset": "int",
-      "limit": "int",
-      "hash": "int"
+      "correspondents": {
+        "type": "Bool"
+      },
+      "bots_pm": {
+        "type": "Bool"
+      },
+      "bots_inline": {
+        "type": "Bool"
+      },
+      "phone_calls": {
+        "type": "Bool"
+      },
+      "groups": {
+        "type": "Bool"
+      },
+      "channels": {
+        "type": "Bool"
+      },
+      "offset": {
+        "type": "int"
+      },
+      "limit": {
+        "type": "int"
+      },
+      "hash": {
+        "type": "int"
+      }
     },
     "return": "contacts_TopPeers"
   },
   "contacts->importCard": {
     "params": {
-      "export_card": "Array of int"
+      "export_card": {
+        "type": "Array of int"
+      }
     },
     "return": "User"
   },
   "contacts->importContacts": {
     "params": {
-      "contacts": "Array of InputContact",
-      "replace": "Bool"
+      "contacts": {
+        "type": "Array of InputContact"
+      },
+      "replace": {
+        "type": "Bool"
+      }
     },
     "return": "contacts_ImportedContacts"
   },
   "contacts->resetTopPeerRating": {
     "params": {
-      "category": "TopPeerCategory",
-      "peer": "InputPeer"
+      "category": {
+        "type": "TopPeerCategory"
+      },
+      "peer": {
+        "type": "InputPeer"
+      }
     },
     "return": "Bool"
   },
   "contacts->resolveUsername": {
     "params": {
-      "username": "string"
+      "username": {
+        "type": "string"
+      }
     },
     "return": "contacts_ResolvedPeer"
   },
   "contacts->search": {
     "params": {
-      "q": "string",
-      "limit": "int"
+      "q": {
+        "type": "string"
+      },
+      "limit": {
+        "type": "int"
+      }
     },
     "return": "contacts_Found"
   },
   "contacts->unblock": {
     "params": {
-      "id": "InputUser"
+      "id": {
+        "type": "InputUser"
+      }
     },
     "return": "Bool"
   },
   "contest->saveDeveloperInfo": {
     "params": {
-      "vk_id": "int",
-      "name": "string",
-      "phone_number": "string",
-      "age": "int",
-      "city": "string"
+      "vk_id": {
+        "type": "int"
+      },
+      "name": {
+        "type": "string"
+      },
+      "phone_number": {
+        "type": "string"
+      },
+      "age": {
+        "type": "int"
+      },
+      "city": {
+        "type": "string"
+      }
     },
     "return": "Bool"
   },
@@ -604,19 +934,25 @@
   },
   "destroy_session": {
     "params": {
-      "session_id": "long"
+      "session_id": {
+        "type": "long"
+      }
     },
     "return": "DestroySessionRes"
   },
   "get_future_salts": {
     "params": {
-      "num": "int"
+      "num": {
+        "type": "int"
+      }
     },
     "return": "FutureSalts"
   },
   "help->getAppChangelog": {
     "params": {
-      "prev_app_version": "string"
+      "prev_app_version": {
+        "type": "string"
+      }
     },
     "return": "Updates"
   },
@@ -650,66 +986,106 @@
   },
   "help->saveAppLog": {
     "params": {
-      "events": "Array of InputAppEvent"
+      "events": {
+        "type": "Array of InputAppEvent"
+      }
     },
     "return": "Bool"
   },
   "help->setBotUpdatesStatus": {
     "params": {
-      "pending_updates_count": "int",
-      "message": "string"
+      "pending_updates_count": {
+        "type": "int"
+      },
+      "message": {
+        "type": "string"
+      }
     },
     "return": "Bool"
   },
   "initConnection": {
     "params": {
-      "api_id": "int",
-      "device_model": "string",
-      "system_version": "string",
-      "app_version": "string",
-      "system_lang_code": "string",
-      "lang_pack": "string",
-      "lang_code": "string",
-      "query": "!X"
+      "api_id": {
+        "type": "int"
+      },
+      "device_model": {
+        "type": "string"
+      },
+      "system_version": {
+        "type": "string"
+      },
+      "app_version": {
+        "type": "string"
+      },
+      "system_lang_code": {
+        "type": "string"
+      },
+      "lang_pack": {
+        "type": "string"
+      },
+      "lang_code": {
+        "type": "string"
+      },
+      "query": {
+        "type": "!X"
+      }
     },
     "return": "X"
   },
   "invokeAfterMsg": {
     "params": {
-      "msg_id": "long",
-      "query": "!X"
+      "msg_id": {
+        "type": "long"
+      },
+      "query": {
+        "type": "!X"
+      }
     },
     "return": "X"
   },
   "invokeAfterMsgs": {
     "params": {
-      "msg_ids": "Array of long",
-      "query": "!X"
+      "msg_ids": {
+        "type": "Array of long"
+      },
+      "query": {
+        "type": "!X"
+      }
     },
     "return": "X"
   },
   "invokeWithLayer": {
     "params": {
-      "layer": "int",
-      "query": "!X"
+      "layer": {
+        "type": "int"
+      },
+      "query": {
+        "type": "!X"
+      }
     },
     "return": "X"
   },
   "invokeWithoutUpdates": {
     "params": {
-      "query": "!X"
+      "query": {
+        "type": "!X"
+      }
     },
     "return": "X"
   },
   "langpack->getDifference": {
     "params": {
-      "from_version": "int"
+      "from_version": {
+        "type": "int"
+      }
     },
     "return": "LangPackDifference"
   },
   "langpack->getLangPack": {
     "params": {
-      "lang_code": "string"
+      "lang_code": {
+        "type": "string"
+      }
     },
     "return": "LangPackDifference"
   },
@@ -719,144 +1095,240 @@
   },
   "langpack->getStrings": {
     "params": {
-      "lang_code": "string",
-      "keys": "Array of string"
+      "lang_code": {
+        "type": "string"
+      },
+      "keys": {
+        "type": "Array of string"
+      }
     },
     "return": "Vector_of_LangPackString"
   },
   "messages->acceptEncryption": {
     "params": {
-      "peer": "InputEncryptedChat",
-      "g_b": "bytes",
-      "key_fingerprint": "long"
+      "peer": {
+        "type": "InputEncryptedChat"
+      },
+      "g_b": {
+        "type": "bytes"
+      },
+      "key_fingerprint": {
+        "type": "long"
+      }
     },
     "return": "EncryptedChat"
   },
   "messages->addChatUser": {
     "params": {
-      "chat_id": "InputPeer",
-      "user_id": "InputUser",
-      "fwd_limit": "int"
+      "chat_id": {
+        "type": "InputPeer"
+      },
+      "user_id": {
+        "type": "InputUser"
+      },
+      "fwd_limit": {
+        "type": "int"
+      }
     },
     "return": "Updates"
   },
   "messages->checkChatInvite": {
     "params": {
-      "hash": "string"
+      "hash": {
+        "type": "string"
+      }
     },
     "return": "ChatInvite"
   },
   "messages->clearRecentStickers": {
     "params": {
-      "attached": "Bool"
+      "attached": {
+        "type": "Bool"
+      }
     },
     "return": "Bool"
   },
   "messages->createChat": {
     "params": {
-      "users": "Array of InputUser",
-      "title": "string"
+      "users": {
+        "type": "Array of InputUser"
+      },
+      "title": {
+        "type": "string"
+      }
     },
     "return": "Updates"
   },
   "messages->deleteChatUser": {
     "params": {
-      "chat_id": "InputPeer",
-      "user_id": "InputUser"
+      "chat_id": {
+        "type": "InputPeer"
+      },
+      "user_id": {
+        "type": "InputUser"
+      }
     },
     "return": "Updates"
   },
   "messages->deleteHistory": {
     "params": {
-      "just_clear": "Bool",
-      "peer": "InputPeer",
-      "max_id": "int"
+      "just_clear": {
+        "type": "Bool"
+      },
+      "peer": {
+        "type": "InputPeer"
+      },
+      "max_id": {
+        "type": "int"
+      }
     },
     "return": "messages_AffectedHistory"
   },
   "messages->deleteMessages": {
     "params": {
-      "revoke": "Bool",
-      "id": "Array of int"
+      "revoke": {
+        "type": "Bool"
+      },
+      "id": {
+        "type": "Array of int"
+      }
     },
     "return": "messages_AffectedMessages"
   },
   "messages->discardEncryption": {
     "params": {
-      "chat_id": "int"
+      "chat_id": {
+        "type": "int"
+      }
     },
     "return": "Bool"
   },
   "messages->editChatAdmin": {
     "params": {
-      "chat_id": "InputPeer",
-      "user_id": "InputUser",
-      "is_admin": "Bool"
+      "chat_id": {
+        "type": "InputPeer"
+      },
+      "user_id": {
+        "type": "InputUser"
+      },
+      "is_admin": {
+        "type": "Bool"
+      }
     },
     "return": "Bool"
   },
   "messages->editChatPhoto": {
     "params": {
-      "chat_id": "InputPeer",
-      "photo": "InputChatPhoto"
+      "chat_id": {
+        "type": "InputPeer"
+      },
+      "photo": {
+        "type": "InputChatPhoto"
+      }
     },
     "return": "Updates"
   },
   "messages->editChatTitle": {
     "params": {
-      "chat_id": "InputPeer",
-      "title": "string"
+      "chat_id": {
+        "type": "InputPeer"
+      },
+      "title": {
+        "type": "string"
+      }
     },
     "return": "Updates"
   },
   "messages->editInlineBotMessage": {
     "params": {
-      "no_webpage": "Bool",
-      "id": "InputBotInlineMessageID",
-      "message": "string",
-      "reply_markup": "ReplyMarkup",
-      "entities": "Array of MessageEntity"
+      "no_webpage": {
+        "type": "Bool"
+      },
+      "id": {
+        "type": "InputBotInlineMessageID"
+      },
+      "message": {
+        "type": "string"
+      },
+      "reply_markup": {
+        "type": "ReplyMarkup"
+      },
+      "entities": {
+        "type": "Array of MessageEntity"
+      }
     },
     "return": "Bool"
   },
   "messages->editMessage": {
     "params": {
-      "no_webpage": "Bool",
-      "peer": "InputPeer",
-      "id": "int",
-      "message": "string",
-      "reply_markup": "ReplyMarkup",
-      "entities": "Array of MessageEntity"
+      "no_webpage": {
+        "type": "Bool"
+      },
+      "peer": {
+        "type": "InputPeer"
+      },
+      "id": {
+        "type": "int"
+      },
+      "message": {
+        "type": "string"
+      },
+      "reply_markup": {
+        "type": "ReplyMarkup"
+      },
+      "entities": {
+        "type": "Array of MessageEntity"
+      }
     },
     "return": "Updates"
   },
   "messages->exportChatInvite": {
     "params": {
-      "chat_id": "InputPeer"
+      "chat_id": {
+        "type": "InputPeer"
+      }
     },
     "return": "ExportedChatInvite"
   },
   "messages->forwardMessage": {
     "params": {
-      "peer": "InputPeer",
-      "id": "int"
+      "peer": {
+        "type": "InputPeer"
+      },
+      "id": {
+        "type": "int"
+      }
     },
     "return": "Updates"
   },
   "messages->forwardMessages": {
     "params": {
-      "silent": "Bool",
-      "background": "Bool",
-      "with_my_score": "Bool",
-      "from_peer": "InputPeer",
-      "id": "Array of int",
-      "to_peer": "InputPeer"
+      "silent": {
+        "type": "Bool"
+      },
+      "background": {
+        "type": "Bool"
+      },
+      "with_my_score": {
+        "type": "Bool"
+      },
+      "from_peer": {
+        "type": "InputPeer"
+      },
+      "id": {
+        "type": "Array of int"
+      },
+      "to_peer": {
+        "type": "InputPeer"
+      }
     },
     "return": "Updates"
   },
   "messages->getAllChats": {
     "params": {
-      "except_ids": "Array of int"
+      "except_ids": {
+        "type": "Array of int"
+      }
     },
     "return": "messages_Chats"
   },
@@ -866,157 +1338,259 @@
   },
   "messages->getAllStickers": {
     "params": {
-      "hash": "int"
+      "hash": {
+        "type": "int"
+      }
     },
     "return": "messages_AllStickers"
   },
   "messages->getArchivedStickers": {
     "params": {
-      "masks": "Bool",
-      "offset_id": "long",
-      "limit": "int"
+      "masks": {
+        "type": "Bool"
+      },
+      "offset_id": {
+        "type": "long"
+      },
+      "limit": {
+        "type": "int"
+      }
     },
     "return": "messages_ArchivedStickers"
   },
   "messages->getAttachedStickers": {
     "params": {
-      "media": "InputStickeredMedia"
+      "media": {
+        "type": "InputStickeredMedia"
+      }
     },
     "return": "Vector_of_StickerSetCovered"
   },
   "messages->getBotCallbackAnswer": {
     "params": {
-      "game": "Bool",
-      "peer": "InputPeer",
-      "msg_id": "int",
-      "data": "bytes"
+      "game": {
+        "type": "Bool"
+      },
+      "peer": {
+        "type": "InputPeer"
+      },
+      "msg_id": {
+        "type": "int"
+      },
+      "data": {
+        "type": "bytes"
+      }
     },
     "return": "messages_BotCallbackAnswer"
   },
   "messages->getChats": {
     "params": {
-      "id": "Array of int"
+      "id": {
+        "type": "Array of int"
+      }
     },
     "return": "messages_Chats"
   },
   "messages->getCommonChats": {
     "params": {
-      "user_id": "InputUser",
-      "max_id": "int",
-      "limit": "int"
+      "user_id": {
+        "type": "InputUser"
+      },
+      "max_id": {
+        "type": "int"
+      },
+      "limit": {
+        "type": "int"
+      }
     },
     "return": "messages_Chats"
   },
   "messages->getDhConfig": {
     "params": {
-      "version": "int",
-      "random_length": "int"
+      "version": {
+        "type": "int"
+      },
+      "random_length": {
+        "type": "int"
+      }
     },
     "return": "messages_DhConfig"
   },
   "messages->getDialogs": {
     "params": {
-      "exclude_pinned": "Bool",
-      "offset_date": "int",
-      "offset_id": "int",
-      "offset_peer": "InputPeer",
-      "limit": "int"
+      "exclude_pinned": {
+        "type": "Bool"
+      },
+      "offset_date": {
+        "type": "int"
+      },
+      "offset_id": {
+        "type": "int"
+      },
+      "offset_peer": {
+        "type": "InputPeer"
+      },
+      "limit": {
+        "type": "int"
+      }
     },
     "return": "messages_Dialogs"
   },
   "messages->getDocumentByHash": {
     "params": {
-      "sha256": "bytes",
-      "size": "int",
-      "mime_type": "string"
+      "sha256": {
+        "type": "bytes"
+      },
+      "size": {
+        "type": "int"
+      },
+      "mime_type": {
+        "type": "string"
+      }
     },
     "return": "Document"
   },
   "messages->getFeaturedStickers": {
     "params": {
-      "hash": "int"
+      "hash": {
+        "type": "int"
+      }
     },
     "return": "messages_FeaturedStickers"
   },
   "messages->getFullChat": {
     "params": {
-      "chat_id": "InputPeer"
+      "chat_id": {
+        "type": "InputPeer"
+      }
     },
     "return": "messages_ChatFull"
   },
   "messages->getGameHighScores": {
     "params": {
-      "peer": "InputPeer",
-      "id": "int",
-      "user_id": "InputUser"
+      "peer": {
+        "type": "InputPeer"
+      },
+      "id": {
+        "type": "int"
+      },
+      "user_id": {
+        "type": "InputUser"
+      }
     },
     "return": "messages_HighScores"
   },
   "messages->getHistory": {
     "params": {
-      "peer": "InputPeer",
-      "offset_id": "int",
-      "offset_date": "int",
-      "add_offset": "int",
-      "limit": "int",
-      "max_id": "int",
-      "min_id": "int"
+      "peer": {
+        "type": "InputPeer"
+      },
+      "offset_id": {
+        "type": "int"
+      },
+      "offset_date": {
+        "type": "int"
+      },
+      "add_offset": {
+        "type": "int"
+      },
+      "limit": {
+        "type": "int"
+      },
+      "max_id": {
+        "type": "int"
+      },
+      "min_id": {
+        "type": "int"
+      }
     },
     "return": "messages_Messages"
   },
   "messages->getInlineBotResults": {
     "params": {
-      "bot": "InputUser",
-      "peer": "InputPeer",
-      "geo_point": "InputGeoPoint",
-      "query": "string",
-      "offset": "string"
+      "bot": {
+        "type": "InputUser"
+      },
+      "peer": {
+        "type": "InputPeer"
+      },
+      "geo_point": {
+        "type": "InputGeoPoint"
+      },
+      "query": {
+        "type": "string"
+      },
+      "offset": {
+        "type": "string"
+      }
     },
     "return": "messages_BotResults"
   },
   "messages->getInlineGameHighScores": {
     "params": {
-      "id": "InputBotInlineMessageID",
-      "user_id": "InputUser"
+      "id": {
+        "type": "InputBotInlineMessageID"
+      },
+      "user_id": {
+        "type": "InputUser"
+      }
     },
     "return": "messages_HighScores"
   },
   "messages->getMaskStickers": {
     "params": {
-      "hash": "int"
+      "hash": {
+        "type": "int"
+      }
     },
     "return": "messages_AllStickers"
   },
   "messages->getMessageEditData": {
     "params": {
-      "peer": "InputPeer",
-      "id": "int"
+      "peer": {
+        "type": "InputPeer"
+      },
+      "id": {
+        "type": "int"
+      }
     },
     "return": "messages_MessageEditData"
   },
   "messages->getMessages": {
     "params": {
-      "id": "Array of int"
+      "id": {
+        "type": "Array of int"
+      }
     },
     "return": "messages_Messages"
   },
   "messages->getMessagesViews": {
     "params": {
-      "peer": "InputPeer",
-      "id": "Array of int",
-      "increment": "Bool"
+      "peer": {
+        "type": "InputPeer"
+      },
+      "id": {
+        "type": "Array of int"
+      },
+      "increment": {
+        "type": "Bool"
+      }
     },
     "return": "Vector_of_int"
   },
   "messages->getPeerDialogs": {
     "params": {
-      "peers": "Array of InputPeer"
+      "peers": {
+        "type": "Array of InputPeer"
+      }
     },
     "return": "messages_PeerDialogs"
   },
   "messages->getPeerSettings": {
     "params": {
-      "peer": "InputPeer"
+      "peer": {
+        "type": "InputPeer"
+      }
     },
     "return": "PeerSettings"
   },
@@ -1026,379 +1600,645 @@
   },
   "messages->getRecentStickers": {
     "params": {
-      "attached": "Bool",
-      "hash": "int"
+      "attached": {
+        "type": "Bool"
+      },
+      "hash": {
+        "type": "int"
+      }
     },
     "return": "messages_RecentStickers"
   },
   "messages->getSavedGifs": {
     "params": {
-      "hash": "int"
+      "hash": {
+        "type": "int"
+      }
     },
     "return": "messages_SavedGifs"
   },
   "messages->getStickerSet": {
     "params": {
-      "stickerset": "InputStickerSet"
+      "stickerset": {
+        "type": "InputStickerSet"
+      }
     },
     "return": "messages_StickerSet"
   },
   "messages->getWebPage": {
     "params": {
-      "url": "string",
-      "hash": "int"
+      "url": {
+        "type": "string"
+      },
+      "hash": {
+        "type": "int"
+      }
     },
     "return": "WebPage"
   },
   "messages->getWebPagePreview": {
     "params": {
-      "message": "string"
+      "message": {
+        "type": "string"
+      }
     },
     "return": "MessageMedia"
   },
   "messages->hideReportSpam": {
     "params": {
-      "peer": "InputPeer"
+      "peer": {
+        "type": "InputPeer"
+      }
     },
     "return": "Bool"
   },
   "messages->importChatInvite": {
     "params": {
-      "hash": "string"
+      "hash": {
+        "type": "string"
+      }
     },
     "return": "Updates"
   },
   "messages->installStickerSet": {
     "params": {
-      "stickerset": "InputStickerSet",
-      "archived": "Bool"
+      "stickerset": {
+        "type": "InputStickerSet"
+      },
+      "archived": {
+        "type": "Bool"
+      }
     },
     "return": "messages_StickerSetInstallResult"
   },
   "messages->migrateChat": {
     "params": {
-      "chat_id": "InputPeer"
+      "chat_id": {
+        "type": "InputPeer"
+      }
     },
     "return": "Updates"
   },
   "messages->readEncryptedHistory": {
     "params": {
-      "peer": "InputEncryptedChat",
-      "max_date": "int"
+      "peer": {
+        "type": "InputEncryptedChat"
+      },
+      "max_date": {
+        "type": "int"
+      }
     },
     "return": "Bool"
   },
   "messages->readFeaturedStickers": {
     "params": {
-      "id": "Array of long"
+      "id": {
+        "type": "Array of long"
+      }
     },
     "return": "Bool"
   },
   "messages->readHistory": {
     "params": {
-      "peer": "InputPeer",
-      "max_id": "int"
+      "peer": {
+        "type": "InputPeer"
+      },
+      "max_id": {
+        "type": "int"
+      }
     },
     "return": "messages_AffectedMessages"
   },
   "messages->readMessageContents": {
     "params": {
-      "id": "Array of int"
+      "id": {
+        "type": "Array of int"
+      }
     },
     "return": "messages_AffectedMessages"
   },
   "messages->receivedMessages": {
     "params": {
-      "max_id": "int"
+      "max_id": {
+        "type": "int"
+      }
     },
     "return": "Vector_of_ReceivedNotifyMessage"
   },
   "messages->receivedQueue": {
     "params": {
-      "max_qts": "int"
+      "max_qts": {
+        "type": "int"
+      }
     },
     "return": "Vector_of_long"
   },
   "messages->reorderPinnedDialogs": {
     "params": {
-      "force": "Bool",
-      "order": "Array of InputPeer"
+      "force": {
+        "type": "Bool"
+      },
+      "order": {
+        "type": "Array of InputPeer"
+      }
     },
     "return": "Bool"
   },
   "messages->reorderStickerSets": {
     "params": {
-      "masks": "Bool",
-      "order": "Array of long"
+      "masks": {
+        "type": "Bool"
+      },
+      "order": {
+        "type": "Array of long"
+      }
     },
     "return": "Bool"
   },
   "messages->reportEncryptedSpam": {
     "params": {
-      "peer": "InputEncryptedChat"
+      "peer": {
+        "type": "InputEncryptedChat"
+      }
     },
     "return": "Bool"
   },
   "messages->reportSpam": {
     "params": {
-      "peer": "InputPeer"
+      "peer": {
+        "type": "InputPeer"
+      }
     },
     "return": "Bool"
   },
   "messages->requestEncryption": {
     "params": {
-      "user_id": "InputUser",
-      "g_a": "bytes"
+      "user_id": {
+        "type": "InputUser"
+      },
+      "g_a": {
+        "type": "bytes"
+      }
     },
     "return": "EncryptedChat"
   },
   "messages->saveDraft": {
     "params": {
-      "no_webpage": "Bool",
-      "reply_to_msg_id": "int",
-      "peer": "InputPeer",
-      "message": "string",
-      "entities": "Array of MessageEntity"
+      "no_webpage": {
+        "type": "Bool"
+      },
+      "reply_to_msg_id": {
+        "type": "int"
+      },
+      "peer": {
+        "type": "InputPeer"
+      },
+      "message": {
+        "type": "string"
+      },
+      "entities": {
+        "type": "Array of MessageEntity"
+      }
     },
     "return": "Bool"
   },
   "messages->saveGif": {
     "params": {
-      "id": "InputDocument",
-      "unsave": "Bool"
+      "id": {
+        "type": "InputDocument"
+      },
+      "unsave": {
+        "type": "Bool"
+      }
     },
     "return": "Bool"
   },
   "messages->saveRecentSticker": {
     "params": {
-      "attached": "Bool",
-      "id": "InputDocument",
-      "unsave": "Bool"
+      "attached": {
+        "type": "Bool"
+      },
+      "id": {
+        "type": "InputDocument"
+      },
+      "unsave": {
+        "type": "Bool"
+      }
     },
     "return": "Bool"
   },
   "messages->search": {
     "params": {
-      "peer": "InputPeer",
-      "q": "string",
-      "from_id": "InputUser",
-      "filter": "MessagesFilter",
-      "min_date": "int",
-      "max_date": "int",
-      "offset": "int",
-      "max_id": "int",
-      "limit": "int"
+      "peer": {
+        "type": "InputPeer"
+      },
+      "q": {
+        "type": "string"
+      },
+      "from_id": {
+        "type": "InputUser"
+      },
+      "filter": {
+        "type": "MessagesFilter"
+      },
+      "min_date": {
+        "type": "int"
+      },
+      "max_date": {
+        "type": "int"
+      },
+      "offset": {
+        "type": "int"
+      },
+      "max_id": {
+        "type": "int"
+      },
+      "limit": {
+        "type": "int"
+      }
     },
     "return": "messages_Messages"
   },
   "messages->searchGifs": {
     "params": {
-      "q": "string",
-      "offset": "int"
+      "q": {
+        "type": "string"
+      },
+      "offset": {
+        "type": "int"
+      }
     },
     "return": "messages_FoundGifs"
   },
   "messages->searchGlobal": {
     "params": {
-      "q": "string",
-      "offset_date": "int",
-      "offset_peer": "InputPeer",
-      "offset_id": "int",
-      "limit": "int"
+      "q": {
+        "type": "string"
+      },
+      "offset_date": {
+        "type": "int"
+      },
+      "offset_peer": {
+        "type": "InputPeer"
+      },
+      "offset_id": {
+        "type": "int"
+      },
+      "limit": {
+        "type": "int"
+      }
     },
     "return": "messages_Messages"
   },
   "messages->sendEncrypted": {
     "params": {
-      "peer": "InputEncryptedChat",
-      "message": "DecryptedMessage"
+      "peer": {
+        "type": "InputEncryptedChat"
+      },
+      "message": {
+        "type": "DecryptedMessage"
+      }
     },
     "return": "messages_SentEncryptedMessage"
   },
   "messages->sendEncryptedFile": {
     "params": {
-      "peer": "InputEncryptedChat",
-      "message": "DecryptedMessage",
-      "file": "InputEncryptedFile"
+      "peer": {
+        "type": "InputEncryptedChat"
+      },
+      "message": {
+        "type": "DecryptedMessage"
+      },
+      "file": {
+        "type": "InputEncryptedFile"
+      }
     },
     "return": "messages_SentEncryptedMessage"
   },
   "messages->sendEncryptedService": {
     "params": {
-      "peer": "InputEncryptedChat",
-      "message": "DecryptedMessage"
+      "peer": {
+        "type": "InputEncryptedChat"
+      },
+      "message": {
+        "type": "DecryptedMessage"
+      }
     },
     "return": "messages_SentEncryptedMessage"
   },
   "messages->sendInlineBotResult": {
     "params": {
-      "silent": "Bool",
-      "background": "Bool",
-      "clear_draft": "Bool",
-      "peer": "InputPeer",
-      "reply_to_msg_id": "int",
-      "query_id": "long",
-      "id": "string"
+      "silent": {
+        "type": "Bool"
+      },
+      "background": {
+        "type": "Bool"
+      },
+      "clear_draft": {
+        "type": "Bool"
+      },
+      "peer": {
+        "type": "InputPeer"
+      },
+      "reply_to_msg_id": {
+        "type": "int"
+      },
+      "query_id": {
+        "type": "long"
+      },
+      "id": {
+        "type": "string"
+      }
     },
     "return": "Updates"
   },
   "messages->sendMedia": {
     "params": {
-      "silent": "Bool",
-      "background": "Bool",
-      "clear_draft": "Bool",
-      "peer": "InputPeer",
-      "reply_to_msg_id": "int",
-      "media": "InputMedia",
-      "reply_markup": "ReplyMarkup"
+      "silent": {
+        "type": "Bool"
+      },
+      "background": {
+        "type": "Bool"
+      },
+      "clear_draft": {
+        "type": "Bool"
+      },
+      "peer": {
+        "type": "InputPeer"
+      },
+      "reply_to_msg_id": {
+        "type": "int"
+      },
+      "media": {
+        "type": "InputMedia"
+      },
+      "reply_markup": {
+        "type": "ReplyMarkup"
+      }
     },
     "return": "Updates"
   },
   "messages->sendMessage": {
     "params": {
-      "no_webpage": "Bool",
-      "silent": "Bool",
-      "background": "Bool",
-      "clear_draft": "Bool",
-      "peer": "InputPeer",
-      "reply_to_msg_id": "int",
-      "message": "string",
-      "reply_markup": "ReplyMarkup",
-      "entities": "Array of MessageEntity"
+      "no_webpage": {
+        "type": "Bool"
+      },
+      "silent": {
+        "type": "Bool"
+      },
+      "background": {
+        "type": "Bool"
+      },
+      "clear_draft": {
+        "type": "Bool"
+      },
+      "peer": {
+        "type": "InputPeer"
+      },
+      "reply_to_msg_id": {
+        "type": "int"
+      },
+      "message": {
+        "type": "string"
+      },
+      "reply_markup": {
+        "type": "ReplyMarkup"
+      },
+      "entities": {
+        "type": "Array of MessageEntity"
+      }
     },
     "return": "Updates"
   },
   "messages->sendScreenshotNotification": {
     "params": {
-      "peer": "InputPeer",
-      "reply_to_msg_id": "int"
+      "peer": {
+        "type": "InputPeer"
+      },
+      "reply_to_msg_id": {
+        "type": "int"
+      }
     },
     "return": "Updates"
   },
   "messages->setBotCallbackAnswer": {
     "params": {
-      "alert": "Bool",
-      "query_id": "long",
-      "message": "string",
-      "url": "string",
-      "cache_time": "int"
+      "alert": {
+        "type": "Bool"
+      },
+      "query_id": {
+        "type": "long"
+      },
+      "message": {
+        "type": "string"
+      },
+      "url": {
+        "type": "string"
+      },
+      "cache_time": {
+        "type": "int"
+      }
     },
     "return": "Bool"
   },
   "messages->setBotPrecheckoutResults": {
     "params": {
-      "success": "Bool",
-      "query_id": "long",
-      "error": "string"
+      "success": {
+        "type": "Bool"
+      },
+      "query_id": {
+        "type": "long"
+      },
+      "error": {
+        "type": "string"
+      }
     },
     "return": "Bool"
   },
   "messages->setBotShippingResults": {
     "params": {
-      "query_id": "long",
-      "error": "string",
-      "shipping_options": "Array of ShippingOption"
+      "query_id": {
+        "type": "long"
+      },
+      "error": {
+        "type": "string"
+      },
+      "shipping_options": {
+        "type": "Array of ShippingOption"
+      }
     },
     "return": "Bool"
   },
   "messages->setEncryptedTyping": {
     "params": {
-      "peer": "InputEncryptedChat",
-      "typing": "Bool"
+      "peer": {
+        "type": "InputEncryptedChat"
+      },
+      "typing": {
+        "type": "Bool"
+      }
     },
     "return": "Bool"
   },
   "messages->setGameScore": {
     "params": {
-      "edit_message": "Bool",
-      "force": "Bool",
-      "peer": "InputPeer",
-      "id": "int",
-      "user_id": "InputUser",
-      "score": "int"
+      "edit_message": {
+        "type": "Bool"
+      },
+      "force": {
+        "type": "Bool"
+      },
+      "peer": {
+        "type": "InputPeer"
+      },
+      "id": {
+        "type": "int"
+      },
+      "user_id": {
+        "type": "InputUser"
+      },
+      "score": {
+        "type": "int"
+      }
     },
     "return": "Updates"
   },
   "messages->setInlineBotResults": {
     "params": {
-      "gallery": "Bool",
-      "private": "Bool",
-      "query_id": "long",
-      "results": "Array of InputBotInlineResult",
-      "cache_time": "int",
-      "next_offset": "string",
-      "switch_pm": "InlineBotSwitchPM"
+      "gallery": {
+        "type": "Bool"
+      },
+      "private": {
+        "type": "Bool"
+      },
+      "query_id": {
+        "type": "long"
+      },
+      "results": {
+        "type": "Array of InputBotInlineResult"
+      },
+      "cache_time": {
+        "type": "int"
+      },
+      "next_offset": {
+        "type": "string"
+      },
+      "switch_pm": {
+        "type": "InlineBotSwitchPM"
+      }
     },
     "return": "Bool"
   },
   "messages->setInlineGameScore": {
     "params": {
-      "edit_message": "Bool",
-      "force": "Bool",
-      "id": "InputBotInlineMessageID",
-      "user_id": "InputUser",
-      "score": "int"
+      "edit_message": {
+        "type": "Bool"
+      },
+      "force": {
+        "type": "Bool"
+      },
+      "id": {
+        "type": "InputBotInlineMessageID"
+      },
+      "user_id": {
+        "type": "InputUser"
+      },
+      "score": {
+        "type": "int"
+      }
     },
     "return": "Bool"
   },
   "messages->setTyping": {
     "params": {
-      "peer": "InputPeer",
-      "action": "SendMessageAction"
+      "peer": {
+        "type": "InputPeer"
+      },
+      "action": {
+        "type": "SendMessageAction"
+      }
     },
     "return": "Bool"
   },
   "messages->startBot": {
     "params": {
-      "bot": "InputUser",
-      "peer": "InputPeer",
-      "start_param": "string"
+      "bot": {
+        "type": "InputUser"
+      },
+      "peer": {
+        "type": "InputPeer"
+      },
+      "start_param": {
+        "type": "string"
+      }
     },
     "return": "Updates"
   },
   "messages->toggleChatAdmins": {
     "params": {
-      "chat_id": "InputPeer",
-      "enabled": "Bool"
+      "chat_id": {
+        "type": "InputPeer"
+      },
+      "enabled": {
+        "type": "Bool"
+      }
     },
     "return": "Updates"
   },
   "messages->toggleDialogPin": {
     "params": {
-      "pinned": "Bool",
-      "peer": "InputPeer"
+      "pinned": {
+        "type": "Bool"
+      },
+      "peer": {
+        "type": "InputPeer"
+      }
     },
     "return": "Bool"
   },
   "messages->uninstallStickerSet": {
     "params": {
-      "stickerset": "InputStickerSet"
+      "stickerset": {
+        "type": "InputStickerSet"
+      }
     },
     "return": "Bool"
   },
   "messages->uploadMedia": {
     "params": {
-      "peer": "InputPeer",
-      "media": "InputMedia"
+      "peer": {
+        "type": "InputPeer"
+      },
+      "media": {
+        "type": "InputMedia"
+      }
     },
     "return": "MessageMedia"
   },
   "payments->clearSavedInfo": {
     "params": {
-      "credentials": "Bool",
-      "info": "Bool"
+      "credentials": {
+        "type": "Bool"
+      },
+      "info": {
+        "type": "Bool"
+      }
     },
     "return": "Bool"
   },
   "payments->getPaymentForm": {
     "params": {
-      "msg_id": "int"
+      "msg_id": {
+        "type": "int"
+      }
     },
     "return": "payments_PaymentForm"
   },
   "payments->getPaymentReceipt": {
     "params": {
-      "msg_id": "int"
+      "msg_id": {
+        "type": "int"
+      }
     },
     "return": "payments_PaymentReceipt"
   },
@@ -1408,44 +2248,80 @@
   },
   "payments->sendPaymentForm": {
     "params": {
-      "msg_id": "int",
-      "requested_info_id": "string",
-      "shipping_option_id": "string",
-      "credentials": "InputPaymentCredentials"
+      "msg_id": {
+        "type": "int"
+      },
+      "requested_info_id": {
+        "type": "string"
+      },
+      "shipping_option_id": {
+        "type": "string"
+      },
+      "credentials": {
+        "type": "InputPaymentCredentials"
+      }
     },
     "return": "payments_PaymentResult"
   },
   "payments->validateRequestedInfo": {
     "params": {
-      "save": "Bool",
-      "msg_id": "int",
-      "info": "PaymentRequestedInfo"
+      "save": {
+        "type": "Bool"
+      },
+      "msg_id": {
+        "type": "int"
+      },
+      "info": {
+        "type": "PaymentRequestedInfo"
+      }
     },
     "return": "payments_ValidatedRequestedInfo"
   },
   "phone->acceptCall": {
     "params": {
-      "peer": "InputPhoneCall",
-      "g_b": "bytes",
-      "protocol": "PhoneCallProtocol"
+      "peer": {
+        "type": "InputPhoneCall"
+      },
+      "g_b": {
+        "type": "bytes"
+      },
+      "protocol": {
+        "type": "PhoneCallProtocol"
+      }
     },
     "return": "phone_PhoneCall"
   },
   "phone->confirmCall": {
     "params": {
-      "peer": "InputPhoneCall",
-      "g_a": "bytes",
-      "key_fingerprint": "long",
-      "protocol": "PhoneCallProtocol"
+      "peer": {
+        "type": "InputPhoneCall"
+      },
+      "g_a": {
+        "type": "bytes"
+      },
+      "key_fingerprint": {
+        "type": "long"
+      },
+      "protocol": {
+        "type": "PhoneCallProtocol"
+      }
     },
     "return": "phone_PhoneCall"
   },
   "phone->discardCall": {
     "params": {
-      "peer": "InputPhoneCall",
-      "duration": "int",
-      "reason": "PhoneCallDiscardReason",
-      "connection_id": "long"
+      "peer": {
+        "type": "InputPhoneCall"
+      },
+      "duration": {
+        "type": "int"
+      },
+      "reason": {
+        "type": "PhoneCallDiscardReason"
+      },
+      "connection_id": {
+        "type": "long"
+      }
     },
     "return": "Updates"
   },
@@ -1455,150 +2331,248 @@
   },
   "phone->receivedCall": {
     "params": {
-      "peer": "InputPhoneCall"
+      "peer": {
+        "type": "InputPhoneCall"
+      }
     },
     "return": "Bool"
   },
   "phone->requestCall": {
     "params": {
-      "user_id": "InputUser",
-      "g_a_hash": "bytes",
-      "protocol": "PhoneCallProtocol"
+      "user_id": {
+        "type": "InputUser"
+      },
+      "g_a_hash": {
+        "type": "bytes"
+      },
+      "protocol": {
+        "type": "PhoneCallProtocol"
+      }
     },
     "return": "phone_PhoneCall"
   },
   "phone->saveCallDebug": {
     "params": {
-      "peer": "InputPhoneCall",
-      "debug": "DataJSON"
+      "peer": {
+        "type": "InputPhoneCall"
+      },
+      "debug": {
+        "type": "DataJSON"
+      }
     },
     "return": "Bool"
   },
   "phone->setCallRating": {
     "params": {
-      "peer": "InputPhoneCall",
-      "rating": "int",
-      "comment": "string"
+      "peer": {
+        "type": "InputPhoneCall"
+      },
+      "rating": {
+        "type": "int"
+      },
+      "comment": {
+        "type": "string"
+      }
     },
     "return": "Updates"
   },
   "photos->deletePhotos": {
     "params": {
-      "id": "Array of InputPhoto"
+      "id": {
+        "type": "Array of InputPhoto"
+      }
     },
     "return": "Vector_of_long"
   },
   "photos->getUserPhotos": {
     "params": {
-      "user_id": "InputUser",
-      "offset": "int",
-      "max_id": "long",
-      "limit": "int"
+      "user_id": {
+        "type": "InputUser"
+      },
+      "offset": {
+        "type": "int"
+      },
+      "max_id": {
+        "type": "long"
+      },
+      "limit": {
+        "type": "int"
+      }
     },
     "return": "photos_Photos"
   },
   "photos->updateProfilePhoto": {
     "params": {
-      "id": "InputPhoto"
+      "id": {
+        "type": "InputPhoto"
+      }
     },
     "return": "UserProfilePhoto"
   },
   "photos->uploadProfilePhoto": {
     "params": {
-      "file": "InputFile"
+      "file": {
+        "type": "InputFile"
+      }
     },
     "return": "photos_Photo"
   },
   "ping": {
     "params": {
-      "ping_id": "long"
+      "ping_id": {
+        "type": "long"
+      }
     },
     "return": "Pong"
   },
   "ping_delay_disconnect": {
     "params": {
-      "ping_id": "long",
-      "disconnect_delay": "int"
+      "ping_id": {
+        "type": "long"
+      },
+      "disconnect_delay": {
+        "type": "int"
+      }
     },
     "return": "Pong"
   },
   "req_DH_params": {
     "params": {
-      "nonce": "int128",
-      "server_nonce": "int128",
-      "p": "string",
-      "q": "string",
-      "public_key_fingerprint": "long",
-      "encrypted_data": "string"
+      "nonce": {
+        "type": "int128"
+      },
+      "server_nonce": {
+        "type": "int128"
+      },
+      "p": {
+        "type": "string"
+      },
+      "q": {
+        "type": "string"
+      },
+      "public_key_fingerprint": {
+        "type": "long"
+      },
+      "encrypted_data": {
+        "type": "string"
+      }
     },
     "return": "Server_DH_Params"
   },
   "req_pq": {
     "params": {
-      "nonce": "int128"
+      "nonce": {
+        "type": "int128"
+      }
     },
     "return": "ResPQ"
   },
   "rpc_drop_answer": {
     "params": {
-      "req_msg_id": "long"
+      "req_msg_id": {
+        "type": "long"
+      }
     },
     "return": "RpcDropAnswer"
   },
   "set_client_DH_params": {
     "params": {
-      "nonce": "int128",
-      "server_nonce": "int128",
-      "encrypted_data": "string"
+      "nonce": {
+        "type": "int128"
+      },
+      "server_nonce": {
+        "type": "int128"
+      },
+      "encrypted_data": {
+        "type": "string"
+      }
     },
     "return": "Set_client_DH_params_answer"
   },
   "stickers->addStickerToSet": {
     "params": {
-      "stickerset": "InputStickerSet",
-      "sticker": "InputStickerSetItem"
+      "stickerset": {
+        "type": "InputStickerSet"
+      },
+      "sticker": {
+        "type": "InputStickerSetItem"
+      }
     },
     "return": "messages_StickerSet"
   },
   "stickers->changeStickerPosition": {
     "params": {
-      "sticker": "InputDocument",
-      "position": "int"
+      "sticker": {
+        "type": "InputDocument"
+      },
+      "position": {
+        "type": "int"
+      }
     },
     "return": "messages_StickerSet"
   },
   "stickers->createStickerSet": {
     "params": {
-      "masks": "Bool",
-      "user_id": "InputUser",
-      "title": "string",
-      "short_name": "string",
-      "stickers": "Array of InputStickerSetItem"
+      "masks": {
+        "type": "Bool"
+      },
+      "user_id": {
+        "type": "InputUser"
+      },
+      "title": {
+        "type": "string"
+      },
+      "short_name": {
+        "type": "string"
+      },
+      "stickers": {
+        "type": "Array of InputStickerSetItem"
+      }
     },
     "return": "messages_StickerSet"
   },
   "stickers->removeStickerFromSet": {
     "params": {
-      "sticker": "InputDocument"
+      "sticker": {
+        "type": "InputDocument"
+      }
     },
     "return": "messages_StickerSet"
   },
   "updates->getChannelDifference": {
     "params": {
-      "force": "Bool",
-      "channel": "InputChannel",
-      "filter": "ChannelMessagesFilter",
-      "pts": "int",
-      "limit": "int"
+      "force": {
+        "type": "Bool"
+      },
+      "channel": {
+        "type": "InputChannel"
+      },
+      "filter": {
+        "type": "ChannelMessagesFilter"
+      },
+      "pts": {
+        "type": "int"
+      },
+      "limit": {
+        "type": "int"
+      }
     },
     "return": "updates_ChannelDifference"
   },
   "updates->getDifference": {
     "params": {
-      "pts": "int",
-      "pts_total_limit": "int",
-      "date": "int",
-      "qts": "int"
+      "pts": {
+        "type": "int"
+      },
+      "pts_total_limit": {
+        "type": "int"
+      },
+      "date": {
+        "type": "int"
+      },
+      "qts": {
+        "type": "int"
+      }
     },
     "return": "updates_Difference"
   },
@@ -1608,68 +2582,112 @@
   },
   "upload->getCdnFile": {
     "params": {
-      "file_token": "bytes",
-      "offset": "int",
-      "limit": "int"
+      "file_token": {
+        "type": "bytes"
+      },
+      "offset": {
+        "type": "int"
+      },
+      "limit": {
+        "type": "int"
+      }
     },
     "return": "upload_CdnFile"
   },
   "upload->getCdnFileHashes": {
     "params": {
-      "file_token": "bytes",
-      "offset": "int"
+      "file_token": {
+        "type": "bytes"
+      },
+      "offset": {
+        "type": "int"
+      }
     },
     "return": "Vector_of_CdnFileHash"
   },
   "upload->getFile": {
     "params": {
-      "location": "InputFileLocation",
-      "offset": "int",
-      "limit": "int"
+      "location": {
+        "type": "InputFileLocation"
+      },
+      "offset": {
+        "type": "int"
+      },
+      "limit": {
+        "type": "int"
+      }
     },
     "return": "upload_File"
   },
   "upload->getWebFile": {
     "params": {
-      "location": "InputWebFileLocation",
-      "offset": "int",
-      "limit": "int"
+      "location": {
+        "type": "InputWebFileLocation"
+      },
+      "offset": {
+        "type": "int"
+      },
+      "limit": {
+        "type": "int"
+      }
     },
     "return": "upload_WebFile"
   },
   "upload->reuploadCdnFile": {
     "params": {
-      "file_token": "bytes",
-      "request_token": "bytes"
+      "file_token": {
+        "type": "bytes"
+      },
+      "request_token": {
+        "type": "bytes"
+      }
     },
     "return": "Vector_of_CdnFileHash"
   },
   "upload->saveBigFilePart": {
     "params": {
-      "file_id": "long",
-      "file_part": "int",
-      "file_total_parts": "int",
-      "bytes": "bytes"
+      "file_id": {
+        "type": "long"
+      },
+      "file_part": {
+        "type": "int"
+      },
+      "file_total_parts": {
+        "type": "int"
+      },
+      "bytes": {
+        "type": "bytes"
+      }
     },
     "return": "Bool"
   },
   "upload->saveFilePart": {
     "params": {
-      "file_id": "long",
-      "file_part": "int",
-      "bytes": "bytes"
+      "file_id": {
+        "type": "long"
+      },
+      "file_part": {
+        "type": "int"
+      },
+      "bytes": {
+        "type": "bytes"
+      }
     },
     "return": "Bool"
   },
   "users->getFullUser": {
     "params": {
-      "id": "InputUser"
+      "id": {
+        "type": "InputUser"
+      }
     },
     "return": "UserFull"
   },
   "users->getUsers": {
     "params": {
-      "id": "Array of InputUser"
+      "id": {
+        "type": "Array of InputUser"
+      }
     },
     "return": "Vector_of_User"
   }
