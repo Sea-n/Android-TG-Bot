@@ -1,0 +1,216 @@
+{
+  "sendMessage": {
+    "params": {
+      "text": "Texto del mensaje a enviar"
+    }
+  },
+  "forwardMessage": {
+    "params": {
+      "message_id": "Identificador de mensaje en el chat especificado en __from_chat_id__"
+    }
+  },
+  "sendPhoto": {
+    "params": {
+      "photo": "Foto para enviar. Pase un file_id como String para enviar una foto que existe en los servidores Telegram (recomendado), pase una URL HTTP como String para Telegram para obtener una foto de Internet o cargue una nueva foto usando multipart/form-data. Más información sobre Envío de archivos »"
+    }
+  },
+  "sendAudio": {
+    "params": {
+      "chat_id": "Identificador único para el chat de destino o el nombre de usuario del canal de destino (en el formato `@channelusername`)",
+      "audio": "Archivo de audio para enviar. Pase un file_id como String para enviar un archivo de audio que existe en los servidores Telegram (recomendado), pase una URL HTTP como String para Telegram para obtener un archivo de audio de Internet o cargue uno nuevo usando multipart/form-data. Más información sobre Envío de archivos »"
+    }
+  },
+  "sendDocument": {
+    "params": {
+      "chat_id": "Identificador único para el chat de destino o el nombre de usuario del canal de destino (en el formato `@channelusername`)",
+      "document": "Archivo para enviar. Pase un file_id como String para enviar un archivo que existe en los servidores Telegram (recomendado), pase una URL HTTP como String para Telegram para obtener un archivo desde Internet, o cargue una nueva usando multipart/form-data. Más información sobre Envío de archivos »"
+    }
+  },
+  "sendVideo": {
+    "params": {
+      "video": "Video para enviar. Pase un file_id como String para enviar un video que existe en los servidores de Telegram (recomendado), pase una URL HTTP como String para Telegram para obtener un video de Internet o cargue un video nuevo usando multipart/form-data. Más información sobre Envío de archivos »"
+    }
+  },
+  "sendVoice": {
+    "params": {
+      "chat_id": "Identificador único para el chat de destino o el nombre de usuario del canal de destino (en el formato `@channelusername`)",
+      "voice": "Archivo de audio para enviar. Pase un file_id como String para enviar un archivo que existe en los servidores Telegram (recomendado), pase una URL HTTP como String para Telegram para obtener un archivo desde Internet, o cargue una nueva usando multipart/form-data. Más información sobre Envío de archivos »"
+    }
+  },
+  "sendVideoNote": {
+    "params": {
+      "chat_id": "Identificador único para el chat de destino o el nombre de usuario del canal de destino (en el formato `@channelusername`)",
+      "video_note": "Nota de video para enviar. Pase un file_id como String para enviar una nota de video que existe en los servidores Telegram (recomendado) o cargue un video nuevo usando multipart/form-data. Más información sobre Envío de archivos ». El envío de notas de vídeo por una URL no está soportado actualmente"
+    }
+  },
+  "sendLocation": {
+    "params": {
+      "chat_id": "Identificador único para el chat de destino o el nombre de usuario del canal de destino (en el formato `@channelusername`)",
+      "latitude": "Latitud de la ubicación",
+      "longitude": "Longitud de la ubicación"
+    }
+  },
+  "sendVenue": {
+    "params": {
+      "chat_id": "Identificador único para el chat de destino o el nombre de usuario del canal de destino (en el formato `@channelusername`)",
+      "latitude": "Latitud del lugar",
+      "longitude": "Longitud del lugar",
+      "title": "Nombre del lugar",
+      "address": "Dirección del lugar"
+    }
+  },
+  "sendContact": {
+    "params": {
+      "chat_id": "Identificador único para el chat de destino o el nombre de usuario del canal de destino (en el formato `@channelusername`)",
+      "phone_number": "Número de teléfono del contacto",
+      "first_name": "Nombre del contacto"
+    }
+  },
+  "sendChatAction": {
+    "params": {
+      "chat_id": "Identificador único para el chat de destino o el nombre de usuario del canal de destino (en el formato `@channelusername`)",
+      "action": "Tipo de acción a difundir. Elija uno, dependiendo de lo que el usuario esté a punto de recibir: __typing__ para mensajes de texto, __upload_photo__ para fotos, __record_video__ o __upload_video__ para videos, __record_audio__ o __upload_audio__ para archivos de audio, __upload_document__ para archivos generales, __find_location__ para datos de ubicación, __record_video_note__ o __upload_video_note__ para video Notas."
+    }
+  },
+  "getUserProfilePhotos": {
+    "params": {
+      "user_id": "Identificador único del usuario de destino"
+    }
+  },
+  "getFile": {
+    "params": {
+      "file_id": "Identificador de archivo para obtener información sobre"
+    }
+  },
+  "kickChatMember": {
+    "params": {
+      "chat_id": "Identificador único para el grupo de destino o nombre de usuario del supergrupo o canal de destino (en el formato `@channelusername`)",
+      "user_id": "Identificador único del usuario de destino"
+    }
+  },
+  "unbanChatMember": {
+    "params": {
+      "chat_id": "Identificador único para el grupo de destino o el nombre de usuario del supergrupo o canal de destino (en el formato «@nombredeusuario`)",
+      "user_id": "Identificador único del usuario de destino"
+    }
+  },
+  "restrictChatMember": {
+    "description": "Utilice este método para restringir un usuario en un supergrupo. El bot debe ser un administrador del supergrupo para que funcione y debe tener los derechos de administrador adecuados. Pase __True__ para todos los parámetros booleanos para levantar las restricciones de un usuario. Devuelve __True__ en caso de éxito.",
+    "params": {
+      "chat_id": "Identificador único para el chat de destino o nombre de usuario del supergrupo de destino (en el formato `@supergroupusername`)",
+      "user_id": "Identificador único del usuario de destino"
+    }
+  },
+  "promoteChatMember": {
+    "params": {
+      "chat_id": "Identificador único para el chat de destino o el nombre de usuario del canal de destino (en el formato `@channelusername`)",
+      "user_id": "Identificador único del usuario de destino"
+    }
+  },
+  "exportChatInviteLink": {
+    "params": {
+      "chat_id": "Identificador único para el chat de destino o el nombre de usuario del canal de destino (en el formato `@channelusername`)"
+    }
+  },
+  "setChatPhoto": {
+    "params": {
+      "chat_id": "Identificador único para el chat de destino o el nombre de usuario del canal de destino (en el formato `@channelusername`)",
+      "photo": "Nueva foto de chat, subida mediante multipart/form-data"
+    }
+  },
+  "deleteChatPhoto": {
+    "params": {
+      "chat_id": "Identificador único para el chat de destino o el nombre de usuario del canal de destino (en el formato `@channelusername`)"
+    }
+  },
+  "setChatTitle": {
+    "params": {
+      "chat_id": "Identificador único para el chat de destino o el nombre de usuario del canal de destino (en el formato `@channelusername`)",
+      "title": "Nuevo título de chat, 1-255 caracteres"
+    }
+  },
+  "setChatDescription": {
+    "description": "Utilice este método para cambiar la descripción de un supergrupo o un canal. El bot debe ser un administrador en el chat para que esto funcione y debe tener los derechos de administrador adecuados. Devuelve __True__ en caso de éxito. ",
+    "params": {
+      "chat_id": "Identificador único para el chat de destino o el nombre de usuario del canal de destino (en el formato `@channelusername`)"
+    }
+  },
+  "pinChatMessage": {
+    "params": {
+      "chat_id": "Identificador único para el chat de destino o nombre de usuario del supergrupo de destino (en el formato `@supergroupusername`)",
+      "message_id": "Identificador de un mensaje a pin"
+    }
+  },
+  "unpinChatMessage": {
+    "params": {
+      "chat_id": "Identificador único para el chat de destino o nombre de usuario del supergrupo de destino (en el formato `@supergroupusername`)"
+    }
+  },
+  "leaveChat": {
+    "description": "Utilice este método para que su bot deje un grupo, supergrupo o canal. Devuelve __True__ en caso de éxito.",
+    "params": {
+      "chat_id": "Identificador único para el chat de destino o nombre de usuario del supergrupo o canal de destino (en el formato `@channelusername`)"
+    }
+  },
+  "getChat": {
+    "description": "Utilice este método para obtener información actualizada sobre el chat (nombre actual del usuario para las conversaciones uno a uno, nombre de usuario actual de un usuario, grupo o canal, etc.). Devuelve un objeto Chat en caso de éxito.",
+    "params": {
+      "chat_id": "Identificador único para el chat de destino o nombre de usuario del supergrupo o canal de destino (en el formato `@channelusername`)"
+    }
+  },
+  "getChatAdministrators": {
+    "description": "Utilice este método para obtener una lista de administradores en una conversación. En caso de éxito, devuelve una matriz de objetos ChatMember que contiene información sobre todos los administradores de chat excepto otros bots. Si el chat es un grupo o un supergrupo y no se nombraron administradores, solo se devolverá el creador.",
+    "params": {
+      "chat_id": "Identificador único para el chat de destino o nombre de usuario del supergrupo o canal de destino (en el formato `@channelusername`)"
+    }
+  },
+  "getChatMembersCount": {
+    "description": "Utilice este método para obtener el número de miembros en un chat. Devuelve __Int__ en caso de éxito.",
+    "params": {
+      "chat_id": "Identificador único para el chat de destino o nombre de usuario del supergrupo o canal de destino (en el formato `@channelusername`)"
+    }
+  },
+  "getChatMember": {
+    "description": "Utilice este método para obtener información sobre un miembro de un chat. Devuelve un objeto ChatMember en caso de éxito.",
+    "params": {
+      "chat_id": "Identificador único para el chat de destino o nombre de usuario del supergrupo o canal de destino (en el formato `@channelusername`)",
+      "user_id": "Identificador único del usuario de destino"
+    }
+  },
+  "answerCallbackQuery": {
+    "params": {
+      "callback_query_id": "Identificador único para que la consulta sea respondida"
+    }
+  },
+  "editMessageText": {
+    "params": {
+      "text": "Nuevo texto del mensaje"
+    }
+  },
+  "deleteMessage": {
+    "description": "Utilice este método para eliminar un mensaje, incluidos los mensajes de servicio, con las siguientes limitaciones:\n- Un mensaje sólo se puede eliminar si se envió hace menos de 48 horas.\n- Los bots pueden eliminar mensajes salientes en grupos y supergrupos.\n- Bots concedidos __can_post_messages__ permisos pueden borrar mensajes salientes en canales.\n- Si el bot es un administrador de un grupo, puede borrar cualquier mensaje allí.\n- Si el bot tiene permiso __can_delete_messages__ en un supergrupo o un canal, Puede borrar cualquier mensaje allí.\nReturns __True__ en caso de éxito.",
+    "params": {
+      "chat_id": "Identificador único para el chat de destino o el nombre de usuario del canal de destino (en el formato `@channelusername`)",
+      "message_id": "Identificador del mensaje a eliminar"
+    }
+  },
+  "sendSticker": {
+    "description": "Utilice este método para enviar pegatinas .webp. En caso de éxito, se devuelve el mensaje enviado.",
+    "params": {
+      "chat_id": "Identificador único para el chat de destino o el nombre de usuario del canal de destino (en el formato `@channelusername`)",
+      "sticker": "Sticker para enviar. Pase un file_id como String para enviar un archivo que existe en los servidores de Telegram (recomendado), pase una URL HTTP como String para Telegram para obtener un archivo .webp desde Internet o cargue uno nuevo usando multipart / form-data. Más información sobre Envío de archivos »"
+    }
+  },
+  "getStickerSet": {
+    "params": {
+      "name": "Nombre del conjunto de stickers"
+    }
+  },
+  "uploadStickerFile": {
+    "description": "Utilice este método para cargar un archivo .png de un sticker para su uso posterior en los métodos __createNewStickerSet__ y __addStickerToSet__ (puede utilizarse varias veces). Devuelve el archivo cargado en caso de éxito.",
+    "params": {
+      "user_id": "Identificador de usuario propietario del archivo sticker",
+      "png_sticker": "**Png** Imagen con la etiqueta, debe tener un tamaño de hasta 512 kilobytes, las dimensiones no deben exceder 512px, y el ancho o la altura deben ser exactamente 512px. Más información sobre Envío de archivos »"
+    }
+  }
+}
