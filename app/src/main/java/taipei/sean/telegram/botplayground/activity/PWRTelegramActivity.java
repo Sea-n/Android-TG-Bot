@@ -280,8 +280,7 @@ public class PWRTelegramActivity extends AppCompatActivity {
 
     public JSONObject loadMethods() {
         final String lang = getString(R.string.lang_code);
-        String jsonStr;   // Temporary variable for read JSON file
-        JSONObject json;
+        JSONObject json = new JSONObject();
 
         /* Begin of read PWRTelegram Methods file */
         try {
@@ -294,17 +293,15 @@ public class PWRTelegramActivity extends AppCompatActivity {
                 return null;
 
             is.close();
-            jsonStr = new String(buffer, "UTF-8");
+            String jsonStr = new String(buffer, "UTF-8");
+
+            try {
+                json = new JSONObject(jsonStr);
+            } catch (JSONException e) {
+                Log.e("pwrt", "parse", e);
+            }
         } catch (IOException e) {
             Log.e("pwrt", "get", e);
-            return null;
-        }
-
-        try {
-            json = new JSONObject(jsonStr);
-        } catch (JSONException e) {
-            Log.e("pwrt", "parse", e);
-            return null;
         }
         /* End of read PWRTelegram Methods file */
 
@@ -319,25 +316,23 @@ public class PWRTelegramActivity extends AppCompatActivity {
                 return null;
 
             is.close();
-            jsonStr = new String(buffer, "UTF-8");
+            String jsonStr = new String(buffer, "UTF-8");
+
+            try {
+                JSONObject originalMethods = new JSONObject(jsonStr);
+                Iterator<String> methods = originalMethods.keys();
+                while (methods.hasNext()) {
+                    String methodName = methods.next();
+                    if (!json.has(methodName)) {   // if PWRTelegram Methods list does not exist this method
+                        JSONObject method = originalMethods.getJSONObject(methodName);
+                        json.put(methodName, method);   // Add to list
+                    }
+                }
+            } catch (JSONException e) {
+                Log.e("pwrt", "parse", e);
+            }
         } catch (IOException e) {
             Log.e("pwrt", "get", e);
-            return null;
-        }
-
-        try {
-            JSONObject originalMethods = new JSONObject(jsonStr);
-            Iterator<String> methods = originalMethods.keys();
-            while (methods.hasNext()) {
-                String methodName = methods.next();
-                if (!json.has(methodName)) {   // if PWRTelegram Methods list does not exist this method
-                    JSONObject method = originalMethods.getJSONObject(methodName);
-                    json.put(methodName, method);   // Add to list
-                }
-            }
-        } catch (JSONException e) {
-            Log.e("pwrt", "parse", e);
-            return null;
         }
         /* End of read Telegram Methods file */
 
@@ -352,43 +347,41 @@ public class PWRTelegramActivity extends AppCompatActivity {
                 return null;
 
             is.close();
-            jsonStr = new String(buffer, "UTF-8");
-        } catch (IOException e) {
-            Log.e("pwrt", "get locale", e);
-            return null;
-        }
+            String jsonStr = new String(buffer, "UTF-8");
 
-        try {
-            JSONObject localeJson = new JSONObject(jsonStr);
+            try {
+                JSONObject localeJson = new JSONObject(jsonStr);
 
-            Iterator<String> methods = localeJson.keys();
-            while (methods.hasNext()) {
-                String methodName = methods.next();
-                JSONObject method = json.getJSONObject(methodName);
-                JSONObject localeMethod = localeJson.getJSONObject(methodName);
+                Iterator<String> methods = localeJson.keys();
+                while (methods.hasNext()) {
+                    String methodName = methods.next();
+                    JSONObject method = json.getJSONObject(methodName);
+                    JSONObject localeMethod = localeJson.getJSONObject(methodName);
 
-                if (localeMethod.has("description")) {
-                    String methodDesc = localeMethod.getString("description");
-                    method.put("description", methodDesc);
-                }
+                    if (localeMethod.has("description")) {
+                        String methodDesc = localeMethod.getString("description");
+                        method.put("description", methodDesc);
+                    }
 
-                if (localeMethod.has("params")) {
-                    JSONObject params = method.getJSONObject("params");
-                    JSONObject localeParams = localeMethod.getJSONObject("params");
+                    if (localeMethod.has("params")) {
+                        JSONObject params = method.getJSONObject("params");
+                        JSONObject localeParams = localeMethod.getJSONObject("params");
 
-                    Iterator<String> paramNames = localeParams.keys();
-                    while (paramNames.hasNext()) {
-                        String paramName = paramNames.next();
-                        JSONObject param = params.getJSONObject(paramName);
-                        String localeParam = localeParams.getString(paramName);
+                        Iterator<String> paramNames = localeParams.keys();
+                        while (paramNames.hasNext()) {
+                            String paramName = paramNames.next();
+                            JSONObject param = params.getJSONObject(paramName);
+                            String localeParam = localeParams.getString(paramName);
 
-                        param.put("description", localeParam);
+                            param.put("description", localeParam);
+                        }
                     }
                 }
+            } catch (JSONException e) {
+                Log.e("pwrt", "parse locale", e);
             }
-        } catch (JSONException e) {
-            Log.e("pwrt", "parse locale", e);
-            return null;
+        } catch (IOException e) {
+            Log.e("pwrt", "get locale", e);
         }
         /* End of read Telegram Description l10n file */
 
@@ -403,43 +396,41 @@ public class PWRTelegramActivity extends AppCompatActivity {
                 return null;
 
             is.close();
-            jsonStr = new String(buffer, "UTF-8");
-        } catch (IOException e) {
-            Log.e("pwrt", "get locale", e);
-            return null;
-        }
+            String jsonStr = new String(buffer, "UTF-8");
 
-        try {
-            JSONObject localeJson = new JSONObject(jsonStr);
+            try {
+                JSONObject localeJson = new JSONObject(jsonStr);
 
-            Iterator<String> methods = localeJson.keys();
-            while (methods.hasNext()) {
-                String methodName = methods.next();
-                JSONObject method = json.getJSONObject(methodName);
-                JSONObject localeMethod = localeJson.getJSONObject(methodName);
+                Iterator<String> methods = localeJson.keys();
+                while (methods.hasNext()) {
+                    String methodName = methods.next();
+                    JSONObject method = json.getJSONObject(methodName);
+                    JSONObject localeMethod = localeJson.getJSONObject(methodName);
 
-                if (localeMethod.has("description")) {
-                    String methodDesc = localeMethod.getString("description");
-                    method.put("description", methodDesc);
-                }
+                    if (localeMethod.has("description")) {
+                        String methodDesc = localeMethod.getString("description");
+                        method.put("description", methodDesc);
+                    }
 
-                if (localeMethod.has("params")) {
-                    JSONObject params = method.getJSONObject("params");
-                    JSONObject localeParams = localeMethod.getJSONObject("params");
+                    if (localeMethod.has("params")) {
+                        JSONObject params = method.getJSONObject("params");
+                        JSONObject localeParams = localeMethod.getJSONObject("params");
 
-                    Iterator<String> paramNames = localeParams.keys();
-                    while (paramNames.hasNext()) {
-                        String paramName = paramNames.next();
-                        JSONObject param = params.getJSONObject(paramName);
-                        String localeParam = localeParams.getString(paramName);
+                        Iterator<String> paramNames = localeParams.keys();
+                        while (paramNames.hasNext()) {
+                            String paramName = paramNames.next();
+                            JSONObject param = params.getJSONObject(paramName);
+                            String localeParam = localeParams.getString(paramName);
 
-                        param.put("description", localeParam);
+                            param.put("description", localeParam);
+                        }
                     }
                 }
+            } catch (JSONException e) {
+                Log.e("pwrt", "parse locale", e);
             }
-        } catch (JSONException e) {
-            Log.e("pwrt", "parse locale", e);
-            return null;
+        } catch (IOException e) {
+            Log.e("pwrt", "get locale", e);
         }
         /* End of read PWRTelegram Description l10n file */
 

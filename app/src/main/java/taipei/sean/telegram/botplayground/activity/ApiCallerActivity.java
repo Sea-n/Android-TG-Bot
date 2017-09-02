@@ -262,8 +262,7 @@ public class ApiCallerActivity extends AppCompatActivity {
 
     public JSONObject loadMethods() {
         final String lang = getString(R.string.lang_code);
-        String jsonStr;
-        JSONObject json;
+        JSONObject json = new JSONObject();
 
         try {
             InputStream is = getAssets().open("api-methods.json");
@@ -275,17 +274,15 @@ public class ApiCallerActivity extends AppCompatActivity {
                 return null;
 
             is.close();
-            jsonStr = new String(buffer, "UTF-8");
+            String jsonStr = new String(buffer, "UTF-8");
+
+            try {
+                json = new JSONObject(jsonStr);
+            } catch (JSONException e) {
+                Log.e("caller", "parse", e);
+            }
         } catch (IOException e) {
             Log.e("caller", "get", e);
-            return null;
-        }
-
-        try {
-            json = new JSONObject(jsonStr);
-        } catch (JSONException e) {
-            Log.e("caller", "parse", e);
-            return null;
         }
 
         try {
@@ -298,43 +295,41 @@ public class ApiCallerActivity extends AppCompatActivity {
                 return null;
 
             is.close();
-            jsonStr = new String(buffer, "UTF-8");
-        } catch (IOException e) {
-            Log.e("caller", "get locale", e);
-            return null;
-        }
+            String jsonStr = new String(buffer, "UTF-8");
 
-        try {
-            JSONObject localeJson = new JSONObject(jsonStr);
+            try {
+                JSONObject localeJson = new JSONObject(jsonStr);
 
-            Iterator<String> methods = localeJson.keys();
-            while (methods.hasNext()) {
-                String methodName = methods.next();
-                JSONObject method = json.getJSONObject(methodName);
-                JSONObject localeMethod = localeJson.getJSONObject(methodName);
+                Iterator<String> methods = localeJson.keys();
+                while (methods.hasNext()) {
+                    String methodName = methods.next();
+                    JSONObject method = json.getJSONObject(methodName);
+                    JSONObject localeMethod = localeJson.getJSONObject(methodName);
 
-                if (localeMethod.has("description")) {
-                    String methodDesc = localeMethod.getString("description");
-                    method.put("description", methodDesc);
-                }
+                    if (localeMethod.has("description")) {
+                        String methodDesc = localeMethod.getString("description");
+                        method.put("description", methodDesc);
+                    }
 
-                if (localeMethod.has("params")) {
-                    JSONObject params = method.getJSONObject("params");
-                    JSONObject localeParams = localeMethod.getJSONObject("params");
+                    if (localeMethod.has("params")) {
+                        JSONObject params = method.getJSONObject("params");
+                        JSONObject localeParams = localeMethod.getJSONObject("params");
 
-                    Iterator<String> paramNames = localeParams.keys();
-                    while (paramNames.hasNext()) {
-                        String paramName = paramNames.next();
-                        JSONObject param = params.getJSONObject(paramName);
-                        String localeParam = localeParams.getString(paramName);
+                        Iterator<String> paramNames = localeParams.keys();
+                        while (paramNames.hasNext()) {
+                            String paramName = paramNames.next();
+                            JSONObject param = params.getJSONObject(paramName);
+                            String localeParam = localeParams.getString(paramName);
 
-                        param.put("description", localeParam);
+                            param.put("description", localeParam);
+                        }
                     }
                 }
+            } catch (JSONException e) {
+                Log.e("caller", "parse locale", e);
             }
-        } catch (JSONException e) {
-            Log.e("caller", "parse locale", e);
-            return null;
+        } catch (IOException e) {
+            Log.e("caller", "get locale", e);
         }
 
         return json;
