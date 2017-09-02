@@ -599,6 +599,12 @@ public class MainActivity extends AppCompatActivity {
                 menu.setGroupVisible(R.id.menu_api, true);
                 accountItem.setVisible(false);
 
+                if (null == currentBot) {
+                    Log.d("main", "no bot on restore menu");
+                    askAddBot();
+                    return;
+                }
+
                 switch (currentBot.type) {
                     case 0:
                         caller.setEnabled(true);
