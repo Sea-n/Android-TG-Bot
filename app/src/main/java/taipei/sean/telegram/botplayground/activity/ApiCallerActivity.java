@@ -1,6 +1,7 @@
 package taipei.sean.telegram.botplayground.activity;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -132,6 +133,21 @@ public class ApiCallerActivity extends AppCompatActivity {
             return;
         }
 
+        if (methodData.has("description")) {
+            try {
+                final String desc = methodData.getString("description");
+                methodView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        Snackbar.make(view, desc, Snackbar.LENGTH_LONG).show();
+                        return false;
+                    }
+                });
+            } catch (JSONException e) {
+                Log.e("caller", "method description", e);
+            }
+        }
+
         if (methodData.has("params")) {
             try {
                 paramData = methodData.getJSONObject("params");
@@ -140,7 +156,7 @@ public class ApiCallerActivity extends AppCompatActivity {
                 return;
             }
         } else {
-            Log.d("caller", "No params: " + method);
+            Log.e("caller", "No params: " + method);
             return;
         }
 
@@ -236,8 +252,10 @@ public class ApiCallerActivity extends AppCompatActivity {
     }
 
     public JSONObject loadMethods() {
+        final String lang = getString(R.string.lang_prefix);
         String jsonStr;
         JSONObject json;
+
         try {
             InputStream is = getAssets().open("api-methods.json");
 
@@ -253,13 +271,63 @@ public class ApiCallerActivity extends AppCompatActivity {
             Log.e("caller", "get", e);
             return null;
         }
+
         try {
             json = new JSONObject(jsonStr);
         } catch (JSONException e) {
             Log.e("caller", "parse", e);
             return null;
         }
-        return json;
 
+        try {
+            InputStream is = getAssets().open("api-methods-" + lang + ".json");
+
+            int size = is.available();
+            byte[] buffer = new byte[size];
+
+            if (is.read(buffer) < 0)
+                return null;
+
+            is.close();
+            jsonStr = new String(buffer, "UTF-8");
+        } catch (IOException e) {
+            Log.e("caller", "get locale", e);
+            return null;
+        }
+
+        try {
+            JSONObject localeJson = new JSONObject(jsonStr);
+
+            Iterator<String> methods = localeJson.keys();
+            while (methods.hasNext()) {
+                String methodName = methods.next();
+                JSONObject method = json.getJSONObject(methodName);
+                JSONObject localeMethod = localeJson.getJSONObject(methodName);
+
+                if (localeMethod.has("description")) {
+                    String methodDesc = localeMethod.getString("description");
+                    method.put("description", methodDesc);
+                }
+
+                if (localeMethod.has("params")) {
+                    JSONObject params = method.getJSONObject("params");
+                    JSONObject localeParams = localeMethod.getJSONObject("params");
+
+                    Iterator<String> paramNames = localeParams.keys();
+                    while (paramNames.hasNext()) {
+                        String paramName = paramNames.next();
+                        JSONObject param = params.getJSONObject(paramName);
+                        String localeParam = localeParams.getString(paramName);
+
+                        param.put("description", localeParam);
+                    }
+                }
+            }
+        } catch (JSONException e) {
+            Log.e("caller", "parse locale", e);
+            return null;
+        }
+
+        return json;
     }
 }

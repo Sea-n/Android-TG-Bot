@@ -3,6 +3,7 @@ package taipei.sean.telegram.botplayground.activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -41,7 +42,6 @@ public class PWRTelegramActivity extends AppCompatActivity {
     private int _type;
     private PWRTelegramAPI _api;
     private JSONObject apiMethods;
-    private JSONObject pApiMethods;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +58,7 @@ public class PWRTelegramActivity extends AppCompatActivity {
             _token = bundle.getString("token");
             _type = bundle.getInt("type");
         } catch (NullPointerException e) {
-            Log.e("caller", "bundle error", e);
+            Log.e("pwrt", "bundle error", e);
             finish();
         }
 
@@ -79,21 +79,8 @@ public class PWRTelegramActivity extends AppCompatActivity {
 
 
         final ArrayList<String> botApiMethodsList = new ArrayList<String>() {};
-        pApiMethods = loadPMethods();
         apiMethods = loadMethods();
 
-
-        Iterator<String> pTemp = pApiMethods.keys();
-        while (pTemp.hasNext()) {
-            String key = pTemp.next();
-            botApiMethodsList.add(key);
-        }
-
-        Iterator<String> temp = apiMethods.keys();
-        while (temp.hasNext()) {
-            String key = temp.next();
-            botApiMethodsList.add(key);
-        }
 
         final SeanAdapter<String> adapter = new SeanAdapter<>(this,
                 android.R.layout.simple_dropdown_item_1line, botApiMethodsList);
@@ -120,7 +107,7 @@ public class PWRTelegramActivity extends AppCompatActivity {
         });
 
         String method = db.getParam("_method_pwrt");
-        if (pApiMethods.has(method) || apiMethods.has(method))
+        if (apiMethods.has(method))
             methodView.setText(method);
         updateMethod();
     }
@@ -130,31 +117,48 @@ public class PWRTelegramActivity extends AppCompatActivity {
         final RecyclerView paramList = (RecyclerView) findViewById(R.id.pwrtelegram_inputs);
         final String method = methodView.getText().toString();
 
+        JSONObject methodData;
         JSONObject paramData;
 
+        if (!apiMethods.has(method)) {
+            methodView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
+            ViewGroup.LayoutParams layoutParams = paramList.getLayoutParams();
+            layoutParams.height = 0;
+            paramList.setLayoutParams(layoutParams);
+            return;
+        }
+
         try {
-            JSONObject methodData;
-
-            if (pApiMethods.has(method)) {
-                methodData = pApiMethods.getJSONObject(method);
-            } else if (apiMethods.has(method)) {
-                methodData = apiMethods.getJSONObject(method);
-            } else {
-                methodView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
-                ViewGroup.LayoutParams layoutParams = paramList.getLayoutParams();
-                layoutParams.height = 0;
-                paramList.setLayoutParams(layoutParams);
-                return;
-            }
-
-            if (methodData.has("params"))
-                paramData = methodData.getJSONObject("params");
-            else {
-                Log.d("caller", "No params: " + method);
-                return;
-            }
+            methodData = apiMethods.getJSONObject(method);
         } catch (JSONException e) {
-            Log.e("caller", "json", e);
+            Log.e("pwrt", apiMethods.toString(), e);
+            return;
+        }
+
+        if (methodData.has("description")) {
+            try {
+                final String desc = methodData.getString("description");
+                methodView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        Snackbar.make(view, desc, Snackbar.LENGTH_LONG).show();
+                        return false;
+                    }
+                });
+            } catch (JSONException e) {
+                Log.e("pwrt", "method description", e);
+            }
+        }
+
+        if (methodData.has("params"))
+            try {
+                paramData = methodData.getJSONObject("params");
+            } catch (JSONException e) {
+                Log.e("pwrt", "method description", e);
+                return;
+            }
+        else {
+            Log.e("pwrt", "No params: " + method);
             return;
         }
 
@@ -168,7 +172,7 @@ public class PWRTelegramActivity extends AppCompatActivity {
                 apiCallerAdapter.addData(key, value);
             }
         } catch (JSONException e) {
-            Log.e("caller", "parse", e);
+            Log.e("pwrt", "parse", e);
         }
 
         paramList.setAdapter(apiCallerAdapter);
@@ -234,24 +238,24 @@ public class PWRTelegramActivity extends AppCompatActivity {
             TextInputLayout textInputLayout = (TextInputLayout) paramAdapter.getViewByPos(i);
             InstantComplete textInputEditText = (InstantComplete) textInputLayout.getEditText();
             if (null == textInputEditText) {
-                Log.w("caller", "edit text null");
+                Log.w("pwrt", "edit text null");
                 continue;
             }
             CharSequence hint = textInputLayout.getHint();
             if (null == hint) {
-                Log.w("caller", "hint null");
+                Log.w("pwrt", "hint null");
                 continue;
             }
             String name = hint.toString();
             CharSequence valueChar = textInputEditText.getText();
             if (null == valueChar) {
-                Log.w("caller", "value char null");
+                Log.w("pwrt", "value char null");
                 continue;
             }
             String value = valueChar.toString();
 
             if (Objects.equals(value, "")) {
-                Log.w("caller", "value empty");
+                Log.w("pwrt", "value empty");
                 continue;
             }
 
@@ -259,7 +263,7 @@ public class PWRTelegramActivity extends AppCompatActivity {
                 jsonObject.put(name, value);
                 db.insertFav(name, value, method);
             } catch (JSONException e) {
-                Log.e("caller", "json", e);
+                Log.e("pwrt", "json", e);
             }
         }
 
@@ -267,35 +271,11 @@ public class PWRTelegramActivity extends AppCompatActivity {
     }
 
     public JSONObject loadMethods() {
-        String jsonStr;
+        final String lang = getString(R.string.lang_prefix);
+        String jsonStr;   // Temporary variable for read JSON file
         JSONObject json;
-        try {
-            InputStream is = getAssets().open("api-methods.json");
 
-            int size = is.available();
-            byte[] buffer = new byte[size];
-
-            if (is.read(buffer) < 0)
-                return null;
-
-            is.close();
-            jsonStr = new String(buffer, "UTF-8");
-        } catch (IOException e) {
-            Log.e("caller", "get", e);
-            return null;
-        }
-        try {
-            json = new JSONObject(jsonStr);
-        } catch (JSONException e) {
-            Log.e("caller", "parse", e);
-            return null;
-        }
-        return json;
-    }
-
-    public JSONObject loadPMethods() {
-        String jsonStr;
-        JSONObject json;
+        /* Begin of read PWRTelegram Methods file */
         try {
             InputStream is = getAssets().open("pwrtelegram-methods.json");
 
@@ -308,15 +288,153 @@ public class PWRTelegramActivity extends AppCompatActivity {
             is.close();
             jsonStr = new String(buffer, "UTF-8");
         } catch (IOException e) {
-            Log.e("caller", "get", e);
+            Log.e("pwrt", "get", e);
             return null;
         }
+
         try {
             json = new JSONObject(jsonStr);
         } catch (JSONException e) {
-            Log.e("caller", "parse", e);
+            Log.e("pwrt", "parse", e);
             return null;
         }
+        /* End of read PWRTelegram Methods file */
+
+        /* Begin of read Telegram Methods file */
+        try {
+            InputStream is = getAssets().open("api-methods.json");
+
+            int size = is.available();
+            byte[] buffer = new byte[size];
+
+            if (is.read(buffer) < 0)
+                return null;
+
+            is.close();
+            jsonStr = new String(buffer, "UTF-8");
+        } catch (IOException e) {
+            Log.e("pwrt", "get", e);
+            return null;
+        }
+
+        try {
+            JSONObject originalMethods = new JSONObject(jsonStr);
+            Iterator<String> methods = originalMethods.keys();
+            while (methods.hasNext()) {
+                String methodName = methods.next();
+                if (!json.has(methodName)) {   // if PWRTelegram Methods list does not exist this method
+                    JSONObject method = originalMethods.getJSONObject(methodName);
+                    json.put(methodName, method);   // Add to list
+                }
+            }
+        } catch (JSONException e) {
+            Log.e("pwrt", "parse", e);
+            return null;
+        }
+        /* End of read Telegram Methods file */
+
+        /* Begin of read Telegram Description l10n file */
+        try {
+            InputStream is = getAssets().open("api-methods-" + lang + ".json");
+
+            int size = is.available();
+            byte[] buffer = new byte[size];
+
+            if (is.read(buffer) < 0)
+                return null;
+
+            is.close();
+            jsonStr = new String(buffer, "UTF-8");
+        } catch (IOException e) {
+            Log.e("pwrt", "get locale", e);
+            return null;
+        }
+
+        try {
+            JSONObject localeJson = new JSONObject(jsonStr);
+
+            Iterator<String> methods = localeJson.keys();
+            while (methods.hasNext()) {
+                String methodName = methods.next();
+                JSONObject method = json.getJSONObject(methodName);
+                JSONObject localeMethod = localeJson.getJSONObject(methodName);
+
+                if (localeMethod.has("description")) {
+                    String methodDesc = localeMethod.getString("description");
+                    method.put("description", methodDesc);
+                }
+
+                if (localeMethod.has("params")) {
+                    JSONObject params = method.getJSONObject("params");
+                    JSONObject localeParams = localeMethod.getJSONObject("params");
+
+                    Iterator<String> paramNames = localeParams.keys();
+                    while (paramNames.hasNext()) {
+                        String paramName = paramNames.next();
+                        JSONObject param = params.getJSONObject(paramName);
+                        String localeParam = localeParams.getString(paramName);
+
+                        param.put("description", localeParam);
+                    }
+                }
+            }
+        } catch (JSONException e) {
+            Log.e("pwrt", "parse locale", e);
+            return null;
+        }
+        /* End of read Telegram Description l10n file */
+
+        /* Begin of read PWRTelegram Description l10n file (Over-write original description) */
+        try {
+            InputStream is = getAssets().open("pwrtelegram-methods-" + lang + ".json");
+
+            int size = is.available();
+            byte[] buffer = new byte[size];
+
+            if (is.read(buffer) < 0)
+                return null;
+
+            is.close();
+            jsonStr = new String(buffer, "UTF-8");
+        } catch (IOException e) {
+            Log.e("pwrt", "get locale", e);
+            return null;
+        }
+
+        try {
+            JSONObject localeJson = new JSONObject(jsonStr);
+
+            Iterator<String> methods = localeJson.keys();
+            while (methods.hasNext()) {
+                String methodName = methods.next();
+                JSONObject method = json.getJSONObject(methodName);
+                JSONObject localeMethod = localeJson.getJSONObject(methodName);
+
+                if (localeMethod.has("description")) {
+                    String methodDesc = localeMethod.getString("description");
+                    method.put("description", methodDesc);
+                }
+
+                if (localeMethod.has("params")) {
+                    JSONObject params = method.getJSONObject("params");
+                    JSONObject localeParams = localeMethod.getJSONObject("params");
+
+                    Iterator<String> paramNames = localeParams.keys();
+                    while (paramNames.hasNext()) {
+                        String paramName = paramNames.next();
+                        JSONObject param = params.getJSONObject(paramName);
+                        String localeParam = localeParams.getString(paramName);
+
+                        param.put("description", localeParam);
+                    }
+                }
+            }
+        } catch (JSONException e) {
+            Log.e("pwrt", "parse locale", e);
+            return null;
+        }
+        /* End of read PWRTelegram Description l10n file */
+
         return json;
     }
 }

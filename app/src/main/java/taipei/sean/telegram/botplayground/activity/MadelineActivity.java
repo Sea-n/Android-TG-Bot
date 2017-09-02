@@ -1,6 +1,7 @@
 package taipei.sean.telegram.botplayground.activity;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -47,7 +48,7 @@ public class MadelineActivity extends AppCompatActivity {
             _token = bundle.getString("token");
             _type = bundle.getInt("type");
         } catch (NullPointerException e) {
-            Log.e("ml", "bundle error", e);
+            Log.e("madeline", "bundle error", e);
             finish();
         }
 
@@ -56,13 +57,11 @@ public class MadelineActivity extends AppCompatActivity {
         _api = new PWRTelegramAPI(this, _token, _type);
 
         final InstantComplete methodView = (InstantComplete) findViewById(R.id.madeline_method);
-        final RecyclerView inputList = (RecyclerView) findViewById(R.id.madeline_inputs);
         final Button submitButton = (Button) findViewById(R.id.madeline_submit);
 
 
         final ArrayList<String> botApiMethodsList = new ArrayList<String>() {};
         apiMethods = loadMethods();
-
 
         Iterator<String> temp = apiMethods.keys();
         while (temp.hasNext()) {
@@ -117,22 +116,39 @@ public class MadelineActivity extends AppCompatActivity {
             return;
         }
 
+        methodView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_star_border_black_24dp, 0);
+
         try {
             methodData = apiMethods.getJSONObject(method);
         } catch (JSONException e) {
-            Log.e("ml", apiMethods.toString(), e);
+            Log.e("madeline", apiMethods.toString(), e);
             return;
+        }
+
+        if (methodData.has("description")) {
+            try {
+                final String desc = methodData.getString("description");
+                methodView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        Snackbar.make(view, desc, Snackbar.LENGTH_LONG).show();
+                        return false;
+                    }
+                });
+            } catch (JSONException e) {
+                Log.e("madeline", "method description", e);
+            }
         }
 
         if (methodData.has("params")) {
             try {
                 paramData = methodData.getJSONObject("params");
             } catch (JSONException e) {
-                Log.e("ml", "json", e);
+                Log.e("madeline", methodData.toString(), e);
                 return;
             }
         } else {
-            Log.d("ml", "No params: " + method);
+            Log.e("madeline", "No params: " + method);
             return;
         }
 
@@ -149,7 +165,7 @@ public class MadelineActivity extends AppCompatActivity {
                 apiCallerAdapter.addData(key, wrapValue);
             }
         } catch (JSONException e) {
-            Log.e("ml", "parse", e);
+            Log.e("madeline", "parse", e);
         }
 
         paramView.setAdapter(apiCallerAdapter);
@@ -178,7 +194,7 @@ public class MadelineActivity extends AppCompatActivity {
         try {
             jsonObject.put("method", method);
         } catch (JSONException e) {
-            Log.e("ml", "method", e);
+            Log.e("madeline", "method", e);
             return;
         }
 
@@ -194,24 +210,24 @@ public class MadelineActivity extends AppCompatActivity {
             TextInputLayout textInputLayout = (TextInputLayout) paramAdapter.getViewByPos(i);
             InstantComplete textInputEditText = (InstantComplete) textInputLayout.getEditText();
             if (null == textInputEditText) {
-                Log.w("ml", "edit text null");
+                Log.w("madeline", "edit text null");
                 continue;
             }
             CharSequence hint = textInputLayout.getHint();
             if (null == hint) {
-                Log.w("ml", "hint null");
+                Log.w("madeline", "hint null");
                 continue;
             }
             String name = hint.toString();
             CharSequence valueChar = textInputEditText.getText();
             if (null == valueChar) {
-                Log.w("ml", "value char null");
+                Log.w("madeline", "value char null");
                 continue;
             }
             String value = valueChar.toString();
 
             if (Objects.equals(value, "")) {
-                Log.w("ml", "value empty");
+                Log.w("madeline", "value empty");
                 continue;
             }
 
@@ -219,14 +235,14 @@ public class MadelineActivity extends AppCompatActivity {
                 paramObject.put(name, value);
                 db.insertFav(name, value, method);
             } catch (JSONException e) {
-                Log.e("ml", "json", e);
+                Log.e("madeline", "json", e);
             }
         }
 
         try {
             jsonObject.put("params", paramObject);
         } catch (JSONException e) {
-            Log.e("ml", "method", e);
+            Log.e("madeline", "method", e);
             return;
         }
 
@@ -236,6 +252,7 @@ public class MadelineActivity extends AppCompatActivity {
     public JSONObject loadMethods() {
         String jsonStr;
         JSONObject json;
+
         try {
             InputStream is = getAssets().open("madeline-methods.json");
 
@@ -248,15 +265,17 @@ public class MadelineActivity extends AppCompatActivity {
             is.close();
             jsonStr = new String(buffer, "UTF-8");
         } catch (IOException e) {
-            Log.e("ml", "get", e);
+            Log.e("madeline", "get", e);
             return null;
         }
+
         try {
             json = new JSONObject(jsonStr);
         } catch (JSONException e) {
-            Log.e("ml", "parse", e);
+            Log.e("madeline", "parse", e);
             return null;
         }
+
         return json;
     }
 }
