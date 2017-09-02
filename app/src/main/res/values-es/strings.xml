@@ -2,6 +2,8 @@
 <resources>
     <string name="app_name">Awesome Telegram Bot</string>
 
+    <string name="lang_code">es</string>
+
     <string name="menu_account">Cuentas</string>
     <string name="menu_pwrtelegram">PWRTelegram API (no oficial)</string>
     <string name="menu_madeline">Cambiar a Madeline Proto</string>

@@ -271,7 +271,7 @@ public class PWRTelegramActivity extends AppCompatActivity {
     }
 
     public JSONObject loadMethods() {
-        final String lang = getString(R.string.lang_prefix);
+        final String lang = getString(R.string.lang_code);
         String jsonStr;   // Temporary variable for read JSON file
         JSONObject json;
 

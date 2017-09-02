@@ -252,7 +252,7 @@ public class ApiCallerActivity extends AppCompatActivity {
     }
 
     public JSONObject loadMethods() {
-        final String lang = getString(R.string.lang_prefix);
+        final String lang = getString(R.string.lang_code);
         String jsonStr;
         JSONObject json;
 
