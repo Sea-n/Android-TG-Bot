@@ -41,8 +41,6 @@
     <string name="del_bot_confirm_title">刪除 Bot</string>
     <string name="del_bot_confirm_msg">您確定要刪除這隻 Bot 嗎？</string>
 
-    <string name="json_data">JSON 資料</string>
-    <string name="check_json">檢測 JSON 格式</string>
     <string name="no_context_yet">尚無內容</string>
 
     <string name="file_downloader">檔案下載器</string>

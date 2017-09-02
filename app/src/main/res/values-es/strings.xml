@@ -41,8 +41,6 @@
     <string name="del_bot_confirm_title">Eliminar Bot</string>
     <string name="del_bot_confirm_msg">¿Estás seguro de que quieres eliminar este bot?</string>
 
-    <string name="json_data">Datos JSON</string>
-    <string name="check_json">Comprobar JSON</string>
     <string name="no_context_yet">Todavía no hay contexto.</string>
 
     <string name="file_downloader">Descargador de archivos</string>

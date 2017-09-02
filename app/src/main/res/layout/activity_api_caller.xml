@@ -30,51 +30,16 @@
         android:layout_width="match_parent"
         android:layout_height="0sp" />
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/api_caller_data"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/json_data"
-            android:inputType="textMultiLine"
-            android:text="@string/json_empty_object" />
-
-    </android.support.design.widget.TextInputLayout>
-
-    <GridLayout
+    <Button
+        android:id="@+id/api_caller_submit"
+        style="?android:textAppearanceSmall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:columnCount="2"
-        android:orientation="horizontal"
-        android:rowCount="2">
-
-        <Button
-            android:id="@+id/api_caller_check"
-            style="?android:textAppearanceSmall"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_marginEnd="5dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="16dp"
-            android:text="@string/check_json"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/api_caller_submit"
-            style="?android:textAppearanceSmall"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_marginEnd="5dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="16dp"
-            android:text="@string/submit"
-            android:textStyle="bold" />
-    </GridLayout>
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/submit"
+        android:textStyle="bold" />
 
     <ScrollView
         android:layout_width="match_parent"

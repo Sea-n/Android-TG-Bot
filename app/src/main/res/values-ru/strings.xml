@@ -41,8 +41,6 @@
     <string name="del_bot_confirm_title">Удалить Бота</string>
     <string name="del_bot_confirm_msg">Вы уверены, что хотите удалить этот бота?</string>
 
-    <string name="json_data">JSON Data</string>
-    <string name="check_json">Проверить JSON</string>
     <string name="no_context_yet">No Context Yet.</string>
 
     <string name="file_downloader">Загрузчик Файлов</string>

@@ -58,20 +58,12 @@ public class ApiCallerActivity extends AppCompatActivity {
 
         final InstantComplete methodView = (InstantComplete) findViewById(R.id.api_caller_method);
         final Button submitButton = (Button) findViewById(R.id.api_caller_submit);
-        final Button checkJsonButton = (Button) findViewById(R.id.api_caller_check);
-        final TextInputEditText jsonView = (TextInputEditText) findViewById(R.id.api_caller_data);
         final TextView resultView = (TextView) findViewById(R.id.api_caller_result);
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 submit();
-            }
-        });
-        checkJsonButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                _api.checkJson(jsonView, resultView);
             }
         });
 
@@ -200,27 +192,12 @@ public class ApiCallerActivity extends AppCompatActivity {
     private void submit() {
         final InstantComplete methodView = (InstantComplete) findViewById(R.id.api_caller_method);
         final RecyclerView paramList = (RecyclerView) findViewById(R.id.api_caller_inputs);
-        final TextInputEditText dataView = (TextInputEditText) findViewById(R.id.api_caller_data);
         final TextView resultView = (TextView) findViewById(R.id.api_caller_result);
 
         String method = methodView.getText().toString();
-        String jsonData = dataView.getText().toString();
-        JSONObject jsonObject;
-
-        try {
-            jsonObject = new JSONObject(jsonData);
-        } catch (JSONException e) {
-            Log.e("caller", "json", e);
-            dataView.setError(e.getLocalizedMessage());
-            return;
-        }
+        JSONObject jsonObject = new JSONObject();
 
         final ApiCallerAdapter paramAdapter = (ApiCallerAdapter) paramList.getAdapter();
-        final int paramHeight = paramList.getHeight();
-        if (null == paramAdapter || paramHeight == 0) {
-            _api.callApi(method, resultView, jsonData);
-            return;
-        }
 
         final int inputCount = paramAdapter.getItemCount();
         for (int i=0; i<inputCount; i++) {
