@@ -175,6 +175,9 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        final int navColor = navView.getDrawingCacheBackgroundColor();
+        footer.setBackgroundColor(navColor);
     }
 
     @Override

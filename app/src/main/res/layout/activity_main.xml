@@ -28,7 +28,6 @@
             <TextView
                 android:id="@+id/main_footer"
                 android:gravity="center"
-                android:background="#FAFAFAFA"
                 android:paddingTop="10sp"
                 android:paddingBottom="20sp"
                 android:layout_width="match_parent"
