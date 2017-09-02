@@ -136,7 +136,7 @@ public class MadelineActivity extends AppCompatActivity {
             return;
         }
 
-        ApiCallerAdapter apiCallerAdapter = new ApiCallerAdapter(getApplicationContext());
+        final ApiCallerAdapter apiCallerAdapter = new ApiCallerAdapter(getApplicationContext());
 
         try {
             JSONObject wrapValue = new JSONObject();
@@ -158,7 +158,12 @@ public class MadelineActivity extends AppCompatActivity {
 
         db.updateParam("_method_ml", method);
 
-        apiCallerAdapter.fitView(paramView);
+        paramView.post(new Runnable() {
+            @Override
+            public void run() {
+                apiCallerAdapter.fitView(paramView);
+            }
+        });
     }
 
     private void submit() {

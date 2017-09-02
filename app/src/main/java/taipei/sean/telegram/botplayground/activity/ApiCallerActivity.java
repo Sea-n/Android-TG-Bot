@@ -144,7 +144,7 @@ public class ApiCallerActivity extends AppCompatActivity {
             return;
         }
 
-        ApiCallerAdapter apiCallerAdapter = new ApiCallerAdapter(getApplicationContext());
+        final ApiCallerAdapter apiCallerAdapter = new ApiCallerAdapter(getApplicationContext());
 
         try {
             Iterator<String> temp = paramData.keys();
@@ -163,7 +163,12 @@ public class ApiCallerActivity extends AppCompatActivity {
 
         db.updateParam("_method", method);
 
-        apiCallerAdapter.fitView(paramList);
+        paramList.post(new Runnable() {
+            @Override
+            public void run() {
+                apiCallerAdapter.fitView(paramList);
+            }
+        });
     }
 
     private void submit() {

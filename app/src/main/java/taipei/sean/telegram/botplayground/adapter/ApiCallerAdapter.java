@@ -171,6 +171,8 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         final int screenHeight = recyclerView.getRootView().getHeight();
         recyclerView.measure(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);   // Measure height when wrap content
         final int recyclerHeight = recyclerView.getMeasuredHeight();
+        Log.d("adapter", "screen height " + screenHeight);
+        Log.d("adapter", "recycler view height " + recyclerHeight);
 
         ViewGroup.LayoutParams inputLayoutParams = recyclerView.getLayoutParams();
         if (recyclerHeight > (screenHeight * maxHeightPercentage / 100)) {   // If child exceed max% of screen height

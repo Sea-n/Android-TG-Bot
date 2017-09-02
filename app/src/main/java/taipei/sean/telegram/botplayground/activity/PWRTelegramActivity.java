@@ -158,7 +158,7 @@ public class PWRTelegramActivity extends AppCompatActivity {
             return;
         }
 
-        ApiCallerAdapter apiCallerAdapter = new ApiCallerAdapter(getApplicationContext());
+        final ApiCallerAdapter apiCallerAdapter = new ApiCallerAdapter(getApplicationContext());
 
         try {
             Iterator<String> temp = paramData.keys();
@@ -176,7 +176,13 @@ public class PWRTelegramActivity extends AppCompatActivity {
         paramList.setItemViewCacheSize(paramData.length());
 
         db.updateParam("_method_pwrt", method);
-        apiCallerAdapter.fitView(paramList);
+
+        paramList.post(new Runnable() {
+            @Override
+            public void run() {
+                apiCallerAdapter.fitView(paramList);
+            }
+        });
     }
 
     @Override
