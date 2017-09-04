@@ -14,6 +14,7 @@ Issues, Pull Requests are **always welcome**
 ## Translators
 Spanish🇪🇸 by [Chaky El Pipe](http://telegra.ph/Biografía-Chaky-El-Pipe-07-24)  
 Russian🇷🇺 by [Smartman\_ru](https://github.com/smartmanru)  
+Hindi🇮🇳 by [Rishabh](https://github.com/lulzx)  
 Chinese🇹🇼 by [Sean](https://www.sean.taipei)  
 If you would like to translate this app to your native language, please read [this gist](https://gist.github.com/Sea-n/aacf84e85230a57778076eb6c3d98072).
 

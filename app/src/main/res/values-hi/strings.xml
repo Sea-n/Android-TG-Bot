@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Awesome Telegram Bot</string>
+
+    <string name="lang_code">hi</string>
+
+    <string name="menu_account">खाता</string>
+    <string name="menu_pwrtelegram">PWR Telegram API (अनौपचारिक)</string>
+    <string name="menu_madeline">Madeline Proto पर बदले</string>
+    <string name="pwrt_menu_info">PWRTelegram क्या है?</string>
+    <string name="menu_functions">कार्य</string>
+    <string name="menu_add_bot">बॉट जोड़े</string>
+    <string name="menu_join_group">ग्रुप से जुड़े</string>
+    <string name="menu_github">GitHub पर स्टार दे</string>
+    <string name="menu_export">आंकड़ाकोष को एस. डी. कार्ड में भेजे</string>
+
+    <string name="title_activity_add_bot">नया बॉट</string>
+    <string name="title_activity_bot_api">बॉट API</string>
+    <string name="title_activity_pwrtelegram_api">PWRTelegram API</string>
+    <string name="title_activity_madeline_api">Madeline API</string>
+    <string name="title_activity_favorite">पसंदीदा</string>
+    <string name="title_activity_add_favorite">पसंदीदा में शामिल करें</string>
+
+    <string name="no_bot_placeholder">अभी तक कोई भी बॉट को नहीँ जोड़ा गया हैं, कृपया + पे दबाये</string>
+    <string name="not_normal_bot">कृपया साधारण बॉट टोकन इस्तेमाल करें।</string>
+
+    <string name="add_bot_token">आपका बॉट टोकन</string>
+    <string name="add_bot_name">उपनाम</string>
+    <string name="token_type">टोकन का प्रकार</string>
+    <string name="token_type_normal">सामान्य बॉट</string>
+    <string name="token_type_deep">Deep Telegram</string>
+    <string name="token_type_user">PWRTelegram User</string>
+    <string name="add_bot_name_invalid">उपनाम गलत हैं, कृपया फिर से जाचे।</string>
+    <string name="add_bot_token_invalid">बॉट टोकन का प्रारूप सही नहीँ हैं।</string>
+
+    <string name="no_bot_warning">आपने बॉट टोकन नहीँ डाला है, कृपया उसे डाले।</string>
+    <string name="no_bot_selected">आपने अपना बॉट नहीँ चुना हैं।</string>
+    <string name="ask_add_bot_title">नया बॉट</string>
+    <string name="ask_add_bot_msg">क्या आप नये बॉट को शामिल करना चाहते है?</string>
+
+    <string name="del_bot_confirm_title">बॉट हटाएँ</string>
+    <string name="del_bot_confirm_msg">क्या आपको यकीन है कि आप इस बॉट को हटाना चाहते है?</string>
+
+    <string name="no_context_yet">अभी तक कोई भी प्रसंग शामिल नहीँ किया गया है।</string>
+
+    <string name="file_downloader">फ़ाइल डाउनलोडर</string>
+    <string name="file_id">फ़ाइल आई. डी.</string>
+    <string name="file_downloader_description">फ़ाइल डाउनलोड होने के बाद अपने आप खुलेगा। \nसभी फ़ाइल /sdcard/TeleBot डायरेक्टरी में होंगी।</string>
+
+    <string name="add_fav_prompt">इष्ट बॉट के प्रकार चुने</string>
+    <string name="add_fav_value_hint">आपका डेटा</string>
+    <string name="add_fav_name_hint">कृपया नाम चुने</string>
+
+    <string name="save_db">आंकड़ाकोष बचाये</string>
+    <string name="export_mkdir_fail">बैकअप डायरेक्टरी बनाना असफ़ल हो रहा हैं।</string>
+    <string name="db_export_fail">आंकड़ाकोष को बचाना असफ़ल रहा। \nकारन:</string>
+    <string name="export_to">"भेज दिया गया है"</string>
+
+    <string name="footer_rate_title">एप का मूल्यांकन करें</string>
+    <string name="footer_rate_msg">अगर आपको यह एप पसंद आया है तो जाये पर दबाये :)</string>
+    <string name="footer_rate_yes">जाये</string>
+    <string name="footer_rate_no">अभी नहीँ</string>
+
+    <string name="method">तरीका</string>
+    <string name="done">ठीक</string>
+    <string name="save">बचाये</string>
+    <string name="submit">जमा करें</string>
+    <string name="cancel">रद्द करें</string>
+    <string name="edit">बदले</string>
+    <string name="remove">हटाये</string>
+    <string name="yes">हां</string>
+    <string name="no">नहीं</string>
+</resources>
