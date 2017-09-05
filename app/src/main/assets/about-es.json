@@ -1,0 +1,56 @@
+[
+  {
+    "title": "Desarrollador principal",
+    "desc": "Sean",
+    "url": "https://www.sean.taipei/"
+  },
+  {
+    "title": "Traductores",
+    "desc": "",
+    "header": true
+  },
+  {
+    "title": "Español 🇪🇸",
+    "desc": "Chaky El Pipe",
+    "url": "http://telegra.ph/Biografía-Chaky-El-Pipe-07-24"
+  },
+  {
+    "title": "Ruso 🇷🇺",
+    "desc": "Smartman_ru",
+    "url": "https://github.com/smartmanru"
+  },
+  {
+    "title": "Hindi 🇮🇳",
+    "desc": "Rishabh",
+    "url": "https://github.com/lulzx"
+  },
+  {
+    "title": "Chino 🇹🇼",
+    "desc": "Sean",
+    "url": "https://www.sean.taipei"
+  },
+  {
+    "title": "Convertirse en traductor",
+    "desc": "¡Haga que su lengua materna tenga traducción incorporada!",
+    "url": "https://git.io/l10n"
+  },
+  {
+    "header": true,
+    "title": "misc"
+  },
+  {
+    "title": "Escríbenos",
+    "desc": "Si te gusta :)",
+    "url": "https://play.google.com/store/apps/details?id=taipei.sean.telegram.botplayground"
+  },
+  {
+    "title": "Grupo Oficial",
+    "desc": "",
+    "url": "https://t.me/joinchat/Bosd10Oji66jDlxbp9dWjw"
+  },
+  {
+    "title": "Código abierto en GitHub",
+    "desc": "Sea-n/Android-TG-Bot",
+    "url": "https://git.io/TG"
+  }
+]
