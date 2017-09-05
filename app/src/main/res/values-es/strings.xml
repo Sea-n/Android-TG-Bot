@@ -13,7 +13,7 @@
     <string name="menu_join_group">Unirse al grupo</string>
     <string name="menu_github">Estrella en GitHub</string>
     <string name="menu_export">Exportar base de datos a tarjeta SD</string>
-    <string name="menu_about">About</string>
+    <string name="menu_about">Acerca de</string>
 
     <string name="title_activity_add_bot">Nuevo Bot</string>
     <string name="title_activity_bot_api">Bot API</string>
