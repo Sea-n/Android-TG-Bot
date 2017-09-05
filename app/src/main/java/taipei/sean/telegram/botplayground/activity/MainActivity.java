@@ -378,6 +378,10 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_export:
                         exportDB();
                         break;
+                    case R.id.nav_about:
+                        Intent aboutIntent = new Intent(MainActivity.this, AboutActivity.class);
+                        startActivity(aboutIntent);
+                        break;
                     default:
                         Log.w("nav", "press unknown item " + id);
                         break;

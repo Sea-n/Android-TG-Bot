@@ -13,6 +13,7 @@
     <string name="menu_join_group">Join Group</string>
     <string name="menu_github">Star on GitHub</string>
     <string name="menu_export">Export Database to SD Card</string>
+    <string name="menu_about">About</string>
 
     <string name="title_activity_add_bot">New Bot</string>
     <string name="title_activity_bot_api">Bot API</string>
@@ -20,6 +21,7 @@
     <string name="title_activity_madeline_api">Madeline API</string>
     <string name="title_activity_favorite">Favorites</string>
     <string name="title_activity_add_favorite">Add Favorite</string>
+    <string name="title_activity_about">About</string>
 
     <string name="no_bot_placeholder">No Bot yet, please click + to add one.</string>
     <string name="not_normal_bot">Please use Normal Bot Token</string>

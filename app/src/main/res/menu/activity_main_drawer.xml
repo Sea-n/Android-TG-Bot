@@ -49,6 +49,11 @@
                 android:icon="@drawable/ic_archive_black_24dp"
                 android:title="@string/menu_export" />
             <item
+                android:id="@+id/nav_about"
+                android:visible="true"
+                android:icon="@drawable/ic_info_outline_black_24dp"
+                android:title="@string/menu_about" />
+            <item
                 android:id="@+id/footer_spacer"
                 android:checkable="false"
                 android:enabled="false"
