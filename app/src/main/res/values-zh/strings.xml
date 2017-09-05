@@ -21,7 +21,7 @@
     <string name="title_activity_madeline_api">Madeline API</string>
     <string name="title_activity_favorite">我的最愛</string>
     <string name="title_activity_add_favorite">新增最愛</string>
-    <string name="title_activity_about">About</string>
+    <string name="title_activity_about">About This App</string>
 
     <string name="no_bot_placeholder">還沒有現成 Bot，請點右下角 + 以加入 Bot</string>
     <string name="not_normal_bot">請使用普通 Bot Token</string>
