@@ -1,0 +1,55 @@
+[
+  {
+    "title": "主要開發者",
+    "desc": "Sean",
+    "url": "https://www.sean.taipei/"
+  },
+  {
+    "header": true,
+    "title": "翻譯者"
+  },
+  {
+    "title": "西班牙語 (Spanish) 🇪🇸",
+    "desc": "Chaky El Pipe",
+    "url": "http://telegra.ph/Biografía-Chaky-El-Pipe-07-24"
+  },
+  {
+    "title": "俄文 (Russian) 🇷🇺",
+    "desc": "Smartman_ru",
+    "url": "https://github.com/smartmanru"
+  },
+  {
+    "title": "印度語 (Hindi) 🇮🇳",
+    "desc": "Rishabh",
+    "url": "https://github.com/lulzx"
+  },
+  {
+    "title": "中文 (Chinese) 🇹🇼",
+    "desc": "Sean",
+    "url": "https://www.sean.taipei"
+  },
+  {
+    "title": "成為翻譯者",
+    "desc": "改善翻譯，讓您的獲得更舒適的使用體驗",
+    "url": "https://git.io/l10n"
+  },
+  {
+    "header": true,
+    "title": "其它"
+  },
+  {
+    "title": "評分",
+    "desc": "支持個台灣人，拜託給個五星 m(_ _)m",
+    "url": "https://play.google.com/store/apps/details?id=taipei.sean.telegram.botplayground"
+  },
+  {
+    "title": "官方聊天群",
+    "desc": "盡量用英文喔 :D",
+    "url": "https://t.me/joinchat/Bosd10Oji66jDlxbp9dWjw"
+  },
+  {
+    "title": "Open Source on GitHub",
+    "desc": "Sea-n/Android-TG-Bot",
+    "url": "https://git.io/TG"
+  }
+]
