@@ -21,7 +21,7 @@
     <string name="title_activity_madeline_api">Madeline API</string>
     <string name="title_activity_favorite">Favoritos</string>
     <string name="title_activity_add_favorite">Agregar favorito</string>
-    <string name="title_activity_about">About</string>
+    <string name="title_activity_about">Acerca de</string>
 
     <string name="no_bot_placeholder">No hay BOT, haz clic en + para añadir uno.</string>
     <string name="not_normal_bot">Por favor, utilice Botón de Bot Normal</string>
