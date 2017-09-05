@@ -1,37 +1,37 @@
 [
   {
-    "title": "Main developer",
+    "title": "Desarrollador principal",
     "desc": "Sean",
     "url": "https://www.sean.taipei/"
   },
   {
-    "title": "Translators",
+    "title": "Traductores",
     "desc": "",
     "header": true
   },
   {
-    "title": "Spanish🇪🇸",
+    "title": "Español 🇪🇸",
     "desc": "Chaky El Pipe",
     "url": "http://telegra.ph/Biografía-Chaky-El-Pipe-07-24"
   },
   {
-    "title": "Russian🇷🇺",
+    "title": "Ruso 🇷🇺",
     "desc": "Smartman_ru",
     "url": "https://github.com/smartmanru"
   },
   {
-    "title": "Hindi🇮🇳",
+    "title": "Hindi 🇮🇳",
     "desc": "Rishabh",
     "url": "https://github.com/lulzx"
   },
   {
-    "title": "Chinese🇹🇼",
+    "title": "Chino 🇹🇼",
     "desc": "Sean",
     "url": "https://www.sean.taipei"
   },
   {
-    "title": "Become Translator",
-    "desc": "Make your native language have built-in translate!",
+    "title": "Convertirse en traductor",
+    "desc": "¡Haga que su lengua materna tenga traducción incorporada!",
     "url": "https://git.io/l10n"
   },
   {
@@ -39,17 +39,17 @@
     "title": "misc"
   },
   {
-    "title": "Rate us",
-    "desc": "If you like it :)",
+    "title": "Escríbenos",
+    "desc": "Si te gusta :)",
     "url": "https://play.google.com/store/apps/details?id=taipei.sean.telegram.botplayground"
   },
   {
-    "title": "Official Chat Room",
+    "title": "Grupo Oficial",
     "desc": "",
     "url": "https://t.me/joinchat/Bosd10Oji66jDlxbp9dWjw"
   },
   {
-    "title": "Open Source on GitHub",
+    "title": "Código abierto en GitHub",
     "desc": "Sea-n/Android-TG-Bot",
     "url": "https://git.io/TG"
   }
