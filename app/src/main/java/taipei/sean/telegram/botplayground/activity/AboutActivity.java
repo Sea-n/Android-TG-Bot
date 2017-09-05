@@ -23,10 +23,11 @@ public class AboutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
 
+        final String lang = getString(R.string.lang_code);
         JSONArray json;
 
         try {
-            InputStream is = getAssets().open("about.json");
+            InputStream is = getAssets().open("about-" + lang + ".json");
 
             int size = is.available();
             byte[] buffer = new byte[size];
@@ -40,12 +41,38 @@ public class AboutActivity extends AppCompatActivity {
             try {
                 json = new JSONArray(jsonStr);
             } catch (JSONException e) {
-                Log.e("about", "parse", e);
-                return;
+                Log.e("about", "parse locale", e);
+                json = null;
             }
         } catch (IOException e) {
-            Log.e("about", "get", e);
-            return;
+            Log.e("about", "get locale", e);
+            json = null;
+        }
+
+        if (null == json) {
+            try {
+                InputStream is = getAssets().open("about.json");
+
+                int size = is.available();
+                byte[] buffer = new byte[size];
+
+                if (is.read(buffer) < 0)
+                    return;
+
+                is.close();
+                String jsonStr = new String(buffer, "UTF-8");
+
+                try {
+                    json = new JSONArray(jsonStr);
+                } catch (JSONException e) {
+                    Log.e("about", "parse", e);
+                    return;
+                }
+            } catch (IOException e) {
+                Log.e("about", "get", e);
+                return;
+            }
+
         }
 
 
