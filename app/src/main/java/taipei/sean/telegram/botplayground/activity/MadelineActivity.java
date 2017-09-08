@@ -198,8 +198,14 @@ public class MadelineActivity extends AppCompatActivity {
         }
 
         final ApiCallerAdapter paramAdapter = (ApiCallerAdapter) paramList.getAdapter();
+
+        if (null == paramAdapter) {
+            _api.callApi("madeline", resultView, jsonObject);
+            return;
+        }
+
         final int paramHeight = paramList.getHeight();
-        if (null == paramAdapter || paramHeight == 0) {
+        if (paramHeight == 0) {
             _api.callApi("madeline", resultView, jsonObject);
             return;
         }

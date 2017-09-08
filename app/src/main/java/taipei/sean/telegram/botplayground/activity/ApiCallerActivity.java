@@ -2,7 +2,6 @@ package taipei.sean.telegram.botplayground.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -198,6 +197,17 @@ public class ApiCallerActivity extends AppCompatActivity {
         JSONObject jsonObject = new JSONObject();
 
         final ApiCallerAdapter paramAdapter = (ApiCallerAdapter) paramList.getAdapter();
+
+        if (null == paramAdapter) {
+            _api.callApi(method, resultView, null);
+            return;
+        }
+
+        final int paramHeight = paramList.getHeight();
+        if (paramHeight == 0) {
+            _api.callApi(method, resultView, null);
+            return;
+        }
 
         final int inputCount = paramAdapter.getItemCount();
         for (int i=0; i<inputCount; i++) {

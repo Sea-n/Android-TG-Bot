@@ -2,6 +2,7 @@ package taipei.sean.telegram.botplayground;
 
 import android.content.Context;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -49,7 +50,10 @@ public class PWRTelegramAPI {
         _apiBaseUrl = apiBaseUrl;
     }
 
-    public void callApi(final String method, final TextView resultView, final JSONObject params) {
+    public void callApi(final String method, final TextView resultView, @Nullable JSONObject params) {
+        if (null == params)
+            params = new JSONObject();
+
         Log.d("papi", method + params);
 
         String json = params.toString();
@@ -63,6 +67,7 @@ public class PWRTelegramAPI {
 
         final String url = _apiBaseUrl + "/" + method;
 
+        final JSONObject finalParams = params;
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -73,10 +78,10 @@ public class PWRTelegramAPI {
 
                     String postData = "";
                     try {
-                        Iterator<String> temp = params.keys();
+                        Iterator<String> temp = finalParams.keys();
                         while (temp.hasNext()) {
                             String key = temp.next();
-                            String value = params.get(key).toString();
+                            String value = finalParams.get(key).toString();
                             postData += key + "=" + value + "&";
                         }
                     } catch (JSONException e) {

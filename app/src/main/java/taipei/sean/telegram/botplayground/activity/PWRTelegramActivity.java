@@ -235,10 +235,17 @@ public class PWRTelegramActivity extends AppCompatActivity {
 
         JSONObject jsonObject = new JSONObject();
 
+
         final ApiCallerAdapter paramAdapter = (ApiCallerAdapter) paramList.getAdapter();
+
+        if (null == paramAdapter) {
+            _api.callApi(method, resultView, null);
+            return;
+        }
+
         final int paramHeight = paramList.getHeight();
-        if (null == paramAdapter || paramHeight == 0) {
-            _api.callApi(method, resultView, jsonObject);
+        if (paramHeight == 0) {
+            _api.callApi(method, resultView, null);
             return;
         }
 

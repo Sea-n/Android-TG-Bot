@@ -33,7 +33,10 @@ public class TelegramAPI {
         _apiBaseUrl = "https://api.telegram.org/bot" + token;
     }
 
-    public void callApi(final String method, final TextView resultView, JSONObject j) {
+    public void callApi(final String method, final TextView resultView, @Nullable JSONObject j) {
+        if (null == j)
+            j = new JSONObject();
+
         final String json = j.toString();
 
         Log.d("api", method + json);
