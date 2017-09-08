@@ -9,9 +9,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -24,7 +22,7 @@ public class AddBotActivity extends AppCompatActivity {
     final private int _dbVer = 4;
     private TextInputEditText tokenView;
     private TextInputEditText nameView;
-    private Spinner typeView;
+//    private Spinner typeView;
     private SeanDBHelper db;
     private long _id = -1;
 
@@ -40,12 +38,14 @@ public class AddBotActivity extends AppCompatActivity {
 
         tokenView = (TextInputEditText) findViewById(R.id.add_bot_token);
         nameView = (TextInputEditText) findViewById(R.id.add_bot_name);
-        typeView = (Spinner) findViewById(R.id.add_bot_type);
+//        typeView = (Spinner) findViewById(R.id.add_bot_type);
 
+        /*
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.token_type_list, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         typeView.setAdapter(adapter);
+        */
 
         Bundle bundle = getIntent().getExtras();
         if ((bundle != null) && bundle.containsKey("id")) {
@@ -73,7 +73,7 @@ public class AddBotActivity extends AppCompatActivity {
     private void restoreData() {
         BotStructure bot = db.getBot(_id);
         Log.d("add", "bot"+bot);
-        typeView.setSelection(bot.type);
+//        typeView.setSelection(bot.type);
         nameView.setText(bot.name);
         tokenView.setText(bot.token);
     }
@@ -83,7 +83,8 @@ public class AddBotActivity extends AppCompatActivity {
         // Store values at the time of the login attempt.
         String token = tokenView.getText().toString();
         String name = nameView.getText().toString();
-        int type = typeView.getSelectedItemPosition();
+//        int type = typeView.getSelectedItemPosition();
+        int type = 0;
 
         boolean cancel = false;
         View focusView = null;

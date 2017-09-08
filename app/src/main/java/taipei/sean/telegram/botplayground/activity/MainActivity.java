@@ -325,6 +325,7 @@ public class MainActivity extends AppCompatActivity {
                         mIntent.putExtra("token", currentBot.token);
                         startActivity(mIntent);
                         break;
+                    /*
                     case R.id.nav_pwrtelegram:
                         if (null == currentBot) {
                             Log.w("nav", "no bots");
@@ -338,6 +339,7 @@ public class MainActivity extends AppCompatActivity {
                         pIntent.putExtra("type", currentBot.type);
                         startActivity(pIntent);
                         break;
+                    */
                     case R.id.nav_file_dl:
                         if (null == currentBot) {
                             Log.w("nav", "no bots");

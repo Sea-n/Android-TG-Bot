@@ -109,6 +109,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="taipei.sean.telegram.botplayground.activity.MainActivity" />
         </activity>
+
+        <!--
         <activity
             android:name=".activity.PWRTelegramActivity"
             android:label="@string/title_activity_pwrtelegram_api"
@@ -147,6 +149,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="taipei.sean.telegram.botplayground.activity.PWRTelegramActivity" />
         </activity>
+        -->
 
         <provider
             android:name=".GenericFileProvider"
