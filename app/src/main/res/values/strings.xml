@@ -81,7 +81,7 @@
     <string name="bot_token_regex" translatable="false">[0-9]{5,10}:[A-Za-z0-9_-]*</string>
     <string name="nav_header_default_subtitle" translatable="false">12345:AAJqs_w-4</string>
     <string name="github_url" translatable="false">https://github.com/Sea-n/Android-TG-Bot</string>
-    <string name="telegram_group_join_link" translatable="false">https://t.me/joinchat/Bosd10Oji66jDlxbp9dWjw</string>
+    <string name="telegram_group_join_link" translatable="false">https://t.me/AwesomeTeleBot</string>
 
     <string-array name="token_type_list">
         <item>@string/token_type_normal</item>

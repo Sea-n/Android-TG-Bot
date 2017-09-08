@@ -23,5 +23,5 @@ If you would like to translate this app to your native language, please read [th
 + Google Play: [taipei.sean.telegram.botplayground](https://play.google.com/store/apps/details?id=taipei.sean.telegram.botplayground)
   + Beta Testing Program is [available](https://play.google.com/apps/testing/taipei.sean.telegram.botplayground)!
   + Remember to Rate before join Beta Program :smiley:
-+ Telegram [Group](https://t.me/joinchat/Bosd10Oji66jDlxbp9dWjw)
++ Telegram [Group](https://t.me/AwesomeTeleBot)
 + Bot API Tutorial: [從零開始的 Telegram Bot](https://blog.sean.taipei/2017/05/telegram-bot) (Chinese)
