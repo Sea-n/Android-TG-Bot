@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "164697939255",
+    "firebase_url": "https://awesome-telegram-bot.firebaseio.com",
+    "project_id": "awesome-telegram-bot",
+    "storage_bucket": "awesome-telegram-bot.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:164697939255:android:6633b9a34849953e",
+        "android_client_info": {
+          "package_name": "taipei.sean.telegram.botplayground.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "164697939255-2rot6kd2jq1osbic541ruu1rlg3bkn89.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPRiF7Ku4N3bIhsxduxJ1JaO0MLfrf1Qc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
