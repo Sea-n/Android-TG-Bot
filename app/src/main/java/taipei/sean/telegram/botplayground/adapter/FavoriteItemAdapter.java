@@ -9,8 +9,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import taipei.sean.telegram.botplayground.activity.AddFavoriteActivity;
 import taipei.sean.telegram.botplayground.FavStructure;
+import taipei.sean.telegram.botplayground.activity.AddFavoriteActivity;
 
 public class FavoriteItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ArrayList<FavStructure> iList;

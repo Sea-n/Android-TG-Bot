@@ -121,7 +121,7 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         List<FavStructure> favs = db.getFavs(name);
         ArrayList<String> favList = new ArrayList<>();
-        for (int i=0; i<favs.size(); i++)
+        for (int i = 0; i < favs.size(); i++)
             favList.add(favs.get(i).value);
         SeanAdapter<String> favAdapter = new SeanAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, favList);
         autoCompleteTextView.setAdapter(favAdapter);
@@ -136,10 +136,12 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         autoCompleteTextView.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
             @Override
             public void afterTextChanged(Editable editable) {
@@ -155,13 +157,6 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public int getItemCount() {
         return iList.size();
-    }
-
-
-    private class DummyViewHolder extends RecyclerView.ViewHolder {
-        public DummyViewHolder(View itemView) {
-            super(itemView);
-        }
     }
 
     public void fitView(RecyclerView recyclerView) {
@@ -185,5 +180,11 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     public View getViewByPos(int pos) {
         return iListView.get(pos);
+    }
+
+    private class DummyViewHolder extends RecyclerView.ViewHolder {
+        public DummyViewHolder(View itemView) {
+            super(itemView);
+        }
     }
 }

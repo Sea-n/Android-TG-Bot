@@ -69,20 +69,20 @@ public class FavoriteActivity extends AppCompatActivity {
 
         ArrayMap<String, FavoriteItemAdapter> favAdas = new ArrayMap<>();
         List<FavStructure> favs = db.getFavs(null);
-        for (FavStructure fav: favs) {
+        for (FavStructure fav : favs) {
             String kind = fav.kind;
             if (favAdas.containsKey(kind)) {
                 FavoriteItemAdapter favAda = favAdas.get(kind);
                 favAda.addData(fav);
             } else {
-                FavoriteItemAdapter favAda = new FavoriteItemAdapter(screenWidth - paddingWidth*2);
+                FavoriteItemAdapter favAda = new FavoriteItemAdapter(screenWidth - paddingWidth * 2);
                 favAda.addData(fav);
                 favAdas.put(kind, favAda);
             }
         }
 
         FavoriteListAdapter favListAda = new FavoriteListAdapter();
-        for (int i=0; i<favAdas.size(); i++) {
+        for (int i = 0; i < favAdas.size(); i++) {
             String name = favAdas.keyAt(i);
             FavoriteItemAdapter favAda = favAdas.get(name);
             favListAda.addData(name, favAda);

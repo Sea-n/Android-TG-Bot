@@ -84,7 +84,7 @@ public class AboutActivity extends AppCompatActivity {
 
 
         try {
-            for (int index=0; index<json.length(); index++) {
+            for (int index = 0; index < json.length(); index++) {
                 JSONObject value = json.getJSONObject(index);
                 adapter.addData(value);
             }

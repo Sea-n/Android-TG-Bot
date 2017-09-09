@@ -77,10 +77,10 @@ public class SeanDBHelper extends SQLiteOpenHelper {
                 }
             case 3:
                 try {
-                db.execSQL("CREATE TABLE IF NOT EXISTS main.params " +
-                        "(_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-                        "kind TEXT NOT NULL, " +
-                        "value TEXT)");
+                    db.execSQL("CREATE TABLE IF NOT EXISTS main.params " +
+                            "(_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                            "kind TEXT NOT NULL, " +
+                            "value TEXT)");
                 } catch (SQLiteException e) {
                     Log.e("db", "onUpgrade", e);
                 }
@@ -142,13 +142,13 @@ public class SeanDBHelper extends SQLiteOpenHelper {
     public List<FavStructure> getFavs(@Nullable String kind) {
         SQLiteDatabase db = getWritableDatabase();
 
-        List<FavStructure> result = new ArrayList<FavStructure>() {};
+        List<FavStructure> result = new ArrayList<FavStructure>() {
+        };
         Cursor cursor;
 
         if (null == kind) {
             cursor = db.rawQuery("SELECT * FROM favorites", null);
-        }
-        else {
+        } else {
             cursor = db.rawQuery("SELECT * FROM favorites WHERE kind = ?", new String[]{kind});
         }
 
@@ -171,7 +171,7 @@ public class SeanDBHelper extends SQLiteOpenHelper {
         FavStructure result = new FavStructure();
         Cursor cursor;
 
-        cursor = db.rawQuery("SELECT * FROM favorites WHERE _id = ?", new String[]{id+""});
+        cursor = db.rawQuery("SELECT * FROM favorites WHERE _id = ?", new String[]{id + ""});
         cursor.moveToNext();
 
         result._id = cursor.getLong(0);
@@ -275,7 +275,7 @@ public class SeanDBHelper extends SQLiteOpenHelper {
             getWritableDatabase().close();
             return true;
         } else {
-            Log.w("db", srcDB+" does not exists");
+            Log.w("db", srcDB + " does not exists");
         }
         return false;
     }

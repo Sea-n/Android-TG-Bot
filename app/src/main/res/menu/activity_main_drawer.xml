@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group
-        android:id="@+id/menu_api" >
+    <group android:id="@+id/menu_api">
         <item
             android:id="@+id/nav_caller"
             android:icon="@drawable/ic_call_black_24dp"
@@ -52,9 +51,9 @@
                 android:title="@string/menu_export" />
             <item
                 android:id="@+id/nav_about"
-                android:visible="true"
                 android:icon="@drawable/ic_info_outline_black_24dp"
-                android:title="@string/menu_about" />
+                android:title="@string/menu_about"
+                android:visible="true" />
             <item
                 android:id="@+id/footer_spacer"
                 android:checkable="false"

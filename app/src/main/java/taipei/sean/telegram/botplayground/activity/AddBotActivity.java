@@ -22,7 +22,7 @@ public class AddBotActivity extends AppCompatActivity {
     final private int _dbVer = 4;
     private TextInputEditText tokenView;
     private TextInputEditText nameView;
-//    private Spinner typeView;
+    //    private Spinner typeView;
     private SeanDBHelper db;
     private long _id = -1;
 
@@ -72,7 +72,7 @@ public class AddBotActivity extends AppCompatActivity {
 
     private void restoreData() {
         BotStructure bot = db.getBot(_id);
-        Log.d("add", "bot"+bot);
+        Log.d("add", "bot" + bot);
 //        typeView.setSelection(bot.type);
         nameView.setText(bot.name);
         tokenView.setText(bot.token);

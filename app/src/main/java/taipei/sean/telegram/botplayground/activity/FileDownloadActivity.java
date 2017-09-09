@@ -64,7 +64,7 @@ public class FileDownloadActivity extends AppCompatActivity {
         int permW = ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
         if (permW == PackageManager.PERMISSION_DENIED) {
             Log.w("fd", "permission WRITE_EXTERNAL_STORAGE denied");
-            ActivityCompat.requestPermissions(this, new String[] {android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
             finish();
         }
 
@@ -74,7 +74,7 @@ public class FileDownloadActivity extends AppCompatActivity {
         final List<FavStructure> favs = db.getFavs("file_id");
 
         ArrayList<String> favList = new ArrayList<>();
-        for (FavStructure fav: favs)
+        for (FavStructure fav : favs)
             favList.add(fav.value);
 
         final SeanAdapter<String> adapter = new SeanAdapter<>(this,

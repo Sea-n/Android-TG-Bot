@@ -85,7 +85,8 @@ public class PWRTelegramActivity extends AppCompatActivity {
             }
         });
 
-        final ArrayList<String> botApiMethodsList = new ArrayList<String>() {};
+        final ArrayList<String> botApiMethodsList = new ArrayList<String>() {
+        };
         apiMethods = loadMethods();
 
         if (null == apiMethods) {
@@ -99,10 +100,12 @@ public class PWRTelegramActivity extends AppCompatActivity {
 
         methodView.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
             @Override
             public void afterTextChanged(Editable editable) {
@@ -250,7 +253,7 @@ public class PWRTelegramActivity extends AppCompatActivity {
         }
 
         final int inputCount = paramAdapter.getItemCount();
-        for (int i=0; i<inputCount; i++) {
+        for (int i = 0; i < inputCount; i++) {
             TextInputLayout textInputLayout = (TextInputLayout) paramAdapter.getViewByPos(i);
             InstantComplete textInputEditText = (InstantComplete) textInputLayout.getEditText();
             if (null == textInputEditText) {

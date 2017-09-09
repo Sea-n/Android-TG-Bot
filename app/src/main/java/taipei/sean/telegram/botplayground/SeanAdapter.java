@@ -18,12 +18,12 @@ public class SeanAdapter<T> extends ArrayAdapter<T> implements Filterable {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             FilterResults filterResults = new FilterResults();
-            ArrayList<T> tempList=new ArrayList<>();
+            ArrayList<T> tempList = new ArrayList<>();
             //constraint is the result from text you want to filter against.
             //_objects is your data set you will filter from
-            if(constraint != null && _objects!=null) {
-                int length=_objects.size();
-                for (int i=0; i<length; i++) {
+            if (constraint != null && _objects != null) {
+                int length = _objects.size();
+                for (int i = 0; i < length; i++) {
                     T item = _objects.get(i);
 
                     String lowerItem = item.toString().toLowerCase(Locale.ENGLISH);

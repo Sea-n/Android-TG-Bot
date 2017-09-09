@@ -45,13 +45,13 @@ import taipei.sean.telegram.botplayground.SeanDBHelper;
 
 public class MainActivity extends AppCompatActivity {
     final private int _dbVer = 4;
+    final private int _requestCode_addBot = 1;
+    final private int _requestCode_editBot = 2;
+    final private int _requestCode_reqPerm = 4;
     private SeanDBHelper db;
     private List<BotStructure> _bots = null;
     private boolean changeAccountMenuOpen = false;
     private BotStructure currentBot = null;
-    private final int _requestCode_addBot = 1;
-    private final int _requestCode_editBot = 2;
-    private final int _requestCode_reqPerm = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
             PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
             String verName = pInfo.versionName;
             int verCode = pInfo.versionCode;
-            footerStr = getString(R.string.nav_footer, appName, verName, verCode+"");
+            footerStr = getString(R.string.nav_footer, appName, verName, verCode + "");
         } catch (PackageManager.NameNotFoundException e) {
             Log.e("main", "Name Not Found", e);
             if (Objects.equals(footerStr, "")) {
@@ -147,8 +147,7 @@ public class MainActivity extends AppCompatActivity {
                 new AlertDialog.Builder(context)
                         .setTitle(R.string.footer_rate_title)
                         .setMessage(R.string.footer_rate_msg)
-                        .setPositiveButton(R.string.footer_rate_yes, new DialogInterface.OnClickListener()
-                        {
+                        .setPositiveButton(R.string.footer_rate_yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 final String packName = context.getPackageName();
@@ -254,8 +253,7 @@ public class MainActivity extends AppCompatActivity {
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setTitle(R.string.del_bot_confirm_title)
                 .setMessage(R.string.del_bot_confirm_msg)
-                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener()
-                {
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         db.deleteBot(id);
@@ -280,8 +278,7 @@ public class MainActivity extends AppCompatActivity {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.ask_add_bot_title)
                 .setMessage(R.string.ask_add_bot_msg)
-                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener()
-                {
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         addBot();
@@ -424,7 +421,7 @@ public class MainActivity extends AppCompatActivity {
         int permW = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         if (permW == PackageManager.PERMISSION_DENIED) {
             Log.w("main", "permission WRITE_EXTERNAL_STORAGE denied");
-            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, _requestCode_reqPerm);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, _requestCode_reqPerm);
             return;
         }
 
@@ -459,17 +456,17 @@ public class MainActivity extends AppCompatActivity {
                 String backupName = filename + ".db";
 
                 File backupFile = new File(backupDir, backupName);
-                Log.d("main", "db: "+backupFile);
+                Log.d("main", "db: " + backupFile);
 
                 try {
                     db.copyDatabase(oldDb, backupFile);
                 } catch (IOException e) {
                     Log.e("main", "export", e);
-                    Snackbar.make(fab, getString(R.string.db_export_fail)+e.getMessage(), Snackbar.LENGTH_LONG)
+                    Snackbar.make(fab, getString(R.string.db_export_fail) + e.getMessage(), Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                     return;
                 }
-                Snackbar.make(fab, getString(R.string.export_to)+backupFile.toString(), Snackbar.LENGTH_LONG)
+                Snackbar.make(fab, getString(R.string.export_to) + backupFile.toString(), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
