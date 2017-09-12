@@ -26,9 +26,9 @@ import okhttp3.Response;
 
 public class TelegraphAPI {
     final private int _dbVer = 4;
-    private SeanDBHelper db;
     final private String _apiBaseUrl = "https://api.telegra.ph/";
     final private Context _context;
+    private SeanDBHelper db;
 
     public TelegraphAPI(Context context) {
         this._context = context;

@@ -219,7 +219,6 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 Log.w("ada", "value char null");
                 return "";
             }
-            Log.d("aa",  valueChar.toString());
             return valueChar.toString();
         } else if (view instanceof CheckBox) {
             CheckBox checkBox = (CheckBox) view;
