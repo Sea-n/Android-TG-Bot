@@ -4,8 +4,6 @@ Issues, Pull Requests are **always welcome**
 
 ## Features
 * Have a complete list of APIs
-* Support third-party PWRTelegram API
-* Support third-party Madeline API (via PWRTelegram API)
 * Automatic completion API method
 * Automatic completion of the parameters
 * Can quickly switch between different Bot

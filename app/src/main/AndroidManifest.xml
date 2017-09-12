@@ -136,47 +136,6 @@
                 android:value="taipei.sean.telegram.botplayground.activity.MainActivity" />
         </activity>
 
-        <!--
-        <activity
-            android:name=".activity.PWRTelegramActivity"
-            android:label="@string/title_activity_pwrtelegram_api"
-            android:parentActivityName=".activity.MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="taipei.sean.telegram.botplayground.activity.MainActivity" />
-
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="api.pwrtelegram.xyz"
-                    android:scheme="http" />
-
-                <data
-                    android:host="api.pwrtelegram.xyz"
-                    android:scheme="https" />
-
-                <data
-                    android:host="deepapi.pwrtelegram.xyz"
-                    android:scheme="http" />
-
-                <data
-                    android:host="deepapi.pwrtelegram.xyz"
-                    android:scheme="https" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".activity.MadelineActivity"
-            android:label="@string/title_activity_madeline_api"
-            android:parentActivityName=".activity.PWRTelegramActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="taipei.sean.telegram.botplayground.activity.PWRTelegramActivity" />
-        </activity>
-        -->
-
         <provider
             android:name=".GenericFileProvider"
             android:authorities=".provider"

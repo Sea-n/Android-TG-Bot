@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -103,26 +102,5 @@ public class TelegramAPI {
             }
         });
         thread.start();
-    }
-
-    public boolean checkJson(EditText jsonView, @Nullable TextView resultView) {
-        try {
-            String jsonData = jsonView.getText().toString();
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            JsonParser jp = new JsonParser();
-            JsonElement je = jp.parse(jsonData);
-            String json = gson.toJson(je);
-            if (null != resultView) {
-                jsonView.setText(json);
-                resultView.setText(json);
-            }
-            return true;
-        } catch (JsonSyntaxException e) {
-            Log.e("main", "check error:", e);
-            String error = e.getLocalizedMessage();
-            if (null != resultView)
-                resultView.setText(error);
-        }
-        return false;
     }
 }

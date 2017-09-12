@@ -326,21 +326,6 @@ public class MainActivity extends AppCompatActivity {
                         Intent tIntent = new Intent(MainActivity.this, TelegraphActivity.class);
                         startActivity(tIntent);
                         break;
-                    /*
-                    case R.id.nav_pwrtelegram:
-                        if (null == currentBot) {
-                            Log.w("nav", "no bots");
-                            View fab = findViewById(R.id.main_fab);
-                            Snackbar.make(fab, R.string.no_bot_warning, Snackbar.LENGTH_LONG)
-                                    .setAction("Action", null).show();
-                            break;
-                        }
-                        Intent pIntent = new Intent(MainActivity.this, PWRTelegramActivity.class);
-                        pIntent.putExtra("token", currentBot.token);
-                        pIntent.putExtra("type", currentBot.type);
-                        startActivity(pIntent);
-                        break;
-                    */
                     case R.id.nav_file_dl:
                         if (null == currentBot) {
                             Log.w("nav", "no bots");

@@ -5,9 +5,6 @@
     <string name="lang_code">hi</string>
 
     <string name="menu_account">खाता</string>
-    <string name="menu_pwrtelegram">PWR Telegram API (अनौपचारिक)</string>
-    <string name="menu_madeline">Madeline Proto पर बदले</string>
-    <string name="pwrt_menu_info">PWRTelegram क्या है?</string>
     <string name="menu_functions">कार्य</string>
     <string name="menu_add_bot">बॉट जोड़े</string>
     <string name="menu_join_group">ग्रुप से जुड़े</string>
@@ -18,8 +15,6 @@
     <string name="title_activity_add_bot">नया बॉट</string>
     <string name="title_activity_bot_api">बॉट API</string>
     <string name="title_activity_telegraph">Telegraph</string>
-    <string name="title_activity_pwrtelegram_api">PWRTelegram API</string>
-    <string name="title_activity_madeline_api">Madeline API</string>
     <string name="title_activity_favorite">पसंदीदा</string>
     <string name="title_activity_add_favorite">पसंदीदा में शामिल करें</string>
     <string name="title_activity_about">About This App</string>
@@ -29,10 +24,6 @@
 
     <string name="add_bot_token">आपका बॉट टोकन</string>
     <string name="add_bot_name">उपनाम</string>
-    <string name="token_type">टोकन का प्रकार</string>
-    <string name="token_type_normal">सामान्य बॉट</string>
-    <string name="token_type_deep">Deep Telegram</string>
-    <string name="token_type_user">PWRTelegram User</string>
     <string name="add_bot_name_invalid">उपनाम गलत हैं, कृपया फिर से जाचे।</string>
     <string name="add_bot_token_invalid">बॉट टोकन का प्रारूप सही नहीँ हैं।</string>
 

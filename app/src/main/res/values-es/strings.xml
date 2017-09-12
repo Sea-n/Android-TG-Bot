@@ -5,9 +5,6 @@
     <string name="lang_code">es</string>
 
     <string name="menu_account">Cuentas</string>
-    <string name="menu_pwrtelegram">PWRTelegram API (no oficial)</string>
-    <string name="menu_madeline">Cambiar a Madeline Proto</string>
-    <string name="pwrt_menu_info">¿Qué es PWRTelegram?</string>
     <string name="menu_functions">Funciones</string>
     <string name="menu_add_bot">Añadir Bot</string>
     <string name="menu_join_group">Unirse al grupo</string>
@@ -18,8 +15,6 @@
     <string name="title_activity_add_bot">Nuevo Bot</string>
     <string name="title_activity_bot_api">Bot API</string>
     <string name="title_activity_telegraph">Telegraph</string>
-    <string name="title_activity_pwrtelegram_api">PWRTelegram API</string>
-    <string name="title_activity_madeline_api">Madeline API</string>
     <string name="title_activity_favorite">Favoritos</string>
     <string name="title_activity_add_favorite">Agregar favorito</string>
     <string name="title_activity_about">Acerca de esta aplicación</string>
@@ -29,10 +24,6 @@
 
     <string name="add_bot_token">El token de tu Bot</string>
     <string name="add_bot_name">Apodo</string>
-    <string name="token_type">Tipo de token</string>
-    <string name="token_type_normal">Normal Bot</string>
-    <string name="token_type_deep">Deep Telegram</string>
-    <string name="token_type_user">Usuario PWRTelegram</string>
     <string name="add_bot_name_invalid">Apodo inválido, vuelva a comprobarlo.</string>
     <string name="add_bot_token_invalid">Formato de token no válido</string>
 

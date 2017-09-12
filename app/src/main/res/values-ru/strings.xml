@@ -5,9 +5,6 @@
     <string name="lang_code">ru</string>
 
     <string name="menu_account">Аккаунты</string>
-    <string name="menu_pwrtelegram">PWRTelegram API (unofficial)</string>
-    <string name="menu_madeline">Переключиться на Madeline Proto</string>
-    <string name="pwrt_menu_info">Что такое PWRTelegram?</string>
     <string name="menu_functions">Функции</string>
     <string name="menu_add_bot">Добавить Бота</string>
     <string name="menu_join_group">Вступить В Группу</string>
@@ -18,8 +15,6 @@
     <string name="title_activity_add_bot">Новый Бот</string>
     <string name="title_activity_bot_api">Bot API</string>
     <string name="title_activity_telegraph">Telegraph</string>
-    <string name="title_activity_pwrtelegram_api">PWRTelegram API</string>
-    <string name="title_activity_madeline_api">Madeline API</string>
     <string name="title_activity_favorite">Избранное</string>
     <string name="title_activity_add_favorite">Добавить В Избранное</string>
     <string name="title_activity_about">About This App</string>
@@ -29,10 +24,6 @@
 
     <string name="add_bot_token">Ваш токен</string>
     <string name="add_bot_name">Ник</string>
-    <string name="token_type">Тип токена</string>
-    <string name="token_type_normal">Обычный бот</string>
-    <string name="token_type_deep">Deep Telegram</string>
-    <string name="token_type_user">PWRTelegram User</string>
     <string name="add_bot_name_invalid">Ник неверный, пожалуйста, проверьте еще раз.</string>
     <string name="add_bot_token_invalid">Неверный формат токена</string>
 
