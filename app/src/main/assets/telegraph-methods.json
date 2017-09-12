@@ -108,7 +108,7 @@
         "description": "Content of the page. "
       },
       "return_content": {
-        "type": "Boolean, default = false",
+        "type": "Boolean",
         "description": "If true, a content field will be returned in the Page object (see: Content format)."
       }
     }
@@ -151,7 +151,7 @@
         "description": "Profile link, opened when users click on the author's name below the title. Can be any link, not necessarily to a Telegram profile or channel."
       },
       "return_content": {
-        "type": "Boolean, default = false",
+        "type": "Boolean",
         "description": "If true, a content field will be returned in the Page object."
       }
     }
@@ -165,7 +165,7 @@
         "description": "Path to the Telegraph page (in the format Title-12-31, i.e. everything that comes after http://telegra.ph/)."
       },
       "return_content": {
-        "type": "Boolean, default = false",
+        "type": "Boolean",
         "description": "If true, content field will be returned in Page object."
       }
     }
@@ -179,11 +179,14 @@
         "description": "Access token of the Telegraph account."
       },
       "offset": {
-        "type": "Integer, default = 0",
+        "type": "Integer",
         "description": "Sequential number of the first page to be returned."
       },
       "limit": {
-        "type": "Integer, 0-200, default = 50",
+        "type": "Integer",
+        "min": 0,
+        "max": 200,
+        "default": 50,
         "description": "Limits the number of pages to be retrieved."
       }
     }
@@ -197,19 +200,27 @@
         "description": "Path to the Telegraph page (in the format Title-12-31, where 12 is the month and 31 the day the article was first published)."
       },
       "year": {
-        "type": "Integer, 2000-2100",
+        "type": "Integer",
+        "min": 2000,
+        "max": 2100,
         "description": "Required if month is passed. If passed, the number of page views for the requested year will be returned."
       },
       "month": {
-        "type": "Integer, 1-12",
+        "type": "Integer",
+        "min": 1,
+        "max": 12,
         "description": "Required if day is passed. If passed, the number of page views for the requested month will be returned."
       },
       "day": {
-        "type": "Integer, 1-31",
+        "type": "Integer",
+        "min": 1,
+        "max": 31,
         "description": "Required if hour is passed. If passed, the number of page views for the requested day will be returned."
       },
       "hour": {
-        "type": "Integer, 0-24",
+        "type": "Integer",
+        "min": 0,
+        "max": 24,
         "description": "If passed, the number of page views for the requested hour will be returned."
       }
     }
