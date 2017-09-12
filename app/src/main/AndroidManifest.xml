@@ -88,6 +88,29 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".activity.TelegraphActivity"
+            android:label="@string/title_activity_telegraph"
+            android:parentActivityName=".activity.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="taipei.sean.telegram.botplayground.activity.MainActivity" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="api.telegra.ph"
+                    android:scheme="http" />
+
+                <data
+                    android:host="api.telegra.ph"
+                    android:scheme="https" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".activity.FavoriteActivity"
             android:label="@string/title_activity_favorite"
             android:parentActivityName=".activity.MainActivity"

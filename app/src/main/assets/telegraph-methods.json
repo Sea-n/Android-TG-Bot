@@ -1,0 +1,217 @@
+{
+  "createAccount": {
+    "description": "Use this method to create a new Telegraph account. Most users only need one account, but this can be useful for channel administrators who would like to keep individual author names and profile links for each of their channels. On success, returns an Account object with the regular fields and an additional access_token field.",
+    "params": {
+      "short_name": {
+        "type": "String",
+        "minChar": 1,
+        "maxChar": 32,
+        "required": true,
+        "description": "Account name, helps users with several accounts remember which they are currently using. Displayed to the user above the 'Edit/Publish' button on Telegra.ph, other users don't see this name."
+      },
+      "author_name": {
+        "type": "String",
+        "minChar": 0,
+        "maxChar": 128,
+        "description": "Default author name used when creating new articles."
+      },
+      "author_url": {
+        "type": "String",
+        "minChar": 0,
+        "maxChar": 512,
+        "description": "Default profile link, opened when users click on the author's name below the title. Can be any link, not necessarily to a Telegram profile or channel."
+      }
+    }
+  },
+  "editAccountInfo": {
+    "description": "Use this method to update information about a Telegraph account. Pass only the parameters that you want to edit. On success, returns an Account object with the default fields.",
+    "params": {
+      "access_token": {
+        "type": "String",
+        "required": true,
+        "description": "Access token of the Telegraph account."
+      },
+      "short_name": {
+        "type": "String",
+        "minChar": 1,
+        "maxChar": 32,
+        "description": "New account name."
+      },
+      "author_name": {
+        "type": "String",
+        "minChar": 0,
+        "maxChar": 128,
+        "description": "New default author name used when creating new articles."
+      },
+      "author_url": {
+        "type": "String",
+        "minChar": 0,
+        "maxChar": 512,
+        "description": "New default profile link, opened when users click on the author's name below the title. Can be any link, not necessarily to a Telegram profile or channel."
+      }
+    }
+  },
+  "getAccountInfo": {
+    "description": "Use this method to get information about a Telegraph account. Returns an Account object on success.",
+    "params": {
+      "access_token": {
+        "type": "String",
+        "required": true,
+        "description": "Access token of the Telegraph account."
+      },
+      "fields": {
+        "type": "Array of String, default = [“short_name”,“author_name”,“author_url”]",
+        "description": "List of account fields to return. Available fields: short_name, author_name, author_url, auth_url, page_count."
+      }
+    }
+  },
+  "revokeAccessToken": {
+    "description": "Use this method to revoke access_token and generate a new one, for example, if the user would like to reset all connected sessions, or you have reasons to believe the token was compromised. On success, returns an Account object with new access_token and auth_url fields.",
+    "params": {
+      "access_token": {
+        "type": "String",
+        "required": true,
+        "description": "Access token of the Telegraph account."
+      }
+    }
+  },
+  "createPage": {
+    "description": "Use this method to create a new Telegraph page. On success, returns a Page object.",
+    "params": {
+      "access_token": {
+        "type": "String",
+        "required": true,
+        "description": "Access token of the Telegraph account."
+      },
+      "title": {
+        "type": "String",
+        "minChar": 1,
+        "maxChar": 256,
+        "required": true,
+        "description": "Page title."
+      },
+      "author_name": {
+        "type": "String",
+        "minChar": 0,
+        "maxChar": 128,
+        "description": "Author name, displayed below the article's title."
+      },
+      "author_url": {
+        "type": "String",
+        "minChar": 0,
+        "maxChar": 512,
+        "description": "Profile link, opened when users click on the author's name below the title. Can be any link, not necessarily to a Telegram profile or channel."
+      },
+      "content": {
+        "type": "Array of Node, up to 64 KB",
+        "required": true,
+        "description": "Content of the page. "
+      },
+      "return_content": {
+        "type": "Boolean, default = false",
+        "description": "If true, a content field will be returned in the Page object (see: Content format)."
+      }
+    }
+  },
+  "editPage": {
+    "description": "Use this method to edit an existing Telegraph page. On success, returns a Page object.",
+    "params": {
+      "access_token": {
+        "type": "String",
+        "required": true,
+        "description": "Access token of the Telegraph account."
+      },
+      "path": {
+        "type": "String",
+        "required": true,
+        "description": "Path to the page."
+      },
+      "title": {
+        "type": "String",
+        "minChar": 1,
+        "maxChar": 256,
+        "required": true,
+        "description": "Page title."
+      },
+      "content": {
+        "type": "Array of Node, up to 64 KB",
+        "required": true,
+        "description": "Content of the page."
+      },
+      "author_name": {
+        "type": "String",
+        "minChar": 0,
+        "maxChar": 128,
+        "description": "Author name, displayed below the article's title."
+      },
+      "author_url": {
+        "type": "String",
+        "minChar": 0,
+        "maxChar": 512,
+        "description": "Profile link, opened when users click on the author's name below the title. Can be any link, not necessarily to a Telegram profile or channel."
+      },
+      "return_content": {
+        "type": "Boolean, default = false",
+        "description": "If true, a content field will be returned in the Page object."
+      }
+    }
+  },
+  "getPage": {
+    "description": "Use this method to get a Telegraph page. Returns a Page object on success.",
+    "params": {
+      "path": {
+        "type": "String",
+        "required": true,
+        "description": "Path to the Telegraph page (in the format Title-12-31, i.e. everything that comes after http://telegra.ph/)."
+      },
+      "return_content": {
+        "type": "Boolean, default = false",
+        "description": "If true, content field will be returned in Page object."
+      }
+    }
+  },
+  "getPageList": {
+    "description": "Use this method to get a list of pages belonging to a Telegraph account. Returns a PageList object, sorted by most recently created pages first.",
+    "params": {
+      "access_token": {
+        "type": "String",
+        "required": true,
+        "description": "Access token of the Telegraph account."
+      },
+      "offset": {
+        "type": "Integer, default = 0",
+        "description": "Sequential number of the first page to be returned."
+      },
+      "limit": {
+        "type": "Integer, 0-200, default = 50",
+        "description": "Limits the number of pages to be retrieved."
+      }
+    }
+  },
+  "getViews": {
+    "description": "Use this method to get the number of views for a Telegraph article. Returns a PageViews object on success. By default, the total number of page views will be returned.",
+    "params": {
+      "path": {
+        "type": "String",
+        "required": true,
+        "description": "Path to the Telegraph page (in the format Title-12-31, where 12 is the month and 31 the day the article was first published)."
+      },
+      "year": {
+        "type": "Integer, 2000-2100",
+        "description": "Required if month is passed. If passed, the number of page views for the requested year will be returned."
+      },
+      "month": {
+        "type": "Integer, 1-12",
+        "description": "Required if day is passed. If passed, the number of page views for the requested month will be returned."
+      },
+      "day": {
+        "type": "Integer, 1-31",
+        "description": "Required if hour is passed. If passed, the number of page views for the requested day will be returned."
+      },
+      "hour": {
+        "type": "Integer, 0-24",
+        "description": "If passed, the number of page views for the requested hour will be returned."
+      }
+    }
+  }
+}

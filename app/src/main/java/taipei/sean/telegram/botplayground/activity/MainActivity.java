@@ -322,6 +322,10 @@ public class MainActivity extends AppCompatActivity {
                         mIntent.putExtra("token", currentBot.token);
                         startActivity(mIntent);
                         break;
+                    case R.id.nav_telegraph:
+                        Intent tIntent = new Intent(MainActivity.this, TelegraphActivity.class);
+                        startActivity(tIntent);
+                        break;
                     /*
                     case R.id.nav_pwrtelegram:
                         if (null == currentBot) {
