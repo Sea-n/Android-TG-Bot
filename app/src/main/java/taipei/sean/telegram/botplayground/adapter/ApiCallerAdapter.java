@@ -5,6 +5,7 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -27,10 +28,8 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     final private Context context;
     final private int _dbVer = 4;
     private SeanDBHelper db;
-    private ArrayList<String> iList;
-    private ArrayList<String> iListType;
-    private ArrayList<Boolean> iListReq;
-    private ArrayList<String> iListDesc;
+    private ArrayList<JSONObject> iList;
+    private ArrayList<String> iListName;
     private ArrayList<View> iListView;
 
     public ApiCallerAdapter(Context context) {
@@ -39,32 +38,13 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         db = new SeanDBHelper(context, "data.db", null, _dbVer);
 
         iList = new ArrayList<>();
-        iListType = new ArrayList<>();
-        iListDesc = new ArrayList<>();
-        iListReq = new ArrayList<>();
         iListView = new ArrayList<>();
+        iListName = new ArrayList<>();
     }
 
     public void addData(String name, JSONObject data) {
-        try {
-            String type = "String";
-            Boolean required = false;
-            String desc = "";
-            if (data.has("type"))
-                type = data.getString("type");
-            if (data.has("required"))
-                required = data.getBoolean("required");
-            if (data.has("description"))
-                desc = data.getString("description");
-
-            iList.add(name);
-            iListType.add(type);
-            iListReq.add(required);
-            iListDesc.add(desc);
-            Log.d("ada", "add " + name);
-        } catch (JSONException e) {
-            Log.e("caller", "ada", e);
-        }
+        iList.add(data);
+        iListName.add(name);
     }
 
     @Override
@@ -79,10 +59,28 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        final String name = iList.get(position);
-        final String type = iListType.get(position);
-        final Boolean req = iListReq.get(position);
-        final String desc = iListDesc.get(position);
+        String type = "String";
+        boolean req = false;
+        String desc = "";
+        int maxChar = -1;
+
+        final JSONObject data = iList.get(position);
+        final String name = iListName.get(position);
+        try {
+            if (data.has("type"))
+                type = data.getString("type");
+            if (data.has("required"))
+                req = data.getBoolean("required");
+            if (data.has("description"))
+                desc = data.getString("description");
+            if (data.has("maxChar"))
+                maxChar = data.getInt("maxChar");
+            Log.d("ada", "add " + name);
+        } catch (JSONException e) {
+            Log.e("caller", "ada", e);
+        }
+
+
 
         TextInputLayout textInputLayout = (TextInputLayout) holder.itemView;
         textInputLayout.setHint(name);
@@ -116,6 +114,10 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 break;
         }
 
+        if (maxChar > 0) {
+            autoCompleteTextView.setFilters(new InputFilter[] {new InputFilter.LengthFilter(maxChar)});
+        }
+
         String text = db.getParam(name);
         autoCompleteTextView.setText(text);
 
@@ -126,10 +128,11 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         SeanAdapter<String> favAdapter = new SeanAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, favList);
         autoCompleteTextView.setAdapter(favAdapter);
 
+        final String finalDesc = desc;
         autoCompleteTextView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                Snackbar.make(view, desc, Snackbar.LENGTH_LONG).show();
+                Snackbar.make(view, finalDesc, Snackbar.LENGTH_LONG).show();
                 return false;
             }
         });
