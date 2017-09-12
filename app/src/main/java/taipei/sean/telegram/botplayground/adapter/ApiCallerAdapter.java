@@ -11,12 +11,15 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.EditText;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import taipei.sean.telegram.botplayground.FavStructure;
 import taipei.sean.telegram.botplayground.InstantComplete;
@@ -77,9 +80,8 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 maxChar = data.getInt("maxChar");
             Log.d("ada", "add " + name);
         } catch (JSONException e) {
-            Log.e("caller", "ada", e);
+            Log.e("ada", "ada", e);
         }
-
 
 
         TextInputLayout textInputLayout = (TextInputLayout) holder.itemView;
@@ -88,8 +90,6 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
         textInputLayout.setLayoutParams(layoutParams);
 
-        iListView.add(textInputLayout);
-
 
         InstantComplete autoCompleteTextView = new InstantComplete(textInputLayout.getContext());
 
@@ -97,64 +97,88 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             autoCompleteTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_star_border_black_24dp, 0);
 
         switch (type) {
+            case "Boolean":
+            case "Bool":
+                type = "bool";
+                break;
             case "Float number":
+                type = "float";
                 autoCompleteTextView.setRawInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
                 autoCompleteTextView.setSingleLine();
                 break;
-            case "Boolean":
-            case "Bool":
             case "Integer":
             case "int":
             case "int128":
             case "long":
+                type = "int";
                 autoCompleteTextView.setRawInputType(InputType.TYPE_CLASS_NUMBER);
+                autoCompleteTextView.setSingleLine();
+                break;
             case "Integer or String":
             case "string":
-                autoCompleteTextView.setSingleLine();
+                type = "str";
                 break;
         }
 
-        if (maxChar > 0) {
-            autoCompleteTextView.setFilters(new InputFilter[] {new InputFilter.LengthFilter(maxChar)});
+        if (Objects.equals(type, "bool")) {
+            CheckBox checkBox = new CheckBox(context);
+            checkBox.setText(name);
+
+            final String finalDesc = desc;
+            checkBox.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    Snackbar.make(view, finalDesc, Snackbar.LENGTH_LONG).show();
+                    return false;
+                }
+            });
+
+            textInputLayout.addView(checkBox);
+            iListView.add(checkBox);
+        } else {
+            if (maxChar > 0) {
+                autoCompleteTextView.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxChar)});
+            }
+
+            String text = db.getParam(name);
+            autoCompleteTextView.setText(text);
+
+            List<FavStructure> favs = db.getFavs(name);
+            ArrayList<String> favList = new ArrayList<>();
+            for (int i = 0; i < favs.size(); i++)
+                favList.add(favs.get(i).value);
+            SeanAdapter<String> favAdapter = new SeanAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, favList);
+            autoCompleteTextView.setAdapter(favAdapter);
+
+            final String finalDesc = desc;
+            autoCompleteTextView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    Snackbar.make(view, finalDesc, Snackbar.LENGTH_LONG).show();
+                    return false;
+                }
+            });
+
+            autoCompleteTextView.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+                    String value = editable.toString();
+
+                    db.updateParam(name, value);
+                }
+            });
+
+            textInputLayout.addView(autoCompleteTextView);
+            iListView.add(autoCompleteTextView);
         }
-
-        String text = db.getParam(name);
-        autoCompleteTextView.setText(text);
-
-        List<FavStructure> favs = db.getFavs(name);
-        ArrayList<String> favList = new ArrayList<>();
-        for (int i = 0; i < favs.size(); i++)
-            favList.add(favs.get(i).value);
-        SeanAdapter<String> favAdapter = new SeanAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, favList);
-        autoCompleteTextView.setAdapter(favAdapter);
-
-        final String finalDesc = desc;
-        autoCompleteTextView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                Snackbar.make(view, finalDesc, Snackbar.LENGTH_LONG).show();
-                return false;
-            }
-        });
-
-        autoCompleteTextView.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                String value = editable.toString();
-
-                db.updateParam(name, value);
-            }
-        });
-
-        textInputLayout.addView(autoCompleteTextView);
     }
 
     @Override
@@ -181,8 +205,32 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         recyclerView.setLayoutParams(inputLayoutParams);   // Set Layout Parameter to original view
     }
 
-    public View getViewByPos(int pos) {
-        return iListView.get(pos);
+    public String getName(int pos) {
+        return iListName.get(pos);
+    }
+
+    public String getValue(int pos) {
+        View view = iListView.get(pos);
+
+        if (view instanceof EditText) {
+            EditText editText = (EditText) view;
+            CharSequence valueChar = editText.getText();
+            if (null == valueChar) {
+                Log.w("ada", "value char null");
+                return "";
+            }
+            Log.d("aa",  valueChar.toString());
+            return valueChar.toString();
+        } else if (view instanceof CheckBox) {
+            CheckBox checkBox = (CheckBox) view;
+            if (checkBox.isChecked())
+                return "1";
+            else
+                return null;
+        } else {
+            Log.e("ada", "Unknown view " + view.toString());
+            return null;
+        }
     }
 
     private class DummyViewHolder extends RecyclerView.ViewHolder {

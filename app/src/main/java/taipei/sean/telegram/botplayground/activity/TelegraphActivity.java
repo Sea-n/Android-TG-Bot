@@ -2,7 +2,6 @@ package taipei.sean.telegram.botplayground.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -204,29 +203,13 @@ public class TelegraphActivity extends AppCompatActivity {
 
         final int inputCount = paramAdapter.getItemCount();
         for (int i = 0; i < inputCount; i++) {
-            TextInputLayout textInputLayout = (TextInputLayout) paramAdapter.getViewByPos(i);
-            InstantComplete textInputEditText = (InstantComplete) textInputLayout.getEditText();
-            if (null == textInputEditText) {
-                Log.w("telegraph", "edit text null");
-                continue;
-            }
-            CharSequence hint = textInputLayout.getHint();
-            if (null == hint) {
-                Log.w("telegraph", "hint null");
-                continue;
-            }
-            String name = hint.toString();
-            CharSequence valueChar = textInputEditText.getText();
-            if (null == valueChar) {
-                Log.w("telegraph", "value char null");
-                continue;
-            }
-            String value = valueChar.toString();
+            String name = paramAdapter.getName(i);
+            String value = paramAdapter.getValue(i);
 
-            if (Objects.equals(value, "")) {
-                Log.w("telegraph", "value empty");
+            if (null == value)
                 continue;
-            }
+            if (Objects.equals(value, ""))
+                continue;
 
             db.insertFav(name, value, method);
 
