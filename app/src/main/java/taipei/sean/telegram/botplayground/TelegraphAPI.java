@@ -25,6 +25,8 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class TelegraphAPI {
+    final private int _dbVer = 4;
+    private SeanDBHelper db;
     final private String _apiBaseUrl = "https://api.telegra.ph/";
     final private Context _context;
 
@@ -37,6 +39,8 @@ public class TelegraphAPI {
             j = new JSONObject();
 
         final String json = j.toString();
+
+        db = new SeanDBHelper(_context, "data.db", null, _dbVer);
 
         Log.d("api", method + json);
 
@@ -96,6 +100,25 @@ public class TelegraphAPI {
                     resultText += response;
                 }
                 Log.d("api", "resp:" + json);
+
+                try {
+                    JSONObject jsonObject = new JSONObject(json);
+                    boolean status = jsonObject.getBoolean("ok");
+                    if (status) {
+                        JSONObject result = jsonObject.getJSONObject("result");
+                        if (result.has("access_token")) {
+                            String token = result.getString("access_token");
+                            db.insertFav("access_token", token, _context.getString(R.string.title_activity_telegraph));
+                        }
+                        if (result.has("path")) {
+                            String token = result.getString("path");
+                            db.insertFav("path", token, _context.getString(R.string.title_activity_telegraph));
+                        }
+                    }
+                } catch (JSONException e) {
+                    Log.e("api", "parse", e);
+                    resultText += response;
+                }
 
                 resultText += json;
 
