@@ -4,22 +4,21 @@
     "params": {
       "offset": {
         "type": "Integer",
-        "required": false,
         "description": "Identifier of the first update to be returned. Must be greater by one than the highest among the identifiers of previously received updates. By default, updates starting with the earliest unconfirmed update are returned. An update is considered confirmed as soon as getUpdates is called with an __offset__ higher than its __update_id__. The negative offset can be specified to retrieve updates starting from __-offset__ update from the end of the updates queue. All previous updates will forgotten."
       },
       "limit": {
         "type": "Integer",
-        "required": false,
-        "description": "Limits the number of updates to be retrieved. Values between 1—100 are accepted. Defaults to 100."
+        "minInt": 1,
+        "maxInt": 100,
+        "default": 100,
+        "description": "Limits the number of updates to be retrieved."
       },
       "timeout": {
         "type": "Integer",
-        "required": false,
         "description": "Timeout in seconds for long polling. Defaults to 0, i.e. usual short polling. Should be positive, short polling should be used for testing purposes only."
       },
       "allowed_updates": {
         "type": "Array of String",
-        "required": false,
         "description": "List the types of updates you want your bot to receive. For example, specify [“message”, “edited_channel_post”, “callback_query”] to only receive updates of these types. See Update for a complete list of available update types. Specify an empty list to receive all updates regardless of type (default). If not specified, the previous setting will be used.\nPlease note that this parameter doesn't affect updates created before the call to the getUpdates, so unwanted updates may be received for a short period of time."
       }
     }
@@ -34,17 +33,17 @@
       },
       "certificate": {
         "type": "InputFile",
-        "required": false,
         "description": "Upload your public key certificate so that the root certificate in use can be checked. See our self-signed guide for details."
       },
       "max_connections": {
         "type": "Integer",
-        "required": false,
-        "description": "Maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery, 1-100. Defaults to __40__. Use lower values to limit the load on your bot‘s server, and higher values to increase your bot’s throughput."
+        "minInt": 1,
+        "maxInt": 100,
+        "default": 40,
+        "description": "Maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery. Use lower values to limit the load on your bot‘s server, and higher values to increase your bot’s throughput."
       },
       "allowed_updates": {
         "type": "Array of String",
-        "required": false,
         "description": "List the types of updates you want your bot to receive. For example, specify [“message”, “edited_channel_post”, “callback_query”] to only receive updates of these types. See Update for a complete list of available update types. Specify an empty list to receive all updates regardless of type (default). If not specified, the previous setting will be used.\nPlease note that this parameter doesn't affect updates created before the call to the setWebhook, so unwanted updates may be received for a short period of time."
       }
     }
@@ -73,27 +72,22 @@
       },
       "parse_mode": {
         "type": "String",
-        "required": false,
         "description": "Send __Markdown__ or __HTML__, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message."
       },
       "disable_web_page_preview": {
         "type": "Boolean",
-        "required": false,
         "description": "Disables link previews for links in this message"
       },
       "disable_notification": {
         "type": "Boolean",
-        "required": false,
         "description": "Sends the message silently. Users will receive a notification with no sound."
       },
       "reply_to_message_id": {
         "type": "Integer",
-        "required": false,
         "description": "If the message is a reply, ID of the original message"
       },
       "reply_markup": {
         "type": "InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply",
-        "required": false,
         "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user."
       }
     }
@@ -113,7 +107,6 @@
       },
       "disable_notification": {
         "type": "Boolean",
-        "required": false,
         "description": "Sends the message silently. Users will receive a notification with no sound."
       },
       "message_id": {
@@ -138,22 +131,19 @@
       },
       "caption": {
         "type": "String",
-        "required": false,
-        "description": "Photo caption (may also be used when resending photos by __file_id__), 0-200 characters"
+        "maxChar": 200,
+        "description": "Photo caption (may also be used when resending photos by __file_id__)."
       },
       "disable_notification": {
         "type": "Boolean",
-        "required": false,
         "description": "Sends the message silently. Users will receive a notification with no sound."
       },
       "reply_to_message_id": {
         "type": "Integer",
-        "required": false,
         "description": "If the message is a reply, ID of the original message"
       },
       "reply_markup": {
         "type": "InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply",
-        "required": false,
         "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user."
       }
     }
@@ -173,37 +163,31 @@
       },
       "caption": {
         "type": "String",
-        "required": false,
-        "description": "Audio caption, 0-200 characters"
+        "maxChar": 200,
+        "description": "Audio caption"
       },
       "duration": {
         "type": "Integer",
-        "required": false,
         "description": "Duration of the audio in seconds"
       },
       "performer": {
         "type": "String",
-        "required": false,
         "description": "Performer"
       },
       "title": {
         "type": "String",
-        "required": false,
         "description": "Track name"
       },
       "disable_notification": {
         "type": "Boolean",
-        "required": false,
         "description": "Sends the message silently. Users will receive a notification with no sound."
       },
       "reply_to_message_id": {
         "type": "Integer",
-        "required": false,
         "description": "If the message is a reply, ID of the original message"
       },
       "reply_markup": {
         "type": "InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply",
-        "required": false,
         "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user."
       }
     }
@@ -223,22 +207,19 @@
       },
       "caption": {
         "type": "String",
-        "required": false,
-        "description": "Document caption (may also be used when resending documents by __file_id__), 0-200 characters"
+        "maxChar": 200,
+        "description": "Document caption (may also be used when resending documents by __file_id__)."
       },
       "disable_notification": {
         "type": "Boolean",
-        "required": false,
         "description": "Sends the message silently. Users will receive a notification with no sound."
       },
       "reply_to_message_id": {
         "type": "Integer",
-        "required": false,
         "description": "If the message is a reply, ID of the original message"
       },
       "reply_markup": {
         "type": "InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply",
-        "required": false,
         "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user."
       }
     }
@@ -258,37 +239,31 @@
       },
       "duration": {
         "type": "Integer",
-        "required": false,
         "description": "Duration of sent video in seconds"
       },
       "width": {
         "type": "Integer",
-        "required": false,
         "description": "Video width"
       },
       "height": {
         "type": "Integer",
-        "required": false,
         "description": "Video height"
       },
       "caption": {
         "type": "String",
-        "required": false,
-        "description": "Video caption (may also be used when resending videos by __file_id__), 0-200 characters"
+        "maxChar": 200,
+        "description": "Video caption (may also be used when resending videos by __file_id__)."
       },
       "disable_notification": {
         "type": "Boolean",
-        "required": false,
         "description": "Sends the message silently. Users will receive a notification with no sound."
       },
       "reply_to_message_id": {
         "type": "Integer",
-        "required": false,
         "description": "If the message is a reply, ID of the original message"
       },
       "reply_markup": {
         "type": "InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply",
-        "required": false,
         "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user."
       }
     }
@@ -308,27 +283,23 @@
       },
       "caption": {
         "type": "String",
-        "required": false,
-        "description": "Voice message caption, 0-200 characters"
+        "maxChar": 200,
+        "description": "Voice message caption."
       },
       "duration": {
         "type": "Integer",
-        "required": false,
         "description": "Duration of the voice message in seconds"
       },
       "disable_notification": {
         "type": "Boolean",
-        "required": false,
         "description": "Sends the message silently. Users will receive a notification with no sound."
       },
       "reply_to_message_id": {
         "type": "Integer",
-        "required": false,
         "description": "If the message is a reply, ID of the original message"
       },
       "reply_markup": {
         "type": "InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply",
-        "required": false,
         "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user."
       }
     }
@@ -348,27 +319,22 @@
       },
       "duration": {
         "type": "Integer",
-        "required": false,
         "description": "Duration of sent video in seconds"
       },
       "length": {
         "type": "Integer",
-        "required": false,
         "description": "Video width and height"
       },
       "disable_notification": {
         "type": "Boolean",
-        "required": false,
         "description": "Sends the message silently. Users will receive a notification with no sound."
       },
       "reply_to_message_id": {
         "type": "Integer",
-        "required": false,
         "description": "If the message is a reply, ID of the original message"
       },
       "reply_markup": {
         "type": "InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply",
-        "required": false,
         "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user."
       }
     }
@@ -393,17 +359,14 @@
       },
       "disable_notification": {
         "type": "Boolean",
-        "required": false,
         "description": "Sends the message silently. Users will receive a notification with no sound."
       },
       "reply_to_message_id": {
         "type": "Integer",
-        "required": false,
         "description": "If the message is a reply, ID of the original message"
       },
       "reply_markup": {
         "type": "InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply",
-        "required": false,
         "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user."
       }
     }
@@ -438,22 +401,18 @@
       },
       "foursquare_id": {
         "type": "String",
-        "required": false,
         "description": "Foursquare identifier of the venue"
       },
       "disable_notification": {
         "type": "Boolean",
-        "required": false,
         "description": "Sends the message silently. Users will receive a notification with no sound."
       },
       "reply_to_message_id": {
         "type": "Integer",
-        "required": false,
         "description": "If the message is a reply, ID of the original message"
       },
       "reply_markup": {
         "type": "InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply",
-        "required": false,
         "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user."
       }
     }
@@ -478,22 +437,18 @@
       },
       "last_name": {
         "type": "String",
-        "required": false,
         "description": "Contact's last name"
       },
       "disable_notification": {
         "type": "Boolean",
-        "required": false,
         "description": "Sends the message silently. Users will receive a notification with no sound."
       },
       "reply_to_message_id": {
         "type": "Integer",
-        "required": false,
         "description": "If the message is a reply, ID of the original message"
       },
       "reply_markup": {
         "type": "InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply",
-        "required": false,
         "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove keyboard or to force a reply from the user."
       }
     }
@@ -523,13 +478,14 @@
       },
       "offset": {
         "type": "Integer",
-        "required": false,
         "description": "Sequential number of the first photo to be returned. By default, all photos are returned."
       },
       "limit": {
         "type": "Integer",
-        "required": false,
-        "description": "Limits the number of photos to be retrieved. Values between 1—100 are accepted. Defaults to 100."
+        "minInt": 1,
+        "maxInt": 100,
+        "default": 100,
+        "description": "Limits the number of photos to be retrieved."
       }
     }
   },
@@ -557,7 +513,6 @@
       },
       "until_date": {
         "type": "Integer",
-        "required": false,
         "description": "Date when the user will be unbanned, unix time. If user is banned for more than 366 days or less than 30 seconds from the current time they are considered to be banned forever"
       }
     }
@@ -592,27 +547,22 @@
       },
       "until_date": {
         "type": "Integer",
-        "required": false,
         "description": "Date when restrictions will be lifted for the user, unix time. If user is restricted for more than 366 days or less than 30 seconds from the current time, they are considered to be restricted forever"
       },
       "can_send_messages": {
         "type": "Boolean",
-        "required": false,
         "description": "Pass True, if the user can send text messages, contacts, locations and venues"
       },
       "can_send_media_messages": {
         "type": "Boolean",
-        "required": false,
         "description": "Pass True, if the user can send audios, documents, photos, videos, video notes and voice notes, implies can_send_messages"
       },
       "can_send_other_messages": {
         "type": "Boolean",
-        "required": false,
         "description": "Pass True, if the user can send animations, games, stickers and use inline bots, implies can_send_media_messages"
       },
       "can_add_web_page_previews": {
         "type": "Boolean",
-        "required": false,
         "description": "Pass True, if the user may add web page previews to their messages, implies can_send_media_messages"
       }
     }
@@ -632,42 +582,34 @@
       },
       "can_change_info": {
         "type": "Boolean",
-        "required": false,
         "description": "Pass True, if the administrator can change chat title, photo and other settings"
       },
       "can_post_messages": {
         "type": "Boolean",
-        "required": false,
         "description": "Pass True, if the administrator can create channel posts, channels only"
       },
       "can_edit_messages": {
         "type": "Boolean",
-        "required": false,
         "description": "Pass True, if the administrator can edit messages of other users, channels only"
       },
       "can_delete_messages": {
         "type": "Boolean",
-        "required": false,
         "description": "Pass True, if the administrator can delete messages of other users"
       },
       "can_invite_users": {
         "type": "Boolean",
-        "required": false,
         "description": "Pass True, if the administrator can invite new users to the chat"
       },
       "can_restrict_members": {
         "type": "Boolean",
-        "required": false,
         "description": "Pass True, if the administrator can restrict, ban or unban chat members"
       },
       "can_pin_messages": {
         "type": "Boolean",
-        "required": false,
         "description": "Pass True, if the administrator can pin messages, supergroups only"
       },
       "can_promote_members": {
         "type": "Boolean",
-        "required": false,
         "description": "Pass True, if the administrator can add new administrators with a subset of his own privileges or demote administrators that he has promoted, directly or indirectly (promoted by administrators that were appointed by him)"
       }
     }
@@ -715,8 +657,10 @@
       },
       "title": {
         "type": "String",
+        "minChar": 1,
+        "maxChar": 255,
         "required": true,
-        "description": "New chat title, 1-255 characters"
+        "description": "New chat title."
       }
     }
   },
@@ -730,8 +674,8 @@
       },
       "description": {
         "type": "String",
-        "required": false,
-        "description": "New chat description, 0-255 characters"
+        "maxChar": 255,
+        "description": "New chat description"
       }
     }
   },
@@ -750,7 +694,6 @@
       },
       "disable_notification": {
         "type": "Boolean",
-        "required": false,
         "description": "Pass __True__, if it is not necessary to send a notification to all group members about the new pinned message"
       }
     }
@@ -829,22 +772,19 @@
       },
       "text": {
         "type": "String",
-        "required": false,
-        "description": "Text of the notification. If not specified, nothing will be shown to the user, 0-200 characters"
+        "maxChar": 200,
+        "description": "Text of the notification. If not specified, nothing will be shown to the user."
       },
       "show_alert": {
         "type": "Boolean",
-        "required": false,
-        "description": "If __true__, an alert will be shown by the client instead of a notification at the top of the chat screen. Defaults to __false__."
+        "description": "If __true__, an alert will be shown by the client instead of a notification at the top of the chat screen."
       },
       "url": {
         "type": "String",
-        "required": false,
         "description": "URL that will be opened by the user's client. If you have created a Game and accepted the conditions via @Botfather, specify the URL that opens your game – note that this will only work if the query comes from a __callback_game__ button.\nOtherwise, you may use links like `t.me/your_bot?start=XXXX` that open your bot with a parameter."
       },
       "cache_time": {
         "type": "Integer",
-        "required": false,
         "description": "The maximum amount of time in seconds that the result of the callback query may be cached client-side. Telegram apps will support caching starting in version 3.14. Defaults to 0."
       }
     }
@@ -854,17 +794,14 @@
     "params": {
       "chat_id": {
         "type": "Integer or String",
-        "required": false,
         "description": "Required if __inline_message_id__ is not specified. Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
       },
       "message_id": {
         "type": "Integer",
-        "required": false,
         "description": "Required if __inline_message_id__ is not specified. Identifier of the sent message"
       },
       "inline_message_id": {
         "type": "String",
-        "required": false,
         "description": "Required if __chat_id__ and __message_id__ are not specified. Identifier of the inline message"
       },
       "text": {
@@ -874,17 +811,14 @@
       },
       "parse_mode": {
         "type": "String",
-        "required": false,
         "description": "Send __Markdown__ or __HTML__, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message."
       },
       "disable_web_page_preview": {
         "type": "Boolean",
-        "required": false,
         "description": "Disables link previews for links in this message"
       },
       "reply_markup": {
         "type": "InlineKeyboardMarkup",
-        "required": false,
         "description": "A JSON-serialized object for an inline keyboard."
       }
     }
@@ -894,27 +828,22 @@
     "params": {
       "chat_id": {
         "type": "Integer or String",
-        "required": false,
         "description": "Required if __inline_message_id__ is not specified. Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
       },
       "message_id": {
         "type": "Integer",
-        "required": false,
         "description": "Required if __inline_message_id__ is not specified. Identifier of the sent message"
       },
       "inline_message_id": {
         "type": "String",
-        "required": false,
         "description": "Required if __chat_id__ and __message_id__ are not specified. Identifier of the inline message"
       },
       "caption": {
         "type": "String",
-        "required": false,
         "description": "New caption of the message"
       },
       "reply_markup": {
         "type": "InlineKeyboardMarkup",
-        "required": false,
         "description": "A JSON-serialized object for an inline keyboard."
       }
     }
@@ -924,22 +853,18 @@
     "params": {
       "chat_id": {
         "type": "Integer or String",
-        "required": false,
         "description": "Required if __inline_message_id__ is not specified. Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
       },
       "message_id": {
         "type": "Integer",
-        "required": false,
         "description": "Required if __inline_message_id__ is not specified. Identifier of the sent message"
       },
       "inline_message_id": {
         "type": "String",
-        "required": false,
         "description": "Required if __chat_id__ and __message_id__ are not specified. Identifier of the inline message"
       },
       "reply_markup": {
         "type": "InlineKeyboardMarkup",
-        "required": false,
         "description": "A JSON-serialized object for an inline keyboard."
       }
     }
@@ -974,17 +899,14 @@
       },
       "disable_notification": {
         "type": "Boolean",
-        "required": false,
         "description": "Sends the message silently. Users will receive a notification with no sound."
       },
       "reply_to_message_id": {
         "type": "Integer",
-        "required": false,
         "description": "If the message is a reply, ID of the original message"
       },
       "reply_markup": {
         "type": "InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply",
-        "required": false,
         "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user."
       }
     }
@@ -1024,13 +946,17 @@
       },
       "name": {
         "type": "String",
+        "minChar": 1,
+        "maxChar": 64,
         "required": true,
-        "description": "Short name of sticker set, to be used in `t.me/addstickers/` URLs (e.g., __animals__). Can contain only english letters, digits and underscores. Must begin with a letter, can't contain consecutive underscores and must end in __“_by_<bot username>”__. __<bot_username>__ is case insensitive. 1-64 characters."
+        "description": "Short name of sticker set, to be used in `t.me/addstickers/` URLs (e.g., __animals__). Can contain only english letters, digits and underscores. Must begin with a letter, can't contain consecutive underscores and must end in __“_by_<bot username>”__. __<bot_username>__ is case insensitive."
       },
       "title": {
         "type": "String",
+        "minChar": 1,
+        "maxChar": 64,
         "required": true,
-        "description": "Sticker set title, 1-64 characters"
+        "description": "Sticker set title."
       },
       "png_sticker": {
         "type": "InputFile or String",
@@ -1044,12 +970,10 @@
       },
       "contains_masks": {
         "type": "Boolean",
-        "required": false,
         "description": "Pass __True__, if a set of mask stickers should be created"
       },
       "mask_position": {
         "type": "MaskPosition",
-        "required": false,
         "description": "A JSON-serialized object for position where the mask should be placed on faces"
       }
     }
@@ -1079,7 +1003,6 @@
       },
       "mask_position": {
         "type": "MaskPosition",
-        "required": false,
         "description": "A JSON-serialized object for position where the mask should be placed on faces"
       }
     }
@@ -1124,28 +1047,26 @@
       },
       "cache_time": {
         "type": "Integer",
-        "required": false,
-        "description": "The maximum amount of time in seconds that the result of the inline query may be cached on the server. Defaults to 300."
+        "default": 300,
+        "description": "The maximum amount of time in seconds that the result of the inline query may be cached on the server."
       },
       "is_personal": {
         "type": "Boolean",
-        "required": false,
         "description": "Pass __True__, if results may be cached on the server side only for the user that sent the query. By default, results may be returned to any user who sends the same query"
       },
       "next_offset": {
         "type": "String",
-        "required": false,
         "description": "Pass the offset that a client should send in the next query with the same text to receive more results. Pass an empty string if there are no more results or if you don‘t support pagination. Offset length can’t exceed 64 bytes."
       },
       "switch_pm_text": {
         "type": "String",
-        "required": false,
         "description": "If passed, clients will display a button with specified text that switches the user to a private chat with the bot and sends the bot a start message with the parameter __switch_pm_parameter__"
       },
       "switch_pm_parameter": {
         "type": "String",
-        "required": false,
-        "description": "Deep-linking parameter for the /start message sent to the bot when user presses the switch button. 1-64 characters, only `A-Z`, `a-z`, `0-9`, `_` and `-` are allowed.\n__Example:__ An inline bot that sends YouTube videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To do this, it displays a ‘Connect your YouTube account’ button above the results, or even before showing any. The user presses the button, switches to a private chat with the bot and, in doing so, passes a start parameter that instructs the bot to return an oauth link. Once done, the bot can offer a __switch_inline__ button so that the user can easily return to the chat where they wanted to use the bot's inline capabilities."
+        "minChar": 1,
+        "maxChar": 64,
+        "description": "Deep-linking parameter for the /start message sent to the bot when user presses the switch button. Only `A-Z`, `a-z`, `0-9`, `_` and `-` are allowed.\n__Example:__ An inline bot that sends YouTube videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To do this, it displays a ‘Connect your YouTube account’ button above the results, or even before showing any. The user presses the button, switches to a private chat with the bot and, in doing so, passes a start parameter that instructs the bot to return an oauth link. Once done, the bot can offer a __switch_inline__ button so that the user can easily return to the chat where they wanted to use the bot's inline capabilities."
       }
     }
   },
@@ -1159,18 +1080,24 @@
       },
       "title": {
         "type": "String",
+        "minChar": 1,
+        "maxChar": 32,
         "required": true,
-        "description": "Product name, 1-32 characters"
+        "description": "Product name."
       },
       "description": {
         "type": "String",
+        "minChar": 1,
+        "maxChar": 255,
         "required": true,
-        "description": "Product description, 1-255 characters"
+        "description": "Product description."
       },
       "payload": {
         "type": "String",
+        "minChar": 1,
+        "maxChar": 128,
         "required": true,
-        "description": "Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use for your internal processes."
+        "description": "Bot-defined invoice payload. This will not be displayed to the user, use for your internal processes."
       },
       "provider_token": {
         "type": "String",
@@ -1194,62 +1121,50 @@
       },
       "photo_url": {
         "type": "String",
-        "required": false,
         "description": "URL of the product photo for the invoice. Can be a photo of the goods or a marketing image for a service. People like it better when they see what they are paying for."
       },
       "photo_size": {
         "type": "Integer",
-        "required": false,
         "description": "Photo size"
       },
       "photo_width": {
         "type": "Integer",
-        "required": false,
         "description": "Photo width"
       },
       "photo_height": {
         "type": "Integer",
-        "required": false,
         "description": "Photo height"
       },
       "need_name": {
         "type": "Boolean",
-        "required": false,
         "description": "Pass __True__, if you require the user's full name to complete the order"
       },
       "need_phone_number": {
         "type": "Boolean",
-        "required": false,
         "description": "Pass __True__, if you require the user's phone number to complete the order"
       },
       "need_email": {
         "type": "Boolean",
-        "required": false,
         "description": "Pass __True__, if you require the user's email to complete the order"
       },
       "need_shipping_address": {
         "type": "Boolean",
-        "required": false,
         "description": "Pass __True__, if you require the user's shipping address to complete the order"
       },
       "is_flexible": {
         "type": "Boolean",
-        "required": false,
         "description": "Pass __True__, if the final price depends on the shipping method"
       },
       "disable_notification": {
         "type": "Boolean",
-        "required": false,
         "description": "Sends the message silently. Users will receive a notification with no sound."
       },
       "reply_to_message_id": {
         "type": "Integer",
-        "required": false,
         "description": "If the message is a reply, ID of the original message"
       },
       "reply_markup": {
         "type": "InlineKeyboardMarkup",
-        "required": false,
         "description": "A JSON-serialized object for an inline keyboard. If empty, one 'Pay `total price`' button will be shown. If not empty, the first button must be a Pay button."
       }
     }
@@ -1269,12 +1184,10 @@
       },
       "shipping_options": {
         "type": "Array of ShippingOption",
-        "required": false,
         "description": "Required if __ok__ is True. A JSON-serialized array of available shipping options."
       },
       "error_message": {
         "type": "String",
-        "required": false,
         "description": "Required if __ok__ is False. Error message in human readable form that explains why it is impossible to complete the order (e.g. \"Sorry, delivery to your desired address is unavailable'). Telegram will display this message to the user."
       }
     }
@@ -1294,7 +1207,6 @@
       },
       "error_message": {
         "type": "String",
-        "required": false,
         "description": "Required if __ok__ is __False__. Error message in human readable form that explains the reason for failure to proceed with the checkout (e.g. \"Sorry, somebody just bought the last of our amazing black T-shirts while you were busy filling out your payment details. Please choose a different color or garment!\"). Telegram will display this message to the user."
       }
     }
@@ -1314,17 +1226,14 @@
       },
       "disable_notification": {
         "type": "Boolean",
-        "required": false,
         "description": "Sends the message silently. Users will receive a notification with no sound."
       },
       "reply_to_message_id": {
         "type": "Integer",
-        "required": false,
         "description": "If the message is a reply, ID of the original message"
       },
       "reply_markup": {
         "type": "InlineKeyboardMarkup",
-        "required": false,
         "description": "A JSON-serialized object for an inline keyboard. If empty, one ‘Play game_title’ button will be shown. If not empty, the first button must launch the game."
       }
     }
@@ -1344,27 +1253,22 @@
       },
       "force": {
         "type": "Boolean",
-        "required": false,
         "description": "Pass True, if the high score is allowed to decrease. This can be useful when fixing mistakes or banning cheaters"
       },
       "disable_edit_message": {
         "type": "Boolean",
-        "required": false,
         "description": "Pass True, if the game message should not be automatically edited to include the current scoreboard"
       },
       "chat_id": {
         "type": "Integer",
-        "required": false,
         "description": "Required if __inline_message_id__ is not specified. Unique identifier for the target chat"
       },
       "message_id": {
         "type": "Integer",
-        "required": false,
         "description": "Required if __inline_message_id__ is not specified. Identifier of the sent message"
       },
       "inline_message_id": {
         "type": "String",
-        "required": false,
         "description": "Required if __chat_id__ and __message_id__ are not specified. Identifier of the inline message"
       }
     }
@@ -1379,17 +1283,14 @@
       },
       "chat_id": {
         "type": "Integer",
-        "required": false,
         "description": "Required if __inline_message_id__ is not specified. Unique identifier for the target chat"
       },
       "message_id": {
         "type": "Integer",
-        "required": false,
         "description": "Required if __inline_message_id__ is not specified. Identifier of the sent message"
       },
       "inline_message_id": {
         "type": "String",
-        "required": false,
         "description": "Required if __chat_id__ and __message_id__ are not specified. Identifier of the inline message"
       }
     }

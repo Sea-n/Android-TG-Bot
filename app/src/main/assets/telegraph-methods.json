@@ -11,13 +11,11 @@
       },
       "author_name": {
         "type": "String",
-        "minChar": 0,
         "maxChar": 128,
         "description": "Default author name used when creating new articles."
       },
       "author_url": {
         "type": "String",
-        "minChar": 0,
         "maxChar": 512,
         "description": "Default profile link, opened when users click on the author's name below the title. Can be any link, not necessarily to a Telegram profile or channel."
       }
@@ -39,13 +37,11 @@
       },
       "author_name": {
         "type": "String",
-        "minChar": 0,
         "maxChar": 128,
         "description": "New default author name used when creating new articles."
       },
       "author_url": {
         "type": "String",
-        "minChar": 0,
         "maxChar": 512,
         "description": "New default profile link, opened when users click on the author's name below the title. Can be any link, not necessarily to a Telegram profile or channel."
       }
@@ -60,7 +56,14 @@
         "description": "Access token of the Telegraph account."
       },
       "fields": {
-        "type": "Array of String, default = [“short_name”,“author_name”,“author_url”]",
+        "type": "Array of String",
+        "options": {
+          "short_name": true,
+          "author_name": true,
+          "author_url": true,
+          "auth_url": false,
+          "page_count": false
+        },
         "description": "List of account fields to return. Available fields: short_name, author_name, author_url, auth_url, page_count."
       }
     }
@@ -92,13 +95,11 @@
       },
       "author_name": {
         "type": "String",
-        "minChar": 0,
         "maxChar": 128,
         "description": "Author name, displayed below the article's title."
       },
       "author_url": {
         "type": "String",
-        "minChar": 0,
         "maxChar": 512,
         "description": "Profile link, opened when users click on the author's name below the title. Can be any link, not necessarily to a Telegram profile or channel."
       },
@@ -140,13 +141,11 @@
       },
       "author_name": {
         "type": "String",
-        "minChar": 0,
         "maxChar": 128,
         "description": "Author name, displayed below the article's title."
       },
       "author_url": {
         "type": "String",
-        "minChar": 0,
         "maxChar": 512,
         "description": "Profile link, opened when users click on the author's name below the title. Can be any link, not necessarily to a Telegram profile or channel."
       },
@@ -184,8 +183,7 @@
       },
       "limit": {
         "type": "Integer",
-        "min": 0,
-        "max": 200,
+        "maxInt": 200,
         "default": 50,
         "description": "Limits the number of pages to be retrieved."
       }
@@ -201,26 +199,25 @@
       },
       "year": {
         "type": "Integer",
-        "min": 2000,
-        "max": 2100,
+        "minInt": 2000,
+        "maxInt": 2100,
         "description": "Required if month is passed. If passed, the number of page views for the requested year will be returned."
       },
       "month": {
         "type": "Integer",
-        "min": 1,
-        "max": 12,
+        "minInt": 1,
+        "maxInt": 12,
         "description": "Required if day is passed. If passed, the number of page views for the requested month will be returned."
       },
       "day": {
         "type": "Integer",
-        "min": 1,
-        "max": 31,
+        "minInt": 1,
+        "maxInt": 31,
         "description": "Required if hour is passed. If passed, the number of page views for the requested day will be returned."
       },
       "hour": {
         "type": "Integer",
-        "min": 0,
-        "max": 24,
+        "maxInt": 24,
         "description": "If passed, the number of page views for the requested hour will be returned."
       }
     }

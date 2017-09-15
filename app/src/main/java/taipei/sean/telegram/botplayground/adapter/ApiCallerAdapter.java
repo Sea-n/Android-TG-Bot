@@ -140,8 +140,53 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 autoCompleteTextView.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxChar)});
             }
 
-            String text = db.getParam(name);
-            autoCompleteTextView.setText(text);
+            if (data.has("default")) {
+                String defaultVal = "";
+                try {
+                    defaultVal = data.getString("default");
+                } catch (JSONException e) {
+                    Log.e("ada", "default", e);
+                }
+                autoCompleteTextView.setText(defaultVal);
+            } else {
+                String text = db.getParam(name);
+                autoCompleteTextView.setText(text);
+            }
+
+
+            if (data.has("maxInt")) {
+                int min = 0;
+                int max = -1;
+                try {
+                    max = data.getInt("maxInt");
+                    if (data.has("minInt"))
+                        min = data.getInt("minInt");
+                } catch (JSONException e) {
+                    Log.e("ada", "range", e);
+                }
+
+                final int finalMin = min;
+                final int finalMax = max;
+                autoCompleteTextView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View view, boolean hasFocus) {
+                        if (hasFocus)
+                            return;
+                        EditText editText = (EditText) view;
+                        String valStr = editText.getText().toString();
+                        int val = -1;
+                        try {
+                            val = Integer.parseInt(valStr);
+                        } catch (NumberFormatException e) {
+                            Log.w("ada", "parse", e);
+                        }
+                        if (val >= 0 && (val < finalMin || finalMax < val)) {
+                            String errorMsg = context.getString(R.string.param_out_of_range, finalMin, finalMax);
+                            editText.setError(errorMsg);
+                        }
+                    }
+                });
+            }
 
             List<FavStructure> favs = db.getFavs(name);
             ArrayList<String> favList = new ArrayList<>();

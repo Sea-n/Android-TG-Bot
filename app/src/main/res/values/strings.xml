@@ -36,6 +36,7 @@
     <string name="del_bot_confirm_msg">Are you sure you want to delete this bot?</string>
 
     <string name="no_context_yet">No Context Yet.</string>
+    <string name="param_out_of_range">Number must in range %1$d - %2$d.</string>
 
     <string name="file_downloader">File Downloader</string>
     <string name="file_id">File ID</string>
