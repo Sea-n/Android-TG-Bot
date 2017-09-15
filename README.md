@@ -23,3 +23,7 @@ If you would like to translate this app to your native language, please read [th
   + Remember to Rate before join Beta Program :smiley:
 + Telegram [Group](https://t.me/AwesomeTeleBot)
 + Bot API Tutorial: [從零開始的 Telegram Bot](https://blog.sean.taipei/2017/05/telegram-bot) (Chinese)
+
+
+## License
+[Apache 2](LICENSE) License
