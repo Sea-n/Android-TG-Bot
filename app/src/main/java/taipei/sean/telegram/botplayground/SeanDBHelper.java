@@ -204,6 +204,24 @@ public class SeanDBHelper extends SQLiteOpenHelper {
         return db.insert("tokens", null, values);
     }
 
+    public long insertToken(String token, String name) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM tokens WHERE token = ?;", new String[]{token});
+        int count = cursor.getCount();
+        cursor.close();
+        if (count > 0) {
+            Log.d("db", "Token already exists");
+            return -1;
+        }
+
+        ContentValues values = new ContentValues();
+        values.put("token", token);
+        values.put("name", name);
+        values.put("type", 0);
+        return db.insert("tokens", null, values);
+    }
+
     public long insertFav(String kind, String value, @Nullable String name) {
         SQLiteDatabase db = getWritableDatabase();
 

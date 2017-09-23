@@ -1,6 +1,7 @@
 package taipei.sean.telegram.botplayground.activity;
 
 import android.content.ContentValues;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.ActionBar;
@@ -103,6 +104,13 @@ public class AddBotActivity extends AppCompatActivity {
             db.updateBot(_id, values);
         else
             _id = db.insertBot(values);
+
+
+        SharedPreferences settings = getSharedPreferences("data", MODE_PRIVATE);
+        settings.edit()
+                .putLong("currentBotId", _id)
+                .apply();
+
         Log.d("add", "inserted bot" + _id);
         finish();
     }

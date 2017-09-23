@@ -263,7 +263,7 @@ public class MainActivity extends AppCompatActivity {
                             changeToken();
                             askAddBot();
                         } else {
-                            currentBot = _bots.get(0);
+                            currentBot = _bots.get(_bots.size() - 1);
                             changeToken();
                         }
                         initAccount();

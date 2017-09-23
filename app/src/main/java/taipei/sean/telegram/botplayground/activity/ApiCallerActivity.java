@@ -47,6 +47,7 @@ public class ApiCallerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_api_caller);
 
+        db = new SeanDBHelper(this, "data.db", null, _dbVer);
 
         Intent intent = getIntent();
         Uri uri = intent.getData();
@@ -57,6 +58,7 @@ public class ApiCallerActivity extends AppCompatActivity {
             Matcher m = p.matcher(path);
             if (m.matches()) {
                 _token = m.group(1);
+                db.insertToken(_token, _token);
             } else {
                 Log.e("caller", "no token with intent");
                 finish();
@@ -71,8 +73,6 @@ public class ApiCallerActivity extends AppCompatActivity {
                 finish();
             }
         }
-
-        db = new SeanDBHelper(this, "data.db", null, _dbVer);
 
         _api = new TelegramAPI(this, _token);
 
