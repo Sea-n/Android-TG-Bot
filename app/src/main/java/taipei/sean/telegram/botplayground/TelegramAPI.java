@@ -12,10 +12,13 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -24,8 +27,10 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class TelegramAPI {
+    final private int _dbVer = 4;
     final private String _apiBaseUrl;
     final private Context _context;
+    private SeanDBHelper db;
 
     public TelegramAPI(Context context, String token) {
         this._context = context;
@@ -37,6 +42,8 @@ public class TelegramAPI {
             j = new JSONObject();
 
         final String json = j.toString();
+
+        db = new SeanDBHelper(_context, "data.db", null, _dbVer);
 
         Log.d("api", method + json);
 
@@ -88,6 +95,23 @@ public class TelegramAPI {
                     resultText += response;
                 }
                 Log.d("api", "resp:" + json);
+
+                try {
+                    JSONObject jsonObject = new JSONObject(json);
+                    boolean status = jsonObject.getBoolean("ok");
+                    if (status) {
+
+                        Pattern p = Pattern.compile("\"file_id\": \"([^\"]+)\"");
+                        Matcher m = p.matcher(json);
+                        while (m.find()) {
+                            String fileId = m.group(1);
+                            db.insertFav("file_id", fileId, method);
+                        }
+                    }
+                } catch (JSONException e) {
+                    Log.e("api", "parse", e);
+                    resultText += response;
+                }
 
                 resultText += json;
 
