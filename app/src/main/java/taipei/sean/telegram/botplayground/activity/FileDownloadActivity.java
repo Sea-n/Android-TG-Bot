@@ -2,12 +2,9 @@ package taipei.sean.telegram.botplayground.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -60,13 +57,6 @@ public class FileDownloadActivity extends AppCompatActivity {
         }
 
         db = new SeanDBHelper(this, "data.db", null, _dbVer);
-
-        int permW = ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        if (permW == PackageManager.PERMISSION_DENIED) {
-            Log.w("fd", "permission WRITE_EXTERNAL_STORAGE denied");
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
-            finish();
-        }
 
         final InstantComplete fileIdView = (InstantComplete) findViewById(R.id.file_download_file_id);
         final Button submitButton = (Button) findViewById(R.id.file_download_submit);

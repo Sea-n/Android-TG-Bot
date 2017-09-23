@@ -47,7 +47,8 @@ public class MainActivity extends AppCompatActivity {
     final private int _dbVer = 4;
     final private int _requestCode_addBot = 1;
     final private int _requestCode_editBot = 2;
-    final private int _requestCode_reqPerm = 4;
+    final private int _reqPerm_exportDb = 1;
+    final private int _reqPerm_openFileDl = 2;
     private SeanDBHelper db;
     private List<BotStructure> _bots = null;
     private boolean changeAccountMenuOpen = false;
@@ -327,24 +328,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(tIntent);
                         break;
                     case R.id.nav_file_dl:
-                        if (null == currentBot) {
-                            Log.w("nav", "no bots");
-                            View fab = findViewById(R.id.main_fab);
-                            Snackbar.make(fab, R.string.no_bot_warning, Snackbar.LENGTH_LONG)
-                                    .setAction("Action", null).show();
-                            break;
-                        }
-
-                        if (currentBot.type != 0) {
-                            View fab = findViewById(R.id.main_fab);
-                            Snackbar.make(fab, R.string.not_normal_bot, Snackbar.LENGTH_LONG)
-                                    .setAction("Action", null).show();
-                            break;
-                        }
-
-                        Intent dlIntent = new Intent(MainActivity.this, FileDownloadActivity.class);
-                        dlIntent.putExtra("token", currentBot.token);
-                        startActivity(dlIntent);
+                        openFileDownloader();
                         break;
                     case R.id.nav_add_bot:
                         addBot();
@@ -401,8 +385,23 @@ public class MainActivity extends AppCompatActivity {
             case _requestCode_editBot:
                 initAccount();
                 break;
-            case _requestCode_reqPerm:
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+        for (int grantResult : grantResults) {
+            if (grantResult == PackageManager.PERMISSION_GRANTED) {
+                switch (requestCode) {
+                    case _reqPerm_exportDb:
+                        exportDB();
+                        break;
+                    case _reqPerm_openFileDl:
+                        openFileDownloader();
+                        break;
+                }
                 break;
+            }
         }
     }
 
@@ -410,7 +409,7 @@ public class MainActivity extends AppCompatActivity {
         int permW = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         if (permW == PackageManager.PERMISSION_DENIED) {
             Log.w("main", "permission WRITE_EXTERNAL_STORAGE denied");
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, _requestCode_reqPerm);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, _reqPerm_exportDb);
             return;
         }
 
@@ -616,5 +615,33 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void openFileDownloader() {
+        int permW = ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (permW == PackageManager.PERMISSION_DENIED) {
+            Log.w("fd", "permission WRITE_EXTERNAL_STORAGE denied");
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, _reqPerm_openFileDl);
+            return;
+        }
+
+        if (null == currentBot) {
+            Log.w("nav", "no bots");
+            View fab = findViewById(R.id.main_fab);
+            Snackbar.make(fab, R.string.no_bot_warning, Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+            return;
+        }
+
+        if (currentBot.type != 0) {
+            View fab = findViewById(R.id.main_fab);
+            Snackbar.make(fab, R.string.not_normal_bot, Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+            return;
+        }
+
+        Intent dlIntent = new Intent(MainActivity.this, FileDownloadActivity.class);
+        dlIntent.putExtra("token", currentBot.token);
+        startActivity(dlIntent);
     }
 }
