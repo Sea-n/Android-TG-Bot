@@ -1,5 +1,7 @@
 package taipei.sean.telegram.botplayground.activity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +24,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Objects;
+import java.util.Set;
 
 import taipei.sean.telegram.botplayground.InstantComplete;
 import taipei.sean.telegram.botplayground.R;
@@ -42,6 +45,23 @@ public class TelegraphActivity extends AppCompatActivity {
         setContentView(R.layout.activity_telegraph);
 
         db = new SeanDBHelper(this, "data.db", null, _dbVer);
+
+        Intent intent = getIntent();
+        Uri uri = intent.getData();
+        if (null != uri) {
+            String path = uri.getPath();
+
+            Log.d("wow", "uri: " + uri);
+
+            db.updateParam("_method_telegraph", path.substring(1));
+
+            Set<String> args = uri.getQueryParameterNames();
+            for (Object argNameObj : args) {
+                String argName = argNameObj.toString();
+                String argVal = uri.getQueryParameter(argName);
+                db.updateParam(argName, argVal);
+            }
+        }
 
         _api = new TelegraphAPI(this);
 

@@ -1,5 +1,7 @@
 package taipei.sean.telegram.botplayground.activity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +24,9 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Objects;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import taipei.sean.telegram.botplayground.InstantComplete;
 import taipei.sean.telegram.botplayground.R;
@@ -42,12 +47,29 @@ public class ApiCallerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_api_caller);
 
-        try {
-            Bundle bundle = getIntent().getExtras();
-            _token = bundle.getString("token");
-        } catch (NullPointerException e) {
-            Log.e("caller", "bundle error", e);
-            finish();
+
+        Intent intent = getIntent();
+        Uri uri = intent.getData();
+        if (null != uri) {
+            String path = uri.getPath();
+
+            Pattern p = Pattern.compile("/bot(" + getString(R.string.bot_token_regex) + ")/.+");
+            Matcher m = p.matcher(path);
+            if (m.matches()) {
+                _token = m.group(1);
+            } else {
+                Log.e("caller", "no token with intent");
+                finish();
+                return;
+            }
+        } else {
+            try {
+                Bundle bundle = getIntent().getExtras();
+                _token = bundle.getString("token");
+            } catch (NullPointerException e) {
+                Log.e("caller", "bundle error", e);
+                finish();
+            }
         }
 
         db = new SeanDBHelper(this, "data.db", null, _dbVer);
@@ -56,7 +78,6 @@ public class ApiCallerActivity extends AppCompatActivity {
 
         final InstantComplete methodView = (InstantComplete) findViewById(R.id.api_caller_method);
         final Button submitButton = (Button) findViewById(R.id.api_caller_submit);
-        final TextView resultView = (TextView) findViewById(R.id.api_caller_result);
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,6 +119,24 @@ public class ApiCallerActivity extends AppCompatActivity {
                 updateMethod();
             }
         });
+
+        if (null != uri) {
+            String path = uri.getPath();
+
+            Pattern p = Pattern.compile("/bot" + getString(R.string.bot_token_regex) + "/([A-Za-z]+)");
+            Matcher m = p.matcher(path);
+            if (m.matches()) {
+                String method = m.group(1);
+                db.updateParam("_method", method);
+            }
+
+            Set<String> args = uri.getQueryParameterNames();
+            for (Object argNameObj : args) {
+                String argName = argNameObj.toString();
+                String argVal = uri.getQueryParameter(argName);
+                db.updateParam(argName, argVal);
+            }
+        }
 
         String method = db.getParam("_method");
         if (apiMethods.has(method))
