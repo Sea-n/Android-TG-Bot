@@ -72,20 +72,23 @@ public class AddBotActivity extends AppCompatActivity {
     private void addBot() {
 
         // Store values at the time of the login attempt.
-        String token = tokenView.getText().toString();
+        String rawToken = tokenView.getText().toString();
         String name = nameView.getText().toString();
         int type = 0;
 
         boolean cancel = false;
         View focusView = null;
 
-        if (TextUtils.isEmpty(name) || !isNameValid(name)) {
+        if (TextUtils.isEmpty(name)) {
             nameView.setError(getString(R.string.add_bot_name_invalid));
             focusView = nameView;
             cancel = true;
         }
 
-        if (TextUtils.isEmpty(token) || !isTokenValid(token)) {
+        String tokenRegex = ".*?(" + getString(R.string.bot_token_regex) + ").*";
+        Pattern tokenPattern = Pattern.compile(tokenRegex, Pattern.DOTALL);
+        Matcher tokenMatcher = tokenPattern.matcher(rawToken);
+        if (!tokenMatcher.matches()) {
             tokenView.setError(getString(R.string.add_bot_token_invalid));
             focusView = tokenView;
             cancel = true;
@@ -95,6 +98,8 @@ public class AddBotActivity extends AppCompatActivity {
             focusView.requestFocus();
             return;
         }
+
+        String token = tokenMatcher.group(1);
 
         ContentValues values = new ContentValues();
         values.put("token", token);
@@ -113,16 +118,5 @@ public class AddBotActivity extends AppCompatActivity {
 
         Log.d("add", "inserted bot" + _id);
         finish();
-    }
-
-    private boolean isTokenValid(String token) {
-        String regex = getString(R.string.bot_token_regex);
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(token);
-        return matcher.matches();
-    }
-
-    private boolean isNameValid(String name) {
-        return name.length() > 0;
     }
 }
