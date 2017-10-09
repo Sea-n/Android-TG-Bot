@@ -229,6 +229,7 @@ public class FileDownloadActivity extends AppCompatActivity {
 
         if (file.exists()) {
             Log.d("fd", "File already exists");
+            openFile(file, mime);
         } else {
             Log.d("fd", "Start download " + file.toString());
             Thread thread = new Thread(new Runnable() {
@@ -301,17 +302,21 @@ public class FileDownloadActivity extends AppCompatActivity {
                     }
                     resp.body().close();
 
-                    String authority = context.getApplicationContext().getPackageName() + ".provider";
-                    Uri fileURI = FileProvider.getUriForFile(context, authority, file);
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setDataAndType(fileURI, mime);
-                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
-                    startActivity(intent);
+                    openFile(file, mime);
                 }
             });
             thread.start();
         }
+    }
+
+    private void openFile(File file, String mime) {
+        String authority = context.getApplicationContext().getPackageName() + ".provider";
+        Uri fileURI = FileProvider.getUriForFile(context, authority, file);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setDataAndType(fileURI, mime);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        startActivity(intent);
     }
 
     private void showError(final String str) {
