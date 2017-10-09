@@ -96,21 +96,23 @@ public class TelegramAPI {
                 }
                 Log.d("api", "resp:" + json);
 
-                try {
-                    JSONObject jsonObject = new JSONObject(json);
-                    boolean status = jsonObject.getBoolean("ok");
-                    if (status) {
+                if (null != json) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(json);
+                        boolean status = jsonObject.getBoolean("ok");
+                        if (status) {
 
-                        Pattern p = Pattern.compile("\"file_id\": \"([^\"]+)\"");
-                        Matcher m = p.matcher(json);
-                        while (m.find()) {
-                            String fileId = m.group(1);
-                            db.insertFav("file_id", fileId, method);
+                            Pattern p = Pattern.compile("\"file_id\": \"([^\"]+)\"");
+                            Matcher m = p.matcher(json);
+                            while (m.find()) {
+                                String fileId = m.group(1);
+                                db.insertFav("file_id", fileId, method);
+                            }
                         }
+                    } catch (JSONException e) {
+                        Log.e("api", "parse", e);
+                        resultText += response;
                     }
-                } catch (JSONException e) {
-                    Log.e("api", "parse", e);
-                    resultText += response;
                 }
 
                 resultText += json;
