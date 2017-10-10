@@ -7,12 +7,19 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,6 +33,7 @@ import taipei.sean.telegram.botplayground.InstantComplete;
 import taipei.sean.telegram.botplayground.R;
 import taipei.sean.telegram.botplayground.SeanAdapter;
 import taipei.sean.telegram.botplayground.SeanDBHelper;
+import taipei.sean.telegram.botplayground.TelegramAPI;
 
 public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     final private Context context;
@@ -118,6 +126,8 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             case "string":
                 type = "str";
                 break;
+            default:
+                type = "other";
         }
 
         if (Objects.equals(type, "bool")) {
@@ -151,6 +161,10 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             } else {
                 String text = db.getParam(name);
                 autoCompleteTextView.setText(text);
+
+                if (Objects.equals(type, "other")) {
+                    TelegramAPI.jsonColor((SpannableStringBuilder) autoCompleteTextView.getEditableText());
+                }
             }
 
 
@@ -204,6 +218,7 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 }
             });
 
+            final String finalType = type;
             autoCompleteTextView.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -216,6 +231,27 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 @Override
                 public void afterTextChanged(Editable editable) {
                     String value = editable.toString();
+
+                    if (Objects.equals(finalType, "other") && value.length() > 0) {
+                        try {
+                            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                            JsonParser jp = new JsonParser();
+                            JsonElement je;
+                            je = jp.parse(value);
+                            String json = gson.toJson(je);
+                            if (je.isJsonArray() || je.isJsonObject()) {
+                                if (!Objects.equals(json, value)) {
+                                    value = json;   // for update parameter
+                                    editable.clear();
+                                    editable.append(json);
+                                }
+
+                                TelegramAPI.jsonColor((SpannableStringBuilder) editable);
+                            }
+                        } catch (JsonSyntaxException e) {
+                            e.getMessage();   // Do nothing
+                        }
+                    }
 
                     db.updateParam(name, value);
                 }

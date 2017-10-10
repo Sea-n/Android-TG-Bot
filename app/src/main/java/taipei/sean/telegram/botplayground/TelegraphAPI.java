@@ -1,9 +1,16 @@
 package taipei.sean.telegram.botplayground;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.SpannedString;
+import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -48,7 +55,13 @@ public class TelegraphAPI {
         JsonParser jp = new JsonParser();
         JsonElement je = jp.parse(json);
         String prettyJson = gson.toJson(je);
-        String resultText = method + prettyJson;
+        SpannableStringBuilder jsonSpannable = new SpannableStringBuilder(prettyJson);
+        TelegramAPI.jsonColor(jsonSpannable);
+
+        SpannableString methodSpannable = new SpannableString(method);
+        methodSpannable.setSpan(new ForegroundColorSpan(Color.MAGENTA), 0, method.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        SpannedString resultText = (SpannedString) TextUtils.concat(methodSpannable, jsonSpannable);
         resultView.setText(resultText);
 
         String url = _apiBaseUrl + "/" + method + "?";
@@ -68,7 +81,7 @@ public class TelegraphAPI {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                String response = "";
+                String respStr = "";
                 String resultText = "";
                 try {
                     Request request = new Request.Builder()
@@ -76,16 +89,37 @@ public class TelegraphAPI {
                             .build();
                     OkHttpClient client = new OkHttpClient();
                     Response resp = client.newCall(request).execute();
-                    response = resp.body().string();
+                    respStr = resp.body().string();
                 } catch (final MalformedURLException e) {
                     Log.e("api", "Malformed URL", e);
-                    resultText += e.getLocalizedMessage();
+                    final String finalResultText = e.getLocalizedMessage();
+                    Handler handler = new Handler(_context.getMainLooper());
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            resultView.setText(finalResultText);
+                        }
+                    });
                 } catch (final IOException e) {
                     Log.e("api", "IO", e);
-                    resultText += e.getLocalizedMessage();
+                    final String finalResultText = e.getLocalizedMessage();
+                    Handler handler = new Handler(_context.getMainLooper());
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            resultView.setText(finalResultText);
+                        }
+                    });
                 } catch (final NullPointerException e) {
                     Log.e("api", "Null Pointer", e);
-                    resultText += e.getLocalizedMessage();
+                    final String finalResultText = e.getLocalizedMessage();
+                    Handler handler = new Handler(_context.getMainLooper());
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            resultView.setText(finalResultText);
+                        }
+                    });
                 }
 
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -93,13 +127,30 @@ public class TelegraphAPI {
                 JsonElement je;
                 String json = "";
                 try {
-                    je = jp.parse(response);
+                    je = jp.parse(respStr);
                     json = gson.toJson(je);
                 } catch (JsonSyntaxException e) {
                     Log.e("api", "parse", e);
-                    resultText += response;
+                    final String finalResultText = respStr;
+                    Handler handler = new Handler(_context.getMainLooper());
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            resultView.setText(finalResultText);
+                        }
+                    });
                 }
-                Log.d("api", "resp:" + json);
+                Log.v("api", "resp:" + json);
+
+                final  SpannableStringBuilder jsonSpannable = new SpannableStringBuilder(json);
+                TelegramAPI.jsonColor(jsonSpannable);
+                Handler handler = new Handler(_context.getMainLooper());
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        resultView.setText(jsonSpannable);
+                    }
+                });
 
                 try {
                     JSONObject jsonObject = new JSONObject(json);
@@ -117,19 +168,7 @@ public class TelegraphAPI {
                     }
                 } catch (JSONException e) {
                     Log.e("api", "parse", e);
-                    resultText += response;
                 }
-
-                resultText += json;
-
-                final String finalResultText = resultText;
-                Handler handler = new Handler(_context.getMainLooper());
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        resultView.setText(finalResultText);
-                    }
-                });
             }
         });
         thread.start();
