@@ -1,8 +1,15 @@
 package taipei.sean.telegram.botplayground;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.SpannedString;
+import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -51,7 +58,13 @@ public class TelegramAPI {
         JsonParser jp = new JsonParser();
         JsonElement je = jp.parse(json);
         String prettyJson = gson.toJson(je);
-        String resultText = method + prettyJson;
+        SpannableStringBuilder jsonSpannable = new SpannableStringBuilder(prettyJson);
+        jsonColor(jsonSpannable);
+
+        SpannableString methodSpannable = new SpannableString(method);
+        methodSpannable.setSpan(new ForegroundColorSpan(Color.MAGENTA), 0, method.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        SpannedString resultText = (SpannedString) TextUtils.concat(methodSpannable, jsonSpannable);
         resultView.setText(resultText);
 
         final String url = _apiBaseUrl + "/" + method;
@@ -59,8 +72,7 @@ public class TelegramAPI {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                String response = "";
-                String resultText = "";
+                String respStr = "";
                 try {
                     final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
@@ -71,16 +83,37 @@ public class TelegramAPI {
                             .build();
                     OkHttpClient client = new OkHttpClient();
                     Response resp = client.newCall(request).execute();
-                    response = resp.body().string();
+                    respStr = resp.body().string();
                 } catch (final MalformedURLException e) {
                     Log.e("api", "Malformed URL", e);
-                    resultText += e.getLocalizedMessage();
+                    final String finalResultText = e.getLocalizedMessage();
+                    Handler handler = new Handler(_context.getMainLooper());
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            resultView.setText(finalResultText);
+                        }
+                    });
                 } catch (final IOException e) {
                     Log.e("api", "IO", e);
-                    resultText += e.getLocalizedMessage();
+                    final String finalResultText = e.getLocalizedMessage();
+                    Handler handler = new Handler(_context.getMainLooper());
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            resultView.setText(finalResultText);
+                        }
+                    });
                 } catch (final NullPointerException e) {
                     Log.e("api", "Null Pointer", e);
-                    resultText += e.getLocalizedMessage();
+                    final String finalResultText = e.getLocalizedMessage();
+                    Handler handler = new Handler(_context.getMainLooper());
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            resultView.setText(finalResultText);
+                        }
+                    });
                 }
 
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -88,13 +121,31 @@ public class TelegramAPI {
                 JsonElement je;
                 String json = "";
                 try {
-                    je = jp.parse(response);
+                    je = jp.parse(respStr);
                     json = gson.toJson(je);
                 } catch (JsonSyntaxException e) {
                     Log.e("api", "parse", e);
-                    resultText += response;
+                    final String finalResultText = respStr;
+                    Handler handler = new Handler(_context.getMainLooper());
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            resultView.setText(finalResultText);
+                        }
+                    });
                 }
-                Log.d("api", "resp:" + json);
+                Log.v("api", "resp:" + json);
+
+                final SpannableStringBuilder jsonSpannable = new SpannableStringBuilder(json);
+                jsonColor(jsonSpannable);
+                Handler handler = new Handler(_context.getMainLooper());
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        resultView.setText(jsonSpannable);
+                    }
+                });
+
 
                 if (null != json) {
                     try {
@@ -110,23 +161,70 @@ public class TelegramAPI {
                             }
                         }
                     } catch (JSONException e) {
-                        Log.e("api", "parse", e);
-                        resultText += response;
+                        Log.e("api", "parse fav", e);
                     }
                 }
-
-                resultText += json;
-
-                final String finalResultText = resultText;
-                Handler handler = new Handler(_context.getMainLooper());
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        resultView.setText(finalResultText);
-                    }
-                });
             }
         });
         thread.start();
     }
+
+    public static SpannableStringBuilder jsonColor(SpannableStringBuilder spannable) {
+        String string = spannable.toString();
+        int pos, posB, posE;
+        for (pos = posB = 0, posE = string.indexOf("\n"); posE != -1; pos = posB = posE + 1, posE = string.indexOf("\n", posB)) {   // Missed first line
+            while (spannable.charAt(pos) == ' ')   // intend space
+                ++pos;
+
+            if (spannable.charAt(pos) == '"') {   // string key
+                int posT = pos;
+
+                do ++pos;   // key, didn't consider about escape
+                while (spannable.charAt(pos) != '"');
+
+                spannable.setSpan(new ForegroundColorSpan(Color.rgb(0x79, 0x5d, 0xa3)), posT, ++pos, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                if (spannable.charAt(pos) == ':') {
+                    spannable.setSpan(new ForegroundColorSpan(Color.BLACK), pos, ++pos, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);   // :
+                    ++pos;   // space after ":"
+                }
+            }
+
+
+            if (spannable.charAt(pos) == '"') {   // string value
+                int posT = pos;
+                do ++pos;   // value, didn't consider about escape
+                while (spannable.charAt(pos) != '"');
+
+                spannable.setSpan(new ForegroundColorSpan(Color.rgb(0xdf, 0x50, 0)), posT, ++pos, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);   // "
+            } else if (spannable.charAt(pos) == 't')   // true
+                spannable.setSpan(new ForegroundColorSpan(Color.rgb(0, 0x86, 0xb3)), pos, pos + 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            else if (spannable.charAt(pos) == 'f')   // false
+                spannable.setSpan(new ForegroundColorSpan(Color.rgb(0, 0x86, 0xb3)), pos, pos + 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            else if (spannable.charAt(pos) == 'n')   // null
+                spannable.setSpan(new ForegroundColorSpan(Color.rgb(0, 0x86, 0xb3)), pos, ++pos + 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            else if (spannable.charAt(pos) == '[' || spannable.charAt(pos) == ']')   // array
+                spannable.setSpan(new ForegroundColorSpan(Color.BLACK), pos, ++pos, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            else if (spannable.charAt(pos) == '{' || spannable.charAt(pos) == '}')   // object
+                spannable.setSpan(new ForegroundColorSpan(Color.BLACK), pos, ++pos, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            else if (Character.isDigit(spannable.charAt(pos)) || spannable.charAt(pos) == '-') {   // signed number
+                int posT = pos;
+                do ++pos;
+                while (Character.isDigit(spannable.charAt(pos)));
+                spannable.setSpan(new ForegroundColorSpan(Color.rgb(0, 0x80, 0x80)), posT, pos, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+
+
+            if (posE > 1) {
+                pos = posE - 1;  // pos before newline
+                if (spannable.charAt(pos) == ',')
+                    spannable.setSpan(new ForegroundColorSpan(Color.BLACK), pos, ++pos, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+        }
+        if (spannable.length() > 2)  // more than 2 line
+            spannable.setSpan(new ForegroundColorSpan(Color.BLACK), spannable.length() - 1, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);   // latest "}"
+
+        return spannable;
+    }
 }
+
