@@ -1,6 +1,7 @@
 package taipei.sean.telegram.botplayground.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.RecyclerView;
@@ -132,6 +133,7 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         if (Objects.equals(type, "bool")) {
             CheckBox checkBox = new CheckBox(context);
+            checkBox.setTextColor(Color.BLACK);
             checkBox.setText(name);
 
             final String finalDesc = desc;
