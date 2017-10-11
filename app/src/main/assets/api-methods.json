@@ -357,6 +357,13 @@
         "required": true,
         "description": "Longitude of location"
       },
+      "live_period": {
+        "type": "Integer",
+        "required": false,
+        "minInt": 60,
+        "maxInt": 86400,
+        "description": "Period in seconds for which the location will be updated."
+      },
       "disable_notification": {
         "type": "Boolean",
         "description": "Sends the message silently. Users will receive a notification with no sound."
@@ -368,6 +375,58 @@
       "reply_markup": {
         "type": "InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply",
         "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user."
+      }
+    }
+  },
+  "editMessageLiveLocation": {
+    "description": "Use this method to edit live location messages sent by the bot or via the bot (for inline bots). A location can be edited until its live_period expires or editing is explicitly disabled by a call to stopMessageLiveLocation. On success, if the edited message was sent by the bot, the edited Message is returned, otherwise True is returned.",
+    "params": {
+      "chat_id": {
+        "type": "Integer or String",
+        "description": "Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+      },
+      "message_id": {
+        "type": "Integer",
+        "description": "Required if inline_message_id is not specified. Identifier of the sent message"
+      },
+      "inline_message_id": {
+        "type": "String",
+        "description": "Required if chat_id and message_id are not specified. Identifier of the inline message"
+      },
+      "latitude": {
+        "type": "Float number",
+        "required": true,
+        "description": "Latitude of new location"
+      },
+      "longitude": {
+        "type": "Float number",
+        "required": true,
+        "description": "Longitude of new location"
+      },
+      "reply_markup": {
+        "type": "InlineKeyboardMarkup",
+        "description": "A JSON-serialized object for a new inline keyboard."
+      }
+    }
+  },
+  "stopMessageLiveLocation": {
+    "description": "Use this method to stop updating a live location message sent by the bot or via the bot (for inline bots) before live_period expires. On success, if the message was sent by the bot, the sent Message is returned, otherwise True is returned.",
+    "params": {
+      "chat_id": {
+        "type": "Integer or String",
+        "description": "Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+      },
+      "message_id": {
+        "type": "Integer",
+        "description": "Required if inline_message_id is not specified. Identifier of the sent message"
+      },
+      "inline_message_id": {
+        "type": "String",
+        "description": "Required if chat_id and message_id are not specified. Identifier of the inline message"
+      },
+      "reply_markup": {
+        "type": "InlineKeyboardMarkup",
+        "description": "A JSON-serialized object for a new inline keyboard."
       }
     }
   },
@@ -760,6 +819,31 @@
         "type": "Integer",
         "required": true,
         "description": "Unique identifier of the target user"
+      }
+    }
+  },
+  "setChatStickerSet": {
+    "description": "Use this method to set a new group sticker set for a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Use the field can_set_sticker_set optionally returned in getChat requests to check if the bot can use this method. Returns True on success.",
+    "params": {
+      "chat_id": {
+        "type": "Integer or String",
+        "required": true,
+        "description": "Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)"
+      },
+      "sticker_set_name": {
+        "type": "String",
+        "required": true,
+        "description": "Name of the sticker set to be set as the group sticker set"
+      }
+    }
+  },
+  "deleteChatStickerSet": {
+    "description": "Use this method to delete a group sticker set from a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Use the field can_set_sticker_set optionally returned in getChat requests to check if the bot can use this method. Returns True on success.",
+    "params": {
+      "chat_id": {
+        "type": "Integer or String",
+        "required": true,
+        "description": "Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)"
       }
     }
   },
