@@ -1,28 +1,44 @@
 package taipei.sean.telegram.botplayground.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -145,6 +161,133 @@ public class ApiCallerActivity extends AppCompatActivity {
         updateMethod();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.api_caller, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.action_screenshot:
+                InstantComplete methodView = (InstantComplete) findViewById(R.id.api_caller_method);
+                String method = methodView.getText().toString();
+
+                int width = methodView.getWidth();
+                int height = 0;
+
+                Bitmap paramsBitmap = null;
+                RecyclerView paramsLayout = (RecyclerView) findViewById(R.id.api_caller_inputs);
+                ApiCallerAdapter paramsAdapter = (ApiCallerAdapter) paramsLayout.getAdapter();
+                if (null != paramsAdapter) {
+                    paramsBitmap = paramsAdapter.getScreenshot();
+                    height += paramsBitmap.getHeight() + width * 3 / 16;
+                }
+
+                Bitmap resultBitmap = null;
+                LinearLayout resultWrapper = (LinearLayout) findViewById(R.id.api_caller_result_wrapper);
+                TextView resultView = (TextView) findViewById(R.id.api_caller_result);
+                if (!Objects.equals(resultView.getText().toString(), getString(R.string.no_context_yet))) {
+                    resultBitmap = Bitmap.createBitmap(resultWrapper.getWidth(), resultWrapper.getHeight(), Bitmap.Config.ARGB_8888);
+                    Canvas resultCanvas = new Canvas(resultBitmap);
+                    resultWrapper.draw(resultCanvas);
+                    height += resultBitmap.getHeight() + width * 3 / 16;
+                }
+
+                if (height == 0)
+                    return false;
+
+                height += width * 2 / 16;
+
+                Bitmap finalBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+                Canvas finalCanvas = new Canvas(finalBitmap);
+                finalCanvas.drawColor(Color.WHITE);
+
+                Paint titlePaint = new Paint();
+                titlePaint.setColor(Color.BLACK);
+                titlePaint.setTypeface(Typeface.SANS_SERIF);
+                setTextSize(titlePaint, width / 2, "Request");
+                titlePaint.setTextAlign(Paint.Align.LEFT);
+
+                Paint methodPaint = new Paint();
+                methodPaint.setColor(Color.DKGRAY);
+                methodPaint.setTypeface(Typeface.SANS_SERIF);
+                setTextSize(methodPaint, width / 3, method);   // Longest method name
+                methodPaint.setTextAlign(Paint.Align.LEFT);
+
+                Paint textPaint = new Paint();
+                textPaint.setColor(Color.LTGRAY);
+                textPaint.setTypeface(Typeface.SANS_SERIF);
+                setTextSize(textPaint, width / 2, "Powered by Awesome Telegram Bot");
+                textPaint.setTextAlign(Paint.Align.LEFT);
+
+                Paint linkPaint = new Paint();
+                linkPaint.setColor(Color.BLUE);
+                titlePaint.setTypeface(Typeface.SANS_SERIF);
+                setTextSize(linkPaint, width / 3, "@AwesomeTeleBot");
+                linkPaint.setTextAlign(Paint.Align.RIGHT);
+
+                int offset = 0;
+
+                if (null != paramsBitmap) {
+                    finalCanvas.drawText("Request", width / 32, offset + width * 2 / 16, titlePaint);
+                    finalCanvas.drawText("(" + method + ")", width * 9 / 16, offset + width * 2 / 16, methodPaint);
+                    offset += width * 3 / 16;
+
+                    finalCanvas.drawBitmap(paramsBitmap, 0, offset, null);
+                    offset += paramsBitmap.getHeight();
+                }
+
+                if (null != resultBitmap) {
+                    finalCanvas.drawText("Response", width / 32, offset + width * 2 / 16, titlePaint);
+                    offset += width * 3 / 16;
+
+                    finalCanvas.drawBitmap(resultBitmap, 0, offset, null);
+                    offset += resultBitmap.getHeight();
+                }
+
+                finalCanvas.drawText("Powered by Awesome Telegram Bot", width / 32, offset + width / 16, textPaint);
+                finalCanvas.drawText("@AwesomeTeleBot", width * 23 / 24, offset + width * 3 / 32, linkPaint);
+
+                SimpleDateFormat sdf = new SimpleDateFormat("MMMdd'T'HH:mm:ss", Locale.US);
+                Date date = new Date();
+                String time = sdf.format(date);
+                File file = new File(Environment.getExternalStorageDirectory().getPath() + "/TeleBot", "screenshot-" + time + ".png");
+                try {
+                    FileOutputStream out = new FileOutputStream(file);
+                    finalBitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+                } catch (Exception e) {
+                    Log.e("caller", "new file", e);
+                }
+
+                String authority = getApplicationContext().getPackageName() + ".provider";
+                Uri fileURI = FileProvider.getUriForFile(getApplicationContext(), authority, file);
+                Intent intent = new Intent();
+                intent.setType("image/png");
+                intent.setAction(Intent.ACTION_SEND);
+                intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+                intent.putExtra(Intent.EXTRA_TITLE, getString(R.string.app_name));
+                intent.putExtra(Intent.EXTRA_TEXT, "Powered by Awesome Telegram Bot, \n@AwesomeTeleBot");
+                intent.putExtra(Intent.EXTRA_STREAM, fileURI);
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+                startActivity(Intent.createChooser(intent, "Share Screenshot of " + method));
+                break;
+            default:
+                Log.w("option", "Press unknown " + id);
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     private void updateMethod() {
         final InstantComplete methodView = (InstantComplete) findViewById(R.id.api_caller_method);
         final RecyclerView paramList = (RecyclerView) findViewById(R.id.api_caller_inputs);
@@ -161,7 +304,7 @@ public class ApiCallerActivity extends AppCompatActivity {
         if (!apiMethods.has(method)) {
             methodView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
             ViewGroup.LayoutParams layoutParams = paramList.getLayoutParams();
-            layoutParams.height = 0;
+            paramList.setAdapter(null);
             paramList.setLayoutParams(layoutParams);
             return;
         }
@@ -355,5 +498,17 @@ public class ApiCallerActivity extends AppCompatActivity {
         }
 
         return json;
+    }
+
+    private static void setTextSize(Paint paint, float desiredWidth, String text) {
+        float testTextSize = 48f;
+
+        Rect bounds = new Rect();
+        paint.setTextSize(testTextSize);
+
+        paint.getTextBounds(text, 0, text.length(), bounds);
+        testTextSize *= desiredWidth;
+        testTextSize /= bounds.width();
+        paint.setTextSize(testTextSize);
     }
 }

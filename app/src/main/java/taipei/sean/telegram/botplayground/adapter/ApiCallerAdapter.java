@@ -1,7 +1,10 @@
 package taipei.sean.telegram.botplayground.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +14,7 @@ import android.text.InputType;
 import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.LruCache;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -43,6 +47,7 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private ArrayList<JSONObject> iList;
     private ArrayList<String> iListName;
     private ArrayList<View> iListView;
+    RecyclerView mRecyclerView;
 
     public ApiCallerAdapter(Context context) {
         this.context = context;
@@ -57,6 +62,14 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void addData(String name, JSONObject data) {
         iList.add(data);
         iListName.add(name);
+    }
+
+
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+
+        mRecyclerView = recyclerView;
     }
 
     @Override
@@ -313,6 +326,49 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             Log.e("ada", "Unknown view " + view.toString());
             return null;
         }
+    }
+
+    public Bitmap getScreenshot() {
+        Bitmap bigBitmap = null;
+        int size = getItemCount();
+        int height = 0;
+        Paint paint = new Paint();
+        int iHeight = 0;
+        final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
+
+        // Use 1/8th of the available memory for this memory cache.
+        final int cacheSize = maxMemory / 8;
+        LruCache<String, Bitmap> bitmaCache = new LruCache<>(cacheSize);
+        for (int i = 0; i < size; i++) {
+            if (null == getValue(i) || getValue(i).length() == 0)
+                continue;
+            RecyclerView.ViewHolder holder = this.createViewHolder(mRecyclerView, getItemViewType(i));
+            onBindViewHolder(holder, i);
+            holder.itemView.measure(View.MeasureSpec.makeMeasureSpec(mRecyclerView.getWidth(), View.MeasureSpec.EXACTLY),
+                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+            holder.itemView.layout(0, 0, holder.itemView.getMeasuredWidth(), holder.itemView.getMeasuredHeight());
+            holder.itemView.setDrawingCacheEnabled(true);
+            holder.itemView.buildDrawingCache();
+            Bitmap drawingCache = holder.itemView.getDrawingCache();
+            if (drawingCache != null) {
+                bitmaCache.put(String.valueOf(i), drawingCache);
+            }
+            height += holder.itemView.getMeasuredHeight();
+        }
+
+        bigBitmap = Bitmap.createBitmap(mRecyclerView.getMeasuredWidth(), height, Bitmap.Config.ARGB_8888);
+        Canvas bigCanvas = new Canvas(bigBitmap);
+
+        for (int i = 0; i < size; i++) {
+            if (null == getValue(i) || getValue(i).length() == 0)
+                continue;
+            Bitmap bitmap = bitmaCache.get(String.valueOf(i));
+            bigCanvas.drawBitmap(bitmap, 0f, iHeight, paint);
+            iHeight += bitmap.getHeight();
+            bitmap.recycle();
+        }
+
+        return bigBitmap;
     }
 
     private class DummyViewHolder extends RecyclerView.ViewHolder {
