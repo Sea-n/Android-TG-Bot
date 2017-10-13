@@ -42,7 +42,7 @@ public class TelegraphActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_telegraph);
+        setContentView(R.layout.api_caller);
 
         db = new SeanDBHelper(this, "data.db", null, _dbVer);
 
@@ -65,8 +65,8 @@ public class TelegraphActivity extends AppCompatActivity {
 
         _api = new TelegraphAPI(this);
 
-        final InstantComplete methodView = (InstantComplete) findViewById(R.id.telegraph_method);
-        final Button submitButton = (Button) findViewById(R.id.telegraph_submit);
+        final InstantComplete methodView = (InstantComplete) findViewById(R.id.api_caller_method);
+        final Button submitButton = (Button) findViewById(R.id.api_caller_submit);
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,8 +117,8 @@ public class TelegraphActivity extends AppCompatActivity {
     }
 
     private void updateMethod() {
-        final InstantComplete methodView = (InstantComplete) findViewById(R.id.telegraph_method);
-        final RecyclerView paramList = (RecyclerView) findViewById(R.id.telegraph_inputs);
+        final InstantComplete methodView = (InstantComplete) findViewById(R.id.api_caller_method);
+        final RecyclerView paramList = (RecyclerView) findViewById(R.id.api_caller_inputs);
         final String method = methodView.getText().toString();
 
         JSONObject methodData;
@@ -201,9 +201,9 @@ public class TelegraphActivity extends AppCompatActivity {
     }
 
     private void submit() {
-        final InstantComplete methodView = (InstantComplete) findViewById(R.id.telegraph_method);
-        final RecyclerView paramList = (RecyclerView) findViewById(R.id.telegraph_inputs);
-        final TextView resultView = (TextView) findViewById(R.id.telegraph_result);
+        final InstantComplete methodView = (InstantComplete) findViewById(R.id.api_caller_method);
+        final RecyclerView paramList = (RecyclerView) findViewById(R.id.api_caller_inputs);
+        final TextView resultView = (TextView) findViewById(R.id.api_caller_result);
 
         String method = methodView.getText().toString();
         JSONObject jsonObject = new JSONObject();

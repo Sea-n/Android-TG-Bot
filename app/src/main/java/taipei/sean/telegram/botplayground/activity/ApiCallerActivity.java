@@ -45,7 +45,7 @@ public class ApiCallerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_api_caller);
+        setContentView(R.layout.api_caller);
 
         db = new SeanDBHelper(this, "data.db", null, _dbVer);
 
