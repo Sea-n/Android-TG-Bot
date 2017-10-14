@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
@@ -104,6 +106,24 @@ public class FileDownloadActivity extends AppCompatActivity {
 
         String file_id = db.getParam("file_id");
         fileIdView.setText(file_id);
+
+        fileIdView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String file_id = editable.toString();
+                db.updateParam("file_id", file_id);
+            }
+        });
 
 
         submitButton.setOnClickListener(new View.OnClickListener() {
