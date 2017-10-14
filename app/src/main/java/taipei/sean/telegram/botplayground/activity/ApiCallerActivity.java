@@ -139,6 +139,8 @@ public class ApiCallerActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
+                String method = editable.toString();
+                db.updateParam("_method", method);
                 updateMethod();
             }
         });
@@ -414,8 +416,6 @@ public class ApiCallerActivity extends AppCompatActivity {
         paramList.setAdapter(apiCallerAdapter);
         paramList.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
         paramList.setItemViewCacheSize(paramData.length());
-
-        db.updateParam("_method", method);
 
         paramList.post(new Runnable() {
             @Override

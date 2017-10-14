@@ -128,6 +128,8 @@ public class TelegraphActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
+                String method = editable.toString();
+                db.updateParam("_method_telegraph", method);
                 updateMethod();
             }
         });
@@ -385,8 +387,6 @@ public class TelegraphActivity extends AppCompatActivity {
         paramList.setAdapter(apiCallerAdapter);
         paramList.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
         paramList.setItemViewCacheSize(paramData.length());
-
-        db.updateParam("_method_telegraph", method);
 
         paramList.post(new Runnable() {
             @Override
