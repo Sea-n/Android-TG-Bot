@@ -36,6 +36,7 @@ public class TelegraphAPI {
     final private String _apiBaseUrl = "https://api.telegra.ph/";
     final private Context _context;
     private SeanDBHelper db;
+    public JSONObject latestResponse;
 
     public TelegraphAPI(Context context) {
         this._context = context;
@@ -153,10 +154,10 @@ public class TelegraphAPI {
                 });
 
                 try {
-                    JSONObject jsonObject = new JSONObject(json);
-                    boolean status = jsonObject.getBoolean("ok");
+                    latestResponse = new JSONObject(json);
+                    boolean status = latestResponse.getBoolean("ok");
                     if (status) {
-                        JSONObject result = jsonObject.getJSONObject("result");
+                        JSONObject result = latestResponse.getJSONObject("result");
                         if (result.has("access_token")) {
                             String token = result.getString("access_token");
                             db.insertFav("access_token", token, _context.getString(R.string.title_activity_telegraph));

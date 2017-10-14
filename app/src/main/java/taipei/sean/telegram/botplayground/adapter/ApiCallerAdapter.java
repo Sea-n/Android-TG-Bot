@@ -26,6 +26,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -369,6 +370,40 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
 
         return bigBitmap;
+    }
+
+    public JSONObject getJson(String method) {
+        JSONObject jsonObject = new JSONObject();
+        final int inputCount = getItemCount();
+        for (int i = 0; i < inputCount; i++) {
+            String name = getName(i);
+            String value = getValue(i);
+
+            if (null == value)
+                continue;
+            if (Objects.equals(value, ""))
+                continue;
+
+            if (method != null)
+                db.insertFav(name, value, method);
+
+            try {
+                JSONObject valueJson = new JSONObject(value);   // if can be JSON Object
+                jsonObject.put(name, valueJson);   // treat as JSON Object
+            } catch (JSONException e1) {
+                try {
+                    JSONArray valueJson = new JSONArray(value);   // if not Object, but can be Array
+                    jsonObject.put(name, valueJson);   // treat as Array
+                } catch (JSONException e2) {
+                    try {
+                        jsonObject.put(name, value);   // not JSON, treat as string
+                    } catch (JSONException e3) {
+                        Log.e("ada", "put", e3);   // Can't put value to jsonObject
+                    }
+                }
+            }
+        }
+        return jsonObject;
     }
 
     private class DummyViewHolder extends RecyclerView.ViewHolder {

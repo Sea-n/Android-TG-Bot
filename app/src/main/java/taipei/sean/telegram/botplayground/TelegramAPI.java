@@ -38,6 +38,7 @@ public class TelegramAPI {
     final private String _apiBaseUrl;
     final private Context _context;
     private SeanDBHelper db;
+    public JSONObject latestResponse;
 
     public TelegramAPI(Context context, String token) {
         this._context = context;
@@ -149,8 +150,8 @@ public class TelegramAPI {
 
                 if (null != json) {
                     try {
-                        JSONObject jsonObject = new JSONObject(json);
-                        boolean status = jsonObject.getBoolean("ok");
+                        latestResponse = new JSONObject(json);
+                        boolean status = latestResponse.getBoolean("ok");
                         if (status) {
 
                             Pattern p = Pattern.compile("\"file_id\": \"([^\"]+)\"");

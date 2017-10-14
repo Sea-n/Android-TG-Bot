@@ -6,4 +6,9 @@
         android:icon="@android:drawable/ic_menu_camera"
         android:title="Screenshot"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_copy"
+        android:icon="@drawable/ic_menu_copy_holo_dark"
+        android:title="Copy"
+        app:showAsAction="ifRoom" />
 </menu>

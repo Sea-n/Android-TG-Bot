@@ -1,5 +1,7 @@
 package taipei.sean.telegram.botplayground.activity;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -13,6 +15,7 @@ import android.os.Environment;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.Editable;
@@ -26,7 +29,11 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.json.JSONArray;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -185,7 +192,7 @@ public class ApiCallerActivity extends AppCompatActivity {
 
                 Bitmap paramsBitmap = null;
                 RecyclerView paramsLayout = (RecyclerView) findViewById(R.id.api_caller_inputs);
-                ApiCallerAdapter paramsAdapter = (ApiCallerAdapter) paramsLayout.getAdapter();
+                final ApiCallerAdapter paramsAdapter = (ApiCallerAdapter) paramsLayout.getAdapter();
                 if (null != paramsAdapter) {
                     paramsBitmap = paramsAdapter.getScreenshot();
                     height += paramsBitmap.getHeight() + width * 3 / 16;
@@ -280,6 +287,50 @@ public class ApiCallerActivity extends AppCompatActivity {
 
                 startActivity(Intent.createChooser(intent, "Share Screenshot of " + method));
                 break;
+
+            case R.id.action_copy:
+                PopupMenu popupMenu = new PopupMenu(this, findViewById(R.id.action_copy));
+                popupMenu.getMenuInflater().inflate(R.menu.popup_api_caller_copy, popupMenu.getMenu());
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        int id = item.getItemId();
+                        JSONObject json = null;
+                        switch (id) {
+                            case R.id.copy_request:
+                                RecyclerView paramsLayout = (RecyclerView) findViewById(R.id.api_caller_inputs);
+                                final ApiCallerAdapter paramsAdapter = (ApiCallerAdapter) paramsLayout.getAdapter();
+                                if (null != paramsAdapter)
+                                    json = paramsAdapter.getJson(null);
+                                break;
+                            case R.id.copy_response:
+                                json = _api.latestResponse;
+                                break;
+                            default:
+                                Log.w("popup", "Press unknown " + id);
+                                return false;
+                        }
+
+                        String text;
+                        if (null == json) {
+                            text = getString(R.string.no_context_yet);
+                        } else {
+                            String jsonStr = json.toString();
+                            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                            JsonParser jp = new JsonParser();
+                            JsonElement je = jp.parse(jsonStr);
+                            text = gson.toJson(je);
+                        }
+
+                        ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                        ClipData clip = ClipData.newPlainText(getString(R.string.app_name), text);
+                        clipboard.setPrimaryClip(clip);
+                        return true;
+                    }
+                });
+                popupMenu.show();
+                break;
+
             default:
                 Log.w("option", "Press unknown " + id);
                 break;
@@ -304,8 +355,9 @@ public class ApiCallerActivity extends AppCompatActivity {
         if (!apiMethods.has(method)) {
             methodView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
             ViewGroup.LayoutParams layoutParams = paramList.getLayoutParams();
-            paramList.setAdapter(null);
+            layoutParams.height = 0;
             paramList.setLayoutParams(layoutParams);
+            paramList.setAdapter(null);
             return;
         }
 
@@ -378,7 +430,6 @@ public class ApiCallerActivity extends AppCompatActivity {
         final TextView resultView = (TextView) findViewById(R.id.api_caller_result);
 
         String method = methodView.getText().toString();
-        JSONObject jsonObject = new JSONObject();
 
         final ApiCallerAdapter paramAdapter = (ApiCallerAdapter) paramList.getAdapter();
 
@@ -387,40 +438,7 @@ public class ApiCallerActivity extends AppCompatActivity {
             return;
         }
 
-        final int paramHeight = paramList.getHeight();
-        if (paramHeight == 0) {
-            _api.callApi(method, resultView, null);
-            return;
-        }
-
-        final int inputCount = paramAdapter.getItemCount();
-        for (int i = 0; i < inputCount; i++) {
-            String name = paramAdapter.getName(i);
-            String value = paramAdapter.getValue(i);
-
-            if (null == value)
-                continue;
-            if (Objects.equals(value, ""))
-                continue;
-
-            db.insertFav(name, value, method);
-
-            try {
-                JSONObject valueJson = new JSONObject(value);   // if can be JSON Object
-                jsonObject.put(name, valueJson);   // treat as JSON Object
-            } catch (JSONException e1) {
-                try {
-                    JSONArray valueJson = new JSONArray(value);   // if not Object, but can be Array
-                    jsonObject.put(name, valueJson);   // treat as Array
-                } catch (JSONException e2) {
-                    try {
-                        jsonObject.put(name, value);   // not JSON, treat as string
-                    } catch (JSONException e3) {
-                        Log.e("caller", "put", e3);   // Can't put value to jsonObject
-                    }
-                }
-            }
-        }
+        JSONObject jsonObject = paramAdapter.getJson(method);
 
         _api.callApi(method, resultView, jsonObject);
     }
