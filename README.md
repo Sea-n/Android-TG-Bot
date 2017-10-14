@@ -17,6 +17,15 @@ Chinese 🇹🇼 by [Sean](https://www.sean.taipei)
 If you would like to translate this app to your native language, please read [this gist](https://gist.github.com/Sea-n/aacf84e85230a57778076eb6c3d98072).
 
 
+## Screenshots
+
+![Home](screenshots/home.png)
+![Bot API](screenshots/bot-api.png)
+![Telegraph](screenshots/telegraph.png)
+![File Downloader](screenshots/file-downloader.png)
+![About](screenshots/about.png)
+
+
 ## Links
 + Google Play: [taipei.sean.telegram.botplayground](https://play.google.com/store/apps/details?id=taipei.sean.telegram.botplayground)
   + Beta Testing Program is [available](https://play.google.com/apps/testing/taipei.sean.telegram.botplayground)!
