@@ -36,6 +36,7 @@
     <string name="del_bot_confirm_msg">क्या आपको यकीन है कि आप इस बॉट को हटाना चाहते है?</string>
 
     <string name="no_context_yet">अभी तक कोई भी प्रसंग शामिल नहीँ किया गया है।</string>
+    <string name="powered_by">Powered by Awesome Telegram Bot</string>
     <string name="param_out_of_range">Number must in range %1$d - %2$d.</string>
 
     <string name="file_downloader">फ़ाइल डाउनलोडर</string>
@@ -59,10 +60,16 @@
     <string name="method">तरीका</string>
     <string name="done">ठीक</string>
     <string name="save">बचाये</string>
+    <string name="copy">Copy</string>
     <string name="submit">जमा करें</string>
     <string name="cancel">रद्द करें</string>
     <string name="edit">बदले</string>
     <string name="remove">हटाये</string>
     <string name="yes">हां</string>
     <string name="no">नहीं</string>
+    <string name="screenshot">Screenshot</string>
+    <string name="request">Request</string>
+    <string name="response">Response</string>
+    <string name="copy_request">Copy Request</string>
+    <string name="copy_response">Copy Response</string>
 </resources>

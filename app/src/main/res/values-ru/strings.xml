@@ -36,6 +36,7 @@
     <string name="del_bot_confirm_msg">Вы уверены, что хотите удалить этот бота?</string>
 
     <string name="no_context_yet">No Context Yet.</string>
+    <string name="powered_by">Powered by Awesome Telegram Bot</string>
     <string name="param_out_of_range">Number must in range %1$d - %2$d.</string>
 
     <string name="file_downloader">Загрузчик Файлов</string>
@@ -59,10 +60,16 @@
     <string name="method">Метод</string>
     <string name="done">Ок</string>
     <string name="save">Сохранить</string>
+    <string name="copy">Copy</string>
     <string name="submit">Подтвердить</string>
     <string name="cancel">Отменить</string>
     <string name="edit">Редактировать</string>
     <string name="remove">Удалить</string>
     <string name="yes">Да</string>
     <string name="no">Нет</string>
+    <string name="screenshot">Screenshot</string>
+    <string name="request">Request</string>
+    <string name="response">Response</string>
+    <string name="copy_request">Copy Request</string>
+    <string name="copy_response">Copy Response</string>
 </resources>

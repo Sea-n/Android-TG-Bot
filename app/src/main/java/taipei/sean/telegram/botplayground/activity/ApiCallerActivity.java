@@ -220,31 +220,31 @@ public class ApiCallerActivity extends AppCompatActivity {
                 Paint titlePaint = new Paint();
                 titlePaint.setColor(Color.BLACK);
                 titlePaint.setTypeface(Typeface.SANS_SERIF);
-                setTextSize(titlePaint, width / 2, "Request");
+                setTextSize(titlePaint, width / 2, getString(R.string.request));
                 titlePaint.setTextAlign(Paint.Align.LEFT);
 
                 Paint methodPaint = new Paint();
                 methodPaint.setColor(Color.DKGRAY);
                 methodPaint.setTypeface(Typeface.SANS_SERIF);
-                setTextSize(methodPaint, width / 3, method);   // Longest method name
+                setTextSize(methodPaint, width / 3, method);
                 methodPaint.setTextAlign(Paint.Align.LEFT);
 
                 Paint textPaint = new Paint();
                 textPaint.setColor(Color.LTGRAY);
                 textPaint.setTypeface(Typeface.SANS_SERIF);
-                setTextSize(textPaint, width / 2, "Powered by Awesome Telegram Bot");
+                setTextSize(textPaint, width / 2, getString(R.string.powered_by));
                 textPaint.setTextAlign(Paint.Align.LEFT);
 
                 Paint linkPaint = new Paint();
                 linkPaint.setColor(Color.BLUE);
                 titlePaint.setTypeface(Typeface.SANS_SERIF);
-                setTextSize(linkPaint, width / 3, "@AwesomeTeleBot");
+                setTextSize(linkPaint, width / 3, getString(R.string.app_link_text));
                 linkPaint.setTextAlign(Paint.Align.RIGHT);
 
                 int offset = 0;
 
                 if (null != paramsBitmap) {
-                    finalCanvas.drawText("Request", width / 32, offset + width * 2 / 16, titlePaint);
+                    finalCanvas.drawText(getString(R.string.request), width / 32, offset + width * 2 / 16, titlePaint);
                     finalCanvas.drawText("(" + method + ")", width * 9 / 16, offset + width * 2 / 16, methodPaint);
                     offset += width * 3 / 16;
 
@@ -253,15 +253,15 @@ public class ApiCallerActivity extends AppCompatActivity {
                 }
 
                 if (null != resultBitmap) {
-                    finalCanvas.drawText("Response", width / 32, offset + width * 2 / 16, titlePaint);
+                    finalCanvas.drawText(getString(R.string.response), width / 32, offset + width * 2 / 16, titlePaint);
                     offset += width * 3 / 16;
 
                     finalCanvas.drawBitmap(resultBitmap, 0, offset, null);
                     offset += resultBitmap.getHeight();
                 }
 
-                finalCanvas.drawText("Powered by Awesome Telegram Bot", width / 32, offset + width / 16, textPaint);
-                finalCanvas.drawText("@AwesomeTeleBot", width * 23 / 24, offset + width * 3 / 32, linkPaint);
+                finalCanvas.drawText(getString(R.string.powered_by), width / 32, offset + width / 16, textPaint);
+                finalCanvas.drawText(getString(R.string.app_link_text), width * 23 / 24, offset + width * 3 / 32, linkPaint);
 
                 SimpleDateFormat sdf = new SimpleDateFormat("MMMdd'T'HH:mm:ss", Locale.US);
                 Date date = new Date();
@@ -274,6 +274,7 @@ public class ApiCallerActivity extends AppCompatActivity {
                     Log.e("caller", "new file", e);
                 }
 
+                String caption = getString(R.string.powered_by) + ", \n" + getString(R.string.app_link_text);
                 String authority = getApplicationContext().getPackageName() + ".provider";
                 Uri fileURI = FileProvider.getUriForFile(getApplicationContext(), authority, file);
                 Intent intent = new Intent();
@@ -281,7 +282,7 @@ public class ApiCallerActivity extends AppCompatActivity {
                 intent.setAction(Intent.ACTION_SEND);
                 intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
                 intent.putExtra(Intent.EXTRA_TITLE, getString(R.string.app_name));
-                intent.putExtra(Intent.EXTRA_TEXT, "Powered by Awesome Telegram Bot, \n@AwesomeTeleBot");
+                intent.putExtra(Intent.EXTRA_TEXT, caption);
                 intent.putExtra(Intent.EXTRA_STREAM, fileURI);
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 

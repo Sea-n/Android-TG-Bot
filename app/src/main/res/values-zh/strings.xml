@@ -36,6 +36,7 @@
     <string name="del_bot_confirm_msg">您確定要刪除這隻 Bot 嗎？</string>
 
     <string name="no_context_yet">尚無內容</string>
+    <string name="powered_by">由 Awesome Telegram Bot 提供</string>
     <string name="param_out_of_range">Number must in range %1$d - %2$d.</string>
 
     <string name="file_downloader">檔案下載器</string>
@@ -59,10 +60,16 @@
     <string name="method">Method</string>
     <string name="done">完成</string>
     <string name="save">儲存</string>
+    <string name="copy">複製</string>
     <string name="submit">送出</string>
     <string name="cancel">取消</string>
     <string name="edit">編輯</string>
     <string name="remove">移除</string>
     <string name="yes">是</string>
     <string name="no">否</string>
+    <string name="screenshot">截圖</string>
+    <string name="request">請求</string>
+    <string name="response">回應</string>
+    <string name="copy_request">複製請求</string>
+    <string name="copy_response">複製回應</string>
 </resources>

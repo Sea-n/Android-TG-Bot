@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/copy_request"
-        android:title="Copy Request" />
+        android:title="@string/copy_request" />
     <item
         android:id="@+id/copy_response"
-        android:title="Copy Response" />
+        android:title="@string/copy_response" />
 </menu>
