@@ -1,8 +1,10 @@
 package taipei.sean.telegram.botplayground.activity;
 
+import android.Manifest;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -10,9 +12,12 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
@@ -28,6 +33,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -46,7 +52,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.Set;
 
 import taipei.sean.telegram.botplayground.InstantComplete;
@@ -129,7 +134,8 @@ public class TelegraphActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 String method = editable.toString();
-                db.updateParam("_method_telegraph", method);
+                if (apiMethods.has(method))
+                    db.updateParam("_method_telegraph", method);
                 updateMethod();
             }
         });
@@ -168,13 +174,14 @@ public class TelegraphActivity extends AppCompatActivity {
                 ApiCallerAdapter paramsAdapter = (ApiCallerAdapter) paramsLayout.getAdapter();
                 if (null != paramsAdapter) {
                     paramsBitmap = paramsAdapter.getScreenshot();
-                    height += paramsBitmap.getHeight() + width * 3 / 16;
+                    if (null != paramsBitmap)
+                        height += paramsBitmap.getHeight() + width * 3 / 16;
                 }
 
                 Bitmap resultBitmap = null;
                 LinearLayout resultWrapper = (LinearLayout) findViewById(R.id.api_caller_result_wrapper);
                 TextView resultView = (TextView) findViewById(R.id.api_caller_result);
-                if (!Objects.equals(resultView.getText().toString(), getString(R.string.no_context_yet))) {
+                if (!resultView.getText().toString().equals(getString(R.string.no_context_yet))) {
                     resultBitmap = Bitmap.createBitmap(resultWrapper.getWidth(), resultWrapper.getHeight(), Bitmap.Config.ARGB_8888);
                     Canvas resultCanvas = new Canvas(resultBitmap);
                     resultWrapper.draw(resultCanvas);
@@ -236,10 +243,13 @@ public class TelegraphActivity extends AppCompatActivity {
                 finalCanvas.drawText(getString(R.string.powered_by), width / 32, offset + width / 16, textPaint);
                 finalCanvas.drawText(getString(R.string.app_link_text), width * 23 / 24, offset + width * 3 / 32, linkPaint);
 
+                File dir = createDir();
+                if (null == dir)
+                    return false;
                 SimpleDateFormat sdf = new SimpleDateFormat("MMMdd'T'HH:mm:ss", Locale.US);
                 Date date = new Date();
                 String time = sdf.format(date);
-                File file = new File(Environment.getExternalStorageDirectory().getPath() + "/TeleBot", "screenshot-" + time + ".png");
+                File file = new File(dir, "screenshot-" + time + ".png");
                 try {
                     FileOutputStream out = new FileOutputStream(file);
                     finalBitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
@@ -327,7 +337,8 @@ public class TelegraphActivity extends AppCompatActivity {
         }
 
         if (!apiMethods.has(method)) {
-            methodView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+                methodView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
             ViewGroup.LayoutParams layoutParams = paramList.getLayoutParams();
             layoutParams.height = 0;
             paramList.setLayoutParams(layoutParams);
@@ -335,7 +346,8 @@ public class TelegraphActivity extends AppCompatActivity {
             return;
         }
 
-        methodView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_star_border_black_24dp, 0);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+            methodView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_star_border_black_24dp, 0);
 
         try {
             methodData = apiMethods.getJSONObject(method);
@@ -488,6 +500,29 @@ public class TelegraphActivity extends AppCompatActivity {
         }
 
         return json;
+    }
+
+    private File createDir() {
+        int permW = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (permW == PackageManager.PERMISSION_DENIED) {
+            Log.w("main", "permission WRITE_EXTERNAL_STORAGE denied");
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+            return null;
+        }
+
+        final File dir = new File(Environment.getExternalStorageDirectory() + "/TeleBot");
+        if (!dir.exists()) {
+            if (!dir.mkdir()) {
+                Log.e("main", "mkdir fail");
+                Toast.makeText(this, R.string.mkdir_fail, Toast.LENGTH_LONG).show();
+                return null;
+            }
+        } else if (!dir.isDirectory()) {
+            Log.e("main", "director is file");
+            Toast.makeText(this, R.string.mkdir_fail, Toast.LENGTH_LONG).show();
+            return null;
+        }
+        return dir;
     }
 
     private static void setTextSize(Paint paint, float desiredWidth, String text) {

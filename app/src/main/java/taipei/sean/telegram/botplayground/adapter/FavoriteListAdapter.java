@@ -1,6 +1,7 @@
 package taipei.sean.telegram.botplayground.adapter;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -62,7 +63,8 @@ public class FavoriteListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 //        LinearLayoutManager layoutManager
 //                = new LinearLayoutManager(linearLayout.getContext(), LinearLayoutManager.VERTICAL, false);
 //        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setPaddingRelative(0, 0, 0, 50);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+            recyclerView.setPaddingRelative(0, 0, 0, 50);
         recyclerView.setAdapter(favAda);
 
         linearLayout.addView(titleTextView);

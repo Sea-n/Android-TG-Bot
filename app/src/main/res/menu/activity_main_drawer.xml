@@ -52,12 +52,6 @@
                 android:icon="@drawable/ic_info_outline_black_24dp"
                 android:title="@string/menu_about"
                 android:visible="true" />
-            <item
-                android:id="@+id/footer_spacer"
-                android:checkable="false"
-                android:enabled="false"
-                android:orderInCategory="200"
-                android:title="" />
         </menu>
     </item>
 </menu>

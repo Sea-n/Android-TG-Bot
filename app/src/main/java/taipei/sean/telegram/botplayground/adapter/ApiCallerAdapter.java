@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.Build;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.RecyclerView;
@@ -32,7 +33,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import taipei.sean.telegram.botplayground.FavStructure;
 import taipei.sean.telegram.botplayground.InstantComplete;
@@ -116,7 +116,7 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         InstantComplete autoCompleteTextView = new InstantComplete(textInputLayout.getContext());
 
-        if (req)
+        if (req && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
             autoCompleteTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_star_border_black_24dp, 0);
 
         switch (type) {
@@ -145,7 +145,7 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 type = "other";
         }
 
-        if (Objects.equals(type, "bool")) {
+        if (type.equals("bool")) {
             CheckBox checkBox = new CheckBox(context);
             checkBox.setTextColor(Color.BLACK);
             checkBox.setText(name);
@@ -178,7 +178,7 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 String text = db.getParam(name);
                 autoCompleteTextView.setText(text);
 
-                if (Objects.equals(type, "other")) {
+                if (type.equals("other")) {
                     TelegramAPI.jsonColor((SpannableStringBuilder) autoCompleteTextView.getEditableText());
                 }
             }
@@ -248,7 +248,7 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 public void afterTextChanged(Editable editable) {
                     String value = editable.toString();
 
-                    if (Objects.equals(finalType, "other") && value.length() > 0) {
+                    if (finalType.equals("other") && value.length() > 0) {
                         try {
                             Gson gson = new GsonBuilder().setPrettyPrinting().create();
                             JsonParser jp = new JsonParser();
@@ -256,7 +256,7 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                             je = jp.parse(value);
                             String json = gson.toJson(je);
                             if (je.isJsonArray() || je.isJsonObject()) {
-                                if (!Objects.equals(json, value)) {
+                                if (!json.equals(value)) {
                                     value = json;   // for update parameter
                                     editable.clear();
                                     editable.append(json);
@@ -357,6 +357,9 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             height += holder.itemView.getMeasuredHeight();
         }
 
+        if (height == 0)
+            return null;
+
         bigBitmap = Bitmap.createBitmap(mRecyclerView.getMeasuredWidth(), height, Bitmap.Config.ARGB_8888);
         Canvas bigCanvas = new Canvas(bigBitmap);
 
@@ -381,7 +384,7 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
             if (null == value)
                 continue;
-            if (Objects.equals(value, ""))
+            if (value.equals(""))
                 continue;
 
             if (method != null)

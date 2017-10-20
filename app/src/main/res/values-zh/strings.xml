@@ -48,7 +48,7 @@
     <string name="add_fav_name_hint">名稱</string>
 
     <string name="save_db">保存資料庫</string>
-    <string name="export_mkdir_fail">建立備份資料夾失敗</string>
+    <string name="mkdir_fail">建立備份資料夾失敗</string>
     <string name="db_export_fail">資料庫匯出失敗\n錯誤訊息：</string>
     <string name="export_to">已匯出至</string>
 

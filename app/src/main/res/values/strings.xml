@@ -48,7 +48,7 @@
     <string name="add_fav_name_hint">Kindly Name</string>
 
     <string name="save_db">Save Databases</string>
-    <string name="export_mkdir_fail">Fail to create backup director</string>
+    <string name="mkdir_fail">Fail to create backup director</string>
     <string name="db_export_fail">Database export fail\nReason:</string>
     <string name="export_to">"Exported to "</string>
 

@@ -1,6 +1,7 @@
 package taipei.sean.telegram.botplayground.adapter;
 
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,7 +60,8 @@ public class FavoriteItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         TextView valView = new TextView(gridLayout.getContext());
         valView.setText(fav.value);
         valView.setWidth(valWidth);
-        valView.setPaddingRelative(0, 0, 20, 0);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+            valView.setPaddingRelative(0, 0, 20, 0);
         gridLayout.addView(valView);
 
         TextView nameView = new TextView(gridLayout.getContext());

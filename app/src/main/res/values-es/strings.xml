@@ -48,7 +48,7 @@
     <string name="add_fav_name_hint">Nombre corto</string>
 
     <string name="save_db">Guardar bases de datos</string>
-    <string name="export_mkdir_fail">Fallo al crear la copia de seguridad</string>
+    <string name="mkdir_fail">Fallo al crear la copia de seguridad</string>
     <string name="db_export_fail">Error en la exportación de la base de datos\nRazón:</string>
     <string name="export_to">"Exportado a "</string>
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 
 public class AboutAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -69,10 +69,11 @@ public class AboutAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         titleView.setText(title);
         titleView.setTextSize(16);
         titleView.setTextColor(Color.BLACK);
-        titleView.setPaddingRelative(40, 20, 40, 3);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+            titleView.setPaddingRelative(40, 20, 40, 3);
         linearLayout.addView(titleView);
 
-        if (!Objects.equals(desc, "")) {
+        if (!desc.equals("")) {
             TextView descView = new TextView(context);
             descView.setText(desc);
             descView.setTextSize(12);
@@ -80,10 +81,13 @@ public class AboutAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             linearLayout.addView(descView);
 
 
-            titleView.setPaddingRelative(40, 30, 40, 3);
-            descView.setPaddingRelative(40, 3, 40, 20);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                titleView.setPaddingRelative(40, 30, 40, 3);
+                descView.setPaddingRelative(40, 3, 40, 20);
+            }
         } else {
-            titleView.setPaddingRelative(40, 40, 40, 40);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+                titleView.setPaddingRelative(40, 40, 40, 40);
         }
 
         View dividerView = new View(context);
@@ -105,7 +109,8 @@ public class AboutAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         titleView.setText(title);
         titleView.setTextSize(15);
         titleView.setTextColor(Color.rgb(0x10, 0x30, 0xc0));
-        titleView.setPaddingRelative(40, 60, 40, 10);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+            titleView.setPaddingRelative(40, 60, 40, 10);
         linearLayout.addView(titleView);
     }
 

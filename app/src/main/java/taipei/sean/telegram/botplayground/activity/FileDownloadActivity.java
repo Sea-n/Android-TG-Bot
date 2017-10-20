@@ -1,10 +1,14 @@
 package taipei.sean.telegram.botplayground.activity;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -219,18 +223,9 @@ public class FileDownloadActivity extends AppCompatActivity {
             return;
         }
 
-        final File downloadDir = new File(Environment.getExternalStorageDirectory() + "/TeleBot");
-        if (!downloadDir.exists()) {
-            if (!downloadDir.mkdir()) {
-                Log.e("fd", "Fail to make directory");
-                showError("Fail to make directory");
-                return;
-            }
-        } else if (!downloadDir.isDirectory()) {
-            Log.e("fd", "Directory is file");
-            showError("Directory is file");
+        final File downloadDir = createDir();
+        if (null == downloadDir)
             return;
-        }
         final String extName = FilenameUtils.getExtension(filePath);
         final boolean noExt = (null == extName || extName.length() == 0);
         final String fileName;
@@ -327,6 +322,29 @@ public class FileDownloadActivity extends AppCompatActivity {
             });
             thread.start();
         }
+    }
+
+    public File createDir() {
+        int permW = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (permW == PackageManager.PERMISSION_DENIED) {
+            Log.w("main", "permission WRITE_EXTERNAL_STORAGE denied");
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+            return null;
+        }
+
+        final File dir = new File(Environment.getExternalStorageDirectory() + "/TeleBot");
+        if (!dir.exists()) {
+            if (!dir.mkdir()) {
+                Log.e("main", "mkdir fail");
+                showError(getString(R.string.mkdir_fail));
+                return null;
+            }
+        } else if (!dir.isDirectory()) {
+            Log.e("main", "director is file");
+            showError(getString(R.string.mkdir_fail));
+            return null;
+        }
+        return dir;
     }
 
     private void openFile(File file, String mime) {

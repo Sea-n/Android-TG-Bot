@@ -48,7 +48,7 @@
     <string name="add_fav_name_hint">कृपया नाम चुने</string>
 
     <string name="save_db">आंकड़ाकोष बचाये</string>
-    <string name="export_mkdir_fail">बैकअप डायरेक्टरी बनाना असफ़ल हो रहा हैं।</string>
+    <string name="mkdir_fail">बैकअप डायरेक्टरी बनाना असफ़ल हो रहा हैं।</string>
     <string name="db_export_fail">आंकड़ाकोष को बचाना असफ़ल रहा। \nकारन:</string>
     <string name="export_to">"भेज दिया गया है"</string>
 

@@ -31,13 +31,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.onesignal.OneSignal;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 
 import taipei.sean.telegram.botplayground.BotStructure;
 import taipei.sean.telegram.botplayground.R;
@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
             footerStr = getString(R.string.nav_footer, appName, verName, verCode + "");
         } catch (PackageManager.NameNotFoundException e) {
             Log.e("main", "Name Not Found", e);
-            if (Objects.equals(footerStr, "")) {
+            if (footerStr.equals("")) {
                 footerStr = e.getLocalizedMessage();
             }
         }
@@ -413,23 +413,12 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
+        final File backupDir = createDir();
+        if (null == backupDir)
+            return;
+
         final File oldDb = this.getDatabasePath("data.db");
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.main_fab);
-
-        final File backupDir = new File(Environment.getExternalStorageDirectory() + "/TeleBot");
-        if (!backupDir.exists()) {
-            if (!backupDir.mkdir()) {
-                Log.e("main", "export mkdir fail");
-                Snackbar.make(fab, R.string.export_mkdir_fail, Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                return;
-            }
-        } else if (!backupDir.isDirectory()) {
-            Log.e("main", "export director is file");
-            Snackbar.make(fab, R.string.export_mkdir_fail, Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
-            return;
-        }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.save_db);
@@ -466,6 +455,29 @@ public class MainActivity extends AppCompatActivity {
         });
 
         builder.show();
+    }
+
+    private File createDir() {
+        int permW = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (permW == PackageManager.PERMISSION_DENIED) {
+            Log.w("main", "permission WRITE_EXTERNAL_STORAGE denied");
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+            return null;
+        }
+
+        final File dir = new File(Environment.getExternalStorageDirectory() + "/TeleBot");
+        if (!dir.exists()) {
+            if (!dir.mkdir()) {
+                Log.e("main", "mkdir fail");
+                Toast.makeText(this, R.string.mkdir_fail, Toast.LENGTH_LONG).show();
+                return null;
+            }
+        } else if (!dir.isDirectory()) {
+            Log.e("main", "director is file");
+            Toast.makeText(this, R.string.mkdir_fail, Toast.LENGTH_LONG).show();
+            return null;
+        }
+        return dir;
     }
 
     public void addBot() {

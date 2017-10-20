@@ -5,10 +5,10 @@ android {
     buildToolsVersion "25.0.3"
     defaultConfig {
         applicationId "taipei.sean.telegram.botplayground"
-        minSdkVersion 21
+        minSdkVersion 15
         targetSdkVersion 25
-        versionCode 52
-        versionName "1.7.3"
+        versionCode 53
+        versionName "1.7.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [onesignal_app_id               : "07dbb755-8e15-4edb-9c2c-281efae2b677",
                                 // Project number pulled from dashboard, local value is ignored.

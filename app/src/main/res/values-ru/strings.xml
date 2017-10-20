@@ -48,7 +48,7 @@
     <string name="add_fav_name_hint">Введите название </string>
 
     <string name="save_db">Сохранить Базу Данных</string>
-    <string name="export_mkdir_fail">Не удается создать резервную копию папки</string>
+    <string name="mkdir_fail">Не удается создать резервную копию папки</string>
     <string name="db_export_fail">Ошибки при экспорте базы данных\nПричина:</string>
     <string name="export_to">"Экспортировать в "</string>
 
