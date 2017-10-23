@@ -79,8 +79,6 @@ public class TelegraphActivity extends AppCompatActivity {
         if (null != uri) {
             String path = uri.getPath();
 
-            Log.d("wow", "uri: " + uri);
-
             db.updateParam("_method_telegraph", path.substring(1));
 
             Set<String> args = uri.getQueryParameterNames();
@@ -163,19 +161,25 @@ public class TelegraphActivity extends AppCompatActivity {
 
         switch (id) {
             case R.id.action_screenshot:
-                InstantComplete methodView = (InstantComplete) findViewById(R.id.api_caller_method);
-                String method = methodView.getText().toString();
-
-                int width = methodView.getWidth();
+                LinearLayout parentLayout = (LinearLayout) findViewById(R.id.api_caller_layout);
+                int width = parentLayout.getWidth();
                 int height = 0;
 
+                InstantComplete methodView = (InstantComplete) findViewById(R.id.api_caller_method);
+                String method = methodView.getText().toString();
+                if (!apiMethods.has(method))
+                    method = null;
+
                 Bitmap paramsBitmap = null;
-                RecyclerView paramsLayout = (RecyclerView) findViewById(R.id.api_caller_inputs);
-                ApiCallerAdapter paramsAdapter = (ApiCallerAdapter) paramsLayout.getAdapter();
-                if (null != paramsAdapter) {
-                    paramsBitmap = paramsAdapter.getScreenshot();
-                    if (null != paramsBitmap)
-                        height += paramsBitmap.getHeight() + width * 3 / 16;
+                if (null != method) {
+                    height += width * 3 / 16;   // Request Header (with method name)
+                    RecyclerView paramsLayout = (RecyclerView) findViewById(R.id.api_caller_inputs);
+                    final ApiCallerAdapter paramsAdapter = (ApiCallerAdapter) paramsLayout.getAdapter();
+                    if (null != paramsAdapter) {
+                        paramsBitmap = paramsAdapter.getScreenshot();
+                        if (null != paramsBitmap)
+                            height += paramsBitmap.getHeight();   // Request Body
+                    }
                 }
 
                 Bitmap resultBitmap = null;
@@ -191,7 +195,7 @@ public class TelegraphActivity extends AppCompatActivity {
                 if (height == 0)
                     return false;
 
-                height += width * 2 / 16;
+                height += width * 2 / 16;   // footer
 
                 Bitmap finalBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
                 Canvas finalCanvas = new Canvas(finalBitmap);
@@ -203,11 +207,14 @@ public class TelegraphActivity extends AppCompatActivity {
                 setTextSize(titlePaint, width / 2, getString(R.string.request));
                 titlePaint.setTextAlign(Paint.Align.LEFT);
 
-                Paint methodPaint = new Paint();
-                methodPaint.setColor(Color.DKGRAY);
-                methodPaint.setTypeface(Typeface.SANS_SERIF);
-                setTextSize(methodPaint, width / 3, method);
-                methodPaint.setTextAlign(Paint.Align.LEFT);
+                Paint methodPaint = null;
+                if (null != method) {
+                    methodPaint = new Paint();
+                    methodPaint.setColor(Color.DKGRAY);
+                    methodPaint.setTypeface(Typeface.SANS_SERIF);
+                    setTextSize(methodPaint, width / 3, method);
+                    methodPaint.setTextAlign(Paint.Align.LEFT);
+                }
 
                 Paint textPaint = new Paint();
                 textPaint.setColor(Color.LTGRAY);
@@ -223,13 +230,15 @@ public class TelegraphActivity extends AppCompatActivity {
 
                 int offset = 0;
 
-                if (null != paramsBitmap) {
+                if (null != method) {
                     finalCanvas.drawText(getString(R.string.request), width / 32, offset + width * 2 / 16, titlePaint);
                     finalCanvas.drawText("(" + method + ")", width * 9 / 16, offset + width * 2 / 16, methodPaint);
                     offset += width * 3 / 16;
 
-                    finalCanvas.drawBitmap(paramsBitmap, 0, offset, null);
-                    offset += paramsBitmap.getHeight();
+                    if (null != paramsBitmap) {
+                        finalCanvas.drawBitmap(paramsBitmap, 0, offset, null);
+                        offset += paramsBitmap.getHeight();
+                    }
                 }
 
                 if (null != resultBitmap) {
