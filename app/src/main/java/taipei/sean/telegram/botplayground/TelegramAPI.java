@@ -204,9 +204,9 @@ public class TelegramAPI {
                 spannable.setSpan(new ForegroundColorSpan(Color.rgb(0, 0x86, 0xb3)), pos, pos + 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             else if (spannable.charAt(pos) == 'n')   // null
                 spannable.setSpan(new ForegroundColorSpan(Color.rgb(0, 0x86, 0xb3)), pos, ++pos + 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            else if (spannable.charAt(pos) == '[' || spannable.charAt(pos) == ']')   // array
+            else if (spannable.charAt(pos) == '[')   // array
                 spannable.setSpan(new ForegroundColorSpan(Color.BLACK), pos, ++pos, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            else if (spannable.charAt(pos) == '{' || spannable.charAt(pos) == '}')   // object
+            else if (spannable.charAt(pos) == '{')   // object
                 spannable.setSpan(new ForegroundColorSpan(Color.BLACK), pos, ++pos, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             else if (Character.isDigit(spannable.charAt(pos)) || spannable.charAt(pos) == '-') {   // signed number
                 int posT = pos;
@@ -219,6 +219,10 @@ public class TelegramAPI {
             if (posE > 1) {
                 pos = posE - 1;  // pos before newline
                 if (spannable.charAt(pos) == ',')
+                    spannable.setSpan(new ForegroundColorSpan(Color.BLACK), pos, ++pos, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                else if (spannable.charAt(pos) == ']')   // array
+                    spannable.setSpan(new ForegroundColorSpan(Color.BLACK), pos, ++pos, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                else if (spannable.charAt(pos) == '}')   // object
                     spannable.setSpan(new ForegroundColorSpan(Color.BLACK), pos, ++pos, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
         }
