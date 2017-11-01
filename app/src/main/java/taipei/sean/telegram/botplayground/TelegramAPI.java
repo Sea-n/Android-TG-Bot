@@ -181,7 +181,7 @@ public class TelegramAPI {
                 int posT = pos;
 
                 do ++pos;   // key, didn't consider about escape
-                while (spannable.charAt(pos) != '"');
+                while (pos != posE && (spannable.charAt(pos) != '"' ||  spannable.charAt(pos) != '\n'));
 
                 spannable.setSpan(new ForegroundColorSpan(Color.rgb(0x79, 0x5d, 0xa3)), posT, ++pos, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
