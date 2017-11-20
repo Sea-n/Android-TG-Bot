@@ -339,6 +339,29 @@
       }
     }
   },
+  "sendMediaGroup": {
+    "description": "Use this method to send a group of photos or videos as an album. On success, an array of the sent Messages is returned.",
+    "params": {
+      "chat_id": {
+        "type": "Integer or String",
+        "required": true,
+        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+      },
+      "media": {
+        "type": "Array of InputMedia",
+        "required": true,
+        "description": "A JSON-serialized array describing photos and videos to be sent, must include 1–10 items"
+      },
+      "disable_notification": {
+        "type": "Boolean",
+        "description": "Sends the messages silently. Users will receive a notification with no sound."
+      },
+      "reply_to_message_id": {
+        "type": "Integer",
+        "description": "If the messages are a reply, ID of the original message"
+      }
+    }
+  },
   "sendLocation": {
     "description": "Use this method to send point on the map. On success, the sent Message is returned.",
     "params": {
@@ -739,12 +762,12 @@
     }
   },
   "pinChatMessage": {
-    "description": "Use this method to pin a message in a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns __True__ on success. ",
+    "description": "Use this method to pin a message in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the ‘can_pin_messages’ admin right in the supergroup or ‘can_edit_messages’ admin right in the channel. Returns __True__ on success.",
     "params": {
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)"
+        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
       },
       "message_id": {
         "type": "Integer",
@@ -753,17 +776,17 @@
       },
       "disable_notification": {
         "type": "Boolean",
-        "description": "Pass __True__, if it is not necessary to send a notification to all group members about the new pinned message"
+        "description": "Pass __True__, if it is not necessary to send a notification to all chat members about the new pinned message. Notifications are always disabled in channels."
       }
     }
   },
   "unpinChatMessage": {
-    "description": "Use this method to unpin a message in a supergroup chat. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns __True__ on success. ",
+    "description": "Use this method to unpin a message in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the ‘can_pin_messages’ admin right in the supergroup or ‘can_edit_messages’ admin right in the channel. Returns __True__ on success.",
     "params": {
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)"
+        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
       }
     }
   },
@@ -1202,6 +1225,10 @@
         "type": "Array of LabeledPrice",
         "required": true,
         "description": "Price breakdown, a list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.)"
+      },
+      "provider_data": {
+        "type": "String",
+        "description": "JSON-encoded data about the invoice, which will be shared with the payment provider. A detailed description of required fields should be provided by the payment provider."
       },
       "photo_url": {
         "type": "String",
