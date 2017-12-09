@@ -166,21 +166,18 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 autoCompleteTextView.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxChar)});
             }
 
-            if (data.has("default")) {
-                String defaultVal = "";
+            String text = db.getParam(name);
+            if (text.equals("") && data.has("default")) {
                 try {
-                    defaultVal = data.getString("default");
+                    text = data.getString("default");
                 } catch (JSONException e) {
                     Log.e("ada", "default", e);
                 }
-                autoCompleteTextView.setText(defaultVal);
-            } else {
-                String text = db.getParam(name);
-                autoCompleteTextView.setText(text);
+            }
+            autoCompleteTextView.setText(text);
 
-                if (type.equals("other")) {
-                    TelegramAPI.jsonColor((SpannableStringBuilder) autoCompleteTextView.getEditableText());
-                }
+            if (type.equals("other")) {
+                TelegramAPI.jsonColor((SpannableStringBuilder) autoCompleteTextView.getEditableText());
             }
 
 
