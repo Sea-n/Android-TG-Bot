@@ -54,4 +54,6 @@
                 android:visible="true" />
         </menu>
     </item>
+
+    <item android:title="@string/app_name" />
 </menu>

@@ -8,6 +8,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -53,6 +55,41 @@ public class AddBotActivity extends AppCompatActivity {
                 addBot();
             }
         });
+
+        tokenView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (!b)
+                    formatToken();
+            }
+        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.add_bot, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.action_done:
+                addBot();
+                break;
+
+            default:
+                Log.w("option", "Press unknown " + id);
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void setupActionBar() {
@@ -69,10 +106,24 @@ public class AddBotActivity extends AppCompatActivity {
         tokenView.setText(bot.token);
     }
 
-    private void addBot() {
-
-        // Store values at the time of the login attempt.
+    private void formatToken() {
         String rawToken = tokenView.getText().toString();
+        String tokenRegex = ".*?(" + getString(R.string.bot_token_regex) + ").*";
+        Pattern tokenPattern = Pattern.compile(tokenRegex, Pattern.DOTALL);
+        Matcher tokenMatcher = tokenPattern.matcher(rawToken);
+        if (tokenMatcher.matches()) {
+            String token = tokenMatcher.group(1);
+            tokenView.setText(token);
+        } else {
+            tokenView.setError(getString(R.string.add_bot_token_invalid));
+        }
+
+    }
+
+    private void addBot() {
+        formatToken();
+
+        String token = tokenView.getText().toString();
         String name = nameView.getText().toString();
         int type = 0;
 
@@ -87,7 +138,7 @@ public class AddBotActivity extends AppCompatActivity {
 
         String tokenRegex = ".*?(" + getString(R.string.bot_token_regex) + ").*";
         Pattern tokenPattern = Pattern.compile(tokenRegex, Pattern.DOTALL);
-        Matcher tokenMatcher = tokenPattern.matcher(rawToken);
+        Matcher tokenMatcher = tokenPattern.matcher(token);
         if (!tokenMatcher.matches()) {
             tokenView.setError(getString(R.string.add_bot_token_invalid));
             focusView = tokenView;
@@ -98,8 +149,6 @@ public class AddBotActivity extends AppCompatActivity {
             focusView.requestFocus();
             return;
         }
-
-        String token = tokenMatcher.group(1);
 
         ContentValues values = new ContentValues();
         values.put("token", token);
