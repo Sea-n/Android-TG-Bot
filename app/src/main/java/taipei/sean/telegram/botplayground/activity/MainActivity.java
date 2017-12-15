@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -29,16 +31,32 @@ import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.onesignal.OneSignal;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.List;
+import java.util.Locale;
+
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 import taipei.sean.telegram.botplayground.BotStructure;
 import taipei.sean.telegram.botplayground.R;
 import taipei.sean.telegram.botplayground.SeanDBHelper;
@@ -536,9 +554,11 @@ public class MainActivity extends AppCompatActivity {
     private boolean changeToken() {
         final NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
         final LinearLayout navHeader = (LinearLayout) navView.getHeaderView(0);
+        final ImageView photoView = (ImageView) navHeader.findViewById(R.id.nav_header_image);
         final TextView title = (TextView) navHeader.findViewById(R.id.nav_header_title);
         final TextView subtitle = (TextView) navHeader.findViewById(R.id.nav_header_subtitle);
         final TextView main = (TextView) findViewById(R.id.main_content);
+        final File dir = createDir();
 
         if (null == currentBot) {
             Log.w("main", "change token null bot");
@@ -559,12 +579,49 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
 
+        final File photoFile = new File(dir, currentBot.userId + ".jpg");
+        if (!photoFile.exists()) {
+            Thread profilePhotoThread = new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        final String url = String.format(Locale.US, "https://api.telegram.org/bot%s/getUserProfilePhotos?user_id=%d", currentBot.token, currentBot.userId);
+                        Request request = new Request.Builder()
+                                .url(url)
+                                .build();
+                        OkHttpClient client = new OkHttpClient();
+                        Response resp = client.newCall(request).execute();
+                        String respStr = resp.body().string();
+                        final JSONObject json = new JSONObject(respStr).getJSONObject("result");
+
+                        int count = json.getInt("total_count");
+                        if (count > 0) {
+                            final String fileId = json.getJSONArray("photos").getJSONArray(0).getJSONObject(0).getString("file_id");
+                            getFileId(fileId);
+                            changeToken();
+                        }
+                    } catch (final Exception e) {
+                        Log.w("add", "err", e);
+                    }
+
+                }
+            };
+            profilePhotoThread.start();
+        }
+
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 title.setText(currentBot.name);
                 subtitle.setText(currentBot.token);
                 main.setText(currentBot.name);
+
+                if (photoFile.exists()) {
+                    Bitmap photoBitmap = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
+                    photoView.setImageBitmap(photoBitmap);
+                } else {
+                    photoView.setImageResource(R.mipmap.ic_launcher);
+                }
             }
         });
 
@@ -655,5 +712,132 @@ public class MainActivity extends AppCompatActivity {
         Intent dlIntent = new Intent(MainActivity.this, FileDownloadActivity.class);
         dlIntent.putExtra("token", currentBot.token);
         startActivity(dlIntent);
+    }
+
+    private void getFileId(final String fileId) {
+        Log.d("add", "getFile " + fileId);
+
+        db.insertFav("file_id", fileId, getResources().getString(R.string.menu_add_bot));
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("file_id", fileId);
+        } catch (JSONException e) {
+            Log.e("add", "getFile", e);
+            return;
+        }
+        final String json = jsonObject.toString();
+
+        final String url = "https://api.telegram.org/bot" + currentBot.token + "/getFile";
+
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String response = "";
+                try {
+                    final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+
+                    RequestBody body = RequestBody.create(JSON, json);
+                    Request request = new Request.Builder()
+                            .url(url)
+                            .post(body)
+                            .build();
+                    OkHttpClient client = new OkHttpClient();
+                    Response resp = client.newCall(request).execute();
+                    response = resp.body().string();
+                } catch (final Exception e) {
+                    Log.e("add", "get file id", e);
+                    return;
+                }
+
+                final String filePath;
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    if (!jsonObject.getBoolean("ok")) {
+                        Log.w("add", "getFile response ok=false");
+                        return;
+                    }
+                    JSONObject result = jsonObject.getJSONObject("result");
+                    filePath = result.getString("file_path");
+                } catch (JSONException e) {
+                    Log.e("add", "getFile", e);
+                    return;
+                }
+                getFilePath(fileId, filePath);
+            }
+        });
+        thread.start();
+    }
+
+    private void getFilePath(final String fileId, final String filePath) {
+        final URL url;
+        try {
+            url = new URL("https://api.telegram.org/file/bot" + currentBot.token + "/" + filePath);
+        } catch (MalformedURLException e) {
+            Log.e("add", "getFile", e);
+            return;
+        }
+
+        final File downloadDir = createDir();
+        if (null == downloadDir)
+            return;
+        final String fileName = currentBot.userId + ".jpg";
+        final File file = new File(downloadDir, fileName);
+
+
+        if (file.exists()) {
+            Log.d("add", "File already exists");
+        } else {
+            Log.d("add", "Start download " + file.toString());
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    OkHttpClient client = new OkHttpClient();
+                    Request request = new Request.Builder().url(url)
+                            .build();
+                    Response resp;
+                    try {
+                        resp = client.newCall(request).execute();
+                    } catch (IOException e) {
+                        Log.e("add", "IO", e);
+                        return;
+                    }
+
+                    if (resp.code() != 200) {
+                        Log.e("add", "Resp Code " + resp.code());
+                        return;
+                    }
+
+                    if (null == resp.body()) {
+                        Log.e("add", "Resp Body null");
+                        return;
+                    }
+
+                    InputStream in = resp.body().byteStream();
+                    FileOutputStream fos;
+                    try {
+                        fos = new FileOutputStream(file);
+                    } catch (FileNotFoundException e) {
+                        Log.e("add", "File Not Found", e);
+                        return;
+                    }
+
+                    BufferedInputStream bis = new BufferedInputStream(in);
+                    try {
+                        int current;
+                        while ((current = bis.read()) != -1) {
+                            fos.write(current);
+                        }
+                        fos.close();
+                    } catch (IOException e) {
+                        Log.e("add", "IO", e);
+                        return;
+                    }
+                    resp.body().close();
+                }
+            });
+            thread.start();
+        }
     }
 }

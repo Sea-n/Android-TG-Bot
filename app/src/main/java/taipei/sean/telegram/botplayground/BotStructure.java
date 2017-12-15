@@ -4,6 +4,7 @@ public class BotStructure {
     public long _id;
     public String name;
     public String token;
+    public int userId;
     public String note;
     public int type;
 }

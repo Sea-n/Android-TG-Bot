@@ -136,7 +136,11 @@ public class MultipartUtility {
         writer.append("--" + boundary + "--").append(LINE_FEED);
         writer.close();
 
-        InputStream is = httpConn.getInputStream();
+        InputStream is;
+        if (httpConn.getResponseCode() == 200)
+            is = httpConn.getInputStream();
+        else
+            is = httpConn.getErrorStream();
         InputStreamReader isr = new InputStreamReader(is);
         BufferedReader reader = new BufferedReader(isr);
         String line;

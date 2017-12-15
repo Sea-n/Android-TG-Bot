@@ -1,9 +1,15 @@
 package taipei.sean.telegram.botplayground.activity;
 
+import android.Manifest;
 import android.content.ContentValues;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
 import android.support.design.widget.TextInputEditText;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -13,10 +19,28 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 import taipei.sean.telegram.botplayground.BotStructure;
 import taipei.sean.telegram.botplayground.R;
 import taipei.sean.telegram.botplayground.SeanDBHelper;
@@ -24,9 +48,13 @@ import taipei.sean.telegram.botplayground.SeanDBHelper;
 public class AddBotActivity extends AppCompatActivity {
     final private int _dbVer = 4;
     private TextInputEditText tokenView;
-    private TextInputEditText nameView;
+    private TextInputEditText nicknameView;
+    private TextInputEditText infoView;
     private SeanDBHelper db;
     private long _id = -1;
+    private String _token;
+    private String username;
+    private int userId;
 
     public AddBotActivity() {
         db = new SeanDBHelper(this, "data.db", null, _dbVer);
@@ -39,7 +67,8 @@ public class AddBotActivity extends AppCompatActivity {
         setupActionBar();
 
         tokenView = (TextInputEditText) findViewById(R.id.add_bot_token);
-        nameView = (TextInputEditText) findViewById(R.id.add_bot_name);
+        nicknameView = (TextInputEditText) findViewById(R.id.add_bot_nickname);
+        infoView = (TextInputEditText) findViewById(R.id.add_bot_info);
 
         Bundle bundle = getIntent().getExtras();
         if ((bundle != null) && bundle.containsKey("id")) {
@@ -60,9 +89,11 @@ public class AddBotActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View view, boolean b) {
                 if (!b)
-                    formatToken();
+                    updateToken();
             }
         });
+
+        updateToken();
     }
 
     @Override
@@ -102,43 +133,84 @@ public class AddBotActivity extends AppCompatActivity {
     private void restoreData() {
         BotStructure bot = db.getBot(_id);
         Log.d("add", "bot" + bot);
-        nameView.setText(bot.name);
+        nicknameView.setText(bot.name);
         tokenView.setText(bot.token);
     }
 
-    private void formatToken() {
+    private void updateToken() {
         String rawToken = tokenView.getText().toString();
+        if (rawToken.isEmpty())
+            return;
         String tokenRegex = ".*?(" + getString(R.string.bot_token_regex) + ").*";
         Pattern tokenPattern = Pattern.compile(tokenRegex, Pattern.DOTALL);
         Matcher tokenMatcher = tokenPattern.matcher(rawToken);
-        if (tokenMatcher.matches()) {
-            String token = tokenMatcher.group(1);
-            tokenView.setText(token);
-        } else {
+        if (!tokenMatcher.matches()) {
             tokenView.setError(getString(R.string.add_bot_token_invalid));
+            return;
         }
 
+        _token = tokenMatcher.group(1);
+        tokenView.setText(_token);
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final Handler handler = new Handler(getMainLooper());
+
+                try {
+                    final String url = String.format("https://api.telegram.org/bot%s/getMe", _token);
+                    Request request = new Request.Builder()
+                            .url(url)
+                            .build();
+                    OkHttpClient client = new OkHttpClient();
+                    Response resp = client.newCall(request).execute();
+                    String respStr = resp.body().string();
+                    JSONObject json = new JSONObject(respStr).getJSONObject("result");
+                    final String firstname = json.getString("first_name");
+                    username = json.getString("username");
+                    userId = json.getInt("id");
+                    final String detail = String.format("%s (@%s)", firstname, username);
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            infoView.setText(detail);
+                        }
+                    });
+                } catch (final Exception e) {
+                    Log.e("add", "err", e);
+                    final String errorMessage = e.getLocalizedMessage();
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            infoView.setText(errorMessage);
+                        }
+                    });
+                    return;
+                }
+            }
+        });
+        thread.start();
     }
 
     private void addBot() {
-        formatToken();
+        updateToken();
 
-        String token = tokenView.getText().toString();
-        String name = nameView.getText().toString();
+        _token = tokenView.getText().toString();
+        String name = nicknameView.getText().toString();
         int type = 0;
 
         boolean cancel = false;
         View focusView = null;
 
         if (TextUtils.isEmpty(name)) {
-            nameView.setError(getString(R.string.add_bot_name_invalid));
-            focusView = nameView;
+            nicknameView.setError(getString(R.string.add_bot_name_invalid));
+            focusView = nicknameView;
             cancel = true;
         }
 
         String tokenRegex = ".*?(" + getString(R.string.bot_token_regex) + ").*";
         Pattern tokenPattern = Pattern.compile(tokenRegex, Pattern.DOTALL);
-        Matcher tokenMatcher = tokenPattern.matcher(token);
+        Matcher tokenMatcher = tokenPattern.matcher(_token);
         if (!tokenMatcher.matches()) {
             tokenView.setError(getString(R.string.add_bot_token_invalid));
             focusView = tokenView;
@@ -151,7 +223,7 @@ public class AddBotActivity extends AppCompatActivity {
         }
 
         ContentValues values = new ContentValues();
-        values.put("token", token);
+        values.put("token", _token);
         values.put("name", name);
         values.put("type", type);
         if (_id > 0)

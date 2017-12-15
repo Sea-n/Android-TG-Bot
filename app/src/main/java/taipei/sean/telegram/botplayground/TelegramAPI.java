@@ -30,7 +30,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -82,6 +81,7 @@ public class TelegramAPI {
                 try {
                     MultipartUtility multipart = new MultipartUtility(_context, url);
 
+                    multipart.addFormField("_sender", "Awesome Telegram Bot");
                     Iterator<String> keys = json.keys();
                     while (keys.hasNext()) {
                         final String key = keys.next();

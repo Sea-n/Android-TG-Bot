@@ -102,6 +102,7 @@ public class SeanDBHelper extends SQLiteOpenHelper {
             item.name = cursor.getString(2);
             item.note = cursor.getString(3);
             item.type = cursor.getInt(4);
+            item.userId = Integer.parseInt(item.token.split(":")[0]);
             result.add(item);
         }
 
@@ -129,6 +130,7 @@ public class SeanDBHelper extends SQLiteOpenHelper {
             result.name = cursor.getString(2);
             result.note = cursor.getString(3);
             result.type = cursor.getInt(4);
+            result.userId = Integer.parseInt(result.token.split(":")[0]);
         } catch (RuntimeException e) {
             Log.w("db", "Getting data error " + id, e);
             cursor.close();
