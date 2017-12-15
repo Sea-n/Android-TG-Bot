@@ -1,6 +1,9 @@
 package taipei.sean.telegram.botplayground.adapter;
 
+import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -16,6 +19,7 @@ import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.util.LruCache;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -44,6 +48,12 @@ import taipei.sean.telegram.botplayground.TelegramAPI;
 public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     final private Context context;
     final private int _dbVer = 4;
+    final public static int TYPE_BOOLEAN = 1;
+    final public static int TYPE_INTEGER = 2;
+    final public static int TYPE_FLOAT = 4;
+    final public static int TYPE_STRING = 8;
+    final public static int TYPE_JSON = 16;
+    final public static int TYPE_FILE = 32;
     private SeanDBHelper db;
     private ArrayList<JSONObject> iList;
     private ArrayList<String> iListName;
@@ -85,7 +95,8 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        String type = "String";
+        String _type = "String";
+        int type = 0;
         boolean req = false;
         String desc = "";
         int maxChar = -1;
@@ -94,7 +105,7 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         final String name = iListName.get(position);
         try {
             if (data.has("type"))
-                type = data.getString("type");
+                _type = data.getString("type");
             if (data.has("required"))
                 req = data.getBoolean("required");
             if (data.has("description"))
@@ -113,39 +124,80 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
         textInputLayout.setLayoutParams(layoutParams);
 
+        if (_type.contains("Boolean"))
+            type |= TYPE_BOOLEAN;
+        if (_type.contains("Integer"))
+            type |= TYPE_INTEGER;
+        if (_type.contains("Float"))
+            type |= TYPE_FLOAT;
+        if (_type.contains("String"))
+            type |= TYPE_STRING;
+        if (_type.contains("Array") || _type.contains("KeyboardMarkup") || _type.contains("MaskPosition"))
+            type |= TYPE_JSON;
+        if (_type.contains("InputFile"))
+            type |= TYPE_FILE;
 
-        InstantComplete autoCompleteTextView = new InstantComplete(textInputLayout.getContext());
+        final InstantComplete autoCompleteTextView = new InstantComplete(textInputLayout.getContext());
 
-        if (req && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
-            autoCompleteTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_star_border_black_24dp, 0);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            final int DRAWABLE_RIGHT = 2;
+            int end = 0;
 
-        switch (type) {
-            case "Boolean":
-            case "Bool":
-                type = "bool";
-                break;
-            case "Float number":
-                type = "float";
-                autoCompleteTextView.setRawInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-                autoCompleteTextView.setSingleLine();
-                break;
-            case "Integer":
-            case "int":
-            case "int128":
-            case "long":
-                type = "int";
-                autoCompleteTextView.setRawInputType(InputType.TYPE_CLASS_NUMBER);
-                autoCompleteTextView.setSingleLine();
-                break;
-            case "Integer or String":
-            case "string":
-                type = "str";
-                break;
-            default:
-                type = "other";
+            if (req) {
+                end = R.drawable.ic_star_border_black_24dp;
+                autoCompleteTextView.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        if (event.getAction() == MotionEvent.ACTION_UP) {
+                            int drawableWidth = autoCompleteTextView.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width();
+                            if (event.getRawX() >= (autoCompleteTextView.getRight() - drawableWidth)) {
+                                Snackbar.make(autoCompleteTextView, "This field is required.", Snackbar.LENGTH_SHORT).show();
+                            }
+                        }
+                        return false;
+                    }
+                });
+            }
+
+            if ((type & TYPE_FILE) > 0) {
+                end = R.drawable.ic_cloud_upload_black_24dp;
+                autoCompleteTextView.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        if (event.getAction() == MotionEvent.ACTION_UP) {
+                            int drawableWidth = autoCompleteTextView.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width();
+                            if (event.getRawX() >= (autoCompleteTextView.getRight() - drawableWidth)) {
+                                db.updateParam("_file", name);
+                                try {
+                                    Intent intent;
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                                        intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                                        intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+                                    } else {
+                                        intent = new Intent(Intent.ACTION_GET_CONTENT);
+                                    }
+                                    intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+                                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                    intent.setType("*/*");
+
+                                    ((Activity) context).startActivityForResult(Intent.createChooser(intent, "Select a File to Upload"), 87);
+                                } catch (ActivityNotFoundException e) {
+                                    Log.e("ada", "no file manager", e);
+                                    // Potentially direct the user to the Market with a Dialog
+                                    Snackbar.make(autoCompleteTextView, "Please install a File Manager.", Snackbar.LENGTH_LONG).show();
+                                }
+                            }
+                        }
+                        return false;
+                    }
+                });
+            }
+
+            autoCompleteTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, end, 0);
         }
 
-        if (type.equals("bool")) {
+
+        if (type == TYPE_BOOLEAN) {
             CheckBox checkBox = new CheckBox(context);
             checkBox.setTextColor(Color.BLACK);
             checkBox.setText(name);
@@ -162,6 +214,15 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             textInputLayout.addView(checkBox);
             iListView.add(checkBox);
         } else {
+            if (type == TYPE_INTEGER) {
+                autoCompleteTextView.setRawInputType(InputType.TYPE_CLASS_NUMBER);
+                autoCompleteTextView.setSingleLine();
+            }
+            if (type == TYPE_FLOAT) {
+                autoCompleteTextView.setRawInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                autoCompleteTextView.setSingleLine();
+            }
+
             if (maxChar > 0) {
                 autoCompleteTextView.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxChar)});
             }
@@ -176,7 +237,7 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             }
             autoCompleteTextView.setText(text);
 
-            if (type.equals("other")) {
+            if ((type & TYPE_JSON) != 0) {
                 TelegramAPI.jsonColor((SpannableStringBuilder) autoCompleteTextView.getEditableText());
             }
 
@@ -231,7 +292,7 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 }
             });
 
-            final String finalType = type;
+            final int finalType = type;
             autoCompleteTextView.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -245,7 +306,7 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 public void afterTextChanged(Editable editable) {
                     String value = editable.toString();
 
-                    if (finalType.equals("other") && value.length() > 0) {
+                    if ((finalType & TYPE_JSON) != 0 && value.length() > 0) {
                         try {
                             Gson gson = new GsonBuilder().setPrettyPrinting().create();
                             JsonParser jp = new JsonParser();

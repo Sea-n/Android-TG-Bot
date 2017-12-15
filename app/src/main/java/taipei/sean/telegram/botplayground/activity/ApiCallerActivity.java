@@ -3,6 +3,7 @@ package taipei.sean.telegram.botplayground.activity;
 import android.Manifest;
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -363,6 +364,27 @@ public class ApiCallerActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        switch (requestCode) {
+            case 87:
+                if (resultCode == RESULT_OK) {
+                    Uri uri = data.getData();
+                    if (uri != null) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                            ContentResolver resolver = getContentResolver();
+                            resolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        }
+
+                        String param = db.getParam("_file");
+
+                        db.updateParam(param, uri.toString());
+                        updateMethod();
+                    }
+                }
+        }
+    }
+
     private void updateMethod() {
         final InstantComplete methodView = (InstantComplete) findViewById(R.id.api_caller_method);
         final RecyclerView paramList = (RecyclerView) findViewById(R.id.api_caller_inputs);
@@ -423,7 +445,7 @@ public class ApiCallerActivity extends AppCompatActivity {
             return;
         }
 
-        final ApiCallerAdapter apiCallerAdapter = new ApiCallerAdapter(getApplicationContext());
+        final ApiCallerAdapter apiCallerAdapter = new ApiCallerAdapter(this);
 
         try {
             Iterator<String> temp = paramData.keys();

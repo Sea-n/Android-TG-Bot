@@ -1,8 +1,15 @@
 package taipei.sean.telegram.botplayground;
 
+import android.content.ContentUris;
 import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Color;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
 import android.os.Handler;
+import android.provider.DocumentsContract;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -22,16 +29,11 @@ import com.google.gson.JsonSyntaxException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
+import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 public class TelegramAPI {
     final private int _dbVer = 4;
@@ -46,18 +48,21 @@ public class TelegramAPI {
     }
 
     public void callApi(final String method, final TextView resultView, @Nullable JSONObject j) {
+        final JSONObject json;
         if (null == j)
-            j = new JSONObject();
+            json = new JSONObject();
+        else
+            json = j;
 
-        final String json = j.toString();
+        final String jsonStr = json.toString();
 
         db = new SeanDBHelper(_context, "data.db", null, _dbVer);
 
-        Log.d("api", method + json);
+        Log.d("api", method + jsonStr);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         JsonParser jp = new JsonParser();
-        JsonElement je = jp.parse(json);
+        JsonElement je = jp.parse(jsonStr);
         String prettyJson = gson.toJson(je);
         SpannableStringBuilder jsonSpannable = new SpannableStringBuilder(prettyJson);
         jsonColor(jsonSpannable);
@@ -75,38 +80,35 @@ public class TelegramAPI {
             public void run() {
                 String respStr = "";
                 try {
-                    final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+                    MultipartUtility multipart = new MultipartUtility(_context, url);
 
-                    RequestBody body = RequestBody.create(JSON, json);
-                    Request request = new Request.Builder()
-                            .url(url)
-                            .post(body)
-                            .build();
-                    OkHttpClient client = new OkHttpClient();
-                    Response resp = client.newCall(request).execute();
-                    respStr = resp.body().string();
-                } catch (final MalformedURLException e) {
-                    Log.e("api", "Malformed URL", e);
-                    final String finalResultText = e.getLocalizedMessage();
-                    Handler handler = new Handler(_context.getMainLooper());
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            resultView.setText(finalResultText);
+                    Iterator<String> keys = json.keys();
+                    while (keys.hasNext()) {
+                        final String key = keys.next();
+
+                        try {
+                            Object object = json.get(key);
+                            String value = object.toString();
+                            if (value.startsWith("content://")) {
+                                try {
+                                    Uri uri = Uri.parse(value);
+                                    String path = getPath(uri);
+                                    File file = new File(path);
+                                    multipart.addFilePart(key, file);
+                                } catch (Exception e) {
+                                    Log.e("api", "file", e);
+                                    multipart.addFormField(key, value);
+                                }
+                            } else {
+                                multipart.addFormField(key, value);
+                            }
+                        } catch (JSONException e) {
+                            Log.e("api", "parsing", e);
                         }
-                    });
-                } catch (final IOException e) {
-                    Log.e("api", "IO", e);
-                    final String finalResultText = e.getLocalizedMessage();
-                    Handler handler = new Handler(_context.getMainLooper());
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            resultView.setText(finalResultText);
-                        }
-                    });
-                } catch (final NullPointerException e) {
-                    Log.e("api", "Null Pointer", e);
+                    }
+                    respStr = multipart.finish();
+                } catch (final Exception e) {
+                    Log.e("api", "send request", e);
                     final String finalResultText = e.getLocalizedMessage();
                     Handler handler = new Handler(_context.getMainLooper());
                     handler.post(new Runnable() {
@@ -181,7 +183,7 @@ public class TelegramAPI {
                 int posT = pos;
 
                 do ++pos;   // key, didn't consider about escape
-                while (pos != posE && (spannable.charAt(pos) != '"' ||  spannable.charAt(pos) != '\n'));
+                while (pos != posE && (spannable.charAt(pos) != '"' || spannable.charAt(pos) != '\n'));
 
                 spannable.setSpan(new ForegroundColorSpan(Color.rgb(0x79, 0x5d, 0xa3)), posT, ++pos, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
@@ -230,6 +232,90 @@ public class TelegramAPI {
             spannable.setSpan(new ForegroundColorSpan(Color.BLACK), spannable.length() - 1, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);   // latest "}"
 
         return spannable;
+    }
+
+
+    private String getPath(final Uri uri) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && DocumentsContract.isDocumentUri(_context, uri)) {   // DocumentProvider
+            if ("com.android.externalstorage.documents".equals(uri.getAuthority())) {   // ExternalStorageProvider
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                final String type = split[0];
+
+                if ("primary".equalsIgnoreCase(type)) {
+                    return Environment.getExternalStorageDirectory() + "/" + split[1];
+                }
+
+            } else if ("com.android.providers.downloads.documents".equals(uri.getAuthority())) {   // DownloadsProvider
+
+                final String id = DocumentsContract.getDocumentId(uri);
+                final Uri contentUri = ContentUris.withAppendedId(
+                        Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+
+                return getDataColumn(_context, contentUri, null, null);
+            } else if ("com.android.providers.media.documents".equals(uri.getAuthority())) {   // MediaProvider
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                final String type = split[0];
+
+                Uri contentUri = null;
+                if ("image".equals(type)) {
+                    contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                } else if ("video".equals(type)) {
+                    contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
+                } else if ("audio".equals(type)) {
+                    contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+                }
+
+                final String selection = "_id=?";
+                final String[] selectionArgs = new String[]{
+                        split[1]
+                };
+
+                return getDataColumn(_context, contentUri, selection, selectionArgs);
+            }
+        } else if ("content".equalsIgnoreCase(uri.getScheme())) {   // MediaStore (and general)
+
+            // Return the remote address
+            if ("com.google.android.apps.photos.content".equals(uri.getAuthority()))
+                return uri.getLastPathSegment();
+
+            return getDataColumn(_context, uri, null, null);
+        } else if ("file".equalsIgnoreCase(uri.getScheme())) {   // File
+            return uri.getPath();
+        }
+
+        return null;
+    }
+
+    /**
+     * Get the value of the data column for this Uri. This is useful for
+     * MediaStore Uris, and other file-based ContentProviders.
+     *
+     * @param context       The context.
+     * @param uri           The Uri to query.
+     * @param selection     (Optional) Filter used in the query.
+     * @param selectionArgs (Optional) Selection arguments used in the query.
+     * @return The value of the _data column, which is typically a file path.
+     */
+    public String getDataColumn(Context context, Uri uri, String selection, String[] selectionArgs) {
+        Cursor cursor = null;
+        final String column = "_data";
+        final String[] projection = {
+                column
+        };
+
+        try {
+            cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                final int index = cursor.getColumnIndexOrThrow(column);
+                return cursor.getString(index);
+            }
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+        return null;
     }
 }
 

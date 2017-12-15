@@ -392,7 +392,7 @@ public class TelegraphActivity extends AppCompatActivity {
             return;
         }
 
-        final ApiCallerAdapter apiCallerAdapter = new ApiCallerAdapter(getApplicationContext());
+        final ApiCallerAdapter apiCallerAdapter = new ApiCallerAdapter(this);
 
         try {
             Iterator<String> temp = paramData.keys();

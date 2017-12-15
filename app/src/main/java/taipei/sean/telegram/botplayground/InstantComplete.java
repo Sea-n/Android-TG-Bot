@@ -21,4 +21,10 @@ public class InstantComplete extends android.support.v7.widget.AppCompatAutoComp
     public boolean enoughToFilter() {
         return true;
     }
+
+    @Override
+    public boolean performClick() {
+        super.performClick();
+        return true;
+    }
 }
