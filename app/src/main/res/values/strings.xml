@@ -84,4 +84,5 @@
     <string name="github_url" translatable="false">https://github.com/Sea-n/Android-TG-Bot</string>
     <string name="telegram_group_join_link" translatable="false">https://t.me/AwesomeTeleBot</string>
     <string name="app_link_text" translatable="false">\@AwesomeTeleBot</string>
+    <string name="token_unauthorized">This Bot Token seems to BROKEN, please edit or remove this.</string>
 </resources>

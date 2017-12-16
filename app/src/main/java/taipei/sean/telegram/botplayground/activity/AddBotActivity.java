@@ -160,14 +160,12 @@ public class AddBotActivity extends AppCompatActivity {
                     });
                 } catch (final Exception e) {
                     Log.e("add", "err", e);
-                    final String errorMessage = e.getLocalizedMessage();
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            infoView.setText(errorMessage);
+                            infoView.setText(R.string.token_unauthorized);
                         }
                     });
-                    return;
                 }
             }
         });

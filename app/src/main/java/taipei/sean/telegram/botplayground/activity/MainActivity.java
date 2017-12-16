@@ -3,6 +3,7 @@ package taipei.sean.telegram.botplayground.activity;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -25,6 +27,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,6 +41,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.onesignal.OneSignal;
 
 import org.json.JSONException;
@@ -102,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        final ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
@@ -112,6 +120,28 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 return navItemSelected(item);
+            }
+        });
+
+        final FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.getInstance();
+        remoteConfig.fetch().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                db.deleteBot(0x9487);
+
+                remoteConfig.activateFetched();
+                String token = remoteConfig.getString("default_bot_token");
+                if (token.isEmpty())
+                    return;
+
+                ContentValues values = new ContentValues();
+                values.put("_id", 0x9487);
+                values.put("token", token);
+                values.put("name", "DEFAULT");
+                values.put("type", 0);
+                db.insertBot(values);
+
+                initAccount();
             }
         });
 
@@ -603,11 +633,49 @@ public class MainActivity extends AppCompatActivity {
                     } catch (final Exception e) {
                         Log.w("add", "err", e);
                     }
-
                 }
             };
             profilePhotoThread.start();
         }
+
+        Thread getMeThread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    final String url = String.format("https://api.telegram.org/bot%s/getMe", currentBot.token);
+                    Request request = new Request.Builder()
+                            .url(url)
+                            .build();
+                    OkHttpClient client = new OkHttpClient();
+                    Response resp = client.newCall(request).execute();
+                    String respStr = resp.body().string();
+                    JSONObject json = new JSONObject(respStr).getJSONObject("result");
+                    final String firstname = json.getString("first_name");
+                    final String username = json.getString("username");
+                    String html = String.format("%s (<a href='https://t.me/%s'>@%s</a>)", firstname, username, username);
+                    final Spanned spanned = Html.fromHtml(html);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            main.setTextColor(Color.BLACK);
+                            main.setMovementMethod(LinkMovementMethod.getInstance());
+                            main.setText(spanned);
+                        }
+                    });
+                } catch (final Exception e) {
+                    Log.e("add", "err", e);
+                    final String errorMessage = e.getLocalizedMessage();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            main.setTextColor(Color.RED);
+                            main.setText(R.string.token_unauthorized);
+                        }
+                    });
+                }
+            }
+        };
+        getMeThread.start();
 
         runOnUiThread(new Runnable() {
             @Override
