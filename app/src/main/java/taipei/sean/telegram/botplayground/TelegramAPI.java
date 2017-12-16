@@ -81,7 +81,6 @@ public class TelegramAPI {
                 try {
                     MultipartUtility multipart = new MultipartUtility(_context, url);
 
-                    multipart.addFormField("_sender", "Awesome Telegram Bot");
                     Iterator<String> keys = json.keys();
                     while (keys.hasNext()) {
                         final String key = keys.next();
@@ -106,6 +105,7 @@ public class TelegramAPI {
                             Log.e("api", "parsing", e);
                         }
                     }
+                    multipart.addFormField("_sender", "Awesome Telegram Bot");
                     respStr = multipart.finish();
                 } catch (final Exception e) {
                     Log.e("api", "send request", e);
