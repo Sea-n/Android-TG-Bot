@@ -46,7 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:enabled="false"
-            android:hint="Bot Info" />
+            android:hint="@string/bot_info" />
 
     </android.support.design.widget.TextInputLayout>
 
@@ -58,4 +58,11 @@
         android:layout_marginTop="16dp"
         android:text="@string/done"
         android:textStyle="bold" />
+
+    <TextView
+        android:autoLink="web"
+        android:textColorLink="@color/colorLink"
+        android:text="@string/add_bot_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>

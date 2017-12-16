@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Awesome Telegram Bot</string>
-
     <string name="lang_code">hi</string>
 
     <string name="menu_account">खाता</string>
@@ -10,14 +8,11 @@
     <string name="menu_join_group">ग्रुप से जुड़े</string>
     <string name="menu_github">GitHub पर स्टार दे</string>
     <string name="menu_export">आंकड़ाकोष को एस. डी. कार्ड में भेजे</string>
-    <string name="menu_about">About</string>
 
     <string name="title_activity_add_bot">नया बॉट</string>
     <string name="title_activity_bot_api">बॉट API</string>
-    <string name="title_activity_telegraph">Telegraph</string>
     <string name="title_activity_favorite">पसंदीदा</string>
     <string name="title_activity_add_favorite">पसंदीदा में शामिल करें</string>
-    <string name="title_activity_about">About This App</string>
 
     <string name="no_bot_placeholder">अभी तक कोई भी बॉट को नहीँ जोड़ा गया हैं, कृपया + पे दबाये</string>
     <string name="not_normal_bot">कृपया साधारण बॉट टोकन इस्तेमाल करें।</string>
@@ -26,7 +21,6 @@
     <string name="add_bot_name">उपनाम</string>
     <string name="add_bot_name_invalid">उपनाम गलत हैं, कृपया फिर से जाचे।</string>
     <string name="add_bot_token_invalid">बॉट टोकन का प्रारूप सही नहीँ हैं।</string>
-    <string name="token_unauthorized">This Bot Token seems to BROKEN, please edit or remove this.</string>
 
     <string name="no_bot_warning">आपने बॉट टोकन नहीँ डाला है, कृपया उसे डाले।</string>
     <string name="no_bot_selected">आपने अपना बॉट नहीँ चुना हैं।</string>
@@ -36,10 +30,7 @@
     <string name="del_bot_confirm_title">बॉट हटाएँ</string>
     <string name="del_bot_confirm_msg">क्या आपको यकीन है कि आप इस बॉट को हटाना चाहते है?</string>
 
-    <string name="field_required">This field is required.</string>
     <string name="no_context_yet">अभी तक कोई भी प्रसंग शामिल नहीँ किया गया है।</string>
-    <string name="powered_by">Powered by Awesome Telegram Bot</string>
-    <string name="param_out_of_range">Number must in range %1$d - %2$d.</string>
 
     <string name="file_downloader">फ़ाइल डाउनलोडर</string>
     <string name="file_id">फ़ाइल आई. डी.</string>
@@ -62,16 +53,10 @@
     <string name="method">तरीका</string>
     <string name="done">ठीक</string>
     <string name="save">बचाये</string>
-    <string name="copy">Copy</string>
     <string name="submit">जमा करें</string>
     <string name="cancel">रद्द करें</string>
     <string name="edit">बदले</string>
     <string name="remove">हटाये</string>
     <string name="yes">हां</string>
     <string name="no">नहीं</string>
-    <string name="screenshot">Screenshot</string>
-    <string name="request">Request</string>
-    <string name="response">Response</string>
-    <string name="copy_request">Copy Request</string>
-    <string name="copy_response">Copy Response</string>
 </resources>

@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Awesome Telegram Bot</string>
-
     <string name="lang_code">es</string>
 
     <string name="menu_account">Cuentas</string>
@@ -13,8 +11,6 @@
     <string name="menu_about">Acerca de</string>
 
     <string name="title_activity_add_bot">Nuevo Bot</string>
-    <string name="title_activity_bot_api">Bot API</string>
-    <string name="title_activity_telegraph">Telegraph</string>
     <string name="title_activity_favorite">Favoritos</string>
     <string name="title_activity_add_favorite">Agregar favorito</string>
     <string name="title_activity_about">Acerca de esta aplicación</string>
@@ -26,7 +22,6 @@
     <string name="add_bot_name">Apodo</string>
     <string name="add_bot_name_invalid">Apodo inválido, vuelva a comprobarlo.</string>
     <string name="add_bot_token_invalid">Formato de token no válido</string>
-    <string name="token_unauthorized">This Bot Token seems to BROKEN, please edit or remove this.</string>
 
     <string name="no_bot_warning">No seleccionó el bot token, por favor agregue uno primero.</string>
     <string name="no_bot_selected">No has seleccionado tu bot.</string>
@@ -36,10 +31,7 @@
     <string name="del_bot_confirm_title">Eliminar Bot</string>
     <string name="del_bot_confirm_msg">¿Estás seguro de que quieres eliminar este bot?</string>
 
-    <string name="field_required">This field is required.</string>
     <string name="no_context_yet">Todavía no hay contexto.</string>
-    <string name="powered_by">Powered by Awesome Telegram Bot</string>
-    <string name="param_out_of_range">Number must in range %1$d - %2$d.</string>
 
     <string name="file_downloader">Descargador de archivos</string>
     <string name="file_id">ID del archivo</string>
@@ -62,16 +54,9 @@
     <string name="method">Procedimiento</string>
     <string name="done">Hecho</string>
     <string name="save">Guardar</string>
-    <string name="copy">Copy</string>
     <string name="submit">Enviar</string>
     <string name="cancel">Cancelar</string>
     <string name="edit">Editar</string>
     <string name="remove">Eliminar</string>
     <string name="yes">Si</string>
-    <string name="no">No</string>
-    <string name="screenshot">Screenshot</string>
-    <string name="request">Request</string>
-    <string name="response">Response</string>
-    <string name="copy_request">Copy Request</string>
-    <string name="copy_response">Copy Response</string>
 </resources>

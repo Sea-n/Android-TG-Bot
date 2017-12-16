@@ -15,7 +15,7 @@
     <TextView
         android:id="@+id/main_content"
         android:layout_width="wrap_content"
-        android:textColorLink="@android:color/holo_blue_light"
+        android:textColorLink="@color/colorLink"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"

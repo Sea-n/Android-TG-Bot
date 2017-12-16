@@ -7,8 +7,8 @@ android {
         applicationId "taipei.sean.telegram.botplayground"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 56
-        versionName "1.8.1"
+        versionCode 57
+        versionName "3.5.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [onesignal_app_id               : "07dbb755-8e15-4edb-9c2c-281efae2b677",
                                 // Project number pulled from dashboard, local value is ignored.
@@ -25,6 +25,10 @@ android {
             minifyEnabled false
         }
     }
+    lintOptions {
+        disable 'MissingTranslation'
+    }
+
     return void
 }
 

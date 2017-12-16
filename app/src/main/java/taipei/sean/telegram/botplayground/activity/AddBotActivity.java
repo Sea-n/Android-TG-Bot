@@ -164,6 +164,7 @@ public class AddBotActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             infoView.setText(R.string.token_unauthorized);
+                            tokenView.setError(getString(R.string.token_unauthorized));
                         }
                     });
                 }

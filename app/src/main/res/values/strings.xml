@@ -24,6 +24,8 @@
 
     <string name="add_bot_token">Your Bot Token</string>
     <string name="add_bot_name">Nickname</string>
+    <string name="bot_info">Bot Info</string>
+    <string name="add_bot_description">Please obtain Token via https://t.me/BotFather</string>
     <string name="add_bot_name_invalid">Nickname Invalid, please check again.</string>
     <string name="add_bot_token_invalid">Token format invalid</string>
     <string name="token_unauthorized">This Bot Token seems to BROKEN, please edit or remove this.</string>
