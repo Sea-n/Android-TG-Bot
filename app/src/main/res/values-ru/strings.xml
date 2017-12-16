@@ -26,6 +26,7 @@
     <string name="add_bot_name">Ник</string>
     <string name="add_bot_name_invalid">Ник неверный, пожалуйста, проверьте еще раз.</string>
     <string name="add_bot_token_invalid">Неверный формат токена</string>
+    <string name="token_unauthorized">This Bot Token seems to BROKEN, please edit or remove this.</string>
 
     <string name="no_bot_warning">Не выбран токен бота, пожалуйста добавьте токен.</string>
     <string name="no_bot_selected">Вы не выбрали бота</string>

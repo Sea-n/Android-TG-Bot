@@ -12,7 +12,12 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -680,16 +685,6 @@ public class MainActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                title.setText(currentBot.name);
-                subtitle.setText(currentBot.token);
-                main.setText(currentBot.name);
-
-                if (photoFile.exists()) {
-                    Bitmap photoBitmap = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
-                    photoView.setImageBitmap(photoBitmap);
-                } else {
-                    photoView.setImageResource(R.mipmap.ic_launcher);
-                }
             }
         });
 
@@ -708,7 +703,24 @@ public class MainActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     Log.e("restore", "sleep", e);
                 }
+
                 restoreMenu();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        title.setText(currentBot.name);
+                        subtitle.setText(currentBot.token);
+                        main.setText(currentBot.name);
+
+                        if (photoFile.exists()) {
+                            Bitmap photoBitmap = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
+                            Bitmap roundBitmap = getCroppedBitmap(photoBitmap);
+                            photoView.setImageBitmap(roundBitmap);
+                        } else {
+                            photoView.setImageResource(R.mipmap.ic_launcher);
+                        }
+                    }
+                });
             }
         };
         sleepThread.start();
@@ -907,5 +919,30 @@ public class MainActivity extends AppCompatActivity {
             });
             thread.start();
         }
+    }
+
+    /*
+     * https://stackoverflow.com/a/12089127/5201431
+     */
+    public Bitmap getCroppedBitmap(Bitmap bitmap) {
+        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
+                bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(output);
+
+        final int color = 0xff424242;
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        paint.setColor(color);
+        // canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+        canvas.drawCircle(bitmap.getWidth() / 2, bitmap.getHeight() / 2,
+                bitmap.getWidth() / 2, paint);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, rect, rect, paint);
+        //Bitmap _bmp = Bitmap.createScaledBitmap(output, 60, 60, false);
+        //return _bmp;
+        return output;
     }
 }

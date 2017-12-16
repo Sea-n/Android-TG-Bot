@@ -26,6 +26,7 @@
     <string name="add_bot_name">Apodo</string>
     <string name="add_bot_name_invalid">Apodo inválido, vuelva a comprobarlo.</string>
     <string name="add_bot_token_invalid">Formato de token no válido</string>
+    <string name="token_unauthorized">This Bot Token seems to BROKEN, please edit or remove this.</string>
 
     <string name="no_bot_warning">No seleccionó el bot token, por favor agregue uno primero.</string>
     <string name="no_bot_selected">No has seleccionado tu bot.</string>

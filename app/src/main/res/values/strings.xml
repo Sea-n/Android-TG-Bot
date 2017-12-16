@@ -26,6 +26,7 @@
     <string name="add_bot_name">Nickname</string>
     <string name="add_bot_name_invalid">Nickname Invalid, please check again.</string>
     <string name="add_bot_token_invalid">Token format invalid</string>
+    <string name="token_unauthorized">This Bot Token seems to BROKEN, please edit or remove this.</string>
 
     <string name="no_bot_warning">Didn\'t select bot token, please add one first.</string>
     <string name="no_bot_selected">You didn\'t select your bot.</string>
@@ -84,5 +85,4 @@
     <string name="github_url" translatable="false">https://github.com/Sea-n/Android-TG-Bot</string>
     <string name="telegram_group_join_link" translatable="false">https://t.me/AwesomeTeleBot</string>
     <string name="app_link_text" translatable="false">\@AwesomeTeleBot</string>
-    <string name="token_unauthorized">This Bot Token seems to BROKEN, please edit or remove this.</string>
 </resources>

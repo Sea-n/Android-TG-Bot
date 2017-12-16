@@ -26,6 +26,7 @@
     <string name="add_bot_name">उपनाम</string>
     <string name="add_bot_name_invalid">उपनाम गलत हैं, कृपया फिर से जाचे।</string>
     <string name="add_bot_token_invalid">बॉट टोकन का प्रारूप सही नहीँ हैं।</string>
+    <string name="token_unauthorized">This Bot Token seems to BROKEN, please edit or remove this.</string>
 
     <string name="no_bot_warning">आपने बॉट टोकन नहीँ डाला है, कृपया उसे डाले।</string>
     <string name="no_bot_selected">आपने अपना बॉट नहीँ चुना हैं।</string>
