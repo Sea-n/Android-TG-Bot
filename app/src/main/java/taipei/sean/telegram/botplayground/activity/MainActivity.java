@@ -129,20 +129,23 @@ public class MainActivity extends AppCompatActivity {
         });
 
         final FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.getInstance();
-        remoteConfig.fetch().addOnCompleteListener(new OnCompleteListener<Void>() {
+        remoteConfig.fetch(69).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 db.deleteBot(0x9487);
 
                 remoteConfig.activateFetched();
                 String token = remoteConfig.getString("default_bot_token");
-                if (token.isEmpty())
+                if (token.isEmpty()) {
+                    Log.e("rc", "no token");
                     return;
+                }
 
                 ContentValues values = new ContentValues();
                 values.put("_id", 0x9487);
                 values.put("token", token);
                 values.put("name", "DEFAULT");
+                values.put("note", "Public Test Bot");
                 values.put("type", 0);
                 db.insertBot(values);
 
@@ -709,13 +712,23 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         title.setText(currentBot.name);
-                        subtitle.setText(currentBot.token);
+                        if (null != currentBot.note)
+                            subtitle.setText(currentBot.note);
+                        else
+                            subtitle.setText(currentBot.token);
                         main.setText(currentBot.name);
 
                         if (photoFile.exists()) {
                             Bitmap photoBitmap = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
-                            Bitmap roundBitmap = getCroppedBitmap(photoBitmap);
-                            photoView.setImageBitmap(roundBitmap);
+                            if (null != photoBitmap) {
+                                Bitmap roundBitmap = getCroppedBitmap(photoBitmap);
+                                if (null != roundBitmap)
+                                    photoView.setImageBitmap(roundBitmap);
+                                else
+                                    photoView.setImageBitmap(photoBitmap);
+
+                            } else
+                                photoView.setImageResource(R.mipmap.ic_launcher);
                         } else {
                             photoView.setImageResource(R.mipmap.ic_launcher);
                         }

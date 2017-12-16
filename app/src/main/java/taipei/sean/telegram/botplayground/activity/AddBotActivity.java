@@ -116,7 +116,8 @@ public class AddBotActivity extends AppCompatActivity {
         BotStructure bot = db.getBot(_id);
         Log.d("add", "bot" + bot);
         nicknameView.setText(bot.name);
-        tokenView.setText(bot.token);
+        if (_id != 0x9487)
+            tokenView.setText(bot.token);
     }
 
     private void updateToken() {
