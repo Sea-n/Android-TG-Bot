@@ -38,12 +38,74 @@ public class TelegramAPI {
     final private int _dbVer = 4;
     final private String _apiBaseUrl;
     final private Context _context;
-    private SeanDBHelper db;
     public JSONObject latestResponse;
+    private SeanDBHelper db;
 
     public TelegramAPI(Context context, String token) {
         this._context = context;
         _apiBaseUrl = "https://api.telegram.org/bot" + token;
+    }
+
+    public static SpannableStringBuilder jsonColor(SpannableStringBuilder spannable) {
+        String string = spannable.toString();
+        int pos, posB, posE;
+        for (pos = posB = 0, posE = string.indexOf("\n"); posE != -1; pos = posB = posE + 1, posE = string.indexOf("\n", posB)) {   // Missed first line
+            while (spannable.charAt(pos) == ' ')   // intend space
+                ++pos;
+
+            if (spannable.charAt(pos) == '"') {   // string key
+                int posT = pos;
+
+                do ++pos;   // key, didn't consider about escape
+                while (pos != posE && (spannable.charAt(pos) != '"' || spannable.charAt(pos) != '\n'));
+
+                spannable.setSpan(new ForegroundColorSpan(Color.rgb(0x79, 0x5d, 0xa3)), posT, ++pos, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                if (spannable.charAt(pos) == ':') {
+                    spannable.setSpan(new ForegroundColorSpan(Color.BLACK), pos, ++pos, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);   // :
+                    ++pos;   // space after ":"
+                }
+            }
+
+
+            if (spannable.charAt(pos) == '"') {   // string value
+                int posT = pos;
+                do ++pos;   // value, didn't consider about escape
+                while (spannable.charAt(pos) != '"');
+
+                spannable.setSpan(new ForegroundColorSpan(Color.rgb(0xdf, 0x50, 0)), posT, ++pos, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);   // "
+            } else if (spannable.charAt(pos) == 't')   // true
+                spannable.setSpan(new ForegroundColorSpan(Color.rgb(0, 0x86, 0xb3)), pos, pos + 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            else if (spannable.charAt(pos) == 'f')   // false
+                spannable.setSpan(new ForegroundColorSpan(Color.rgb(0, 0x86, 0xb3)), pos, pos + 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            else if (spannable.charAt(pos) == 'n')   // null
+                spannable.setSpan(new ForegroundColorSpan(Color.rgb(0, 0x86, 0xb3)), pos, ++pos + 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            else if (spannable.charAt(pos) == '[')   // array
+                spannable.setSpan(new ForegroundColorSpan(Color.BLACK), pos, ++pos, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            else if (spannable.charAt(pos) == '{')   // object
+                spannable.setSpan(new ForegroundColorSpan(Color.BLACK), pos, ++pos, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            else if (Character.isDigit(spannable.charAt(pos)) || spannable.charAt(pos) == '-') {   // signed number
+                int posT = pos;
+                do ++pos;
+                while (Character.isDigit(spannable.charAt(pos)));
+                spannable.setSpan(new ForegroundColorSpan(Color.rgb(0, 0x80, 0x80)), posT, pos, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+
+
+            if (posE > 1) {
+                pos = posE - 1;  // pos before newline
+                if (spannable.charAt(pos) == ',')
+                    spannable.setSpan(new ForegroundColorSpan(Color.BLACK), pos, ++pos, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                else if (spannable.charAt(pos) == ']')   // array
+                    spannable.setSpan(new ForegroundColorSpan(Color.BLACK), pos, ++pos, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                else if (spannable.charAt(pos) == '}')   // object
+                    spannable.setSpan(new ForegroundColorSpan(Color.BLACK), pos, ++pos, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+        }
+        if (spannable.length() > 2)  // more than 2 line
+            spannable.setSpan(new ForegroundColorSpan(Color.BLACK), spannable.length() - 1, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);   // latest "}"
+
+        return spannable;
     }
 
     public void callApi(final String method, final TextView resultView, @Nullable JSONObject j) {
@@ -171,69 +233,6 @@ public class TelegramAPI {
         });
         thread.start();
     }
-
-    public static SpannableStringBuilder jsonColor(SpannableStringBuilder spannable) {
-        String string = spannable.toString();
-        int pos, posB, posE;
-        for (pos = posB = 0, posE = string.indexOf("\n"); posE != -1; pos = posB = posE + 1, posE = string.indexOf("\n", posB)) {   // Missed first line
-            while (spannable.charAt(pos) == ' ')   // intend space
-                ++pos;
-
-            if (spannable.charAt(pos) == '"') {   // string key
-                int posT = pos;
-
-                do ++pos;   // key, didn't consider about escape
-                while (pos != posE && (spannable.charAt(pos) != '"' || spannable.charAt(pos) != '\n'));
-
-                spannable.setSpan(new ForegroundColorSpan(Color.rgb(0x79, 0x5d, 0xa3)), posT, ++pos, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-                if (spannable.charAt(pos) == ':') {
-                    spannable.setSpan(new ForegroundColorSpan(Color.BLACK), pos, ++pos, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);   // :
-                    ++pos;   // space after ":"
-                }
-            }
-
-
-            if (spannable.charAt(pos) == '"') {   // string value
-                int posT = pos;
-                do ++pos;   // value, didn't consider about escape
-                while (spannable.charAt(pos) != '"');
-
-                spannable.setSpan(new ForegroundColorSpan(Color.rgb(0xdf, 0x50, 0)), posT, ++pos, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);   // "
-            } else if (spannable.charAt(pos) == 't')   // true
-                spannable.setSpan(new ForegroundColorSpan(Color.rgb(0, 0x86, 0xb3)), pos, pos + 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            else if (spannable.charAt(pos) == 'f')   // false
-                spannable.setSpan(new ForegroundColorSpan(Color.rgb(0, 0x86, 0xb3)), pos, pos + 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            else if (spannable.charAt(pos) == 'n')   // null
-                spannable.setSpan(new ForegroundColorSpan(Color.rgb(0, 0x86, 0xb3)), pos, ++pos + 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            else if (spannable.charAt(pos) == '[')   // array
-                spannable.setSpan(new ForegroundColorSpan(Color.BLACK), pos, ++pos, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            else if (spannable.charAt(pos) == '{')   // object
-                spannable.setSpan(new ForegroundColorSpan(Color.BLACK), pos, ++pos, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            else if (Character.isDigit(spannable.charAt(pos)) || spannable.charAt(pos) == '-') {   // signed number
-                int posT = pos;
-                do ++pos;
-                while (Character.isDigit(spannable.charAt(pos)));
-                spannable.setSpan(new ForegroundColorSpan(Color.rgb(0, 0x80, 0x80)), posT, pos, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            }
-
-
-            if (posE > 1) {
-                pos = posE - 1;  // pos before newline
-                if (spannable.charAt(pos) == ',')
-                    spannable.setSpan(new ForegroundColorSpan(Color.BLACK), pos, ++pos, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                else if (spannable.charAt(pos) == ']')   // array
-                    spannable.setSpan(new ForegroundColorSpan(Color.BLACK), pos, ++pos, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                else if (spannable.charAt(pos) == '}')   // object
-                    spannable.setSpan(new ForegroundColorSpan(Color.BLACK), pos, ++pos, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            }
-        }
-        if (spannable.length() > 2)  // more than 2 line
-            spannable.setSpan(new ForegroundColorSpan(Color.BLACK), spannable.length() - 1, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);   // latest "}"
-
-        return spannable;
-    }
-
 
     private String getPath(final Uri uri) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && DocumentsContract.isDocumentUri(_context, uri)) {   // DocumentProvider

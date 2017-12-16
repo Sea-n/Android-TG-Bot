@@ -35,8 +35,8 @@ public class TelegraphAPI {
     final private int _dbVer = 4;
     final private String _apiBaseUrl = "https://api.telegra.ph/";
     final private Context _context;
-    private SeanDBHelper db;
     public JSONObject latestResponse;
+    private SeanDBHelper db;
 
     public TelegraphAPI(Context context) {
         this._context = context;
@@ -143,7 +143,7 @@ public class TelegraphAPI {
                 }
                 Log.v("api", "resp:" + json);
 
-                final  SpannableStringBuilder jsonSpannable = new SpannableStringBuilder(json);
+                final SpannableStringBuilder jsonSpannable = new SpannableStringBuilder(json);
                 TelegramAPI.jsonColor(jsonSpannable);
                 Handler handler = new Handler(_context.getMainLooper());
                 handler.post(new Runnable() {

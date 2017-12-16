@@ -46,19 +46,19 @@ import taipei.sean.telegram.botplayground.SeanDBHelper;
 import taipei.sean.telegram.botplayground.TelegramAPI;
 
 public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    final private Context context;
-    final private int _dbVer = 4;
     final public static int TYPE_BOOLEAN = 1;
     final public static int TYPE_INTEGER = 2;
     final public static int TYPE_FLOAT = 4;
     final public static int TYPE_STRING = 8;
     final public static int TYPE_JSON = 16;
     final public static int TYPE_FILE = 32;
+    final private Context context;
+    final private int _dbVer = 4;
+    RecyclerView mRecyclerView;
     private SeanDBHelper db;
     private ArrayList<JSONObject> iList;
     private ArrayList<String> iListName;
     private ArrayList<View> iListView;
-    RecyclerView mRecyclerView;
 
     public ApiCallerAdapter(Context context) {
         this.context = context;
@@ -151,7 +151,7 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                         if (event.getAction() == MotionEvent.ACTION_UP) {
                             int drawableWidth = autoCompleteTextView.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width();
                             if (event.getRawX() >= (autoCompleteTextView.getRight() - drawableWidth)) {
-                                Snackbar.make(autoCompleteTextView, "This field is required.", Snackbar.LENGTH_SHORT).show();
+                                Snackbar.make(autoCompleteTextView, R.string.field_required, Snackbar.LENGTH_SHORT).show();
                             }
                         }
                         return false;

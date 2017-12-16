@@ -48,9 +48,9 @@ import taipei.sean.telegram.botplayground.SeanDBHelper;
 
 public class FileDownloadActivity extends AppCompatActivity {
     final private int _dbVer = 4;
+    final private Context context = this;
     private SeanDBHelper db;
     private String _token;
-    final private Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

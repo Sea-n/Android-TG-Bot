@@ -35,6 +35,7 @@
     <string name="del_bot_confirm_title">Delete Bot</string>
     <string name="del_bot_confirm_msg">Are you sure you want to delete this bot?</string>
 
+    <string name="field_required">This field is required.</string>
     <string name="no_context_yet">No Context Yet.</string>
     <string name="powered_by">Powered by Awesome Telegram Bot</string>
     <string name="param_out_of_range">Number must in range %1$d - %2$d.</string>

@@ -22,13 +22,13 @@ import java.net.URLConnection;
  * https://stackoverflow.com/questions/34276466
  */
 public class MultipartUtility {
-    private Context context;
-    private final String boundary;
     private static final String LINE_FEED = "\r\n";
+    private final String boundary;
+    final private String charset = "utf-8";
+    private Context context;
     private HttpURLConnection httpConn;
     private OutputStream outputStream;
     private PrintWriter writer;
-    final private String charset = "utf-8";
 
     /**
      * This constructor initializes a new HTTP POST request with content type

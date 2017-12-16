@@ -71,6 +71,18 @@ public class ApiCallerActivity extends AppCompatActivity {
     private TelegramAPI _api;
     private JSONObject apiMethods;
 
+    private static void setTextSize(Paint paint, float desiredWidth, String text) {
+        float testTextSize = 48f;
+
+        Rect bounds = new Rect();
+        paint.setTextSize(testTextSize);
+
+        paint.getTextBounds(text, 0, text.length(), bounds);
+        testTextSize *= desiredWidth;
+        testTextSize /= bounds.width();
+        paint.setTextSize(testTextSize);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -585,17 +597,5 @@ public class ApiCallerActivity extends AppCompatActivity {
             return null;
         }
         return dir;
-    }
-
-    private static void setTextSize(Paint paint, float desiredWidth, String text) {
-        float testTextSize = 48f;
-
-        Rect bounds = new Rect();
-        paint.setTextSize(testTextSize);
-
-        paint.getTextBounds(text, 0, text.length(), bounds);
-        testTextSize *= desiredWidth;
-        testTextSize /= bounds.width();
-        paint.setTextSize(testTextSize);
     }
 }
