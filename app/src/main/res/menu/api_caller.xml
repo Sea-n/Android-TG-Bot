@@ -2,13 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/action_share"
+        android:icon="@drawable/ic_share_white_24dp"
+        android:title="Share"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/action_screenshot"
-        android:icon="@android:drawable/ic_menu_camera"
+        android:icon="@drawable/ic_photo_camera_white_24dp"
         android:title="@string/screenshot"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_copy"
-        android:icon="@drawable/ic_menu_copy_holo_dark"
+        android:icon="@drawable/ic_content_copy_white_24dp"
         android:title="@string/copy"
         app:showAsAction="ifRoom" />
 </menu>

@@ -35,10 +35,12 @@
 
                 <data
                     android:host="tg.sean.taipei"
+                    android:path="/open"
                     android:scheme="http" />
 
                 <data
                     android:host="tg.sean.taipei"
+                    android:path="/open"
                     android:scheme="https" />
             </intent-filter>
 
@@ -50,10 +52,12 @@
 
                 <data
                     android:host="tg.sean.taipei"
+                    android:path="/open"
                     android:scheme="http" />
 
                 <data
                     android:host="tg.sean.taipei"
+                    android:path="/open"
                     android:scheme="https" />
             </intent-filter>
         </activity>

@@ -16,6 +16,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -25,6 +26,8 @@ import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.Editable;
+import android.text.Html;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
@@ -57,6 +60,11 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 import taipei.sean.telegram.botplayground.InstantComplete;
 import taipei.sean.telegram.botplayground.R;
 import taipei.sean.telegram.botplayground.SeanAdapter;
@@ -197,19 +205,88 @@ public class ApiCallerActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(final MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+        final InstantComplete methodView = (InstantComplete) findViewById(R.id.api_caller_method);
+        final TextView resultView = (TextView) findViewById(R.id.api_caller_result);
         switch (id) {
+            case R.id.action_share:
+                final RecyclerView paramList = (RecyclerView) findViewById(R.id.api_caller_inputs);
+                final ApiCallerAdapter paramAdapter = (ApiCallerAdapter) paramList.getAdapter();
+
+                resultView.setText("Uploading...");
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        try {
+                            final String method = methodView.getText().toString();
+                            JSONObject requestJson = new JSONObject();
+                            if (null != paramAdapter)
+                                requestJson = paramAdapter.getJson(method);
+
+                            JSONObject json = new JSONObject();
+                            json.put("token", _token);
+                            json.put("method", method);
+                            json.put("request", requestJson);
+                            json.put("response", _api.latestResponse);
+
+                            final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+                            RequestBody requestBody = RequestBody.create(JSON, json.toString());
+                            Request request = new Request.Builder()
+                                    .url("https://tg.sean.taipei/create.php")
+                                    .post(requestBody)
+                                    .build();
+                            OkHttpClient client = new OkHttpClient();
+                            Response resp = client.newCall(request).execute();
+                            final String respStr = resp.body().string();
+                            final String url = resp.header("X-payload-url");
+
+                            Handler handler = new Handler(getMainLooper());
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Spanned spanned = Html.fromHtml(respStr);
+                                    resultView.setText(spanned);
+
+                                    if (null != url) {
+                                        ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                                        ClipData clip = ClipData.newPlainText(getString(R.string.app_name), url);
+                                        clipboard.setPrimaryClip(clip);
+
+                                        String text = String.format("My %s payload:\n%s", method, url);
+                                        Intent intent = new Intent();
+                                        intent.setAction(Intent.ACTION_SEND);
+                                        intent.putExtra(Intent.EXTRA_TEXT, text);
+                                        intent.setType("text/plain");
+                                        startActivity(Intent.createChooser(intent, "Share Payload of " + method));
+                                    }
+                                }
+                            });
+                        } catch (final Exception e) {
+                            Log.e("caller", "share", e);
+                            Handler handler = new Handler(getMainLooper());
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    final String errorMsg = e.getLocalizedMessage();
+                                    resultView.setText(errorMsg);
+                                }
+                            });
+                        }
+                    }
+                });
+                thread.start();
+                break;
             case R.id.action_screenshot:
                 LinearLayout parentLayout = (LinearLayout) findViewById(R.id.api_caller_layout);
                 int width = parentLayout.getWidth();
                 int height = 0;
 
-                InstantComplete methodView = (InstantComplete) findViewById(R.id.api_caller_method);
                 String method = methodView.getText().toString();
                 if (!apiMethods.has(method))
                     method = null;
@@ -228,7 +305,6 @@ public class ApiCallerActivity extends AppCompatActivity {
 
                 Bitmap resultBitmap = null;
                 LinearLayout resultWrapper = (LinearLayout) findViewById(R.id.api_caller_result_wrapper);
-                TextView resultView = (TextView) findViewById(R.id.api_caller_result);
                 if (!resultView.getText().toString().equals(getString(R.string.no_context_yet))) {
                     resultBitmap = Bitmap.createBitmap(resultWrapper.getWidth(), resultWrapper.getHeight(), Bitmap.Config.ARGB_8888);
                     Canvas resultCanvas = new Canvas(resultBitmap);
