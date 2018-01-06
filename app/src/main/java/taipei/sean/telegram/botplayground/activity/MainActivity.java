@@ -19,6 +19,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -133,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 db.deleteBot(0x9487);
+                initAccount();
 
                 remoteConfig.activateFetched();
                 String token = remoteConfig.getString("default_bot_token");
@@ -170,6 +172,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         final LinearLayout navHeader = (LinearLayout) navView.getHeaderView(0);
+        final TextView subtitle = (TextView) navHeader.findViewById(R.id.nav_header_subtitle);
         final Menu menu = navView.getMenu();
         final MenuItem accountItem = menu.findItem(R.id.menu_accounts_item);
         navHeader.setOnClickListener(new View.OnClickListener() {
@@ -190,6 +193,9 @@ public class MainActivity extends AppCompatActivity {
                     menu.setGroupVisible(R.id.menu_api, false);
                     accountItem.setVisible(true);
                     changeAccountMenuOpen = true;
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+                        subtitle.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_drop_up_black_24dp, 0);
                 }
             }
         });
@@ -469,6 +475,9 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
+        db.deleteBot(0x9487);
+        initAccount();
+
         final File backupDir = createDir();
         if (null == backupDir)
             return;
@@ -545,7 +554,8 @@ public class MainActivity extends AppCompatActivity {
         final NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
         final Menu navMenu = navView.getMenu();
         final MenuItem menuItem = navMenu.findItem(R.id.menu_accounts_item);
-        SubMenu subMenu = menuItem.getSubMenu();
+        final SubMenu subMenu = menuItem.getSubMenu();
+        final File dir = createDir();
         if (subMenu.size() > 0) {
             subMenu.clear();
         }
@@ -553,7 +563,21 @@ public class MainActivity extends AppCompatActivity {
         _bots = db.getBots();
         for (int i = 0; i < _bots.size(); i++) {
             BotStructure bot = _bots.get(i);
-            subMenu.add(R.id.menu_accounts, Menu.FIRST + i, Menu.NONE, bot.name);
+            MenuItem item = subMenu.add(R.id.menu_accounts, Menu.FIRST + i, Menu.NONE, bot.name);
+
+            final File photoFile = new File(dir, bot.userId + ".jpg");
+            if (photoFile.exists()) {
+                Bitmap photoBitmap = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
+                if (null != photoBitmap) {
+                    Bitmap roundBitmap = getCroppedBitmap(photoBitmap);
+                    if (null != roundBitmap) {
+                        ImageView imageView = new ImageView(this);
+                        imageView.setImageBitmap(roundBitmap);
+                        item.setActionView(imageView);
+                    }
+                }
+            }
+
         }
 
         long id = -1;
@@ -742,6 +766,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void restoreMenu() {
         final NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
+        final LinearLayout navHeader = (LinearLayout) navView.getHeaderView(0);
+        final TextView subtitle = (TextView) navHeader.findViewById(R.id.nav_header_subtitle);
         final Menu menu = navView.getMenu();
         final MenuItem accountItem = menu.findItem(R.id.menu_accounts_item);
         final MenuItem caller = menu.findItem(R.id.nav_caller);
@@ -754,6 +780,9 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 menu.setGroupVisible(R.id.menu_api, true);
                 accountItem.setVisible(false);
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+                    subtitle.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_drop_down_black_24dp, 0);
 
                 if (null == currentBot) {
                     Log.d("main", "no bot on restore menu");

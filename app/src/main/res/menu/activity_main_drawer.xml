@@ -33,7 +33,7 @@
         <menu>
             <item
                 android:id="@+id/nav_add_bot"
-                android:icon="@drawable/ic_control_point_black_24dp"
+                android:icon="@drawable/ic_add_black_24dp"
                 android:title="@string/menu_add_bot" />
             <item
                 android:id="@+id/nav_join_group"

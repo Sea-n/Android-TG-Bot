@@ -15,3 +15,8 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+-dontwarn com.google.android.gms.**
+-dontwarn okio.**
+-dontwarn com.squareup.okhttp3.**
+-dontwarn javax.annotation.**

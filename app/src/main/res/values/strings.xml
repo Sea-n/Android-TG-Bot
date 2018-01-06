@@ -79,7 +79,7 @@
 
     <string name="nav_header_photo" translatable="false">Bot Profile Photo</string>
     <string name="nav_header_default_title" translatable="false">No Bot</string>
-    <string name="nav_footer" translatable="false">%1$s  v%2$s (%3$s)</string>
+    <string name="nav_footer" translatable="false">%1$s\nv%2$s (%3$s)</string>
     <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
     <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
     <string name="bot_token_regex" translatable="false">[0-9]{5,10}:[A-Za-z0-9_-]*</string>

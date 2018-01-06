@@ -15,6 +15,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class SeanDBHelper extends SQLiteOpenHelper {
@@ -107,6 +109,17 @@ public class SeanDBHelper extends SQLiteOpenHelper {
         }
 
         cursor.close();
+
+        Collections.sort(result, new Comparator<BotStructure>() {
+            public int compare(BotStructure bot1, BotStructure bot2) {
+                if (bot1._id == 0x9487) return 1;
+                if (bot2._id == 0x9487) return -1;
+
+                if (bot1.userId > bot2.userId) return 1;
+                if (bot1.userId < bot2.userId) return -1;
+                return 0;
+            }
+        });
         return result;
     }
 
