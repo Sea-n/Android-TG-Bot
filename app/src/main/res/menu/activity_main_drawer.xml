@@ -36,6 +36,10 @@
                 android:icon="@drawable/ic_add_black_24dp"
                 android:title="@string/menu_add_bot" />
             <item
+                android:id="@+id/nav_setting"
+                android:icon="@drawable/ic_settings_black_24dp"
+                android:title="@string/title_activity_settings" />
+            <item
                 android:id="@+id/nav_join_group"
                 android:icon="@drawable/ic_group_black_24dp"
                 android:title="@string/menu_join_group" />

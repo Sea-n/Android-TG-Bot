@@ -380,18 +380,26 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(mIntent);
                         break;
                     case R.id.nav_telegraph:
+                        String token = "";
+                        if (null != currentBot)
+                            token = currentBot.token;
                         Intent tIntent = new Intent(MainActivity.this, TelegraphActivity.class);
+                        tIntent.putExtra("token", token);
                         startActivity(tIntent);
                         break;
                     case R.id.nav_file_dl:
                         openFileDownloader();
                         break;
-                    case R.id.nav_add_bot:
-                        addBot();
-                        break;
                     case R.id.nav_fav:
                         Intent favIntent = new Intent(MainActivity.this, FavoriteActivity.class);
                         startActivity(favIntent);
+                        break;
+                    case R.id.nav_add_bot:
+                        addBot();
+                        break;
+                    case R.id.nav_setting:
+                        Intent sIntent = new Intent(MainActivity.this, SettingsActivity.class);
+                        startActivity(sIntent);
                         break;
                     case R.id.nav_join_group:
                         Uri tgUri = Uri.parse(getString(R.string.telegram_group_join_link));

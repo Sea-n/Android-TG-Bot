@@ -59,6 +59,7 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private ArrayList<JSONObject> iList;
     private ArrayList<String> iListName;
     private ArrayList<View> iListView;
+    public boolean modified = false;
 
     public ApiCallerAdapter(Context context) {
         this.context = context;
@@ -328,6 +329,7 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     }
 
                     db.updateParam(name, value);
+                    modified = true;
                 }
             });
 

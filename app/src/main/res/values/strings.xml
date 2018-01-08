@@ -15,6 +15,7 @@
     <string name="title_activity_add_bot">New Bot</string>
     <string name="title_activity_bot_api">Bot API</string>
     <string name="title_activity_telegraph">Telegraph</string>
+    <string name="title_activity_settings">Settings</string>
     <string name="title_activity_favorite">Favorites</string>
     <string name="title_activity_add_favorite">Add Favorite</string>
     <string name="title_activity_about">About This App</string>
@@ -51,6 +52,27 @@
     <string name="add_fav_value_hint">Your Data</string>
     <string name="add_fav_name_hint">Kindly Name</string>
 
+    <string name="setting_sharing">Sharing Options</string>
+    <string name="setting_upload">Upload to Sharing Platform</string>
+    <string name="setting_upload_description">It will generate URL of request, in order to prevent spam, this will send your token for verifying.</string>
+    <string name="setting_screenshot">Screenshot</string>
+    <string name="setting_screenshot_description">Screenshots will be saved in /sdcard/TeleBot, may be an empty image in some old device due to the out-of-memory problem.</string>
+    <string name="setting_copy">Auto Copy Option</string>
+    <string name="setting_share">Pop-up Share Chooser</string>
+
+    <string-array name="setting_copy_options">
+        <item>Only URL (Recommended)</item>
+        <item>URL and Request JSON</item>
+        <item>Nothing</item>
+    </string-array>
+
+    <string-array name="setting_share_options">
+        <item>URL</item>
+        <item>Photo</item>
+        <item>Photo with URL as caption</item>
+        <item>Nothing</item>
+    </string-array>
+
     <string name="save_db">Save Databases</string>
     <string name="mkdir_fail">Fail to create backup director</string>
     <string name="db_export_fail">Database export fail\nReason:</string>
@@ -71,6 +93,7 @@
     <string name="remove">Remove</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="share">Share</string>
     <string name="screenshot">Screenshot</string>
     <string name="request">Request</string>
     <string name="response">Response</string>

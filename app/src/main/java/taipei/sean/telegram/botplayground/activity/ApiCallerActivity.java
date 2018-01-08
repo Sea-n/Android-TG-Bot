@@ -5,6 +5,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -22,7 +23,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.Editable;
@@ -38,11 +38,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -78,6 +73,12 @@ public class ApiCallerActivity extends AppCompatActivity {
     private String _token;
     private TelegramAPI _api;
     private JSONObject apiMethods;
+    private boolean modified = true;
+    private String payloadUrl;
+    private boolean upload;
+    private boolean screenshot;
+    private int copyType;
+    private int shareType;
 
     private static void setTextSize(Paint paint, float desiredWidth, String text) {
         float testTextSize = 48f;
@@ -165,6 +166,7 @@ public class ApiCallerActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
+                modified = true;
                 String method = editable.toString();
                 if (apiMethods.has(method))
                     db.updateParam("_method", method);
@@ -195,12 +197,23 @@ public class ApiCallerActivity extends AppCompatActivity {
             methodView.setText(method);
 
         updateMethod();
+
+        final SharedPreferences preferences = getSharedPreferences("data", MODE_PRIVATE);
+        upload = preferences.getBoolean("upload_payload", true);
+        screenshot = preferences.getBoolean("take_screenshot", false);
+        copyType = preferences.getInt("copy_action", 0);
+        shareType = preferences.getInt("share_intent", 0);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.api_caller, menu);
+
+        MenuItem shareButton = menu.findItem(R.id.action_share);
+        if (!upload && !screenshot)
+            shareButton.setVisible(false);
+
         return true;
     }
 
@@ -213,235 +226,120 @@ public class ApiCallerActivity extends AppCompatActivity {
 
         final InstantComplete methodView = (InstantComplete) findViewById(R.id.api_caller_method);
         final TextView resultView = (TextView) findViewById(R.id.api_caller_result);
+        final RecyclerView paramList = (RecyclerView) findViewById(R.id.api_caller_inputs);
+        final ApiCallerAdapter paramAdapter = (ApiCallerAdapter) paramList.getAdapter();
+
+        if (null != paramAdapter)
+            modified |= paramAdapter.modified;
+
         switch (id) {
             case R.id.action_share:
-                final RecyclerView paramList = (RecyclerView) findViewById(R.id.api_caller_inputs);
-                final ApiCallerAdapter paramAdapter = (ApiCallerAdapter) paramList.getAdapter();
+                if (modified) {
+                    Snackbar.make(resultView, "Please submit before share", Snackbar.LENGTH_SHORT).show();
+                    break;
+                }
 
-                resultView.setText("Uploading...");
-                Thread thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
+                modified = true;
+                Snackbar.make(resultView, "Processing...", Snackbar.LENGTH_SHORT).show();
 
-                        try {
-                            final String method = methodView.getText().toString();
-                            JSONObject requestJson = new JSONObject();
-                            if (null != paramAdapter)
-                                requestJson = paramAdapter.getJson(method);
+                if (upload) {
+                    Thread thread = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                final String method = methodView.getText().toString();
+                                JSONObject requestJson = new JSONObject();
+                                if (null != paramAdapter)
+                                    requestJson = paramAdapter.getJson(method);
 
-                            JSONObject json = new JSONObject();
-                            json.put("token", _token);
-                            json.put("method", method);
-                            json.put("request", requestJson);
-                            json.put("response", _api.latestResponse);
+                                JSONObject json = new JSONObject();
+                                json.put("token", _token);
+                                json.put("method", method);
+                                json.put("request", requestJson);
+                                json.put("response", _api.latestResponse);
 
-                            final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-                            RequestBody requestBody = RequestBody.create(JSON, json.toString());
-                            Request request = new Request.Builder()
-                                    .url("https://tg.sean.taipei/create.php")
-                                    .post(requestBody)
-                                    .build();
-                            OkHttpClient client = new OkHttpClient();
-                            Response resp = client.newCall(request).execute();
-                            final String respStr = resp.body().string();
-                            final String url = resp.header("X-payload-url");
+                                final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+                                RequestBody requestBody = RequestBody.create(JSON, json.toString());
+                                Request request = new Request.Builder()
+                                        .url("https://tg.sean.taipei/create.php")
+                                        .post(requestBody)
+                                        .build();
+                                OkHttpClient client = new OkHttpClient();
+                                Response resp = client.newCall(request).execute();
+                                final String respStr = resp.body().string();
+                                payloadUrl = resp.header("X-payload-url");
 
-                            Handler handler = new Handler(getMainLooper());
-                            handler.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Spanned spanned = Html.fromHtml(respStr);
-                                    resultView.setText(spanned);
+                                Handler handler = new Handler(getMainLooper());
+                                final JSONObject finalRequestJson = requestJson;
+                                handler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (!screenshot) {
+                                            Spanned spanned = Html.fromHtml(respStr);
+                                            resultView.setText(spanned);
+                                        } else
+                                            Snackbar.make(resultView, respStr, Snackbar.LENGTH_LONG).show();
 
-                                    if (null != url) {
-                                        ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-                                        ClipData clip = ClipData.newPlainText(getString(R.string.app_name), url);
-                                        clipboard.setPrimaryClip(clip);
+                                        if (null != payloadUrl) {
+                                            String copyText = null;
+                                            if (copyType == 0)
+                                                copyText = payloadUrl;
+                                            else if (copyType == 1) {
+                                                try {
+                                                    copyText = payloadUrl + "\n\n" + finalRequestJson.toString(2);
+                                                } catch (JSONException e) {
+                                                    Log.e("api", "request json", e);
+                                                }
+                                            }
 
-                                        String text = String.format("My %s payload:\n%s", method, url);
-                                        Intent intent = new Intent();
-                                        intent.setAction(Intent.ACTION_SEND);
-                                        intent.putExtra(Intent.EXTRA_TEXT, text);
-                                        intent.setType("text/plain");
-                                        startActivity(Intent.createChooser(intent, "Share Payload of " + method));
+                                            if (null != copyText) {
+                                                ClipData clip = ClipData.newPlainText(getString(R.string.app_name), copyText);
+                                                ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                                                clipboard.setPrimaryClip(clip);
+                                                Snackbar.make(resultView, "Copied!", Snackbar.LENGTH_SHORT).show();
+                                            }
+
+                                            if (shareType == 0) {
+                                                String text = String.format("My %s payload:\n%s", method, payloadUrl);
+                                                Intent intent = new Intent();
+                                                intent.setAction(Intent.ACTION_SEND);
+                                                intent.putExtra(Intent.EXTRA_TEXT, text);
+                                                intent.setType("text/plain");
+                                                startActivity(Intent.createChooser(intent, "Share Payload of " + method));
+                                            }
+                                        }
                                     }
-                                }
-                            });
-                        } catch (final Exception e) {
-                            Log.e("caller", "share", e);
-                            Handler handler = new Handler(getMainLooper());
-                            handler.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    final String errorMsg = e.getLocalizedMessage();
-                                    resultView.setText(errorMsg);
-                                }
-                            });
+                                });
+
+                                if (shareType == 2)
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            screenshot();
+                                        }
+                                    });
+                            } catch (final Exception e) {
+                                Log.e("caller", "share", e);
+                                Handler handler = new Handler(getMainLooper());
+                                handler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        final String errorMsg = e.getLocalizedMessage();
+                                        if (!screenshot)
+                                            resultView.setText(errorMsg);
+                                        else
+                                            Snackbar.make(resultView, errorMsg, Snackbar.LENGTH_LONG).show();
+                                    }
+                                });
+                            }
                         }
-                    }
-                });
-                thread.start();
-                break;
-            case R.id.action_screenshot:
-                LinearLayout parentLayout = (LinearLayout) findViewById(R.id.api_caller_layout);
-                int width = parentLayout.getWidth();
-                int height = 0;
-
-                String method = methodView.getText().toString();
-                if (!apiMethods.has(method))
-                    method = null;
-
-                Bitmap paramsBitmap = null;
-                if (null != method) {
-                    height += width * 3 / 16;   // Request Header (with method name)
-                    RecyclerView paramsLayout = (RecyclerView) findViewById(R.id.api_caller_inputs);
-                    final ApiCallerAdapter paramsAdapter = (ApiCallerAdapter) paramsLayout.getAdapter();
-                    if (null != paramsAdapter) {
-                        paramsBitmap = paramsAdapter.getScreenshot();
-                        if (null != paramsBitmap)
-                            height += paramsBitmap.getHeight();   // Request Body
-                    }
+                    });
+                    thread.start();
                 }
-
-                Bitmap resultBitmap = null;
-                LinearLayout resultWrapper = (LinearLayout) findViewById(R.id.api_caller_result_wrapper);
-                if (!resultView.getText().toString().equals(getString(R.string.no_context_yet))) {
-                    resultBitmap = Bitmap.createBitmap(resultWrapper.getWidth(), resultWrapper.getHeight(), Bitmap.Config.ARGB_8888);
-                    Canvas resultCanvas = new Canvas(resultBitmap);
-                    resultWrapper.draw(resultCanvas);
-                    height += resultBitmap.getHeight() + width * 3 / 16;
+                if (screenshot) {
+                    if (shareType != 2)
+                        screenshot();
                 }
-
-                if (height == 0)
-                    return false;
-
-                height += width * 2 / 16;   // footer
-
-                Bitmap finalBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-                Canvas finalCanvas = new Canvas(finalBitmap);
-                finalCanvas.drawColor(Color.WHITE);
-
-                Paint titlePaint = new Paint();
-                titlePaint.setColor(Color.BLACK);
-                titlePaint.setTypeface(Typeface.SANS_SERIF);
-                setTextSize(titlePaint, width / 2, getString(R.string.request));
-                titlePaint.setTextAlign(Paint.Align.LEFT);
-
-                Paint methodPaint = null;
-                if (null != method) {
-                    methodPaint = new Paint();
-                    methodPaint.setColor(Color.DKGRAY);
-                    methodPaint.setTypeface(Typeface.SANS_SERIF);
-                    setTextSize(methodPaint, width / 3, method);
-                    methodPaint.setTextAlign(Paint.Align.LEFT);
-                }
-
-                Paint textPaint = new Paint();
-                textPaint.setColor(Color.LTGRAY);
-                textPaint.setTypeface(Typeface.SANS_SERIF);
-                setTextSize(textPaint, width / 2, getString(R.string.powered_by));
-                textPaint.setTextAlign(Paint.Align.LEFT);
-
-                Paint linkPaint = new Paint();
-                linkPaint.setColor(Color.BLUE);
-                titlePaint.setTypeface(Typeface.SANS_SERIF);
-                setTextSize(linkPaint, width / 3, getString(R.string.app_link_text));
-                linkPaint.setTextAlign(Paint.Align.RIGHT);
-
-                int offset = 0;
-
-                if (null != method) {
-                    finalCanvas.drawText(getString(R.string.request), width / 32, offset + width * 2 / 16, titlePaint);
-                    finalCanvas.drawText("(" + method + ")", width * 9 / 16, offset + width * 2 / 16, methodPaint);
-                    offset += width * 3 / 16;
-
-                    if (null != paramsBitmap) {
-                        finalCanvas.drawBitmap(paramsBitmap, 0, offset, null);
-                        offset += paramsBitmap.getHeight();
-                    }
-                }
-
-                if (null != resultBitmap) {
-                    finalCanvas.drawText(getString(R.string.response), width / 32, offset + width * 2 / 16, titlePaint);
-                    offset += width * 3 / 16;
-
-                    finalCanvas.drawBitmap(resultBitmap, 0, offset, null);
-                    offset += resultBitmap.getHeight();
-                }
-
-                finalCanvas.drawText(getString(R.string.powered_by), width / 32, offset + width / 16, textPaint);
-                finalCanvas.drawText(getString(R.string.app_link_text), width * 23 / 24, offset + width * 3 / 32, linkPaint);
-
-                File dir = createDir();
-                if (null == dir)
-                    return false;
-                SimpleDateFormat sdf = new SimpleDateFormat("MMMdd'T'HH:mm:ss", Locale.US);
-                Date date = new Date();
-                String time = sdf.format(date);
-                File file = new File(dir, "screenshot-" + time + ".png");
-                try {
-                    FileOutputStream out = new FileOutputStream(file);
-                    finalBitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-                } catch (Exception e) {
-                    Log.e("caller", "new file", e);
-                }
-
-                String caption = getString(R.string.powered_by) + ", \n" + getString(R.string.app_link_text);
-                String authority = getApplicationContext().getPackageName() + ".provider";
-                Uri fileURI = FileProvider.getUriForFile(getApplicationContext(), authority, file);
-                Intent intent = new Intent();
-                intent.setType("image/png");
-                intent.setAction(Intent.ACTION_SEND);
-                intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
-                intent.putExtra(Intent.EXTRA_TITLE, getString(R.string.app_name));
-                intent.putExtra(Intent.EXTRA_TEXT, caption);
-                intent.putExtra(Intent.EXTRA_STREAM, fileURI);
-                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
-                startActivity(Intent.createChooser(intent, "Share Screenshot of " + method));
-                break;
-
-            case R.id.action_copy:
-                PopupMenu popupMenu = new PopupMenu(this, findViewById(R.id.action_copy));
-                popupMenu.getMenuInflater().inflate(R.menu.popup_api_caller_copy, popupMenu.getMenu());
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        int id = item.getItemId();
-                        JSONObject json = null;
-                        switch (id) {
-                            case R.id.copy_request:
-                                RecyclerView paramsLayout = (RecyclerView) findViewById(R.id.api_caller_inputs);
-                                final ApiCallerAdapter paramsAdapter = (ApiCallerAdapter) paramsLayout.getAdapter();
-                                if (null != paramsAdapter)
-                                    json = paramsAdapter.getJson(null);
-                                break;
-                            case R.id.copy_response:
-                                json = _api.latestResponse;
-                                break;
-                            default:
-                                Log.w("popup", "Press unknown " + id);
-                                return false;
-                        }
-
-                        String text;
-                        if (null == json) {
-                            text = getString(R.string.no_context_yet);
-                        } else {
-                            String jsonStr = json.toString();
-                            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                            JsonParser jp = new JsonParser();
-                            JsonElement je = jp.parse(jsonStr);
-                            text = gson.toJson(je);
-                        }
-
-                        ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-                        ClipData clip = ClipData.newPlainText(getString(R.string.app_name), text);
-                        clipboard.setPrimaryClip(clip);
-                        return true;
-                    }
-                });
-                popupMenu.show();
                 break;
 
             default:
@@ -559,6 +457,7 @@ public class ApiCallerActivity extends AppCompatActivity {
     }
 
     private void submit() {
+        modified = false;
         final InstantComplete methodView = (InstantComplete) findViewById(R.id.api_caller_method);
         final RecyclerView paramList = (RecyclerView) findViewById(R.id.api_caller_inputs);
         final TextView resultView = (TextView) findViewById(R.id.api_caller_result);
@@ -568,6 +467,7 @@ public class ApiCallerActivity extends AppCompatActivity {
         final ApiCallerAdapter paramAdapter = (ApiCallerAdapter) paramList.getAdapter();
 
         if (null == paramAdapter) {
+            paramAdapter.modified = false;
             _api.callApi(method, resultView, null);
             return;
         }
@@ -650,6 +550,132 @@ public class ApiCallerActivity extends AppCompatActivity {
         }
 
         return json;
+    }
+
+    public void screenshot() {
+        final InstantComplete methodView = (InstantComplete) findViewById(R.id.api_caller_method);
+        final TextView resultView = (TextView) findViewById(R.id.api_caller_result);
+
+        LinearLayout parentLayout = (LinearLayout) findViewById(R.id.api_caller_layout);
+        int width = parentLayout.getWidth();
+        int height = 0;
+
+        String method = methodView.getText().toString();
+        if (!apiMethods.has(method))
+            method = null;
+
+        Bitmap paramsBitmap = null;
+        if (null != method) {
+            height += width * 3 / 16;   // Request Header (with method name)
+            RecyclerView paramsLayout = (RecyclerView) findViewById(R.id.api_caller_inputs);
+            final ApiCallerAdapter paramsAdapter = (ApiCallerAdapter) paramsLayout.getAdapter();
+            if (null != paramsAdapter) {
+                paramsBitmap = paramsAdapter.getScreenshot();
+                if (null != paramsBitmap)
+                    height += paramsBitmap.getHeight();   // Request Body
+            }
+        }
+
+        Bitmap resultBitmap = null;
+        LinearLayout resultWrapper = (LinearLayout) findViewById(R.id.api_caller_result_wrapper);
+        if (!resultView.getText().toString().equals(getString(R.string.no_context_yet))) {
+            resultBitmap = Bitmap.createBitmap(resultWrapper.getWidth(), resultWrapper.getHeight(), Bitmap.Config.ARGB_8888);
+            Canvas resultCanvas = new Canvas(resultBitmap);
+            resultWrapper.draw(resultCanvas);
+            height += resultBitmap.getHeight() + width * 3 / 16;
+        }
+
+        if (height == 0)
+            return;
+
+        height += width * 2 / 16;   // footer
+
+        Bitmap finalBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas finalCanvas = new Canvas(finalBitmap);
+        finalCanvas.drawColor(Color.WHITE);
+
+        Paint titlePaint = new Paint();
+        titlePaint.setColor(Color.BLACK);
+        titlePaint.setTypeface(Typeface.SANS_SERIF);
+        setTextSize(titlePaint, width / 2, getString(R.string.request));
+        titlePaint.setTextAlign(Paint.Align.LEFT);
+
+        Paint methodPaint = null;
+        if (null != method) {
+            methodPaint = new Paint();
+            methodPaint.setColor(Color.DKGRAY);
+            methodPaint.setTypeface(Typeface.SANS_SERIF);
+            setTextSize(methodPaint, width / 3, method);
+            methodPaint.setTextAlign(Paint.Align.LEFT);
+        }
+
+        Paint textPaint = new Paint();
+        textPaint.setColor(Color.LTGRAY);
+        textPaint.setTypeface(Typeface.SANS_SERIF);
+        setTextSize(textPaint, width / 2, getString(R.string.powered_by));
+        textPaint.setTextAlign(Paint.Align.LEFT);
+
+        Paint linkPaint = new Paint();
+        linkPaint.setColor(Color.BLUE);
+        titlePaint.setTypeface(Typeface.SANS_SERIF);
+        setTextSize(linkPaint, width / 3, getString(R.string.app_link_text));
+        linkPaint.setTextAlign(Paint.Align.RIGHT);
+
+        int offset = 0;
+
+        if (null != method) {
+            finalCanvas.drawText(getString(R.string.request), width / 32, offset + width * 2 / 16, titlePaint);
+            finalCanvas.drawText("(" + method + ")", width * 9 / 16, offset + width * 2 / 16, methodPaint);
+            offset += width * 3 / 16;
+
+            if (null != paramsBitmap) {
+                finalCanvas.drawBitmap(paramsBitmap, 0, offset, null);
+                offset += paramsBitmap.getHeight();
+            }
+        }
+
+        if (null != resultBitmap) {
+            finalCanvas.drawText(getString(R.string.response), width / 32, offset + width * 2 / 16, titlePaint);
+            offset += width * 3 / 16;
+
+            finalCanvas.drawBitmap(resultBitmap, 0, offset, null);
+            offset += resultBitmap.getHeight();
+        }
+
+        finalCanvas.drawText(getString(R.string.powered_by), width / 32, offset + width / 16, textPaint);
+        finalCanvas.drawText(getString(R.string.app_link_text), width * 23 / 24, offset + width * 3 / 32, linkPaint);
+
+        File dir = createDir();
+        if (null == dir)
+            return;
+        SimpleDateFormat sdf = new SimpleDateFormat("MMMdd'T'HH:mm:ss", Locale.US);
+        Date date = new Date();
+        String time = sdf.format(date);
+        File file = new File(dir, "screenshot-" + time + ".png");
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            finalBitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+        } catch (Exception e) {
+            Log.e("caller", "new file", e);
+        }
+
+        String caption = null;
+        if (shareType == 1)
+            caption = getString(R.string.powered_by) + ", \n" + getString(R.string.app_link_text);
+        else if (shareType == 2)
+            caption = payloadUrl;
+
+        if (null != caption) {
+            String authority = getApplicationContext().getPackageName() + ".provider";
+            Uri fileURI = FileProvider.getUriForFile(getApplicationContext(), authority, file);
+            Intent intent = new Intent();
+            intent.setType("image/png");
+            intent.setAction(Intent.ACTION_SEND);
+            intent.putExtra(Intent.EXTRA_TEXT, caption);
+            intent.putExtra(Intent.EXTRA_STREAM, fileURI);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            startActivity(Intent.createChooser(intent, "Share Screenshot of " + method));
+        }
     }
 
     private File createDir() {
