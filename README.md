@@ -12,9 +12,10 @@ Issues, Pull Requests are **always welcome**
 ## Translators
 Spanish 🇪🇸 by [Chaky El Pipe](http://telegra.ph/Biografía-Chaky-El-Pipe-07-24)  
 Russian 🇷🇺 by [Smartman\_ru](https://github.com/smartmanru)  
-Hindi 🇮🇳 by [Rishabh](https://github.com/lulzx)  
+Hindi 🇮🇳 by [Rishabh](https://github.com/lulzx)
+Italian 🇮🇹 by [Eric Solinas](https://t.me/EricSolinas)
 Chinese 🇹🇼 by [Sean](https://www.sean.taipei)  
-If you would like to translate this app to your native language, please read [this gist](https://gist.github.com/Sea-n/aacf84e85230a57778076eb6c3d98072).
+If you would like to translate this app to your native language, please read [this gist](https://git.io/l10n).
 
 
 ## Screenshots
@@ -28,9 +29,7 @@ If you would like to translate this app to your native language, please read [th
 
 ## Links
 + Google Play: [taipei.sean.telegram.botplayground](https://play.google.com/store/apps/details?id=taipei.sean.telegram.botplayground)
-  + Beta Testing Program is [available](https://play.google.com/apps/testing/taipei.sean.telegram.botplayground)!
-  + Remember to Rate before join Beta Program :smiley:
-+ Telegram [Group](https://t.me/AwesomeTeleBot)
++ Telegram Group: [@AwesomeTeleBot](https://t.me/AwesomeTeleBot)
 + Bot API Tutorial: [從零開始的 Telegram Bot](https://blog.sean.taipei/2017/05/telegram-bot) (Chinese)
 
 

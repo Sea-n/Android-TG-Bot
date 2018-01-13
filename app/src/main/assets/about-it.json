@@ -1,59 +1,59 @@
 [
   {
-    "title": "Desarrollador principal",
+    "title": "Sviluppatore principale",
     "desc": "Sean",
     "url": "https://www.sean.taipei/"
   },
   {
     "header": true,
-    "title": "Traductores"
+    "title": "Traduttori"
   },
   {
-    "title": "Español 🇪🇸",
+    "title": "Spagnolo 🇪🇸",
     "desc": "Chaky El Pipe",
     "url": "http://telegra.ph/Biografía-Chaky-El-Pipe-07-24"
   },
   {
-    "title": "Ruso 🇷🇺",
+    "title": "Russo 🇷🇺",
     "desc": "Smartman_ru",
     "url": "https://github.com/smartmanru"
   },
   {
-    "title": "Hindi 🇮🇳",
+    "title": "Indiano 🇮🇳",
     "desc": "Rishabh",
     "url": "https://github.com/lulzx"
   },
   {
-    "title": "Italian 🇮🇹",
-    "desc": "Eric Solinas",
-    "url": "https://t.me/EricSolinas"
-  },
-  {
-    "title": "Chino 🇹🇼",
+    "title": "Cinese 🇹🇼",
     "desc": "Sean",
     "url": "https://www.sean.taipei"
   },
   {
-    "title": "Convertirse en traductor",
-    "desc": "¡Haga que su lengua materna tenga traducción incorporada!",
+    "title": "Italiano 🇮🇹",
+    "desc": "Eric Solinas",
+    "url": "https://telegram.me/EricSolinas"
+  },
+  {
+    "title": "Diventa un traduttore",
+    "desc": "Traduci l'applicazione nella tua lingua madre!",
     "url": "https://git.io/l10n"
   },
   {
     "header": true,
-    "title": "misc"
+    "title": "Varie"
   },
   {
-    "title": "Escríbenos",
-    "desc": "Si te gusta :)",
+    "title": "Recensisci l'app",
+    "desc": "Se ti va :)",
     "url": "https://play.google.com/store/apps/details?id=taipei.sean.telegram.botplayground"
   },
   {
-    "title": "Grupo Oficial",
-    "desc": "Utilice el inglés en grupo global",
+    "title": "Chat ufficiale",
+    "desc": "Per favore usa l'Inglese nel gruppo",
     "url": "https://t.me/AwesomeTeleBot"
   },
   {
-    "title": "Código abierto en GitHub",
+    "title": "Codice sorgente su GitHub",
     "desc": "Sea-n/Android-TG-Bot",
     "url": "https://git.io/TG"
   }

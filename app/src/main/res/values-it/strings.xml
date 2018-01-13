@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="lang_code">it</string>
+
+    <string name="menu_functions">Funzioni</string>
+    <string name="menu_add_bot">Aggiungi Bot</string>
+    <string name="menu_join_group">Entra nel gruppo</string>
+    <string name="menu_github">Stellina su GitHub</string>
+    <string name="menu_export">Esporta il database sulla scheda SD</string>
+    <string name="menu_about">Informazioni</string>
+
+    <string name="title_activity_add_bot">Nuovo Bot</string>
+    <string name="title_activity_favorite">Preferiti</string>
+    <string name="title_activity_add_favorite">Aggiungi preferito</string>
+    <string name="title_activity_about">Informazioni sull'app</string>
+
+    <string name="no_bot_placeholder">Nessun bot, per favore clicca + per aggiungerne uno.</string>
+    <string name="not_normal_bot">Per favore usa un Token valido</string>
+
+    <string name="add_bot_token">Il Token del tuo Bot</string>
+    <string name="add_bot_name_invalid">Nickname Invalido, ricontrolla per favore.</string>
+    <string name="add_bot_token_invalid">Formato Token invalido</string>
+
+    <string name="no_bot_warning">Non hai selezionato un Token, per favore aggiungine uno prima.</string>
+    <string name="no_bot_selected">Non hai selezionato il tuo bot.</string>
+    <string name="ask_add_bot_title">Nuovo Bot</string>
+    <string name="ask_add_bot_msg">Vuoi aggiungere un nuovo bot?</string>
+
+    <string name="del_bot_confirm_title">Elimina Bot</string>
+    <string name="del_bot_confirm_msg">Sei sicuro di voler eliminare questo bot?</string>
+
+    <string name="no_context_yet">Nulla da mostrare per ora.</string>
+    <string name="powered_by">Sponsorizzato da Awesome Telegram Bot</string>
+    <string name="param_out_of_range">Il valore deve essere nel range %1$d - %2$d.</string>
+
+    <string name="file_downloader_description">Il file sarà aperto automaticamente al termine del download.\nTutti i File scaricati saranno salvati nella cartella /sdcard/TeleBot.</string>
+
+    <string name="add_fav_prompt">Seleziona il tipo</string>
+    <string name="add_fav_value_hint">I tuoi dati</string>
+    <string name="add_fav_name_hint">Nomignolo</string>
+
+    <string name="save_db">Salva Databases</string>
+    <string name="mkdir_fail">Impossibile creare cartella di backup</string>
+    <string name="db_export_fail">Esportazione del database fallita\nMotivo:</string>
+    <string name="export_to">"Esportato in "</string>
+
+    <string name="footer_rate_title">Recensisci questa applicazione</string>
+    <string name="footer_rate_msg">Clicca VAI se ti va :)</string>
+    <string name="footer_rate_yes">VAI</string>
+    <string name="footer_rate_no">Non ora</string>
+
+    <string name="method">Metodo</string>
+    <string name="done">Fatto</string>
+    <string name="save">Salva</string>
+    <string name="copy">Copia</string>
+    <string name="submit">Invia</string>
+    <string name="cancel">Annulla</string>
+    <string name="edit">Modifica</string>
+    <string name="remove">Rimuovi</string>
+    <string name="yes">Sì</string>
+    <string name="request">Richiesta</string>
+    <string name="response">Risposta</string>
+    <string name="copy_request">Copia richiesta</string>
+    <string name="copy_response">Copia risposta</string>
+</resources>
