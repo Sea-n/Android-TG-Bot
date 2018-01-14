@@ -467,12 +467,12 @@ public class ApiCallerActivity extends AppCompatActivity {
         final ApiCallerAdapter paramAdapter = (ApiCallerAdapter) paramList.getAdapter();
 
         if (null == paramAdapter) {
-            paramAdapter.modified = false;
             _api.callApi(method, resultView, null);
             return;
         }
 
         JSONObject jsonObject = paramAdapter.getJson(method);
+        paramAdapter.modified = false;
 
         _api.callApi(method, resultView, jsonObject);
     }
