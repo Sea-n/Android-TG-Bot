@@ -7,8 +7,8 @@ android {
         applicationId "taipei.sean.telegram.botplayground"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 62
-        versionName "3.5.3.1"
+        versionCode 63
+        versionName "3.5.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [onesignal_app_id               : "07dbb755-8e15-4edb-9c2c-281efae2b677",
                                 // Project number pulled from dashboard, local value is ignored.
@@ -34,6 +34,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'

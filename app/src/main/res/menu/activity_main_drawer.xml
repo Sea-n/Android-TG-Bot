@@ -11,6 +11,10 @@
             android:icon="@drawable/ic_edit_black_24dp"
             android:title="@string/title_activity_telegraph" />
         <item
+            android:id="@+id/nav_webhook"
+            android:icon="@drawable/ic_bug_report_black_24dp"
+            android:title="@string/title_activity_webhook" />
+        <item
             android:id="@+id/nav_file_dl"
             android:icon="@drawable/ic_file_download_black_24dp"
             android:title="@string/file_downloader" />

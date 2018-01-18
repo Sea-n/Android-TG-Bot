@@ -387,6 +387,10 @@ public class MainActivity extends AppCompatActivity {
                         tIntent.putExtra("token", token);
                         startActivity(tIntent);
                         break;
+                    case R.id.nav_webhook:
+                        Intent wIntent = new Intent(MainActivity.this, WebhookActivity.class);
+                        startActivity(wIntent);
+                        break;
                     case R.id.nav_file_dl:
                         openFileDownloader();
                         break;

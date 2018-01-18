@@ -15,6 +15,7 @@
     <string name="title_activity_add_bot">New Bot</string>
     <string name="title_activity_bot_api">Bot API</string>
     <string name="title_activity_telegraph">Telegraph</string>
+    <string name="title_activity_webhook">Webhook Debugger</string>
     <string name="title_activity_settings">Settings</string>
     <string name="title_activity_favorite">Favorites</string>
     <string name="title_activity_add_favorite">Add Favorite</string>
@@ -43,6 +44,9 @@
     <string name="no_context_yet">No Context Yet.</string>
     <string name="powered_by">Powered by Awesome Telegram Bot</string>
     <string name="param_out_of_range">Number must in range %1$d - %2$d.</string>
+
+    <string name="paload">Payload</string>
+    <string name="webhook_url">Webhook URL</string>
 
     <string name="file_downloader">File Downloader</string>
     <string name="file_id">File ID</string>

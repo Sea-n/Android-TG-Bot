@@ -12,6 +12,8 @@
 
     <string name="title_activity_add_bot">加入 Bot</string>
     <string name="title_activity_bot_api">Bot API 發送器</string>
+    <string name="title_activity_webhook">Webhook 除錯器</string>
+    <string name="title_activity_settings">設定</string>
     <string name="title_activity_favorite">我的最愛</string>
     <string name="title_activity_add_favorite">新增最愛</string>
     <string name="title_activity_about">關於 App</string>
@@ -40,12 +42,35 @@
     <string name="powered_by">由 Awesome Telegram Bot 提供</string>
     <string name="param_out_of_range">數值必須介於 %1$d - %2$d</string>
 
+    <string name="webhook_url">Webhook 網址</string>
+
     <string name="file_downloader">檔案下載器</string>
     <string name="file_downloader_description">檔案將自動於成功下載後開啟\n所有成功下載的檔案儲存於 /sdcard/TeleBot 目錄中</string>
 
     <string name="add_fav_prompt">選取類別</string>
     <string name="add_fav_value_hint">您的資料</string>
     <string name="add_fav_name_hint">名稱</string>
+
+    <string name="setting_sharing">分享設定</string>
+    <string name="setting_upload">上傳至共享平台</string>
+    <string name="setting_upload_description">這會產生一個公開連結，為了防止垃圾訊息，將傳送您的 bot token 作為驗證</string>
+    <string name="setting_screenshot">截圖</string>
+    <string name="setting_screenshot_description">截圖將保存於 /sdcard/TeleBot 目錄中，某些 RAM 較低的舊手機可能無法正常使用</string>
+    <string name="setting_copy">自動複製</string>
+    <string name="setting_share">彈出式分享選單</string>
+
+    <string-array name="setting_copy_options">
+        <item>只有網址 URL (建議)</item>
+        <item>網址及請求 JSON</item>
+        <item>啥都不要</item>
+    </string-array>
+
+    <string-array name="setting_share_options">
+        <item>網址</item>
+        <item>截圖</item>
+        <item>截圖 (加上連結)</item>
+        <item>啥都不要</item>
+    </string-array>
 
     <string name="save_db">保存資料庫</string>
     <string name="mkdir_fail">建立備份資料夾失敗</string>
@@ -66,6 +91,7 @@
     <string name="remove">移除</string>
     <string name="yes">是</string>
     <string name="no">否</string>
+    <string name="share">分享</string>
     <string name="screenshot">截圖</string>
     <string name="request">請求內容</string>
     <string name="response">回應</string>

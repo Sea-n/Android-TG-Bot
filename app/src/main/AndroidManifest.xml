@@ -22,9 +22,9 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
             <intent-filter
                 android:autoVerify="true"
                 tools:targetApi="23">
@@ -37,13 +37,11 @@
                     android:host="tg.sean.taipei"
                     android:path="/open"
                     android:scheme="http" />
-
                 <data
                     android:host="tg.sean.taipei"
                     android:path="/open"
                     android:scheme="https" />
             </intent-filter>
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -54,7 +52,6 @@
                     android:host="tg.sean.taipei"
                     android:path="/open"
                     android:scheme="http" />
-
                 <data
                     android:host="tg.sean.taipei"
                     android:path="/open"
@@ -87,7 +84,6 @@
                     android:host="api.telegram.org"
                     android:pathPrefix="/bot"
                     android:scheme="http" />
-
                 <data
                     android:host="api.telegram.org"
                     android:pathPrefix="/bot"
@@ -111,7 +107,6 @@
                 <data
                     android:host="api.telegra.ph"
                     android:scheme="http" />
-
                 <data
                     android:host="api.telegra.ph"
                     android:scheme="https" />
@@ -152,7 +147,6 @@
                     android:host="api.telegram.org"
                     android:pathPrefix="/file/bot"
                     android:scheme="http" />
-
                 <data
                     android:host="api.telegram.org"
                     android:pathPrefix="/file/bot"
@@ -182,6 +176,15 @@
         <activity
             android:name=".activity.SettingsActivity"
             android:label="@string/title_activity_settings"
+            android:parentActivityName=".activity.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="taipei.sean.telegram.botplayground.activity.MainActivity" />
+        </activity>
+
+        <activity
+            android:name=".activity.WebhookActivity"
+            android:label="@string/title_activity_webhook"
             android:parentActivityName=".activity.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
