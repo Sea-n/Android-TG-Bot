@@ -27,6 +27,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.Editable;
 import android.text.Html;
+import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -39,6 +40,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -50,6 +56,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -60,6 +67,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import taipei.sean.telegram.botplayground.BotStructure;
 import taipei.sean.telegram.botplayground.InstantComplete;
 import taipei.sean.telegram.botplayground.R;
 import taipei.sean.telegram.botplayground.SeanAdapter;
@@ -102,17 +110,30 @@ public class ApiCallerActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Uri uri = intent.getData();
         if (null != uri) {
+            String host = uri.getHost();
             String path = uri.getPath();
 
-            Pattern p = Pattern.compile("/bot(" + getString(R.string.bot_token_regex) + ")/.+");
-            Matcher m = p.matcher(path);
-            if (m.matches()) {
-                _token = m.group(1);
-                db.insertToken(_token, _token);
-            } else {
-                Log.e("caller", "no token with intent");
-                finish();
-                return;
+            switch (host) {
+                case "api.telegram.org":
+                    Pattern p = Pattern.compile("/bot(" + getString(R.string.bot_token_regex) + ")/.+");
+                    Matcher m = p.matcher(path);
+                    if (m.matches()) {
+                        _token = m.group(1);
+                        db.insertToken(_token, _token);
+                    } else {
+                        Log.e("caller", "no token with intent");
+                        finish();
+                        return;
+                    }
+                    break;
+                case "tg.sean.taipei":
+                    String method = uri.getQueryParameter("method");
+                    String hash = uri.getQueryParameter("hash");
+                    restoreData(method, hash);
+                    break;
+                default:
+                    Log.e("caller", "unknown host: " + host);
+                    break;
             }
         } else {
             try {
@@ -454,6 +475,73 @@ public class ApiCallerActivity extends AppCompatActivity {
                 apiCallerAdapter.fitView(paramList);
             }
         });
+    }
+
+    public void restoreData(final String method, final String hash) {
+        final InstantComplete methodView = (InstantComplete) findViewById(R.id.api_caller_method);
+        final TextView resultView = (TextView) findViewById(R.id.api_caller_result);
+        final String url = String.format("https://tg.sean.taipei/raw.php?method=%s&hash=%s&type=all", method, hash);
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+                    Request request = new Request.Builder()
+                            .url(url)
+                            .header("User-Agent", "Awesome Telegram Bot")
+                            .build();
+                    OkHttpClient client = new OkHttpClient();
+                    Response resp = client.newCall(request).execute();
+                    final String respStr = resp.body().string();
+                    final JSONObject json = new JSONObject(respStr);
+
+                    final JSONObject req = json.getJSONObject("request");
+                    final String apiResp = json.getJSONObject("response").toString();
+                    final String botName = json.getString("bot");
+
+                    List<BotStructure> bots = db.getBots();
+                    if (bots.size() == 0) {
+                        Toast.makeText(getApplicationContext(), R.string.no_bot_warning, Toast.LENGTH_LONG);
+                        finish();
+                    }
+                    for (BotStructure bot : bots) {
+                        if (bot.name.equals(botName))
+                            _token = bot.token;
+                    }
+                    if (null == _token)
+                        _token = bots.get(bots.size() - 1).token;
+
+                    _api = new TelegramAPI(getApplicationContext(), _token);
+
+                    Iterator<String> temp = req.keys();
+                    while (temp.hasNext()) {
+                        String key = temp.next();
+                        String value = req.getString(key);
+                        db.updateParam(key, value);
+                    }
+
+                    Handler handler = new Handler(getMainLooper());
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            methodView.setText(method);
+
+                            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                            JsonParser jp = new JsonParser();
+                            JsonElement je = jp.parse(apiResp);
+                            String prettyJson = gson.toJson(je);
+                            SpannableStringBuilder jsonSpannable = new SpannableStringBuilder(prettyJson);
+                            TelegramAPI.jsonColor(jsonSpannable);
+                            resultView.setText(jsonSpannable);
+                        }
+                    });
+                } catch (final Exception e) {
+                    Log.e("caller", "restore", e);
+                }
+            }
+        });
+        thread.start();
     }
 
     private void submit() {

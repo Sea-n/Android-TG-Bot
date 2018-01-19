@@ -74,11 +74,37 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="taipei.sean.telegram.botplayground.activity.MainActivity" />
 
+            <intent-filter
+                android:autoVerify="true"
+                tools:targetApi="23">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="tg.sean.taipei"
+                    android:pathPrefix="/api"
+                    android:scheme="http" />
+                <data
+                    android:host="tg.sean.taipei"
+                    android:pathPrefix="/api"
+                    android:scheme="https" />
+            </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="tg.sean.taipei"
+                    android:pathPrefix="/api"
+                    android:scheme="http" />
+                <data
+                    android:host="tg.sean.taipei"
+                    android:pathPrefix="/api"
+                    android:scheme="https" />
 
                 <data
                     android:host="api.telegram.org"
@@ -98,11 +124,37 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="taipei.sean.telegram.botplayground.activity.MainActivity" />
 
+            <intent-filter
+                android:autoVerify="true"
+                tools:targetApi="23">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="tg.sean.taipei"
+                    android:pathPrefix="/telegraph"
+                    android:scheme="http" />
+                <data
+                    android:host="tg.sean.taipei"
+                    android:pathPrefix="/telegraph"
+                    android:scheme="https" />
+            </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="tg.sean.taipei"
+                    android:pathPrefix="/telegraph"
+                    android:scheme="http" />
+                <data
+                    android:host="tg.sean.taipei"
+                    android:pathPrefix="/telegraph"
+                    android:scheme="https" />
 
                 <data
                     android:host="api.telegra.ph"

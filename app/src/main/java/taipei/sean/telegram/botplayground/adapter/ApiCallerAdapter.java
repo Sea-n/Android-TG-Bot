@@ -228,6 +228,46 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 autoCompleteTextView.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxChar)});
             }
 
+            final int finalType = type;
+            autoCompleteTextView.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+                    String value = editable.toString();
+
+                    if ((finalType & TYPE_JSON) != 0 && value.length() > 0) {
+                        try {
+                            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                            JsonParser jp = new JsonParser();
+                            JsonElement je;
+                            je = jp.parse(value);
+                            String json = gson.toJson(je);
+                            if (je.isJsonArray() || je.isJsonObject()) {
+                                if (!json.equals(value)) {
+                                    value = json;   // for update parameter
+                                    editable.clear();
+                                    editable.append(json);
+                                }
+
+                                TelegramAPI.jsonColor((SpannableStringBuilder) editable);
+                            }
+                        } catch (JsonSyntaxException e) {
+                            e.getMessage();   // Do nothing
+                        }
+                    }
+
+                    db.updateParam(name, value);
+                    modified = true;
+                }
+            });
+
             String text = db.getParam(name);
             if (text.equals("") && data.has("default")) {
                 try {
@@ -237,11 +277,6 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 }
             }
             autoCompleteTextView.setText(text);
-
-            if ((type & TYPE_JSON) != 0) {
-                TelegramAPI.jsonColor((SpannableStringBuilder) autoCompleteTextView.getEditableText());
-            }
-
 
             if (data.has("maxInt")) {
                 int min = 0;
@@ -290,46 +325,6 @@ public class ApiCallerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 public boolean onLongClick(View view) {
                     Snackbar.make(view, finalDesc, Snackbar.LENGTH_LONG).show();
                     return false;
-                }
-            });
-
-            final int finalType = type;
-            autoCompleteTextView.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                }
-
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                }
-
-                @Override
-                public void afterTextChanged(Editable editable) {
-                    String value = editable.toString();
-
-                    if ((finalType & TYPE_JSON) != 0 && value.length() > 0) {
-                        try {
-                            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                            JsonParser jp = new JsonParser();
-                            JsonElement je;
-                            je = jp.parse(value);
-                            String json = gson.toJson(je);
-                            if (je.isJsonArray() || je.isJsonObject()) {
-                                if (!json.equals(value)) {
-                                    value = json;   // for update parameter
-                                    editable.clear();
-                                    editable.append(json);
-                                }
-
-                                TelegramAPI.jsonColor((SpannableStringBuilder) editable);
-                            }
-                        } catch (JsonSyntaxException e) {
-                            e.getMessage();   // Do nothing
-                        }
-                    }
-
-                    db.updateParam(name, value);
-                    modified = true;
                 }
             });
 

@@ -26,6 +26,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.Editable;
 import android.text.Html;
+import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -37,6 +38,11 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -61,6 +67,7 @@ import taipei.sean.telegram.botplayground.InstantComplete;
 import taipei.sean.telegram.botplayground.R;
 import taipei.sean.telegram.botplayground.SeanAdapter;
 import taipei.sean.telegram.botplayground.SeanDBHelper;
+import taipei.sean.telegram.botplayground.TelegramAPI;
 import taipei.sean.telegram.botplayground.TelegraphAPI;
 import taipei.sean.telegram.botplayground.adapter.ApiCallerAdapter;
 
@@ -99,15 +106,28 @@ public class TelegraphActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Uri uri = intent.getData();
         if (null != uri) {
+            String host = uri.getHost();
             String path = uri.getPath();
 
-            db.updateParam("_method_telegraph", path.substring(1));
+            switch (host) {
+                case "api.telegra.ph":
+                    db.updateParam("_method_telegraph", path.substring(1));
 
-            Set<String> args = uri.getQueryParameterNames();
-            for (Object argNameObj : args) {
-                String argName = argNameObj.toString();
-                String argVal = uri.getQueryParameter(argName);
-                db.updateParam(argName, argVal);
+                    Set<String> args = uri.getQueryParameterNames();
+                    for (Object argNameObj : args) {
+                        String argName = argNameObj.toString();
+                        String argVal = uri.getQueryParameter(argName);
+                        db.updateParam(argName, argVal);
+                    }
+                    break;
+                case "tg.sean.taipei":
+                    String method = uri.getQueryParameter("method");
+                    String hash = uri.getQueryParameter("hash");
+                    restoreData(method, hash);
+                    break;
+                default:
+                    Log.e("caller", "unknown host: " + host);
+                    break;
             }
         } else {
             try {
@@ -191,7 +211,7 @@ public class TelegraphActivity extends AppCompatActivity {
         if (!upload && !screenshot)
             shareButton.setVisible(false);
 
-        if (_token.isEmpty())
+        if (null == _token || _token.isEmpty())
             shareButton.setVisible(false);
 
         return true;
@@ -416,6 +436,58 @@ public class TelegraphActivity extends AppCompatActivity {
         });
     }
 
+    public void restoreData(final String method, final String hash) {
+        final InstantComplete methodView = (InstantComplete) findViewById(R.id.api_caller_method);
+        final TextView resultView = (TextView) findViewById(R.id.api_caller_result);
+        final String url = String.format("https://tg.sean.taipei/raw.php?method=%s&hash=%s&type=all", method, hash);
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+                    Request request = new Request.Builder()
+                            .url(url)
+                            .header("User-Agent", "Awesome Telegram Bot")
+                            .build();
+                    OkHttpClient client = new OkHttpClient();
+                    Response resp = client.newCall(request).execute();
+                    final String respStr = resp.body().string();
+                    final JSONObject json = new JSONObject(respStr);
+
+                    final JSONObject req = json.getJSONObject("request");
+                    final String apiResp = json.getJSONObject("response").toString();
+
+                    Iterator<String> temp = req.keys();
+                    while (temp.hasNext()) {
+                        String key = temp.next();
+                        String value = req.getString(key);
+                        db.updateParam(key, value);
+                    }
+
+                    Handler handler = new Handler(getMainLooper());
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            methodView.setText(method);
+
+                            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                            JsonParser jp = new JsonParser();
+                            JsonElement je = jp.parse(apiResp);
+                            String prettyJson = gson.toJson(je);
+                            SpannableStringBuilder jsonSpannable = new SpannableStringBuilder(prettyJson);
+                            TelegramAPI.jsonColor(jsonSpannable);
+                            resultView.setText(jsonSpannable);
+                        }
+                    });
+                } catch (final Exception e) {
+                    Log.e("telegraph", "restore", e);
+                }
+            }
+        });
+        thread.start();
+    }
+
     private void submit() {
         modified = false;
         final InstantComplete methodView = (InstantComplete) findViewById(R.id.api_caller_method);
@@ -427,12 +499,12 @@ public class TelegraphActivity extends AppCompatActivity {
         final ApiCallerAdapter paramAdapter = (ApiCallerAdapter) paramList.getAdapter();
 
         if (null == paramAdapter) {
-            paramAdapter.modified = false;
             _api.callApi(method, resultView, null);
             return;
         }
 
         JSONObject jsonObject = paramAdapter.getJson(method);
+        paramAdapter.modified = false;
 
         _api.callApi(method, resultView, jsonObject);
     }
