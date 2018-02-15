@@ -4,14 +4,11 @@
     "params": {
       "offset": {
         "type": "Integer",
-        "description": "Identifier of the first update to be returned. Must be greater by one than the highest among the identifiers of previously received updates. By default, updates starting with the earliest unconfirmed update are returned. An update is considered confirmed as soon as getUpdates is called with an __offset__ higher than its __update_id__. The negative offset can be specified to retrieve updates starting from __-offset__ update from the end of the updates queue. All previous updates will forgotten."
+        "description": "Identifier of the first update to be returned. Must be greater by one than the highest among the identifiers of previously received updates. By default, updates starting with the earliest unconfirmed update are returned. An update is considered confirmed as soon as getUpdates is called with an offset higher than its update_id. The negative offset can be specified to retrieve updates starting from -offset update from the end of the updates queue. All previous updates will forgotten."
       },
       "limit": {
         "type": "Integer",
-        "minInt": 1,
-        "maxInt": 100,
-        "default": 100,
-        "description": "Limits the number of updates to be retrieved."
+        "description": "Limits the number of updates to be retrieved. Values between 1—100 are accepted. Defaults to 100."
       },
       "timeout": {
         "type": "Integer",
@@ -19,12 +16,12 @@
       },
       "allowed_updates": {
         "type": "Array of String",
-        "description": "List the types of updates you want your bot to receive. For example, specify [“message”, “edited_channel_post”, “callback_query”] to only receive updates of these types. See Update for a complete list of available update types. Specify an empty list to receive all updates regardless of type (default). If not specified, the previous setting will be used.\nPlease note that this parameter doesn't affect updates created before the call to the getUpdates, so unwanted updates may be received for a short period of time."
+        "description": "List the types of updates you want your bot to receive. For example, specify [“message”, “edited_channel_post”, “callback_query”] to only receive updates of these types. See Update for a complete list of available update types. Specify an empty list to receive all updates regardless of type (default). If not specified, the previous setting will be used.\n\nPlease note that this parameter doesn't affect updates created before the call to the getUpdates, so unwanted updates may be received for a short period of time."
       }
     }
   },
   "setWebhook": {
-    "description": "If you'd like to make sure that the Webhook request comes from Telegram, we recommend using a secret path in the URL, e.g. `https://www.example.com/<token>`. Since nobody else knows your bot‘s token, you can be pretty sure it’s us.",
+    "description": "Use this method to specify a url and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified url, containing a JSON-serialized Update. In case of an unsuccessful request, we will give up after a reasonable amount of attempts. Returns true.",
     "params": {
       "url": {
         "type": "String",
@@ -37,22 +34,19 @@
       },
       "max_connections": {
         "type": "Integer",
-        "minInt": 1,
-        "maxInt": 100,
-        "default": 40,
-        "description": "Maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery. Use lower values to limit the load on your bot‘s server, and higher values to increase your bot’s throughput."
+        "description": "Maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery, 1-100. Defaults to 40. Use lower values to limit the load on your bot‘s server, and higher values to increase your bot’s throughput."
       },
       "allowed_updates": {
         "type": "Array of String",
-        "description": "List the types of updates you want your bot to receive. For example, specify [“message”, “edited_channel_post”, “callback_query”] to only receive updates of these types. See Update for a complete list of available update types. Specify an empty list to receive all updates regardless of type (default). If not specified, the previous setting will be used.\nPlease note that this parameter doesn't affect updates created before the call to the setWebhook, so unwanted updates may be received for a short period of time."
+        "description": "List the types of updates you want your bot to receive. For example, specify [“message”, “edited_channel_post”, “callback_query”] to only receive updates of these types. See Update for a complete list of available update types. Specify an empty list to receive all updates regardless of type (default). If not specified, the previous setting will be used.\n\nPlease note that this parameter doesn't affect updates created before the call to the setWebhook, so unwanted updates may be received for a short period of time."
       }
     }
   },
   "deleteWebhook": {
-    "description": "Use this method to remove webhook integration if you decide to switch back to getUpdates. Returns __True__ on success. Requires no parameters."
+    "description": "Use this method to remove webhook integration if you decide to switch back to getUpdates. Returns True on success. Requires no parameters."
   },
   "getWebhookInfo": {
-    "description": "Use this method to get current webhook status. Requires no parameters. On success, returns a WebhookInfo object. If the bot is using getUpdates, will return an object with the __url__ field empty."
+    "description": "Use this method to get current webhook status. Requires no parameters. On success, returns a WebhookInfo object. If the bot is using getUpdates, will return an object with the url field empty."
   },
   "getMe": {
     "description": "A simple method for testing your bot's auth token. Requires no parameters. Returns basic information about the bot in form of a User object."
@@ -63,7 +57,7 @@
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+        "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
       },
       "text": {
         "type": "String",
@@ -72,7 +66,7 @@
       },
       "parse_mode": {
         "type": "String",
-        "description": "Send __Markdown__ or __HTML__, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message."
+        "description": "Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message."
       },
       "disable_web_page_preview": {
         "type": "Boolean",
@@ -98,12 +92,12 @@
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+        "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
       },
       "from_chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the chat where the original message was sent (or channel username in the format `@channelusername`)"
+        "description": "Unique identifier for the chat where the original message was sent (or channel username in the format @channelusername)"
       },
       "disable_notification": {
         "type": "Boolean",
@@ -112,7 +106,7 @@
       "message_id": {
         "type": "Integer",
         "required": true,
-        "description": "Message identifier in the chat specified in __from_chat_id__"
+        "description": "Message identifier in the chat specified in from_chat_id"
       }
     }
   },
@@ -122,7 +116,7 @@
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+        "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
       },
       "photo": {
         "type": "InputFile or String",
@@ -131,8 +125,11 @@
       },
       "caption": {
         "type": "String",
-        "maxChar": 200,
-        "description": "Photo caption (may also be used when resending photos by __file_id__)."
+        "description": "Photo caption (may also be used when resending photos by file_id), 0-200 characters"
+      },
+      "parse_mode": {
+        "type": "String",
+        "description": "Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption."
       },
       "disable_notification": {
         "type": "Boolean",
@@ -149,12 +146,12 @@
     }
   },
   "sendAudio": {
-    "description": "For sending voice messages, use the sendVoice method instead.",
+    "description": "Use this method to send audio files, if you want Telegram clients to display them in the music player. Your audio must be in the .mp3 format. On success, the sent Message is returned. Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.",
     "params": {
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+        "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
       },
       "audio": {
         "type": "InputFile or String",
@@ -163,8 +160,11 @@
       },
       "caption": {
         "type": "String",
-        "maxChar": 200,
-        "description": "Audio caption"
+        "description": "Audio caption, 0-200 characters"
+      },
+      "parse_mode": {
+        "type": "String",
+        "description": "Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption."
       },
       "duration": {
         "type": "Integer",
@@ -198,7 +198,7 @@
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+        "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
       },
       "document": {
         "type": "InputFile or String",
@@ -207,8 +207,11 @@
       },
       "caption": {
         "type": "String",
-        "maxChar": 200,
-        "description": "Document caption (may also be used when resending documents by __file_id__)."
+        "description": "Document caption (may also be used when resending documents by file_id), 0-200 characters"
+      },
+      "parse_mode": {
+        "type": "String",
+        "description": "Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption."
       },
       "disable_notification": {
         "type": "Boolean",
@@ -230,7 +233,7 @@
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+        "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
       },
       "video": {
         "type": "InputFile or String",
@@ -251,8 +254,15 @@
       },
       "caption": {
         "type": "String",
-        "maxChar": 200,
-        "description": "Video caption (may also be used when resending videos by __file_id__)."
+        "description": "Video caption (may also be used when resending videos by file_id), 0-200 characters"
+      },
+      "parse_mode": {
+        "type": "String",
+        "description": "Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption."
+      },
+      "supports_streaming": {
+        "type": "Boolean",
+        "description": "Pass True, if the uploaded video is suitable for streaming"
       },
       "disable_notification": {
         "type": "Boolean",
@@ -274,7 +284,7 @@
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+        "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
       },
       "voice": {
         "type": "InputFile or String",
@@ -283,8 +293,11 @@
       },
       "caption": {
         "type": "String",
-        "maxChar": 200,
-        "description": "Voice message caption."
+        "description": "Voice message caption, 0-200 characters"
+      },
+      "parse_mode": {
+        "type": "String",
+        "description": "Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption."
       },
       "duration": {
         "type": "Integer",
@@ -310,7 +323,7 @@
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+        "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
       },
       "video_note": {
         "type": "InputFile or String",
@@ -345,12 +358,12 @@
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+        "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
       },
       "media": {
         "type": "Array of InputMedia",
         "required": true,
-        "description": "A JSON-serialized array describing photos and videos to be sent, must include 1–10 items"
+        "description": "A JSON-serialized array describing photos and videos to be sent, must include 2–10 items"
       },
       "disable_notification": {
         "type": "Boolean",
@@ -368,24 +381,21 @@
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+        "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
       },
       "latitude": {
         "type": "Float number",
         "required": true,
-        "description": "Latitude of location"
+        "description": "Latitude of the location"
       },
       "longitude": {
         "type": "Float number",
         "required": true,
-        "description": "Longitude of location"
+        "description": "Longitude of the location"
       },
       "live_period": {
         "type": "Integer",
-        "required": false,
-        "minInt": 60,
-        "maxInt": 86400,
-        "description": "Period in seconds for which the location will be updated."
+        "description": "Period in seconds for which the location will be updated (see Live Locations, should be between 60 and 86400."
       },
       "disable_notification": {
         "type": "Boolean",
@@ -459,7 +469,7 @@
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+        "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
       },
       "latitude": {
         "type": "Float number",
@@ -505,7 +515,7 @@
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+        "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
       },
       "phone_number": {
         "type": "String",
@@ -536,17 +546,17 @@
     }
   },
   "sendChatAction": {
-    "description": "We only recommend using this method when a response from the bot will take a **noticeable** amount of time to arrive.",
+    "description": "Use this method when you need to tell the user that something is happening on the bot's side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status). Returns True on success.",
     "params": {
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+        "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
       },
       "action": {
         "type": "String",
         "required": true,
-        "description": "Type of action to broadcast. Choose one, depending on what the user is about to receive: __typing__ for text messages, __upload_photo__ for photos, __record_video__ or __upload_video__ for videos, __record_audio__ or __upload_audio__ for audio files, __upload_document__ for general files, __find_location__ for location data, __record_video_note__ or __upload_video_note__ for video notes."
+        "description": "Type of action to broadcast. Choose one, depending on what the user is about to receive: typing for text messages, upload_photo for photos, record_video or upload_video for videos, record_audio or upload_audio for audio files, upload_document for general files, find_location for location data, record_video_note or upload_video_note for video notes."
       }
     }
   },
@@ -564,15 +574,12 @@
       },
       "limit": {
         "type": "Integer",
-        "minInt": 1,
-        "maxInt": 100,
-        "default": 100,
-        "description": "Limits the number of photos to be retrieved."
+        "description": "Limits the number of photos to be retrieved. Values between 1—100 are accepted. Defaults to 100."
       }
     }
   },
   "getFile": {
-    "description": "Use this method to get basic info about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a File object is returned. The file can then be downloaded via the link `https://api.telegram.org/file/bot<token>/<file_path>`, where `<file_path>` is taken from the response. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling getFile again.",
+    "description": "Use this method to get basic info about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a File object is returned. The file can then be downloaded via the link https://api.telegram.org/file/bot<token>/<file_path>, where <file_path> is taken from the response. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling getFile again.",
     "params": {
       "file_id": {
         "type": "String",
@@ -582,11 +589,12 @@
     }
   },
   "kickChatMember": {
+    "description": "Use this method to kick a user from a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the group on their own using invite links, etc., unless unbanned first. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.",
     "params": {
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target group or username of the target supergroup or channel (in the format `@channelusername`)"
+        "description": "Unique identifier for the target group or username of the target supergroup or channel (in the format @channelusername)"
       },
       "user_id": {
         "type": "Integer",
@@ -600,12 +608,12 @@
     }
   },
   "unbanChatMember": {
-    "description": "Use this method to unban a previously kicked user in a supergroup or channel. The user will **not** return to the group or channel automatically, but will be able to join via link, etc. The bot must be an administrator for this to work. Returns __True__ on success.",
+    "description": "Use this method to unban a previously kicked user in a supergroup or channel. The user will not return to the group or channel automatically, but will be able to join via link, etc. The bot must be an administrator for this to work. Returns True on success.",
     "params": {
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target group or username of the target supergroup or channel (in the format `@username`)"
+        "description": "Unique identifier for the target group or username of the target supergroup or channel (in the format @username)"
       },
       "user_id": {
         "type": "Integer",
@@ -615,12 +623,12 @@
     }
   },
   "restrictChatMember": {
-    "description": "Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this to work and must have the appropriate admin rights. Pass __True__ for all boolean parameters to lift restrictions from a user. Returns __True__ on success.",
+    "description": "Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this to work and must have the appropriate admin rights. Pass True for all boolean parameters to lift restrictions from a user. Returns True on success.",
     "params": {
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target supergroup (in the format `@supergroupusername`)"
+        "description": "Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)"
       },
       "user_id": {
         "type": "Integer",
@@ -650,12 +658,12 @@
     }
   },
   "promoteChatMember": {
-    "description": "Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Pass __False__ for all boolean parameters to demote a user. Returns __True__ on success.",
+    "description": "Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Pass False for all boolean parameters to demote a user. Returns True on success.",
     "params": {
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+        "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
       },
       "user_id": {
         "type": "Integer",
@@ -672,7 +680,7 @@
       },
       "can_edit_messages": {
         "type": "Boolean",
-        "description": "Pass True, if the administrator can edit messages of other users, channels only"
+        "description": "Pass True, if the administrator can edit messages of other users and can pin messages, channels only"
       },
       "can_delete_messages": {
         "type": "Boolean",
@@ -697,12 +705,12 @@
     }
   },
   "exportChatInviteLink": {
-    "description": "Use this method to export an invite link to a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns exported invite link as __String__ on success.",
+    "description": "Use this method to generate a new invite link for a chat; any previously generated link is revoked. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns the new invite link as String on success.",
     "params": {
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+        "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
       }
     }
   },
@@ -712,7 +720,7 @@
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+        "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
       },
       "photo": {
         "type": "InputFile",
@@ -722,52 +730,51 @@
     }
   },
   "deleteChatPhoto": {
+    "description": "Use this method to delete a chat photo. Photos can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.",
     "params": {
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+        "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
       }
     }
   },
   "setChatTitle": {
+    "description": "Use this method to change the title of a chat. Titles can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.",
     "params": {
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+        "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
       },
       "title": {
         "type": "String",
-        "minChar": 1,
-        "maxChar": 255,
         "required": true,
-        "description": "New chat title."
+        "description": "New chat title, 1-255 characters"
       }
     }
   },
   "setChatDescription": {
-    "description": "Use this method to change the description of a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns __True__ on success. ",
+    "description": "Use this method to change the description of a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.",
     "params": {
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+        "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
       },
       "description": {
         "type": "String",
-        "maxChar": 255,
-        "description": "New chat description"
+        "description": "New chat description, 0-255 characters"
       }
     }
   },
   "pinChatMessage": {
-    "description": "Use this method to pin a message in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the ‘can_pin_messages’ admin right in the supergroup or ‘can_edit_messages’ admin right in the channel. Returns __True__ on success.",
+    "description": "Use this method to pin a message in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the ‘can_pin_messages’ admin right in the supergroup or ‘can_edit_messages’ admin right in the channel. Returns True on success.",
     "params": {
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+        "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
       },
       "message_id": {
         "type": "Integer",
@@ -776,27 +783,27 @@
       },
       "disable_notification": {
         "type": "Boolean",
-        "description": "Pass __True__, if it is not necessary to send a notification to all chat members about the new pinned message. Notifications are always disabled in channels."
+        "description": "Pass True, if it is not necessary to send a notification to all chat members about the new pinned message. Notifications are always disabled in channels."
       }
     }
   },
   "unpinChatMessage": {
-    "description": "Use this method to unpin a message in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the ‘can_pin_messages’ admin right in the supergroup or ‘can_edit_messages’ admin right in the channel. Returns __True__ on success.",
+    "description": "Use this method to unpin a message in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the ‘can_pin_messages’ admin right in the supergroup or ‘can_edit_messages’ admin right in the channel. Returns True on success.",
     "params": {
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+        "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
       }
     }
   },
   "leaveChat": {
-    "description": "Use this method for your bot to leave a group, supergroup or channel. Returns __True__ on success.",
+    "description": "Use this method for your bot to leave a group, supergroup or channel. Returns True on success.",
     "params": {
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target supergroup or channel (in the format `@channelusername`)"
+        "description": "Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)"
       }
     }
   },
@@ -806,7 +813,7 @@
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target supergroup or channel (in the format `@channelusername`)"
+        "description": "Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)"
       }
     }
   },
@@ -816,17 +823,17 @@
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target supergroup or channel (in the format `@channelusername`)"
+        "description": "Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)"
       }
     }
   },
   "getChatMembersCount": {
-    "description": "Use this method to get the number of members in a chat. Returns __Int__ on success.",
+    "description": "Use this method to get the number of members in a chat. Returns Int on success.",
     "params": {
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target supergroup or channel (in the format `@channelusername`)"
+        "description": "Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)"
       }
     }
   },
@@ -836,7 +843,7 @@
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target supergroup or channel (in the format `@channelusername`)"
+        "description": "Unique identifier for the target chat or username of the target supergroup or channel (in the format @channelusername)"
       },
       "user_id": {
         "type": "Integer",
@@ -871,6 +878,7 @@
     }
   },
   "answerCallbackQuery": {
+    "description": "Use this method to send answers to callback queries sent from inline keyboards. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, True is returned.",
     "params": {
       "callback_query_id": {
         "type": "String",
@@ -879,16 +887,15 @@
       },
       "text": {
         "type": "String",
-        "maxChar": 200,
-        "description": "Text of the notification. If not specified, nothing will be shown to the user."
+        "description": "Text of the notification. If not specified, nothing will be shown to the user, 0-200 characters"
       },
       "show_alert": {
         "type": "Boolean",
-        "description": "If __true__, an alert will be shown by the client instead of a notification at the top of the chat screen."
+        "description": "If true, an alert will be shown by the client instead of a notification at the top of the chat screen. Defaults to false."
       },
       "url": {
         "type": "String",
-        "description": "URL that will be opened by the user's client. If you have created a Game and accepted the conditions via @Botfather, specify the URL that opens your game – note that this will only work if the query comes from a __callback_game__ button.\nOtherwise, you may use links like `t.me/your_bot?start=XXXX` that open your bot with a parameter."
+        "description": "URL that will be opened by the user's client. If you have created a Game and accepted the conditions via @Botfather, specify the URL that opens your game – note that this will only work if the query comes from a callback_game button.\n\nOtherwise, you may use links like t.me/your_bot?start=XXXX that open your bot with a parameter."
       },
       "cache_time": {
         "type": "Integer",
@@ -897,19 +904,19 @@
     }
   },
   "editMessageText": {
-    "description": "Use this method to edit text and game messages sent by the bot or via the bot (for inline bots). On success, if edited message is sent by the bot, the edited Message is returned, otherwise __True__ is returned.",
+    "description": "Use this method to edit text and game messages sent by the bot or via the bot (for inline bots). On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.",
     "params": {
       "chat_id": {
         "type": "Integer or String",
-        "description": "Required if __inline_message_id__ is not specified. Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+        "description": "Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
       },
       "message_id": {
         "type": "Integer",
-        "description": "Required if __inline_message_id__ is not specified. Identifier of the sent message"
+        "description": "Required if inline_message_id is not specified. Identifier of the sent message"
       },
       "inline_message_id": {
         "type": "String",
-        "description": "Required if __chat_id__ and __message_id__ are not specified. Identifier of the inline message"
+        "description": "Required if chat_id and message_id are not specified. Identifier of the inline message"
       },
       "text": {
         "type": "String",
@@ -918,7 +925,7 @@
       },
       "parse_mode": {
         "type": "String",
-        "description": "Send __Markdown__ or __HTML__, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message."
+        "description": "Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in your bot's message."
       },
       "disable_web_page_preview": {
         "type": "Boolean",
@@ -931,23 +938,27 @@
     }
   },
   "editMessageCaption": {
-    "description": "Use this method to edit captions of messages sent by the bot or via the bot (for inline bots). On success, if edited message is sent by the bot, the edited Message is returned, otherwise __True__ is returned.",
+    "description": "Use this method to edit captions of messages sent by the bot or via the bot (for inline bots). On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.",
     "params": {
       "chat_id": {
         "type": "Integer or String",
-        "description": "Required if __inline_message_id__ is not specified. Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+        "description": "Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
       },
       "message_id": {
         "type": "Integer",
-        "description": "Required if __inline_message_id__ is not specified. Identifier of the sent message"
+        "description": "Required if inline_message_id is not specified. Identifier of the sent message"
       },
       "inline_message_id": {
         "type": "String",
-        "description": "Required if __chat_id__ and __message_id__ are not specified. Identifier of the inline message"
+        "description": "Required if chat_id and message_id are not specified. Identifier of the inline message"
       },
       "caption": {
         "type": "String",
         "description": "New caption of the message"
+      },
+      "parse_mode": {
+        "type": "String",
+        "description": "Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption."
       },
       "reply_markup": {
         "type": "InlineKeyboardMarkup",
@@ -956,19 +967,19 @@
     }
   },
   "editMessageReplyMarkup": {
-    "description": "Use this method to edit only the reply markup of messages sent by the bot or via the bot (for inline bots).  On success, if edited message is sent by the bot, the edited Message is returned, otherwise __True__ is returned.",
+    "description": "Use this method to edit only the reply markup of messages sent by the bot or via the bot (for inline bots). On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.",
     "params": {
       "chat_id": {
         "type": "Integer or String",
-        "description": "Required if __inline_message_id__ is not specified. Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+        "description": "Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
       },
       "message_id": {
         "type": "Integer",
-        "description": "Required if __inline_message_id__ is not specified. Identifier of the sent message"
+        "description": "Required if inline_message_id is not specified. Identifier of the sent message"
       },
       "inline_message_id": {
         "type": "String",
-        "description": "Required if __chat_id__ and __message_id__ are not specified. Identifier of the inline message"
+        "description": "Required if chat_id and message_id are not specified. Identifier of the inline message"
       },
       "reply_markup": {
         "type": "InlineKeyboardMarkup",
@@ -977,12 +988,12 @@
     }
   },
   "deleteMessage": {
-    "description": "Use this method to delete a message, including service messages, with the following limitations:\n- A message can only be deleted if it was sent less than 48 hours ago.\n- Bots can delete outgoing messages in groups and supergroups.\n- Bots granted __can_post_messages__ permissions can delete outgoing messages in channels.\n- If the bot is an administrator of a group, it can delete any message there.\n- If the bot has __can_delete_messages__ permission in a supergroup or a channel, it can delete any message there.\nReturns __True__ on success.",
+    "description": "Use this method to delete a message, including service messages, with the following limitations:\n- A message can only be deleted if it was sent less than 48 hours ago.\n- Bots can delete outgoing messages in groups and supergroups.\n- Bots granted can_post_messages permissions can delete outgoing messages in channels.\n- If the bot is an administrator of a group, it can delete any message there.\n- If the bot has can_delete_messages permission in a supergroup or a channel, it can delete any message there.\nReturns True on success.",
     "params": {
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+        "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
       },
       "message_id": {
         "type": "Integer",
@@ -997,7 +1008,7 @@
       "chat_id": {
         "type": "Integer or String",
         "required": true,
-        "description": "Unique identifier for the target chat or username of the target channel (in the format `@channelusername`)"
+        "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
       },
       "sticker": {
         "type": "InputFile or String",
@@ -1029,7 +1040,7 @@
     }
   },
   "uploadStickerFile": {
-    "description": "Use this method to upload a .png file with a sticker for later use in __createNewStickerSet__ and __addStickerToSet__ methods (can be used multiple times). Returns the uploaded File on success.",
+    "description": "Use this method to upload a .png file with a sticker for later use in createNewStickerSet and addStickerToSet methods (can be used multiple times). Returns the uploaded File on success.",
     "params": {
       "user_id": {
         "type": "Integer",
@@ -1039,12 +1050,12 @@
       "png_sticker": {
         "type": "InputFile",
         "required": true,
-        "description": "**Png** image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. More info on Sending Files »"
+        "description": "Png image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. More info on Sending Files »"
       }
     }
   },
   "createNewStickerSet": {
-    "description": "Use this method to create new sticker set owned by a user. The bot will be able to edit the created sticker set. Returns __True__ on success.",
+    "description": "Use this method to create new sticker set owned by a user. The bot will be able to edit the created sticker set. Returns True on success.",
     "params": {
       "user_id": {
         "type": "Integer",
@@ -1053,22 +1064,18 @@
       },
       "name": {
         "type": "String",
-        "minChar": 1,
-        "maxChar": 64,
         "required": true,
-        "description": "Short name of sticker set, to be used in `t.me/addstickers/` URLs (e.g., __animals__). Can contain only english letters, digits and underscores. Must begin with a letter, can't contain consecutive underscores and must end in __“_by_<bot username>”__. __<bot_username>__ is case insensitive."
+        "description": "Short name of sticker set, to be used in t.me/addstickers/ URLs (e.g., animals). Can contain only english letters, digits and underscores. Must begin with a letter, can't contain consecutive underscores and must end in “_by_<bot username>”. <bot_username> is case insensitive. 1-64 characters."
       },
       "title": {
         "type": "String",
-        "minChar": 1,
-        "maxChar": 64,
         "required": true,
-        "description": "Sticker set title."
+        "description": "Sticker set title, 1-64 characters"
       },
       "png_sticker": {
         "type": "InputFile or String",
         "required": true,
-        "description": "**Png** image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. Pass a __file_id__ as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »"
+        "description": "Png image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »"
       },
       "emojis": {
         "type": "String",
@@ -1077,7 +1084,7 @@
       },
       "contains_masks": {
         "type": "Boolean",
-        "description": "Pass __True__, if a set of mask stickers should be created"
+        "description": "Pass True, if a set of mask stickers should be created"
       },
       "mask_position": {
         "type": "MaskPosition",
@@ -1086,7 +1093,7 @@
     }
   },
   "addStickerToSet": {
-    "description": "Use this method to add a new sticker to a set created by the bot. Returns __True__ on success.",
+    "description": "Use this method to add a new sticker to a set created by the bot. Returns True on success.",
     "params": {
       "user_id": {
         "type": "Integer",
@@ -1101,7 +1108,7 @@
       "png_sticker": {
         "type": "InputFile or String",
         "required": true,
-        "description": "**Png** image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. Pass a __file_id__ as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »"
+        "description": "Png image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »"
       },
       "emojis": {
         "type": "String",
@@ -1115,7 +1122,7 @@
     }
   },
   "setStickerPositionInSet": {
-    "description": "Use this method to move a sticker in a set created by the bot to a specific position . Returns __True__ on success.",
+    "description": "Use this method to move a sticker in a set created by the bot to a specific position . Returns True on success.",
     "params": {
       "sticker": {
         "type": "String",
@@ -1130,7 +1137,7 @@
     }
   },
   "deleteStickerFromSet": {
-    "description": "Use this method to delete a sticker from a set created by the bot. Returns __True__ on success.",
+    "description": "Use this method to delete a sticker from a set created by the bot. Returns True on success.",
     "params": {
       "sticker": {
         "type": "String",
@@ -1140,7 +1147,7 @@
     }
   },
   "answerInlineQuery": {
-    "description": "Use this method to send answers to an inline query. On success, __True__ is returned.\nNo more than **50** results per query are allowed.",
+    "description": "Use this method to send answers to an inline query. On success, True is returned.\nNo more than 50 results per query are allowed.",
     "params": {
       "inline_query_id": {
         "type": "String",
@@ -1154,12 +1161,11 @@
       },
       "cache_time": {
         "type": "Integer",
-        "default": 300,
-        "description": "The maximum amount of time in seconds that the result of the inline query may be cached on the server."
+        "description": "The maximum amount of time in seconds that the result of the inline query may be cached on the server. Defaults to 300."
       },
       "is_personal": {
         "type": "Boolean",
-        "description": "Pass __True__, if results may be cached on the server side only for the user that sent the query. By default, results may be returned to any user who sends the same query"
+        "description": "Pass True, if results may be cached on the server side only for the user that sent the query. By default, results may be returned to any user who sends the same query"
       },
       "next_offset": {
         "type": "String",
@@ -1167,13 +1173,11 @@
       },
       "switch_pm_text": {
         "type": "String",
-        "description": "If passed, clients will display a button with specified text that switches the user to a private chat with the bot and sends the bot a start message with the parameter __switch_pm_parameter__"
+        "description": "If passed, clients will display a button with specified text that switches the user to a private chat with the bot and sends the bot a start message with the parameter switch_pm_parameter"
       },
       "switch_pm_parameter": {
         "type": "String",
-        "minChar": 1,
-        "maxChar": 64,
-        "description": "Deep-linking parameter for the /start message sent to the bot when user presses the switch button. Only `A-Z`, `a-z`, `0-9`, `_` and `-` are allowed.\n__Example:__ An inline bot that sends YouTube videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To do this, it displays a ‘Connect your YouTube account’ button above the results, or even before showing any. The user presses the button, switches to a private chat with the bot and, in doing so, passes a start parameter that instructs the bot to return an oauth link. Once done, the bot can offer a __switch_inline__ button so that the user can easily return to the chat where they wanted to use the bot's inline capabilities."
+        "description": "Deep-linking parameter for the /start message sent to the bot when user presses the switch button. 1-64 characters, only A-Z, a-z, 0-9, _ and - are allowed.\n\nExample: An inline bot that sends YouTube videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To do this, it displays a ‘Connect your YouTube account’ button above the results, or even before showing any. The user presses the button, switches to a private chat with the bot and, in doing so, passes a start parameter that instructs the bot to return an oauth link. Once done, the bot can offer a switch_inline button so that the user can easily return to the chat where they wanted to use the bot's inline capabilities."
       }
     }
   },
@@ -1187,24 +1191,18 @@
       },
       "title": {
         "type": "String",
-        "minChar": 1,
-        "maxChar": 32,
         "required": true,
-        "description": "Product name."
+        "description": "Product name, 1-32 characters"
       },
       "description": {
         "type": "String",
-        "minChar": 1,
-        "maxChar": 255,
         "required": true,
-        "description": "Product description."
+        "description": "Product description, 1-255 characters"
       },
       "payload": {
         "type": "String",
-        "minChar": 1,
-        "maxChar": 128,
         "required": true,
-        "description": "Bot-defined invoice payload. This will not be displayed to the user, use for your internal processes."
+        "description": "Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use for your internal processes."
       },
       "provider_token": {
         "type": "String",
@@ -1248,23 +1246,31 @@
       },
       "need_name": {
         "type": "Boolean",
-        "description": "Pass __True__, if you require the user's full name to complete the order"
+        "description": "Pass True, if you require the user's full name to complete the order"
       },
       "need_phone_number": {
         "type": "Boolean",
-        "description": "Pass __True__, if you require the user's phone number to complete the order"
+        "description": "Pass True, if you require the user's phone number to complete the order"
       },
       "need_email": {
         "type": "Boolean",
-        "description": "Pass __True__, if you require the user's email to complete the order"
+        "description": "Pass True, if you require the user's email address to complete the order"
       },
       "need_shipping_address": {
         "type": "Boolean",
-        "description": "Pass __True__, if you require the user's shipping address to complete the order"
+        "description": "Pass True, if you require the user's shipping address to complete the order"
+      },
+      "send_phone_number_to_provider": {
+        "type": "Boolean",
+        "description": "Pass True, if user's phone number should be sent to provider"
+      },
+      "send_email_to_provider": {
+        "type": "Boolean",
+        "description": "Pass True, if user's email address should be sent to provider"
       },
       "is_flexible": {
         "type": "Boolean",
-        "description": "Pass __True__, if the final price depends on the shipping method"
+        "description": "Pass True, if the final price depends on the shipping method"
       },
       "disable_notification": {
         "type": "Boolean",
@@ -1276,12 +1282,12 @@
       },
       "reply_markup": {
         "type": "InlineKeyboardMarkup",
-        "description": "A JSON-serialized object for an inline keyboard. If empty, one 'Pay `total price`' button will be shown. If not empty, the first button must be a Pay button."
+        "description": "A JSON-serialized object for an inline keyboard. If empty, one 'Pay total price' button will be shown. If not empty, the first button must be a Pay button."
       }
     }
   },
   "answerShippingQuery": {
-    "description": "If you sent an invoice requesting a shipping address and the parameter __is_flexible__ was specified, the Bot API will send an Update with a __shipping_query__ field to the bot. Use this method to reply to shipping queries. On success, True is returned.",
+    "description": "If you sent an invoice requesting a shipping address and the parameter is_flexible was specified, the Bot API will send an Update with a shipping_query field to the bot. Use this method to reply to shipping queries. On success, True is returned.",
     "params": {
       "shipping_query_id": {
         "type": "String",
@@ -1295,16 +1301,16 @@
       },
       "shipping_options": {
         "type": "Array of ShippingOption",
-        "description": "Required if __ok__ is True. A JSON-serialized array of available shipping options."
+        "description": "Required if ok is True. A JSON-serialized array of available shipping options."
       },
       "error_message": {
         "type": "String",
-        "description": "Required if __ok__ is False. Error message in human readable form that explains why it is impossible to complete the order (e.g. \"Sorry, delivery to your desired address is unavailable'). Telegram will display this message to the user."
+        "description": "Required if ok is False. Error message in human readable form that explains why it is impossible to complete the order (e.g. \"Sorry, delivery to your desired address is unavailable'). Telegram will display this message to the user."
       }
     }
   },
   "answerPreCheckoutQuery": {
-    "description": "Once the user has confirmed their payment and shipping details, the Bot API sends the final confirmation in the form of an Update with the field __pre_checkout_query__. Use this method to respond to such pre-checkout queries. On success, True is returned. ",
+    "description": "Once the user has confirmed their payment and shipping details, the Bot API sends the final confirmation in the form of an Update with the field pre_checkout_query. Use this method to respond to such pre-checkout queries. On success, True is returned. Note: The Bot API must receive an answer within 10 seconds after the pre-checkout query was sent.",
     "params": {
       "pre_checkout_query_id": {
         "type": "String",
@@ -1314,11 +1320,11 @@
       "ok": {
         "type": "Boolean",
         "required": true,
-        "description": "Specify __True__ if everything is alright (goods are available, etc.) and the bot is ready to proceed with the order. Use __False__ if there are any problems."
+        "description": "Specify True if everything is alright (goods are available, etc.) and the bot is ready to proceed with the order. Use False if there are any problems."
       },
       "error_message": {
         "type": "String",
-        "description": "Required if __ok__ is __False__. Error message in human readable form that explains the reason for failure to proceed with the checkout (e.g. \"Sorry, somebody just bought the last of our amazing black T-shirts while you were busy filling out your payment details. Please choose a different color or garment!\"). Telegram will display this message to the user."
+        "description": "Required if ok is False. Error message in human readable form that explains the reason for failure to proceed with the checkout (e.g. \"Sorry, somebody just bought the last of our amazing black T-shirts while you were busy filling out your payment details. Please choose a different color or garment!\"). Telegram will display this message to the user."
       }
     }
   },
@@ -1350,7 +1356,7 @@
     }
   },
   "setGameScore": {
-    "description": "Use this method to set the score of the specified user in a game. On success, if the message was sent by the bot, returns the edited Message, otherwise returns __True__. Returns an error, if the new score is not greater than the user's current score in the chat and __force__ is __False__.",
+    "description": "Use this method to set the score of the specified user in a game. On success, if the message was sent by the bot, returns the edited Message, otherwise returns True. Returns an error, if the new score is not greater than the user's current score in the chat and force is False.",
     "params": {
       "user_id": {
         "type": "Integer",
@@ -1372,15 +1378,15 @@
       },
       "chat_id": {
         "type": "Integer",
-        "description": "Required if __inline_message_id__ is not specified. Unique identifier for the target chat"
+        "description": "Required if inline_message_id is not specified. Unique identifier for the target chat"
       },
       "message_id": {
         "type": "Integer",
-        "description": "Required if __inline_message_id__ is not specified. Identifier of the sent message"
+        "description": "Required if inline_message_id is not specified. Identifier of the sent message"
       },
       "inline_message_id": {
         "type": "String",
-        "description": "Required if __chat_id__ and __message_id__ are not specified. Identifier of the inline message"
+        "description": "Required if chat_id and message_id are not specified. Identifier of the inline message"
       }
     }
   },
@@ -1394,15 +1400,15 @@
       },
       "chat_id": {
         "type": "Integer",
-        "description": "Required if __inline_message_id__ is not specified. Unique identifier for the target chat"
+        "description": "Required if inline_message_id is not specified. Unique identifier for the target chat"
       },
       "message_id": {
         "type": "Integer",
-        "description": "Required if __inline_message_id__ is not specified. Identifier of the sent message"
+        "description": "Required if inline_message_id is not specified. Identifier of the sent message"
       },
       "inline_message_id": {
         "type": "String",
-        "description": "Required if __chat_id__ and __message_id__ are not specified. Identifier of the inline message"
+        "description": "Required if chat_id and message_id are not specified. Identifier of the inline message"
       }
     }
   }
