@@ -372,6 +372,46 @@
       "reply_to_message_id": {
         "type": "Integer",
         "description": "If the messages are a reply, ID of the original message"
+      },
+      "file0": {
+        "type": "InputFile",
+        "description": "Pass “attach://file0” to upload a new"
+      },
+      "file1": {
+        "type": "InputFile",
+        "description": "Pass “attach://file1” to upload a new"
+      },
+      "file2": {
+        "type": "InputFile",
+        "description": "Pass “attach://file2” to upload a new"
+      },
+      "file3": {
+        "type": "InputFile",
+        "description": "Pass “attach://file3” to upload a new"
+      },
+      "file4": {
+        "type": "InputFile",
+        "description": "Pass “attach://file4” to upload a new"
+      },
+      "file5": {
+        "type": "InputFile",
+        "description": "Pass “attach://file5” to upload a new"
+      },
+      "file6": {
+        "type": "InputFile",
+        "description": "Pass “attach://file6” to upload a new"
+      },
+      "file7": {
+        "type": "InputFile",
+        "description": "Pass “attach://file7” to upload a new"
+      },
+      "file8": {
+        "type": "InputFile",
+        "description": "Pass “attach://file8” to upload a new"
+      },
+      "file9": {
+        "type": "InputFile",
+        "description": "Pass “attach://file9” to upload a new"
       }
     }
   },

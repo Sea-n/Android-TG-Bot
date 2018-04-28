@@ -36,14 +36,14 @@
   <string name="no_context_yet">Belum Ada Konteks.</string>
   <string name="powered_by">Didukung oleh Bot Telegram Mengagumkan</string>
   <string name="param_out_of_range">Nomor harus di kisaran %1$d - %2$d.</string>
-  <string name="paload">Payload</string>
+  <string name="paload">Muatan</string>
   <string name="webhook_url">URL Webhook</string>
   <string name="file_downloader">Pengunduh Berkas</string>
   <string name="file_id">ID Berkas</string>
-  <string name="file_downloader_description">Berkas akan terbuka secara otomatis ketika unduhan lengkap.\nSemua Berkas unduhan akan disimpan dalam /sdcard/TeleBot Direktori.</string>
+  <string name="file_downloader_description">Berkas akan terbuka secara otomatis ketika unduhan lengkap.\nSemua Berkas unduhan akan disimpan dalam /sdcard/Direktori Bot.</string>
   <string name="add_fav_prompt">Pilih jenis</string>
   <string name="add_fav_value_hint">Data Anda</string>
-  <string name="add_fav_name_hint">Kindly Name</string>
+  <string name="add_fav_name_hint">Nama Baik</string>
   <string name="setting_sharing">Pilihan Berbagi</string>
   <string name="setting_upload">Unggah ke Platform Berbagi</string>
   <string name="setting_upload_description">Ia akan menghasilkan URL permintaan, untuk mencegah spam, ini akan mengirimkan anda token untuk memverifikasi.</string>

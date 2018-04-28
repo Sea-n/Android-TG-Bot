@@ -1,62 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Awesome Telegram Bot</string>
     <string name="lang_code">es</string>
-
     <string name="menu_account">Cuentas</string>
     <string name="menu_functions">Funciones</string>
     <string name="menu_add_bot">Añadir Bot</string>
     <string name="menu_join_group">Unirse al grupo</string>
     <string name="menu_github">Estrella en GitHub</string>
-    <string name="menu_export">Exportar base de datos a tarjeta SD</string>
+    <string name="menu_export">Exportar base de datos en tarjeta SD</string>
     <string name="menu_about">Acerca de</string>
-
     <string name="title_activity_add_bot">Nuevo Bot</string>
+    <string name="title_activity_bot_api">Bot API</string>
+    <string name="title_activity_telegraph">Telegraph</string>
+    <string name="title_activity_webhook">Webhook depurador</string>
+    <string name="title_activity_settings">Ajustes</string>
     <string name="title_activity_favorite">Favoritos</string>
-    <string name="title_activity_add_favorite">Agregar favorito</string>
-    <string name="title_activity_about">Acerca de esta aplicación</string>
-
-    <string name="no_bot_placeholder">No hay BOT, haz clic en + para añadir uno.</string>
-    <string name="not_normal_bot">Por favor, utilice Botón de Bot Normal</string>
-
-    <string name="add_bot_token">El token de tu Bot</string>
+    <string name="title_activity_add_favorite">Añadir a favoritos</string>
+    <string name="title_activity_about">Acerca de la aplicación</string>
+    <string name="no_bot_placeholder">No hay Bot, por favor haz clic en + para agregar uno.</string>
+    <string name="not_normal_bot">Por favor use Normal Bot Token</string>
+    <string name="add_bot_token">Tu token</string>
     <string name="add_bot_name">Apodo</string>
-    <string name="add_bot_name_invalid">Apodo inválido, vuelva a comprobarlo.</string>
-    <string name="add_bot_token_invalid">Formato de token no válido</string>
-
-    <string name="no_bot_warning">No seleccionó el bot token, por favor agregue uno primero.</string>
-    <string name="no_bot_selected">No has seleccionado tu bot.</string>
+    <string name="bot_info">Información de bot</string>
+    <string name="add_bot_description">Por favor, obtenga el Token vía https://t.me/BotFather</string>
+    <string name="add_bot_name_invalid">Apodo inválido, verifique de nuevo.</string>
+    <string name="add_bot_token_invalid">Formato token no válido</string>
+    <string name="token_unauthorized">Este Token de Bot parece roto, por favor, editalo o eliminalo.</string>
+    <string name="no_bot_warning">No seleccione bot token, por favor agregar una primera.</string>
+    <string name="no_bot_selected">No seleccione el bot.</string>
     <string name="ask_add_bot_title">Nuevo Bot</string>
-    <string name="ask_add_bot_msg">¿Desea agregar un nuevo bot?</string>
-
-    <string name="del_bot_confirm_title">Eliminar Bot</string>
-    <string name="del_bot_confirm_msg">¿Estás seguro de que quieres eliminar este bot?</string>
-
-    <string name="no_context_yet">Todavía no hay contexto.</string>
-
-    <string name="file_downloader">Descargador de archivos</string>
-    <string name="file_id">ID del archivo</string>
-    <string name="file_downloader_description">El archivo se abrirá automáticamente cuando se complete la descarga.\nTodos los archivos descargados se almacenarán en /sdcard/TeleBot Directory.</string>
-
+    <string name="ask_add_bot_msg">¿Desea agregar el nuevo bot?</string>
+    <string name="del_bot_confirm_title">Eliminar el Bot</string>
+    <string name="del_bot_confirm_msg">¿Está seguro que desea eliminar este bot?</string>
+    <string name="field_required">Este campo es obligatorio.</string>
+    <string name="no_context_yet">No hay contexto todavía.</string>
+    <string name="powered_by">Desarrollado por Awesome Telegram Bot</string>
+    <string name="param_out_of_range">El número debe estar dentro del rango %1$d - %2$d.</string>
+    <string name="paload">Capacidad de carga</string>
+    <string name="webhook_url">Webhook URL</string>
+    <string name="file_downloader">Archivo descargado</string>
+    <string name="file_id">ID de archivo</string>
+    <string name="file_downloader_description">El archivo se abrirá automáticamente cuando se complete la descarga.\nTodo el archivo descargado se almacenará en el directorio: /sdcard/TeleBot.</string>
     <string name="add_fav_prompt">Seleccionar tipo</string>
-    <string name="add_fav_value_hint">Tu información</string>
-    <string name="add_fav_name_hint">Nombre corto</string>
-
-    <string name="save_db">Guardar bases de datos</string>
-    <string name="mkdir_fail">Fallo al crear la copia de seguridad</string>
-    <string name="db_export_fail">Error en la exportación de la base de datos\nRazón:</string>
+    <string name="add_fav_value_hint">Sus datos</string>
+    <string name="add_fav_name_hint">Nombre amable</string>
+    <string name="setting_sharing">Opciones de Compartir</string>
+    <string name="setting_upload">Subir a compartir plataforma</string>
+    <string name="setting_upload_description">Genera URL de petición, con el fin de evitar el spam, esto le enviaremos la ficha para verificar.</string>
+    <string name="setting_screenshot">Captura de pantalla</string>
+    <string name="setting_screenshot_description">Capturas de pantalla se guardan en/sdcard/TeleBot, puede ser una imagen vacía en algún viejo dispositivo debido al problema de falta de memoria.</string>
+    <string name="setting_copy">Opción de copia automático</string>
+    <string name="setting_share">Selector de acción emergente</string>
+    <string-array name="setting_copy_options">
+        <item>Sólo URL (recomendado)</item>
+        <item>URL y solicitud JSON</item>
+        <item>Nada</item>
+    </string-array>
+    <string-array name="setting_share_options">
+        <item>URL</item>
+        <item>Foto</item>
+        <item>Foto con el URL como el título</item>
+        <item>Nada</item>
+    </string-array>
+    <string name="save_db">Guardar en base de datos</string>
+    <string name="mkdir_fail">Fallo al crear la carpeta para copias de seguridad</string>
+    <string name="db_export_fail">Error de exportación de la base de datos\nRazón:</string>
     <string name="export_to">"Exportado a "</string>
-
-    <string name="footer_rate_title">Califica esta Aplicación</string>
-    <string name="footer_rate_msg">Haz clic en GO si te gusta :)</string>
-    <string name="footer_rate_yes">IR</string>
+    <string name="footer_rate_title">Comenta y valora la aplicación</string>
+    <string name="footer_rate_msg">Haga clic en ir si te gusta :)</string>
+    <string name="footer_rate_yes">Ir</string>
     <string name="footer_rate_no">Ahora no</string>
-
-    <string name="method">Procedimiento</string>
+    <string name="method">Método</string>
     <string name="done">Hecho</string>
     <string name="save">Guardar</string>
+    <string name="copy">Copiar</string>
     <string name="submit">Enviar</string>
     <string name="cancel">Cancelar</string>
     <string name="edit">Editar</string>
     <string name="remove">Eliminar</string>
     <string name="yes">Si</string>
+    <string name="no">No</string>
+    <string name="share">Compartir</string>
+    <string name="screenshot">Captura de pantalla</string>
+    <string name="request">Solicitud</string>
+    <string name="response">Respuesta</string>
+    <string name="copy_request">Solicitud de copia</string>
+    <string name="copy_response">Respuesta de copia</string>
 </resources>

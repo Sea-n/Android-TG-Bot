@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Bot Telegram tó níyì</string>
+  <string name="lang_code">en</string>
+  <string name="menu_account">Àwọn àkọọlẹ</string>
+  <string name="menu_functions">Awọn iṣẹ</string>
+  <string name="menu_add_bot">Ṣe àfikún Bot</string>
+  <string name="menu_join_group">Parapọ̀ mọ Ẹgbẹ́</string>
+  <string name="menu_github">Fun ní ìràwọ̀ lórí GitHub</string>
+  <string name="menu_export">A fi ìpamọ data ránṣẹ sí SD card</string>
+  <string name="menu_about">Nípa</string>
+  <string name="title_activity_add_bot">Bot titun</string>
+  <string name="title_activity_bot_api">API ti Bot</string>
+  <string name="title_activity_telegraph">Telegraph</string>
+  <string name="title_activity_webhook">Ètò àtúnṣe àṣìṣe ti ojú-ìwé ayélujára</string>
+  <string name="title_activity_settings">Awọn Iṣeto</string>
+  <string name="title_activity_favorite">Awọn ohun ààyò</string>
+  <string name="title_activity_add_favorite">Ṣe àfikún ohun ààyò</string>
+  <string name="title_activity_about">Nípa ètò yìí</string>
+  <string name="no_bot_placeholder">Kò sí Bot lọwọlọwọ, jọwọ tẹ + láti ṣe àfikún kan.</string>
+  <string name="not_normal_bot">Jọwọ lo ààmì Bot tó jẹ déédé</string>
+  <string name="add_bot_token">Ààmì Bot ẹ</string>
+  <string name="add_bot_name">Inagijẹ</string>
+  <string name="bot_info">Àlàyé nípa bot</string>
+  <string name="add_bot_description">Jọwọ gba ààmì nípasẹ https://t.me/BotFather</string>
+  <string name="add_bot_name_invalid">Inagijẹ kò wúlò, jọwọ ṣe àtúnyẹwò.</string>
+  <string name="add_bot_token_invalid">Ọnà kíkà ààmì kò wúlò</string>
+  <string name="token_unauthorized">Ààmì Bot yìí dàbí wípé ó ti DÀRÚ, jọwọ ṣe àtúnṣe tàbí ko yọ èyí.</string>
+  <string name="no_bot_warning">A kò mú ààmì bot, jọwọ ṣe àfikún kan ṣáájú.</string>
+  <string name="no_bot_selected">Iwọ kò mú bot ẹ.</string>
+  <string name="ask_add_bot_title">Bot titun</string>
+  <string name="ask_add_bot_msg">Ṣẹ o fẹ àfikún bot titun?</string>
+  <string name="del_bot_confirm_title">Yọ bot</string>
+  <string name="del_bot_confirm_msg">Ṣe o dájú pé o fẹ yọ bot yìí?</string>
+  <string name="field_required">Àkójọpọ̀ ọrọ yìí jẹ ohun ti a béèrè fún.</string>
+  <string name="no_context_yet">Kò sí atọ́ka lọwọlọwọ.</string>
+  <string name="powered_by">A fun lágbára nípasẹ̀ Bot Telegram tó níyì</string>
+  <string name="param_out_of_range">Onkà gbọdọ wa laarin %1$d - %2$d.</string>
+  <string name="paload">Ẹ̀rù</string>
+  <string name="webhook_url">URL ti ojú-ìwé ayélujára</string>
+  <string name="file_downloader">Ètò ìgbàsílẹ̀ faili</string>
+  <string name="file_id">Idanimọ faili</string>
+  <string name="file_downloader_description">Faili yíò ṣii fúnra rẹ ti ìgbàsílẹ̀ lati ayélujára ba jẹ àṣeyọrí.\nGbogbo faili tí a gbàsílẹ̀ yíò gba fífi sínú ìpamọ pẹlu ìtọ́sọ́nà /sdcard/TeleBot.</string>
+  <string name="add_fav_prompt">Mú irú to fẹ</string>
+  <string name="add_fav_value_hint">Data ẹ</string>
+  <string name="add_fav_name_hint">Jọwọ fún lórúkọ</string>
+  <string name="setting_sharing">Awọn àṣàyàn fún pínpín</string>
+  <string name="setting_upload">Ṣe àgbéjáde sí orí pẹpẹ fún pínpín</string>
+  <string name="setting_upload_description">Yíò pèsè URL to béèrè fún, lati lè dènà àwúrùju, èyí yíò fi ààmì rẹ ránṣẹ fún ijẹrisi.</string>
+  <string name="setting_screenshot">Àwòrán ojú àfihàn</string>
+  <string name="setting_screenshot_description">Àwòrán ojú àfihàn yíò gba ìtọ́jú sínú /sdcard/TeleBot, ó lè jẹ àwòrán asán lórí àwọn ẹrọ to ti pẹ nítorí ìṣòro ìpamọ ti kún.</string>
+  <string name="setting_copy">Àṣàyàn didakọ fúnra rẹ</string>
+  <string name="setting_share">Ètò yíyan ìgbéjáde pínpín</string>
+  <string-array name="setting_copy_options">
+    <item>URL nìkan (a gba níyànjú)</item>
+    <item>URL ati ìbéèrè JSON</item>
+    <item>Kò sí nkan</item>
+  </string-array>
+  <string-array name="setting_share_options">
+    <item>URL</item>
+    <item>Àwòrán</item>
+    <item>Àwòrán pẹlu URL gẹgẹbi ọrọ àlàyé</item>
+    <item>Kò sí nkan</item>
+  </string-array>
+  <string name="save_db">Tọju awọn ìpamọ data</string>
+  <string name="mkdir_fail">O kùnà láti ṣẹda ìtọ́sọ́nà afẹyinti</string>
+  <string name="db_export_fail">Ifiranṣẹ ìpamọ data kùnà\nIdi:</string>
+  <string name="export_to">"A firanṣẹ sí "</string>
+  <string name="footer_rate_title">Ṣe oṣuwọn ètò yii</string>
+  <string name="footer_rate_msg">Tẹ LỌ to ba nifẹ sí :)</string>
+  <string name="footer_rate_yes">LỌ</string>
+  <string name="footer_rate_no">Kìí ṣe lọwọlọwọ</string>
+  <string name="method">Ìlànà</string>
+  <string name="done">O ti ṣe</string>
+  <string name="save">Ṣe ìtọ́jú</string>
+  <string name="copy">Ṣe didakọ</string>
+  <string name="submit">Fi ránṣẹ́</string>
+  <string name="cancel">Fi òpin sí</string>
+  <string name="edit">Ṣe àtúnṣe</string>
+  <string name="remove">Yọ kúrò</string>
+  <string name="yes">Bẹẹni</string>
+  <string name="no">Rárá</string>
+  <string name="share">Ṣe Pínpín</string>
+  <string name="screenshot">Àwòrán ojú àfihàn</string>
+  <string name="request">Béèrè fún</string>
+  <string name="response">Èsì</string>
+  <string name="copy_request">Ṣe àdàkọ ìbéèrè</string>
+  <string name="copy_response">Ṣe àdàkọ èsì</string>
+</resources>
