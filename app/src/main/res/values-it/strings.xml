@@ -12,7 +12,7 @@
     <string name="title_activity_add_bot">Nuovo Bot</string>
     <string name="title_activity_favorite">Preferiti</string>
     <string name="title_activity_add_favorite">Aggiungi preferito</string>
-    <string name="title_activity_about">Informazioni sull'app</string>
+    <string name="title_activity_about">Informazioni sull\'app</string>
 
     <string name="no_bot_placeholder">Nessun bot, per favore clicca + per aggiungerne uno.</string>
     <string name="not_normal_bot">Per favore usa un Token valido</string>

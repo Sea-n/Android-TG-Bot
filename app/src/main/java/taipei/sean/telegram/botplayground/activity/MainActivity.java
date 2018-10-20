@@ -50,7 +50,6 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
-import com.onesignal.OneSignal;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -90,11 +89,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        OneSignal.startInit(this)
-                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
-                .unsubscribeWhenNotificationsAreDisabled(true)
-                .init();
 
         db = new SeanDBHelper(this, "data.db", null, _dbVer);
 
@@ -400,10 +394,6 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.nav_add_bot:
                         addBot();
-                        break;
-                    case R.id.nav_setting:
-                        Intent sIntent = new Intent(MainActivity.this, SettingsActivity.class);
-                        startActivity(sIntent);
                         break;
                     case R.id.nav_join_group:
                         Uri tgUri = Uri.parse(getString(R.string.telegram_group_join_link));

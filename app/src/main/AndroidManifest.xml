@@ -226,15 +226,6 @@
         </activity>
 
         <activity
-            android:name=".activity.SettingsActivity"
-            android:label="@string/title_activity_settings"
-            android:parentActivityName=".activity.MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="taipei.sean.telegram.botplayground.activity.MainActivity" />
-        </activity>
-
-        <activity
             android:name=".activity.WebhookActivity"
             android:label="@string/title_activity_webhook"
             android:parentActivityName=".activity.MainActivity">

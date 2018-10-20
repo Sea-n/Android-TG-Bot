@@ -13,7 +13,6 @@
     <string name="title_activity_bot_api">Bot API</string>
     <string name="title_activity_telegraph">Telegraph</string>
     <string name="title_activity_webhook">Webhook depurador</string>
-    <string name="title_activity_settings">Ajustes</string>
     <string name="title_activity_favorite">Favoritos</string>
     <string name="title_activity_add_favorite">Añadir a favoritos</string>
     <string name="title_activity_about">Acerca de la aplicación</string>
@@ -44,24 +43,6 @@
     <string name="add_fav_prompt">Seleccionar tipo</string>
     <string name="add_fav_value_hint">Sus datos</string>
     <string name="add_fav_name_hint">Nombre amable</string>
-    <string name="setting_sharing">Opciones de Compartir</string>
-    <string name="setting_upload">Subir a compartir plataforma</string>
-    <string name="setting_upload_description">Genera URL de petición, con el fin de evitar el spam, esto le enviaremos la ficha para verificar.</string>
-    <string name="setting_screenshot">Captura de pantalla</string>
-    <string name="setting_screenshot_description">Capturas de pantalla se guardan en/sdcard/TeleBot, puede ser una imagen vacía en algún viejo dispositivo debido al problema de falta de memoria.</string>
-    <string name="setting_copy">Opción de copia automático</string>
-    <string name="setting_share">Selector de acción emergente</string>
-    <string-array name="setting_copy_options">
-        <item>Sólo URL (recomendado)</item>
-        <item>URL y solicitud JSON</item>
-        <item>Nada</item>
-    </string-array>
-    <string-array name="setting_share_options">
-        <item>URL</item>
-        <item>Foto</item>
-        <item>Foto con el URL como el título</item>
-        <item>Nada</item>
-    </string-array>
     <string name="save_db">Guardar en base de datos</string>
     <string name="mkdir_fail">Fallo al crear la carpeta para copias de seguridad</string>
     <string name="db_export_fail">Error de exportación de la base de datos\nRazón:</string>

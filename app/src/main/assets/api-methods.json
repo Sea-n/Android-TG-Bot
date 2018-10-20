@@ -21,7 +21,7 @@
     }
   },
   "setWebhook": {
-    "description": "Use this method to specify a url and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified url, containing a JSON-serialized Update. In case of an unsuccessful request, we will give up after a reasonable amount of attempts. Returns true.",
+    "description": "Use this method to specify a url and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified url, containing a JSON-serialized Update. In case of an unsuccessful request, we will give up after a reasonable amount of attempts. Returns True on success.",
     "params": {
       "url": {
         "type": "String",
@@ -125,7 +125,7 @@
       },
       "caption": {
         "type": "String",
-        "description": "Photo caption (may also be used when resending photos by file_id), 0-200 characters"
+        "description": "Photo caption (may also be used when resending photos by file_id), 0-1024 characters"
       },
       "parse_mode": {
         "type": "String",
@@ -160,7 +160,7 @@
       },
       "caption": {
         "type": "String",
-        "description": "Audio caption, 0-200 characters"
+        "description": "Audio caption, 0-1024 characters"
       },
       "parse_mode": {
         "type": "String",
@@ -177,6 +177,10 @@
       "title": {
         "type": "String",
         "description": "Track name"
+      },
+      "thumb": {
+        "type": "InputFile or String",
+        "description": "Thumbnail of the file sent. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 90. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »"
       },
       "disable_notification": {
         "type": "Boolean",
@@ -205,9 +209,13 @@
         "required": true,
         "description": "File to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »"
       },
+      "thumb": {
+        "type": "InputFile or String",
+        "description": "Thumbnail of the file sent. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 90. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »"
+      },
       "caption": {
         "type": "String",
-        "description": "Document caption (may also be used when resending documents by file_id), 0-200 characters"
+        "description": "Document caption (may also be used when resending documents by file_id), 0-1024 characters"
       },
       "parse_mode": {
         "type": "String",
@@ -252,9 +260,13 @@
         "type": "Integer",
         "description": "Video height"
       },
+      "thumb": {
+        "type": "InputFile or String",
+        "description": "Thumbnail of the file sent. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 90. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »"
+      },
       "caption": {
         "type": "String",
-        "description": "Video caption (may also be used when resending videos by file_id), 0-200 characters"
+        "description": "Video caption (may also be used when resending videos by file_id), 0-1024 characters"
       },
       "parse_mode": {
         "type": "String",
@@ -263,6 +275,57 @@
       "supports_streaming": {
         "type": "Boolean",
         "description": "Pass True, if the uploaded video is suitable for streaming"
+      },
+      "disable_notification": {
+        "type": "Boolean",
+        "description": "Sends the message silently. Users will receive a notification with no sound."
+      },
+      "reply_to_message_id": {
+        "type": "Integer",
+        "description": "If the message is a reply, ID of the original message"
+      },
+      "reply_markup": {
+        "type": "InlineKeyboardMarkup or ReplyKeyboardMarkup or ReplyKeyboardRemove or ForceReply",
+        "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user."
+      }
+    }
+  },
+  "sendAnimation": {
+    "description": "Use this method to send animation files (GIF or H.264/MPEG-4 AVC video without sound). On success, the sent Message is returned. Bots can currently send animation files of up to 50 MB in size, this limit may be changed in the future.",
+    "params": {
+      "chat_id": {
+        "type": "Integer or String",
+        "required": true,
+        "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+      },
+      "animation": {
+        "type": "InputFile or String",
+        "required": true,
+        "description": "Animation to send. Pass a file_id as String to send an animation that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an animation from the Internet, or upload a new animation using multipart/form-data. More info on Sending Files »"
+      },
+      "duration": {
+        "type": "Integer",
+        "description": "Duration of sent animation in seconds"
+      },
+      "width": {
+        "type": "Integer",
+        "description": "Animation width"
+      },
+      "height": {
+        "type": "Integer",
+        "description": "Animation height"
+      },
+      "thumb": {
+        "type": "InputFile or String",
+        "description": "Thumbnail of the file sent. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 90. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »"
+      },
+      "caption": {
+        "type": "String",
+        "description": "Animation caption (may also be used when resending animation by file_id), 0-1024 characters"
+      },
+      "parse_mode": {
+        "type": "String",
+        "description": "Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in the media caption."
       },
       "disable_notification": {
         "type": "Boolean",
@@ -293,7 +356,7 @@
       },
       "caption": {
         "type": "String",
-        "description": "Voice message caption, 0-200 characters"
+        "description": "Voice message caption, 0-1024 characters"
       },
       "parse_mode": {
         "type": "String",
@@ -336,7 +399,11 @@
       },
       "length": {
         "type": "Integer",
-        "description": "Video width and height"
+        "description": "Video width and height, i.e. diameter of the video message"
+      },
+      "thumb": {
+        "type": "InputFile or String",
+        "description": "Thumbnail of the file sent. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail‘s width and height should not exceed 90. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can’t be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »"
       },
       "disable_notification": {
         "type": "Boolean",
@@ -361,7 +428,7 @@
         "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
       },
       "media": {
-        "type": "Array of InputMedia",
+        "type": "Array of InputMediaPhoto and InputMediaVideo",
         "required": true,
         "description": "A JSON-serialized array describing photos and videos to be sent, must include 2–10 items"
       },
@@ -535,6 +602,10 @@
         "type": "String",
         "description": "Foursquare identifier of the venue"
       },
+      "foursquare_type": {
+        "type": "String",
+        "description": "Foursquare type of the venue, if known. (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)"
+      },
       "disable_notification": {
         "type": "Boolean",
         "description": "Sends the message silently. Users will receive a notification with no sound."
@@ -570,6 +641,10 @@
       "last_name": {
         "type": "String",
         "description": "Contact's last name"
+      },
+      "vcard": {
+        "type": "String",
+        "description": "Additional data about the contact in the form of a vCard, 0-2048 bytes"
       },
       "disable_notification": {
         "type": "Boolean",
@@ -1006,6 +1081,32 @@
       }
     }
   },
+  "editMessageMedia": {
+    "description": "Use this method to edit audio, document, photo, or video messages. If a message is a part of a message album, then it can be edited only to a photo or a video. Otherwise, message type can be changed arbitrarily. When inline message is edited, new file can't be uploaded. Use previously uploaded file via its file_id or specify a URL. On success, if the edited message was sent by the bot, the edited Message is returned, otherwise True is returned.",
+    "params": {
+      "chat_id": {
+        "type": "Integer or String",
+        "description": "Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+      },
+      "message_id": {
+        "type": "Integer",
+        "description": "Required if inline_message_id is not specified. Identifier of the sent message"
+      },
+      "inline_message_id": {
+        "type": "String",
+        "description": "Required if chat_id and message_id are not specified. Identifier of the inline message"
+      },
+      "media": {
+        "type": "InputMedia",
+        "required": true,
+        "description": "A JSON-serialized object for a new media content of the message"
+      },
+      "reply_markup": {
+        "type": "InlineKeyboardMarkup",
+        "description": "A JSON-serialized object for a new inline keyboard."
+      }
+    }
+  },
   "editMessageReplyMarkup": {
     "description": "Use this method to edit only the reply markup of messages sent by the bot or via the bot (for inline bots). On success, if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.",
     "params": {
@@ -1365,6 +1466,21 @@
       "error_message": {
         "type": "String",
         "description": "Required if ok is False. Error message in human readable form that explains the reason for failure to proceed with the checkout (e.g. \"Sorry, somebody just bought the last of our amazing black T-shirts while you were busy filling out your payment details. Please choose a different color or garment!\"). Telegram will display this message to the user."
+      }
+    }
+  },
+  "setPassportDataErrors": {
+    "description": "Informs a user that some of the Telegram Passport elements they provided contains errors. The user will not be able to re-submit their Passport to you until the errors are fixed (the contents of the field for which you returned the error must change). Returns True on success.",
+    "params": {
+      "user_id": {
+        "type": "Integer",
+        "required": true,
+        "description": "User identifier"
+      },
+      "errors": {
+        "type": "Array of PassportElementError",
+        "required": true,
+        "description": "A JSON-serialized array describing the errors"
       }
     }
   },

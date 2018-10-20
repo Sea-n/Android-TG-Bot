@@ -13,7 +13,6 @@
   <string name="title_activity_bot_api">API ti Bot</string>
   <string name="title_activity_telegraph">Telegraph</string>
   <string name="title_activity_webhook">Ètò àtúnṣe àṣìṣe ti ojú-ìwé ayélujára</string>
-  <string name="title_activity_settings">Awọn Iṣeto</string>
   <string name="title_activity_favorite">Awọn ohun ààyò</string>
   <string name="title_activity_add_favorite">Ṣe àfikún ohun ààyò</string>
   <string name="title_activity_about">Nípa ètò yìí</string>
@@ -44,24 +43,6 @@
   <string name="add_fav_prompt">Mú irú to fẹ</string>
   <string name="add_fav_value_hint">Data ẹ</string>
   <string name="add_fav_name_hint">Jọwọ fún lórúkọ</string>
-  <string name="setting_sharing">Awọn àṣàyàn fún pínpín</string>
-  <string name="setting_upload">Ṣe àgbéjáde sí orí pẹpẹ fún pínpín</string>
-  <string name="setting_upload_description">Yíò pèsè URL to béèrè fún, lati lè dènà àwúrùju, èyí yíò fi ààmì rẹ ránṣẹ fún ijẹrisi.</string>
-  <string name="setting_screenshot">Àwòrán ojú àfihàn</string>
-  <string name="setting_screenshot_description">Àwòrán ojú àfihàn yíò gba ìtọ́jú sínú /sdcard/TeleBot, ó lè jẹ àwòrán asán lórí àwọn ẹrọ to ti pẹ nítorí ìṣòro ìpamọ ti kún.</string>
-  <string name="setting_copy">Àṣàyàn didakọ fúnra rẹ</string>
-  <string name="setting_share">Ètò yíyan ìgbéjáde pínpín</string>
-  <string-array name="setting_copy_options">
-    <item>URL nìkan (a gba níyànjú)</item>
-    <item>URL ati ìbéèrè JSON</item>
-    <item>Kò sí nkan</item>
-  </string-array>
-  <string-array name="setting_share_options">
-    <item>URL</item>
-    <item>Àwòrán</item>
-    <item>Àwòrán pẹlu URL gẹgẹbi ọrọ àlàyé</item>
-    <item>Kò sí nkan</item>
-  </string-array>
   <string name="save_db">Tọju awọn ìpamọ data</string>
   <string name="mkdir_fail">O kùnà láti ṣẹda ìtọ́sọ́nà afẹyinti</string>
   <string name="db_export_fail">Ifiranṣẹ ìpamọ data kùnà\nIdi:</string>

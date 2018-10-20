@@ -13,7 +13,6 @@
   <string name="title_activity_bot_api">Bot API</string>
   <string name="title_activity_telegraph">Telegram</string>
   <string name="title_activity_webhook">Webhook Debugger</string>
-  <string name="title_activity_settings">Pengaturan</string>
   <string name="title_activity_favorite">Favorit</string>
   <string name="title_activity_add_favorite">Tambahkan Favorit</string>
   <string name="title_activity_about">Tentang Aplikasi Ini</string>
@@ -44,24 +43,6 @@
   <string name="add_fav_prompt">Pilih jenis</string>
   <string name="add_fav_value_hint">Data Anda</string>
   <string name="add_fav_name_hint">Nama Baik</string>
-  <string name="setting_sharing">Pilihan Berbagi</string>
-  <string name="setting_upload">Unggah ke Platform Berbagi</string>
-  <string name="setting_upload_description">Ia akan menghasilkan URL permintaan, untuk mencegah spam, ini akan mengirimkan anda token untuk memverifikasi.</string>
-  <string name="setting_screenshot">Tangkapan layar</string>
-  <string name="setting_screenshot_description">Tangkapan layar akan disimpan dalam /sdcard/TeleBot, mungkin sebuah gambar kosong di beberapa perangkat lama karena masalah kehabisan memori.</string>
-  <string name="setting_copy">Pilihan Salin Otomatis</string>
-  <string name="setting_share">Pemilih Berbagi Pop-up</string>
-  <string-array name="setting_copy_options">
-    <item>Hanya URL (Disarankan)</item>
-    <item>URL dan Permintaan JSON</item>
-    <item>Tidak ada</item>
-  </string-array>
-  <string-array name="setting_share_options">
-    <item>URL</item>
-    <item>Foto</item>
-    <item>Foto dengan URL sebagai keterangan</item>
-    <item>Tidak ada</item>
-  </string-array>
   <string name="save_db">Simpan Basisdata</string>
   <string name="mkdir_fail">Gagal membuat cadangan direktur</string>
   <string name="db_export_fail">Basisdata ekspor gagal\nAlasan:</string>
