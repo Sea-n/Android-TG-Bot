@@ -190,9 +190,9 @@ public class MainActivity extends AppCompatActivity {
 
         final TextView footer = (TextView) findViewById(R.id.main_footer);
         footer.setText(footerStr);
-        footer.setOnLongClickListener(new View.OnLongClickListener() {
+        footer.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(final View view) {
+            public void onClick(final View view) {
                 final Context context = view.getContext();
 
                 new AlertDialog.Builder(context)
@@ -207,8 +207,10 @@ public class MainActivity extends AppCompatActivity {
                                 // To count with Play market backstack, After pressing back button,
                                 // to taken back to our application, we need to add following flags to intent.
                                 goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
-                                        Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
                                         Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                    goToMarket.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
+                                }
                                 try {
                                     startActivity(goToMarket);
                                 } catch (ActivityNotFoundException e) {
@@ -220,9 +222,6 @@ public class MainActivity extends AppCompatActivity {
                         })
                         .setNegativeButton(R.string.footer_rate_no, null)
                         .show();
-
-
-                return false;
             }
         });
 

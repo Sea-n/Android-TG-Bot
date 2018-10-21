@@ -63,9 +63,4 @@
   <string name="yes">是</string>
   <string name="no">否</string>
   <string name="share">分享</string>
-  <string name="screenshot">截图</string>
-  <string name="request">请求内容</string>
-  <string name="response">回应</string>
-  <string name="copy_request">复制请求</string>
-  <string name="copy_response">复制回应</string>
 </resources>

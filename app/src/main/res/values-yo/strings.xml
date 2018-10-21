@@ -62,9 +62,4 @@
   <string name="yes">Bẹẹni</string>
   <string name="no">Rárá</string>
   <string name="share">Ṣe Pínpín</string>
-  <string name="screenshot">Àwòrán ojú àfihàn</string>
-  <string name="request">Béèrè fún</string>
-  <string name="response">Èsì</string>
-  <string name="copy_request">Ṣe àdàkọ ìbéèrè</string>
-  <string name="copy_response">Ṣe àdàkọ èsì</string>
 </resources>

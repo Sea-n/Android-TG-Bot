@@ -62,9 +62,4 @@
     <string name="yes">Si</string>
     <string name="no">No</string>
     <string name="share">Compartir</string>
-    <string name="screenshot">Captura de pantalla</string>
-    <string name="request">Solicitud</string>
-    <string name="response">Respuesta</string>
-    <string name="copy_request">Solicitud de copia</string>
-    <string name="copy_response">Respuesta de copia</string>
 </resources>

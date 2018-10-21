@@ -58,8 +58,4 @@
     <string name="edit">Modifica</string>
     <string name="remove">Rimuovi</string>
     <string name="yes">Sì</string>
-    <string name="request">Richiesta</string>
-    <string name="response">Risposta</string>
-    <string name="copy_request">Copia richiesta</string>
-    <string name="copy_response">Copia risposta</string>
 </resources>

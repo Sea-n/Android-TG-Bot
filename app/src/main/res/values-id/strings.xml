@@ -62,9 +62,4 @@
   <string name="yes">Ya</string>
   <string name="no">Tidak</string>
   <string name="share">Berbagi</string>
-  <string name="screenshot">Tangkapan layar</string>
-  <string name="request">Permintaan</string>
-  <string name="response">Tanggapan</string>
-  <string name="copy_request">Salin Permintaan</string>
-  <string name="copy_response">Salin Tanggapan</string>
 </resources>

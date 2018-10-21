@@ -76,11 +76,6 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="share">Share</string>
-    <string name="screenshot">Screenshot</string>
-    <string name="request">Request</string>
-    <string name="response">Response</string>
-    <string name="copy_request">Copy Request</string>
-    <string name="copy_response">Copy Response</string>
 
     <string name="nav_header_photo" translatable="false">Bot Profile Photo</string>
     <string name="nav_header_default_title" translatable="false">No Bot</string>
@@ -91,5 +86,4 @@
     <string name="nav_header_default_subtitle" translatable="false">12345:AAJqs_w-4</string>
     <string name="github_url" translatable="false">https://github.com/Sea-n/Android-TG-Bot</string>
     <string name="telegram_group_join_link" translatable="false">https://t.me/AwesomeTeleBot</string>
-    <string name="app_link_text" translatable="false">\@AwesomeTeleBot</string>
 </resources>
