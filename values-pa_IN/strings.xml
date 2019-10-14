@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ਸ਼ਾਨਦਾਰ ਟੈਲੀਗ੍ਰਾਮ ਬੋਟ</string>
+
+    <string name="lang_code">ਵਿੱਚ</string>
+
+    <string name="menu_account">ਖਾਤੇ</string>
+    <string name="menu_functions">ਕਾਰਜ</string>
+    <string name="menu_add_bot">ਬੋਟ ਸ਼ਾਮਲ ਕਰੋ</string>
+    <string name="menu_join_group">ਸਮੂਹ ਵਿੱਚ ਸ਼ਾਮਲ ਹੋਵੋ</string>
+    <string name="menu_github">GitHub ਤੇ ਸਟਾਰ</string>
+    <string name="menu_export">SD ਕਾਰਡ ਤੇ ਡਾਟਾਬੇਸ ਐਕਸਪੋਰਟ ਕਰੋ</string>
+    <string name="menu_about">ਬਾਰੇ</string>
+
+    <string name="title_activity_add_bot">ਨਵਾਂ ਬੋਟ</string>
+    <string name="title_activity_bot_api">ਏਪੀਆਈ ਬੋਟ</string>
+    <string name="title_activity_telegraph">ਤਾਰ</string>
+    <string name="title_activity_webhook">ਵੈਬਹੁੱਕ ਡੀਬੱਗਰ</string>
+    <string name="title_activity_favorite">ਮਨਪਸੰਦ</string>
+    <string name="title_activity_add_favorite">ਮਨਪਸੰਦ ਸ਼ਾਮਲ ਕਰੋ</string>
+    <string name="title_activity_about">ਇਸ ਐਪ ਬਾਰੇ</string>
+
+    <string name="no_bot_placeholder">ਅਜੇ ਤੱਕ ਕੋਈ ਬੋਟ ਨਹੀਂ, ਕਿਰਪਾ ਕਰਕੇ ਇਕ ਨੂੰ ਜੋੜਨ ਲਈ + ਕਲਿੱਕ ਕਰੋ.</string>
+    <string name="not_normal_bot">ਕਿਰਪਾ ਕਰਕੇ ਸਧਾਰਣ ਬੋਟ ਟੋਕਨ</string>
+
+    <string name="add_bot_token">ਤੁਹਾਡਾ ਬੋਟ ਟੋਕਨ</string>
+    <string name="add_bot_name">ਉਪਨਾਮ</string>
+    <string name="bot_info">
+ਬੋਟ ਜਾਣਕਾਰੀ</string>
+    <string name="add_bot_description">ਕਿਰਪਾ ਕਰਕੇ https://t.me/BotFather ਦੁਆਰਾ ਟੋਕਨ ਪ੍ਰਾਪਤ ਕਰੋ</string>
+    <string name="add_bot_name_invalid">ਉਪਨਾਮ ਗਲਤ ਹੈ, ਕਿਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਜਾਂਚ ਕਰੋ.</string>
+    <string name="add_bot_token_invalid">ਟੋਕਨ ਫਾਰਮੈਟ ਅਵੈਧ ਹੈ</string>
+    <string name="token_unauthorized">ਇਹ ਬੋਟ ਟੋਕਨ ਟੁੱਟਿਆ ਜਾਪਦਾ ਹੈ, ਕਿਰਪਾ ਕਰਕੇ ਇਸਨੂੰ ਸੋਧੋ ਜਾਂ ਹਟਾਓ.</string>
+
+    <string name="no_bot_warning">ਬੋਟ ਟੋਕਨ ਨਹੀਂ ਚੁਣਿਆ, ਕਿਰਪਾ ਕਰਕੇ ਪਹਿਲਾਂ ਇੱਕ ਸ਼ਾਮਲ ਕਰੋ.</string>
+    <string name="no_bot_selected">ਤੁਸੀਂ ਆਪਣਾ ਬੋਟ ਨਹੀਂ ਚੁਣਿਆ.</string>
+    <string name="ask_add_bot_title">ਨਵਾਂ ਬੋਟ</string>
+    <string name="ask_add_bot_msg">ਕੀ ਤੁਸੀਂ ਨਵਾਂ ਬੋਟ ਲਗਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ?</string>
+
+    <string name="del_bot_confirm_title">ਬੋਟ ਮਿਟਾਓ</string>
+    <string name="del_bot_confirm_msg">ਕੀ ਤੁਸੀਂ ਇਸ ਬੋਟ ਨੂੰ ਹਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ?</string>
+
+    <string name="field_required">ਇਸ ਫੀਲਡ ਦੀ ਲੋੜ ਹੈ.</string>
+    <string name="no_context_yet">ਹਾਲੇ ਕੋਈ ਪ੍ਰਸੰਗ ਨਹੀਂ.</string>
+    <string name="powered_by">ਬਹੁਤ ਵਧੀਆ ਟੈਲੀਗ੍ਰਾਮ ਬੋਟ ਦੁਆਰਾ ਸੰਚਾਲਿਤ</string>
+    <string name="param_out_of_range">ਸੰਖਿਆ% 1 $ d -% 2 $ d ਵਿੱਚ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ.</string>
+
+    <string name="paload">
+ਪੇਲੋਡ</string>
+    <string name="webhook_url">ਵੈਬਹੁਕ URL</string>
+
+    <string name="file_downloader">ਫਾਈਲ ਡਾਉਨਲੋਡਰ</string>
+    <string name="file_id">ਫਾਈਲ ਆਈਡੀ</string>
+    <string name="file_downloader_description">ਡਾਉਨਲੋਡ ਪੂਰਾ ਹੋਣ 'ਤੇ ਫਾਈਲ ਆਪਣੇ ਆਪ ਖੁੱਲ੍ਹ ਜਾਵੇਗੀ.\n ਸਭ ਡਾਉਨਲੋਡ ਕੀਤੀ ਫਾਈਲ / sdcard / TeleBot ਡਾਇਰੈਕਟਰੀ ਵਿੱਚ ਸਟੋਰ ਕੀਤੀ ਜਾਏਗੀ.</string>
+
+    <string name="add_fav_prompt">ਕਿਸਮ ਦੀ ਚੋਣ ਕਰੋ</string>
+    <string name="add_fav_value_hint">ਤੁਹਾਡਾ ਡਾਟਾ</string>
+    <string name="add_fav_name_hint">ਕ੍ਰਿਪਾ ਨਾਮ</string>
+
+    <string name="save_db">ਡਾਟਾਬੇਸ ਸੰਭਾਲੋ</string>
+    <string name="mkdir_fail">ਬੈਕਅਪ ਨਿਰਦੇਸ਼ਕ ਬਣਾਉਣ ਵਿੱਚ ਅਸਫਲ</string>
+    <string name="db_export_fail">ਡਾਟਾਬੇਸ ਨਿਰਯਾਤ ਅਸਫਲ \ n ਕਾਰਨ:</string>
+    <string name="export_to">"ਨੂੰ ਨਿਰਯਾਤ ਕੀਤਾ"</string>
+
+    <string name="footer_rate_title">ਇਸ ਐਪਲੀਕੇਸ਼ਨ ਨੂੰ ਦਰਜਾ ਦਿਓ</string>
+    <string name="footer_rate_msg">ਜੇ ਤੁਸੀਂ ਇਸ ਨੂੰ ਪਸੰਦ ਕਰਦੇ ਹੋ ਤਾਂ Go ਤੇ ਕਲਿਕ ਕਰੋ :)</string>
+    <string name="footer_rate_yes">ਜਾਣਾ</string>
+    <string name="footer_rate_no">ਹਾਲੇ ਨਹੀਂ</string>
+
+    <string name="method">ਤਰੀਕਾ</string>
+    <string name="done">ਹੋ ਗਿਆ</string>
+    <string name="save">ਸੇਵ</string>
+    <string name="copy">ਕਾੱਪੀ</string>
+    <string name="submit">ਜਮ੍ਹਾਂ ਕਰੋ</string>
+    <string name="cancel">ਰੱਦ ਕਰੋ</string>
+    <string name="edit">ਸੰਪਾਦਿਤ ਕਰੋ</string>
+    <string name="remove">ਹਟਾਓ</string>
+    <string name="yes">ਹਾਂ</string>
+    <string name="no">ਨਹੀਂ</string>
+    <string name="share">ਸਾਂਝਾ ਕਰੋ</string>
+
+    <string name="nav_header_photo" translatable="false">ਬੋਟ ਪ੍ਰੋਫਾਈਲ ਫੋਟੋ</string>
+    <string name="nav_header_default_title" translatable="false">ਕੋਈ ਬੋਟ ਨਹੀਂ</string>
+    <string name="nav_footer" translatable="false">%1$s\nv%2$s (%3$s)</string>
+    <string name="navigation_drawer_open" translatable="false">ਖੁੱਲਾ ਨੇਵੀਗੇਸ਼ਨ ਦਰਾਜ਼</string>
+    <string name="navigation_drawer_close" translatable="false">ਨੇਵੀਗੇਸ਼ਨ ਦਰਾਜ਼ ਨੂੰ ਬੰਦ ਕਰੋ</string>
+    <string name="bot_token_regex" translatable="false">[0-9]{5,10}:[A-Za-z0-9_-]*</string>
+    <string name="nav_header_default_subtitle" translatable="false">12345:AAJqs_w-4</string>
+    <string name="github_url" translatable="false">https://github.com/Sea-n/Android-TG-Bot</string>
+    <string name="telegram_group_join_link" translatable="false">https://t.me/AwesomeTeleBot</string>
+</resources>
