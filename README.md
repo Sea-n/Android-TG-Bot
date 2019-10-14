@@ -12,8 +12,9 @@ Issues, Pull Requests are **always welcome**
 ## Translators
 Spanish 🇪🇸 by [Chaky El Pipe](http://telegra.ph/Biografía-Chaky-El-Pipe-07-24)  
 Russian 🇷🇺 by [Smartman\_ru](https://github.com/smartmanru)  
-Hindi 🇮🇳 by [Rishabh](https://github.com/lulzx)
-Italian 🇮🇹 by [Eric Solinas](https://t.me/EricSolinas)
+Hindi 🇮🇳 by [Rishabh](https://github.com/lulzx)<br/>
+Italian 🇮🇹 by [Eric Solinas](https://t.me/EricSolinas)<br/>
+Punjabi 🇮🇳 by [Raghav Kapoor](https://github.com/beardedsailor)<br/>
 Chinese 🇹🇼 by [Sean](https://www.sean.taipei)  
 If you would like to translate this app to your native language, please read [this gist](https://git.io/l10n).
 
