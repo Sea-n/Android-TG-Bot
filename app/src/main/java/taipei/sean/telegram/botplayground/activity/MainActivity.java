@@ -136,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
                 values.put("type", 0);
 
                 BotStructure demo_bot = db.getBot(0x9487);
+
                 if (demo_bot == null || !token.equals(demo_bot.token)) {
                     db.deleteBot(0x9487);
                     db.insertBot(values);
@@ -216,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
                                     startActivity(goToMarket);
                                 } catch (ActivityNotFoundException e) {
                                     startActivity(new Intent(Intent.ACTION_VIEW,
-                                            Uri.parse("http://play.google.com/store/apps/details?id=" + packName)));
+                                            Uri.parse("https://play.google.com/store/apps/details?id=" + packName)));
                                 }
                             }
 
@@ -385,9 +386,11 @@ public class MainActivity extends AppCompatActivity {
                         Intent wIntent = new Intent(MainActivity.this, WebhookActivity.class);
                         startActivity(wIntent);
                         break;
+                    /*
                     case R.id.nav_file_dl:
                         openFileDownloader();
                         break;
+                     */
                     case R.id.nav_fav:
                         Intent favIntent = new Intent(MainActivity.this, FavoriteActivity.class);
                         startActivity(favIntent);
@@ -405,9 +408,11 @@ public class MainActivity extends AppCompatActivity {
                         Intent githubIntent = new Intent(Intent.ACTION_VIEW, githubUri);
                         startActivity(githubIntent);
                         break;
+                    /*
                     case R.id.nav_export:
                         exportDB();
                         break;
+                     */
                     case R.id.nav_about:
                         Intent aboutIntent = new Intent(MainActivity.this, AboutActivity.class);
                         startActivity(aboutIntent);
@@ -520,14 +525,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private File createDir() {
-        int permW = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        if (permW == PackageManager.PERMISSION_DENIED) {
-            Log.w("main", "permission WRITE_EXTERNAL_STORAGE denied");
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
-            return null;
-        }
-
-        final File dir = new File(Environment.getExternalStorageDirectory() + "/TeleBot");
+        final File dir = getFilesDir();
         if (!dir.exists()) {
             if (!dir.mkdir()) {
                 Log.e("main", "mkdir fail");
@@ -768,7 +766,7 @@ public class MainActivity extends AppCompatActivity {
         final Menu menu = navView.getMenu();
         final MenuItem accountItem = menu.findItem(R.id.menu_accounts_item);
         final MenuItem caller = menu.findItem(R.id.nav_caller);
-        final MenuItem downloader = menu.findItem(R.id.nav_file_dl);
+//        final MenuItem downloader = menu.findItem(R.id.nav_file_dl);
 
         changeAccountMenuOpen = false;
 
@@ -790,12 +788,12 @@ public class MainActivity extends AppCompatActivity {
                 switch (currentBot.type) {
                     case 0:
                         caller.setEnabled(true);
-                        downloader.setEnabled(true);
+//                        downloader.setEnabled(true);
                         break;
                     case 1:
                     case 2:
                         caller.setEnabled(false);
-                        downloader.setEnabled(false);
+//                        downloader.setEnabled(false);
                         break;
                     default:
                         Log.d("main", "Unknown type " + currentBot.type);

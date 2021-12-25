@@ -325,14 +325,7 @@ public class FileDownloadActivity extends AppCompatActivity {
     }
 
     public File createDir() {
-        int permW = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        if (permW == PackageManager.PERMISSION_DENIED) {
-            Log.w("main", "permission WRITE_EXTERNAL_STORAGE denied");
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
-            return null;
-        }
-
-        final File dir = new File(Environment.getExternalStorageDirectory() + "/TeleBot");
+        final File dir = getFilesDir();
         if (!dir.exists()) {
             if (!dir.mkdir()) {
                 Log.e("main", "mkdir fail");

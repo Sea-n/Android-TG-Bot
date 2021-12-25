@@ -14,10 +14,12 @@
             android:id="@+id/nav_webhook"
             android:icon="@drawable/ic_bug_report_black_24dp"
             android:title="@string/title_activity_webhook" />
+        <!--
         <item
             android:id="@+id/nav_file_dl"
             android:icon="@drawable/ic_file_download_black_24dp"
             android:title="@string/file_downloader" />
+        -->
         <item
             android:id="@+id/nav_fav"
             android:icon="@drawable/ic_grade_black_24dp"
@@ -47,10 +49,12 @@
                 android:id="@+id/nav_github"
                 android:icon="@drawable/ic_mark_github"
                 android:title="@string/menu_github" />
+            <!--
             <item
                 android:id="@+id/nav_export"
                 android:icon="@drawable/ic_archive_black_24dp"
                 android:title="@string/menu_export" />
+            -->
             <item
                 android:id="@+id/nav_about"
                 android:icon="@drawable/ic_info_outline_black_24dp"

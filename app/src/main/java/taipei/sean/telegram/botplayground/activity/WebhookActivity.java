@@ -78,7 +78,7 @@ public class WebhookActivity extends AppCompatActivity {
 
         String url = db.getParam("url");
         if (!URLUtil.isValidUrl(url))
-            url = "http://httpbin.org/post";
+            url = "https://httpbin.org/post";
 
         urlView.setText(url);
 

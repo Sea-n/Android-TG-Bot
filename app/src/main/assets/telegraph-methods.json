@@ -161,7 +161,7 @@
       "path": {
         "type": "String",
         "required": true,
-        "description": "Path to the Telegraph page (in the format Title-12-31, i.e. everything that comes after http://telegra.ph/)."
+        "description": "Path to the Telegraph page (in the format Title-12-31, i.e. everything that comes after https://telegra.ph/)."
       },
       "return_content": {
         "type": "Boolean",

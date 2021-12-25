@@ -10,7 +10,7 @@ Issues, Pull Requests are **always welcome**
 
 
 ## Translators
-Spanish 🇪🇸 by [Chaky El Pipe](http://telegra.ph/Biografía-Chaky-El-Pipe-07-24)  
+Spanish 🇪🇸 by [Chaky El Pipe](https://telegra.ph/Biografía-Chaky-El-Pipe-07-24)  
 Russian 🇷🇺 by [Smartman\_ru](https://github.com/smartmanru)  
 Hindi 🇮🇳 by [Rishabh](https://github.com/lulzx)
 Italian 🇮🇹 by [Eric Solinas](https://t.me/EricSolinas)
