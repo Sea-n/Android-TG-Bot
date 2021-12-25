@@ -3,7 +3,7 @@ package taipei.sean.telegram.botplayground;
 import android.content.Context;
 import android.util.AttributeSet;
 
-public class InstantComplete extends android.support.v7.widget.AppCompatAutoCompleteTextView {
+public class InstantComplete extends androidx.appcompat.widget.AppCompatAutoCompleteTextView {
 
     public InstantComplete(Context context) {
         super(context);

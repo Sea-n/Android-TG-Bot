@@ -5,8 +5,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.MANAGE_DOCUMENTS" />
+<!--    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
+<!--    <uses-permission android:name="android.permission.MANAGE_DOCUMENTS" />-->
     <uses-permission android:name="android.permission.ACTION_OPEN_DOCUMENT" />
 
     <application
@@ -19,7 +19,8 @@
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -69,7 +70,8 @@
         <activity
             android:name=".activity.ApiCallerActivity"
             android:label="@string/title_activity_bot_api"
-            android:parentActivityName=".activity.MainActivity">
+            android:parentActivityName=".activity.MainActivity"
+            android:exported="true">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="taipei.sean.telegram.botplayground.activity.MainActivity" />
@@ -119,7 +121,8 @@
         <activity
             android:name=".activity.TelegraphActivity"
             android:label="@string/title_activity_telegraph"
-            android:parentActivityName=".activity.MainActivity">
+            android:parentActivityName=".activity.MainActivity"
+            android:exported="true">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="taipei.sean.telegram.botplayground.activity.MainActivity" />
@@ -184,7 +187,8 @@
         <activity
             android:name=".activity.FileDownloadActivity"
             android:label="@string/file_downloader"
-            android:parentActivityName=".activity.MainActivity">
+            android:parentActivityName=".activity.MainActivity"
+            android:exported="true">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="taipei.sean.telegram.botplayground.activity.MainActivity" />

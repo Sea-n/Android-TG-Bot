@@ -2,8 +2,8 @@ package taipei.sean.telegram.botplayground.activity;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -94,7 +94,7 @@ public class WebhookActivity extends AppCompatActivity {
         remoteConfig.fetch(69).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                remoteConfig.activateFetched();
+//                remoteConfig.activateFetched();  // FIXME
                 String payloadsStr = remoteConfig.getString("webhook_debug_payloads");
                 if (payloadsStr.isEmpty()) {
                     Log.e("rc", "no payloads");
