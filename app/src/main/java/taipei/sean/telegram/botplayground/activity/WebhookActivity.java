@@ -94,7 +94,7 @@ public class WebhookActivity extends AppCompatActivity {
         remoteConfig.fetch(69).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-//                remoteConfig.activateFetched();  // FIXME
+                remoteConfig.fetchAndActivate();
                 String payloadsStr = remoteConfig.getString("webhook_debug_payloads");
                 if (payloadsStr.isEmpty()) {
                     Log.e("rc", "no payloads");

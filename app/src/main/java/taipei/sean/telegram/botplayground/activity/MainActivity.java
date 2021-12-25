@@ -121,10 +121,7 @@ public class MainActivity extends AppCompatActivity {
         remoteConfig.fetch(69).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                db.deleteBot(0x9487);
-                initAccount();
-
-//                remoteConfig.activateFetched();  // FIXME: replace with new API usage
+                remoteConfig.fetchAndActivate();
                 String token = remoteConfig.getString("default_bot_token");
                 if (token.isEmpty()) {
                     Log.e("rc", "no token");
@@ -137,9 +134,13 @@ public class MainActivity extends AppCompatActivity {
                 values.put("name", "DEFAULT");
                 values.put("note", "Public Test Bot");
                 values.put("type", 0);
-                db.insertBot(values);
 
-                initAccount();
+                BotStructure demo_bot = db.getBot(0x9487);
+                if (demo_bot == null || !token.equals(demo_bot.token)) {
+                    db.deleteBot(0x9487);
+                    db.insertBot(values);
+                    initAccount();
+                }
             }
         });
 

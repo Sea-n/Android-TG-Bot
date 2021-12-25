@@ -311,7 +311,7 @@ public class ApiCallerActivity extends AppCompatActivity {
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+        super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case 87:
                 if (resultCode == RESULT_OK) {
